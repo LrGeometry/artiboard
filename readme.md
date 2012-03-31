@@ -1,16 +1,15 @@
+# ArtiBoard
 This project is very new. Currently runs checkers game experiments in the console.
+Aims to become a framework for exploring AI and machine learning w.r.t. board games.
 
-Dependancies
-------------
-1. Uses TUT for a testing framework  (http://tut-framework.sourceforge.net/)
-2. Uses Mongoose as embedded web server (http://code.google.com/p/mongoose/)
+## Dependancies
+ * Uses TUT for a testing framework  (http://tut-framework.sourceforge.net/)
+ * Uses Mongoose as embedded web server (http://code.google.com/p/mongoose/)
 
-Development tools
------------------
+## Development tools
   MINGW + Eclipse
 
-Things than can be done
------------------------
+## Things than can (or must) be done
  * More complex checkers experiments
  * More board games, such as reversi, chess or arimaa
  * Interactive web interface for checkers (human vs. computer)
@@ -18,8 +17,7 @@ Things than can be done
  * Extend makefiles to build on other platforms
  * and so on ...
 
-To compile
-----------
+## To compile
  1. Get MINGW (http://www.mingw.org/wiki/InstallationHOWTOforMinGW)
  2. Get TUT (http://sourceforge.net/projects/tut-framework/files/TUT/)
  3. Unzip TUT to some folder
