@@ -1,0 +1,13 @@
+This project is very new. 
+
+Dependancies
+------------
+1. Uses TUT for a testing framework  (http://tut-framework.sourceforge.net/)
+2. USes Mongoose as embedded web server (http://code.google.com/p/mongoose/)
+
+
+Wanna help?
+-----------
+Currently compiles on MINGW and runs checkers game experiments.
+The plan is to develop a very simple web interface that makes the program more visible 
+
