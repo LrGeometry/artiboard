@@ -153,7 +153,9 @@ typedef unsigned int  uint32_t;
 typedef unsigned short  uint16_t;
 typedef unsigned __int64 uint64_t;
 typedef __int64   int64_t;
+#ifndef INT64_MAX
 #define INT64_MAX  9223372036854775807
+#endif
 #endif // HAVE_STDINT
 
 // POSIX dirent interface
@@ -483,7 +485,7 @@ const char **mg_get_valid_option_names(void) {
   return config_options;
 }
 
-static void *call_user(struct mg_connection *conn, enum mg_event event) {
+static const void *call_user(struct mg_connection *conn, enum mg_event event) {
   conn->request_info.user_data = conn->ctx->user_data;
   return conn->ctx->user_callback == NULL ? NULL :
     conn->ctx->user_callback(event, conn, &conn->request_info);
@@ -1437,8 +1439,8 @@ int mg_read(struct mg_connection *conn, void *buf, size_t len) {
   return nread;
 }
 
-int mg_write(struct mg_connection *conn, const void *buf, size_t len) {
-  return (int) push(NULL, conn->client.sock, conn->ssl, (const char *) buf,
+int mg_write(struct mg_connection *conn, const char *buf, size_t len) {
+  return (int) push(NULL, conn->client.sock, conn->ssl, buf,
                     (int64_t) len);
 }
 

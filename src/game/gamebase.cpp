@@ -86,7 +86,7 @@ namespace game
 	}
 
 	std::ostream & operator<<(std::ostream & o, const Square & s) {
-		o << systemex::FormatString("%d%d ", s.file(), s.rank());
+		o << systemex::string_from_format("%d%d ", s.file(), s.rank());
 		return o;
 	}
 
@@ -99,7 +99,7 @@ namespace game
 
 	void MoveString::add(const Square & from, const Square & to)
 	{
-		_text += systemex::FormatString("%d%d-%d%d", from.file(), from.rank(), to.file(),
+		_text += systemex::string_from_format("%d%d-%d%d", from.file(), from.rank(), to.file(),
 				to.rank());
 	}
 
@@ -110,7 +110,7 @@ namespace game
 
 	void MoveString::prepend(const Square & from)
 	{
-		_text = systemex::FormatString("%d%d-", from.file(), from.rank()) + _text;
+		_text = systemex::string_from_format("%d%d-", from.file(), from.rank()) + _text;
 	}
 
 	const std::string& MoveString::text() const

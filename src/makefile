@@ -1,7 +1,7 @@
 include makevars
  
 # LIBS is passed to the linker
-LIBS = -lmingw32
+LIBS = -lwsock32
 TARGET = agent.exe
 WEBTARGET = webagent.exe
 
@@ -37,6 +37,8 @@ subsystems :
 	# game provides facilities to implement board games
 	$(MAKE) -C player     
 	# player adds the ability to create playing agents to any game
+	$(MAKE) -C interpreter
+	# interpreter makes processing commands easier
 	$(MAKE) -C checkers   
 	# checkers implements the game of checkers
 	$(MAKE) -C web        
@@ -48,6 +50,8 @@ subsystems :
 all:	$(TARGET)
 
 clean:
+	$(MAKE) -C web clean        
 	rm -f $(OBJS) $(CONSOLE_O) $(WEB_O) *.exe
 	rm -f $(BIN)/*
 	rmdir $(BIN)
+	rm log.txt

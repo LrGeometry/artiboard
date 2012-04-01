@@ -13,12 +13,12 @@ namespace checkers {
 	using game::otNone;
 	using game::otUnknown;
 	using game::otWin;
-	using systemex::FormatString;
+	using systemex::string_from_format;
 	using std::runtime_error;
 	using systemex::runtime_error_ex;
 
 	std::string make_description(const bool race, const bool jump_opt) {
-		return FormatString("%s%s", race?"Race":"Checkers",	jump_opt?"Casual":"");
+		return string_from_format("%s%s", race?"Race":"Checkers",	jump_opt?"Casual":"");
 	}
 
 	CheckersGame::CheckersGame(const bool race, const bool jump_opt) : IGame(make_description(race,jump_opt)) {

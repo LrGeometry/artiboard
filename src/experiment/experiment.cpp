@@ -13,7 +13,7 @@ namespace experiments {
 	std::ostream & Experiment::file() {
 		if (!ofile.is_open()) {
 			systemex::create_dir("..\\experiments");
-			std::string fileName = systemex::FormatString("..\\experiments\\%s.txt",
+			std::string fileName = systemex::string_from_format("..\\experiments\\%s.txt",
 					_name);
 			ofile.open(fileName.c_str());
 			if (!ofile.is_open())

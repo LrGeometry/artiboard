@@ -152,7 +152,7 @@ int mg_modify_passwords_file(const char *passwords_file_name,
                              const char *password);
 
 // Send data to the client.
-int mg_write(struct mg_connection *, const void *buf, size_t len);
+int mg_write(struct mg_connection *, const char *buf, size_t len);
 
 
 // Send data to the browser using printf() semantics.

@@ -1,19 +1,29 @@
 #include <stdio.h>
 #include <string.h>
 #include "mongoose.h"
+#include "../systemex/systemex.h"
+#include "html.h"
 
-static const void *callback(enum mg_event event,
-                      struct mg_connection *conn,
-                      const struct mg_request_info *request_info) {
-  if (event == MG_NEW_REQUEST) {
-    // Echo requested URI back to the client
-    mg_printf(conn, "HTTP/1.1 200 OK\r\n"
-              "Content-Type: text/plain\r\n\r\n"
-              "%s", request_info->uri);
-    return "";  // Mark as processed
-  } else {
-    return NULL;
-  }
+using systemex::string_from_file;
+using web::HtmlDocument;
+using web::Part;
+
+static const void *callback(enum mg_event event, struct mg_connection *conn,
+		const struct mg_request_info *request_info) {
+	HtmlDocument doc;
+	try {
+		if (event == MG_NEW_REQUEST) {
+			doc.push_back(new Part("",string_from_file("content/index.html")));
+		} else {
+			return NULL;
+		}
+	} catch (std::runtime_error &ex) {
+		doc.push_back(new Part("",ex.what()));
+	} catch (...) {
+		doc.push_back(new Part("","unknown error"));
+	}
+	doc.send(conn);
+	return ""; // Mark as processed
 }
 
 int main(void) {
@@ -21,8 +31,9 @@ int main(void) {
   const char *options[] = {"listening_ports", "8080", NULL};
 
   ctx = mg_start(&callback, 0, options);
+  puts("Web server running at http://localhost:8080\nPress ENTER to exit/n");
   getchar();  // Wait until user hits "enter"
   mg_stop(ctx);
-
+  puts("Web server stopped");
   return 0;
 }

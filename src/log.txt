@@ -1,11 +1,1 @@
  <:
-0:> *** START
-010 Sytem Tests: ..
-020 Game Tests: ..
-030 Checkers Tests: ....
-
-tests summary: ok:8
- <:
-0:> Tests complete <:
-0:> Program complete <:
-0:> *** END

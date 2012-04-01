@@ -1,23 +1,13 @@
 #include <string.h>
 #include <stdio.h>
-#include <dirent.h>
 #include "systemex.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <errno.h>
+#include <fstream>
+#include <windows.h>
+#include <dirent.h>
 
 using namespace std;
 
 namespace systemex {
-
-	char * duplicate_string(const char *str) {
-		size_t len = strlen(str);
-		/* 1 for the null terminator */
-		char *result = static_cast<char *>(malloc(len + 1));
-		ENSURE(result != 0, "could not allocate memory");
-		memcpy(result, str, len + 1);
-		return result;
-	}
 
 	void create_dir(const string& path) {
 			if (mkdir(path.c_str()) != 0) {
@@ -26,7 +16,35 @@ namespace systemex {
 			}
 	}
 
-	string FormatString(const char *szFormat, ...) {
+	void throw_LastError(const string& message) {
+	    // Retrieve the system error message for the last-error code
+	    void * pszMessage;
+	    auto dw = GetLastError();
+	    FormatMessage(
+	          FORMAT_MESSAGE_ALLOCATE_BUFFER |
+	          FORMAT_MESSAGE_FROM_SYSTEM |
+	          FORMAT_MESSAGE_IGNORE_INSERTS,
+	          NULL,
+	          dw,
+	          MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+	          (LPTSTR) &pszMessage,
+	          0, NULL );
+	    const string msg(string_from_format("%s: %s",message.c_str(), pszMessage));
+	    LocalFree(pszMessage);
+	    throw runtime_error(msg);
+	}
+
+
+	char * cstring_copy(const char *str) {
+		size_t len = strlen(str);
+		/* 1 for the null terminator */
+		char *result = new char[len+1];
+		ENSURE(result != 0, "could not allocate memory");
+		memcpy(result, str, len + 1);
+		return result;
+	}
+
+	string string_from_format(const char *szFormat, ...) {
 		char buffer[1024];
 		buffer[sizeof(buffer) - 1] = 0;
 		va_list args;
@@ -35,6 +53,31 @@ namespace systemex {
 		va_end(args);
 		return string(buffer);
 	}
+
+	string string_from_file(const char * fileName) {
+		ifstream file;
+		file.open(fileName);
+		if (!file)
+			throw file_not_found(fileName);
+		// determine file size
+		file.seekg(0,ios::end);
+		auto length = file.tellg();
+		if (length == 0)
+			throw runtime_error_ex("The file ('%s') is empty", fileName);
+		// read the whole file the result
+		file.seekg(0,ios::beg);
+		const size_t bufSize = (unsigned int) length + 1;
+		string result;
+		result.reserve(bufSize);
+		char c;
+		file.get(c);
+		do {
+			result += c;
+			file.get(c);
+		} while (file.good());
+		return result;
+	}
+
 
 	static const char *PARSE_ERROR = "Looking for '%s' but found '%s'";
 	file_not_found::file_not_found(const char *str) :
@@ -85,7 +128,7 @@ namespace systemex {
 		va_start(args, format);
 		vsnprintf(buffer, sizeof(buffer) - 1, format, args);
 		va_end(args);
-		_what = duplicate_string(buffer);
+		_what = cstring_copy(buffer);
 		_value = value;
 	}
 
@@ -95,7 +138,7 @@ namespace systemex {
 
 	Answer::~Answer() {
 		if (_what != 0)
-			free(_what);
+			delete[] _what;
 	}
 
 	Answer& Answer::operator=(Answer &&rhs) {
