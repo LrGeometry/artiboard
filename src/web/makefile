@@ -14,6 +14,9 @@ $(BIN)/content: $(wildcard content/*)
 	
 $(OBJS) : $(HEADERS)
 
+refresh:
+	cp content/* $(BIN)/content/
+
 clean:
 	rm -f *.o 
 	rm -f $(BIN)/content/*

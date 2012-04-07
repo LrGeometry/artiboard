@@ -47,8 +47,8 @@ subsystems :
 	# console frontend to the application
 
 
-all:	$(TARGET)
-
+all:	$(WEBTARGET)
+	
 clean:
 	$(MAKE) -C web clean        
 	rm -f $(OBJS) $(CONSOLE_O) $(WEB_O) *.exe

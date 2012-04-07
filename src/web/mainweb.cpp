@@ -3,10 +3,11 @@
 #include "mongoose.h"
 #include "../systemex/systemex.h"
 #include "html.h"
-
+#include <iostream>
 using systemex::string_from_file;
 using web::HtmlDocument;
 using web::Part;
+using namespace std;
 
 static const void *callback(enum mg_event event, struct mg_connection *conn,
 		const struct mg_request_info *request_info) {
@@ -31,9 +32,9 @@ int main(void) {
   const char *options[] = {"listening_ports", "8080", NULL};
 
   ctx = mg_start(&callback, 0, options);
-  puts("Web server running at http://localhost:8080\nPress ENTER to exit/n");
+  cout << "Web server running at http://localhost:8080\nPress ENTER to exit\n" << endl;
   getchar();  // Wait until user hits "enter"
   mg_stop(ctx);
-  puts("Web server stopped");
+  cout << "Web server stopped" << endl;
   return 0;
 }
