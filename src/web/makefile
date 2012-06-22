@@ -19,5 +19,5 @@ refresh:
 clean:
 	rm -f *.o 
 	rm -f $(BIN)/content/*
-	if test -d dir; then rmdir -p $(BIN)/content; fi
+	if test -d $(BIN)/content; then rmdir $(BIN)/content; fi
 	

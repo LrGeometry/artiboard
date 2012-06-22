@@ -53,5 +53,5 @@ clean:
 	$(MAKE) -C web clean        
 	rm -f $(OBJS) $(CONSOLE_O) $(WEB_O) *.exe
 	rm -f $(BIN)/*
-	rmdir $(BIN)
-	rm log.txt
+	if test -d $(BIN); then rmdir $(BIN); fi
+	rm -f log.txt
