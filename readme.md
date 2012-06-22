@@ -2,7 +2,7 @@
 This project is very new. Currently runs checkers game experiments in the console.
 Aims to become a framework for exploring AI and machine learning w.r.t. board games.
 
-## Dependancies
+## Dependencies
  * Uses TUT for a testing framework  (http://tut-framework.sourceforge.net/)
  * Uses Mongoose as embedded web server (http://code.google.com/p/mongoose/)
 

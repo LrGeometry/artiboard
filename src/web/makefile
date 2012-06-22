@@ -8,8 +8,7 @@ all: $(OBJS) $(BIN)/content
 
 $(BIN)/content: $(wildcard content/*)
 	rm -f $(BIN)/content/*
-	rmdir $(BIN)/content
-	mkdir $(BIN)/content
+	mkdir -p $(BIN)/content
 	cp content/* $(BIN)/content/
 	
 $(OBJS) : $(HEADERS)
@@ -20,5 +19,5 @@ refresh:
 clean:
 	rm -f *.o 
 	rm -f $(BIN)/content/*
-	rmdir $(BIN)/content
+	if test -d dir; then rmdir -p $(BIN)/content; fi
 	
