@@ -22,7 +22,9 @@ namespace systemex {
 #else
 	#include <stdlib.h>
 #endif
-
+/**
+ * Extends standard system facilities
+ */
 namespace systemex {
 	using std::runtime_error;
 	using std::exception;
@@ -37,6 +39,9 @@ namespace systemex {
 	string string_from_file(const char * fileName);
 	void throw_LastError(const string& message);
 
+	/**
+	 * \brief An exception that supports formatted input
+	 */
 	class runtime_error_ex: public runtime_error {
 		public:
 			runtime_error_ex(const char *pFormat, ...);

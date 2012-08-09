@@ -36,12 +36,13 @@ void showExperiments() {
 
 int main(int argc, const char * args[]) {
 	try {
-		tut::console_reporter reporter(systemex::Log::instance().file());
+		// tut::console_reporter reporter(systemex::Log::instance().file());
+		tut::console_reporter reporter(std::cout);
 		tut::runner.get().set_callback(&reporter);
 		tut::runner.get().run_tests();
 		LOG << "Tests complete";
 		if (reporter.all_ok()) {
-			std::cout << "Tests ran ok" << std::endl;
+			std::cout << "Tests ran OK" << std::endl;
 			if (argc != 2) {
 				std::cout << "To run an experiment, use: agent.exe <experiment name>" << std::endl;
 				std::cout << "Possible experiments" << std::endl;

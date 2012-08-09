@@ -1,0 +1,28 @@
+Coding conventions
+0. General
+0.1. Use British spelling where possible
+
+1. Files
+1.1. File name have lower case
+1.2. File name for a test is prefixed with "test_"
+
+2. Name spaces
+2.1. Name space name is in lower case
+ 
+3. Classes
+3.1. Class name is CamelCase 
+
+4. Methods
+4.1. Method name is lower case, underscore between word
+
+5. Data members
+5.1. Member name is lower case
+5.2. Public members are allowed
+5.3. Private members are prefixed with "_"
+
+6. Parameters
+6.1. Parameter name is lowerCamelCase
+
+7. Return values
+7.1. Return a reference where the caller does not need to check for null
+7.2. Retrun a smart pointer when the called is somehow responsible for memory management 

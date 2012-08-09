@@ -1,10 +1,13 @@
 #include <tut/tut.hpp>
 #include "systemex.h"
+/**
+ * \brief Unit tests
+ */
 namespace tut {
 	using namespace systemex;
 	struct data {
 	};
-	test_group<data> systemTests("010 Sytem Tests");
+	test_group<data> systemTests("010 System Tests");
 
 	template<> template<> void test_group<data>::object::test<1>() {
 		runtime_error_ex ex("hello %s", "dolly");

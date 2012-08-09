@@ -28,7 +28,7 @@ namespace game {
 		ordinal_t rank() const {return _rank;}
 		ordinal_t file() const {return _file;}
 		bool is_valid() const {return in_bounds(_file,_rank);}
-		// returns NOT_VALID if square is not valid TODO: rather throw exception
+		// returns NOT_VALID if square is not valid TODO 900 rather throw exception
 		ordinal_t color_index(const bool flip = false) const;
 		color_t color() const;
 
@@ -41,7 +41,7 @@ namespace game {
 			const ordinal_t offset_file, 
 			const ordinal_t offset_rank);
 		Square(const ordinal_t dark_color_index);
-		enum { NOT_VALID = 99}; // TODO: get rid of this member
+		enum { NOT_VALID = 99}; // TODO 900 get rid of this member
 		//default constructor creates an invalid square
 		// (0,0)
 		Square();
@@ -124,7 +124,7 @@ namespace game {
 	std::ostream & operator  <<(std::ostream &, const SquareSet &);
 	std::istream & operator  >>(std::istream &, SquareSet &);
 
-	// A MoveString provides a string respresentation for a move
+	// A MoveString provides a string representation for a move
 	// A move contains commands and squares
 	class MoveString 
 	{
