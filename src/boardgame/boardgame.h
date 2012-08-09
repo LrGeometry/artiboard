@@ -5,7 +5,7 @@
 #include <ostream>
 #include <memory>
 
-#define FOR_SQUARES(row,col) for (std::size_t row = 0; row < 8; row++) for (std::size_t col = 0; col < 8; col++)
+#define FOR_SQUARES(row,col) for (index_t row = 0; row < 8; row++) for (index_t col = 0; col < 8; col++)
 /**
  * The board game implementation framework.
  * The framework presumes that a board game is played on a Board that contains 64 squares.
@@ -20,6 +20,7 @@
 namespace board_game {
 	using std::unique_ptr;
 	using std::shared_ptr;
+	using std::ostream;
 
 	/* TODO 100 How do we store the game tree?
 	 Possibilities:
@@ -62,7 +63,7 @@ namespace board_game {
 				return _value == other._value;
 			}
 			;
-			square_value_t operator()() const {
+			square_value_t index() const {
 				return _value;
 			}
 			;
@@ -70,11 +71,9 @@ namespace board_game {
 			square_value_t _value;
 	};
 
-	inline std::ostream& operator <<(std::ostream& os, const Piece& v) {
-		os << (int) v();
-		return os;
-	}
+	ostream& operator <<(std::ostream& os, const Piece& v);
 
+	typedef std::size_t index_t;
 	/**
 	 * An 8x8 matrix of Piece objects.
 	 * Left bottom square is (0,0), and right to is (7,7).
@@ -91,8 +90,8 @@ namespace board_game {
 			 * @param rowIndex
 			 * @return Piece::OUT_OF_BOUNDS if indexes are invalid
 			 */
-			const Piece& operator ()(const std::size_t colIndex,
-					const std::size_t rowIndex) const;
+			const Piece& operator ()(const index_t colIndex,
+					const index_t rowIndex) const;
 			/**
 			 * Place as Piece on a square
 			 * @param colIndex must be a valid index
@@ -107,6 +106,7 @@ namespace board_game {
 			typedef std::unique_ptr<Board> u_ptr;
 	};
 
+	ostream& operator <<(std::ostream& os, const Board& v);
 
 	typedef std::forward_list<std::unique_ptr<Board>> BoardOwnerList;
 	/**
@@ -123,16 +123,24 @@ namespace board_game {
 	 */
 	class BoardView {
 		public:
-			BoardView(const Board &brd, Side side, std::size_t col = 0, std::size_t row = 0)
-				: _vantageCol(col), _vantageRow(row), _vantageSide(side), _brd(brd) {}
+			BoardView(const Board &brd, Side side = Side::South, std::size_t col = 0, std::size_t row = 0)
+				: _vantageCol(col), _vantageRow(row), _vantageSide(side), _board(brd) {}
 			void go(std::size_t col, std::size_t row) {
 				_vantageCol = col;
 				_vantageRow = row;
 			};
+			const Piece& anchor() const {return _board(_vantageCol, _vantageRow);};
+			const index_t & col() const {return _vantageCol;};
+			const index_t & row() const {return _vantageRow;};
+			const Piece& relative(const index_t colOffset, const index_t rowOffset) const {
+				const index_t delta_col = (_vantageSide == Side::South) ? colOffset : -colOffset;
+				const index_t delta_row = (_vantageSide == Side::South) ? rowOffset : -rowOffset;
+				return _board(_vantageCol + delta_col, _vantageRow + delta_row);
+			}
 		private:
-			std::size_t _vantageCol, _vantageRow;
+			index_t _vantageCol, _vantageRow;
 			Side _vantageSide;
-			const Board &_brd;
+			const Board &_board;
 	};
 
 	/**
@@ -143,21 +151,13 @@ namespace board_game {
 			const static Ply ZERO;
 			Ply(int index) {_index = index;}
 			int index() const {return _index;}
-			Side sideToMove() const {return (_index%2 == 0)?Side::South:Side::North;}
+			Side side_to_move() const {return (_index%2 == 0)?Side::South:Side::North;}
 			Ply next() const { return Ply(_index+1); }
 		private:
 			int _index;
 	};
 
 	enum StepOutcome {
-		/**
-		 * The winning move / and step
-		 */
-		EndsGameInWin,
-		/**
-		 * Ends the game in a tie
-		 */
-		EndsGameInTie,
 		/**
 		 * Ends the move
 		 */
@@ -176,12 +176,35 @@ namespace board_game {
 		public:
 			Step(StepOutcome outcome) : _outcome(outcome) {}
 			StepOutcome outcome() const { return _outcome; }
-			void apply_on(Board &brd) const;
+			virtual void apply_on(Board &brd) const = 0;
+			virtual ~Step() {};
 		private:
 			const StepOutcome _outcome;
 		public:
 			typedef std::forward_list<std::shared_ptr<Step>> SharedFWList;
 	};
+
+	class StepWithCoords : public Step {
+		public:
+			StepWithCoords(const index_t &col, const index_t &row, StepOutcome outcome)
+				: Step(outcome), _col(col), _row(row) {};
+		protected:
+			const index_t _col;
+			const index_t _row;
+	};
+
+	class StepToPlace : public StepWithCoords {
+		public:
+			StepToPlace(const BoardView &view, const Piece &piece, StepOutcome outcome = StepOutcome::EndsMove)
+			   : StepWithCoords(view.col(),view.row(),outcome), _piece(piece) {};
+			void apply_on(Board &brd) const override {
+				brd(_col,_row, _piece);
+			};
+		private:
+			const Piece _piece;
+	};
+
+
 
 
 
@@ -190,14 +213,15 @@ namespace board_game {
 	 */
 	class Move {
 		public:
+			explicit Move(shared_ptr<Step>& step) {_steps.push_front(step);};
 			unique_ptr<Board> apply_to(const Board &brd) const;
-			void add(shared_ptr<Step> step);
+			void add(shared_ptr<Step>& step);
 		private:
 			Step::SharedFWList _steps;
+		public:
+			typedef std::shared_ptr<Move> s_ptr;
+			typedef std::forward_list<s_ptr> SharedFWList;
 	};
-
-	typedef std::shared_ptr<Move> MoveSP;
-	typedef std::forward_list<MoveSP> MoveList;
 
 
 
@@ -215,10 +239,14 @@ namespace board_game {
 			unique_ptr<Board> _board;
 		public:
 			typedef std::shared_ptr<Position> s_ptr;
+			typedef std::list<std::shared_ptr<Position>> SharedList;
 	};
 
+	ostream& operator <<(std::ostream& os, const Position& v);
 
-
+	enum MatchOutcome {
+		Unknown, SouthPlayerWins, NorthPlayerWins, Draw
+	};
 	/**
 	 * Abstract class that describes the rules of a game.
 	 */
@@ -230,7 +258,8 @@ namespace board_game {
 			 * @param ply
 			 * @param result
 			 */
-			virtual void collectMoves(const Position& pos, MoveList &result) const = 0;
+			virtual void collectMoves(const Position& pos, Move::SharedFWList &result) const = 0;
+			virtual MatchOutcome outcome_of(const Position& pos) const = 0;
 			virtual ~GameSpecification() {};
 		protected:
 			/**
@@ -247,7 +276,7 @@ namespace board_game {
 	 */
 	class GameSpecificationWithLocalSteps: public GameSpecification {
 		public:
-			virtual void collectMoves(const Position& pos, MoveList &result) const override;
+			virtual void collectMoves(const Position& pos, Move::SharedFWList &result) const override;
 		protected:
 			virtual void collectSteps(const Position& pos, const BoardView& view, int stepIndex, Step::SharedFWList &result) const = 0;
 
@@ -270,14 +299,12 @@ namespace board_game {
 			const Position& last() const {return *_plies.back();}
 			const Position& root() const {return *_plies.front();}
 			void add(unique_ptr<Board> &brd);
+			const Position::SharedList& sequence() const {return _plies;}
 		private:
-			std::list<std::shared_ptr<Position>> _plies;
+			Position::SharedList _plies;
 	};
 
-	enum MatchOutcome {
-		Unknown, SouthPlayerWins, NorthPlayerWins, Draw
-	};
-
+	ostream& operator <<(std::ostream& os, const PlayLine& v);
 	/**
 	 * Makes the choice of which move to pick next
 	 */
@@ -303,6 +330,8 @@ namespace board_game {
 				return _outcome;
 			}
 
+			const PlayLine& line() const {return _line;}
+
 		private:
 			const GameSpecification& _spec;
 			MoveChooser& _chooser;
@@ -310,4 +339,5 @@ namespace board_game {
 			MatchOutcome _outcome;
 		};
 
+	ostream& operator <<(std::ostream& os, const Match& v);
 }

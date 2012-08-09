@@ -7,6 +7,10 @@ namespace board_game {
 
 	Piece::Piece(square_value_t v): _value(v) {};
 
+	std::ostream& operator <<(ostream& os, const Piece& v) {
+		os << v.index();
+		return os;
+	}
 	Board::Board() {};
 
 	const Piece& Board::operator () (const std::size_t colIndex, const std::size_t rowIndex) const {
@@ -24,9 +28,7 @@ namespace board_game {
 		_data[rowIndex * 8 + colIndex] = v;
 	}
 
-	void Step::apply_on(Board &brd) const {
-		// TODO 050 Step::apply_on
-	}
+
 
 	void PlayLine::add(unique_ptr<Board> &brd) {
 		_plies.push_back(shared_ptr<Position>(new Position(last().ply().next(), brd)));
@@ -47,8 +49,8 @@ namespace board_game {
 		return unique_ptr<Board>(result);
 	}
 
-	void GameSpecificationWithLocalSteps::collectMoves(const Position& pos, MoveList &result) const {
-		BoardView view(pos.board(),pos.ply().sideToMove());
+	void GameSpecificationWithLocalSteps::collectMoves(const Position& pos, Move::SharedFWList &result) const {
+		BoardView view(pos.board(),pos.ply().side_to_move());
 		Step::SharedFWList steps;
 		int stepIndex = 0;
 		FOR_SQUARES(r,c) {
@@ -59,10 +61,22 @@ namespace board_game {
 			for_each(step, steps) {
 				if ((*step)->outcome() == StepOutcome::EndsMoveAndContinue)
 					throw std::runtime_error("open steps not implemented yet");
-
+				result.emplace_front(new Move(*step));
 			}
 			// TODO 110 create more moves for open steps
 		}
+	}
+
+	ostream& operator <<(std::ostream& os, const Board& v) {
+		for (index_t r = 8; r > 0; r--) {
+			auto row = r - 1;
+			os << row << " ";
+			for (index_t c = 0; c < 8; c++) {
+				os << v(c,row) << " ";
+			}
+			os << std::endl;
+		}
+		return os;
 	}
 
 	const Ply Ply::ZERO(0);
@@ -70,6 +84,13 @@ namespace board_game {
 	PlayLine::PlayLine(unique_ptr<Board> initial) {
 		_plies.emplace_back(new Position(Ply::ZERO, initial));
 	};
+
+	ostream& operator <<(ostream& os, const PlayLine& v) {
+		for_each(p,v.sequence()) {
+			os << "Ply: " << (*p)->ply().index() << std::endl << (*p)->board() << std::endl;
+		}
+		return os;
+	}
 
 	Match::Match(const GameSpecification& spec,  MoveChooser& chooser):
 			_spec(spec),
@@ -81,7 +102,7 @@ namespace board_game {
 	void Match::play() {
 		if (!_line.last().is_root())
 			throw std::runtime_error("cannot play again");
-		MoveList moves;
+		Move::SharedFWList moves;
 		while (_outcome == MatchOutcome::Unknown) {
 			auto &pos = _line.last();
 			moves.clear();
@@ -94,7 +115,14 @@ namespace board_game {
 					boards.push_front((**m).apply_to(pos.board()));
 				}
 				_line.add(_chooser.select(pos, boards));
+				_outcome = _spec.outcome_of(_line.last());
 			}
 		}
+	}
+
+	ostream& operator <<(std::ostream& os, const Match& v) {
+		os << "Match had " << v.line().sequence().size() << " moves" << std::endl;
+		os << v.line();
+		return os;
 	}
 }
