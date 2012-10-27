@@ -1,0 +1,24 @@
+# Addition include for tut
+INCLUDES = -IC:\Development\cpp\libraries\shared\include
+CXXFLAGS =   -fno-strict-aliasing  -O2 -g -Wall -Werror -fmessage-length=0 -DFIND_LEAKS_OFF -std=c++0x  $(INCLUDES)
+
+BIN = ../../bin
+# Dependancies between subsystems
+
+SYSTEMEX_D = $(wildcard ../systemex/*.h)
+BOARD_GAME_D = $(wildcard ../boardgame/*.h) $(SYSTEMEX_D)
+ARIMAA_GAME_D = $(wildcard ../arimaagame/*.h) $(BOARD_GAME_D)
+INTERPRETER_D = $(wildcard ../interpreter/*.h) $(SYSTEMEX_D)
+EXPERIMENTS_D = $(wildcard ../experiment/*.h) $(SYSTEMEX_D)
+GAME_D = $(wildcard ../game/*.h) $(SYSTEMEX_D)
+
+PLAYER_D = $(wildcard ../player/*.h) $(GAME_D)
+CHECKERS_D = $(wildcard ../checkers/*.h) $(EXPERIMENTS_D) $(PLAYER_D)
+
+WEB_D = $(wildcard ../web/*.h) $(CHECKERS_D) $(INTERPETER)
+CONSOLE_D = $(wildcard ../console/*.h) $(CHECKERS_D) 
+
+# Dependancy graph
+# systemex <---- experiments <-------------|
+#            |-- game <--------- player <----- checkers <--- web
+#            |-- gameboard <-- arimaagame

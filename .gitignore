@@ -1,3 +1,6 @@
 *.[oa]
 /bin/
 /dox/
+src/.settings/
+src/log.txt
+.metadata
