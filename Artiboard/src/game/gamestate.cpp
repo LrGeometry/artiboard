@@ -4,6 +4,9 @@
 #include "../systemex/systemex.h"
 #include <sstream>
 
+/**
+ * Older game framework -- in progress to be replaced by board_game
+ */
 namespace game {
 	using systemex::runtime_error;
 

@@ -1,5 +1,6 @@
 #include "boardgame.h"
 #include "../systemex/systemex.h"
+
 namespace board_game {
 	const char out_of_bounds = '*';
 	const Piece Piece::EMPTY(' ');
@@ -34,7 +35,7 @@ namespace board_game {
 		_plies.push_back(shared_ptr<Position>(new Position(last().ply().next(), brd)));
 	}
 
-	unique_ptr<Board> Move::apply_to(const Board &brd) const {
+	std::unique_ptr<Board> Move::apply_to(const Board &brd) const {
 		Board::u_ptr result(new Board(brd));
 		for_each(step,_steps) {
 			(*step)->apply_on(*result);
@@ -43,7 +44,7 @@ namespace board_game {
 	}
 
 
-	unique_ptr<Board> GameSpecification::initialBoard() const {
+	std::unique_ptr<Board> GameSpecification::initialBoard() const {
 		auto result = new Board();
 		setup(*result);
 		return unique_ptr<Board>(result);
@@ -63,7 +64,6 @@ namespace board_game {
 					throw std::runtime_error("open steps not implemented yet");
 				result.emplace_front(new Move(*step));
 			}
-			// TODO 110 create more moves for open steps
 		}
 	}
 

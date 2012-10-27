@@ -9,6 +9,7 @@ using web::HtmlDocument;
 using web::Part;
 using namespace std;
 
+// TODO Implement interactive game in HTML5
 static const void *callback(enum mg_event event, struct mg_connection *conn,
 		const struct mg_request_info *request_info) {
 	HtmlDocument doc;

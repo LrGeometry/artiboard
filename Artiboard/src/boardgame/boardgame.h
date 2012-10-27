@@ -7,26 +7,26 @@
 
 #define FOR_SQUARES(row,col) for (index_t row = 0; row < 8; row++) for (index_t col = 0; col < 8; col++)
 /**
- * The board game implementation framework.
+ * Use this name space to implement a specific board game.
  * The framework presumes that a board game is played on a Board that contains 64 squares.
  * Each square on the board has a Piece.  There are two players, one on the south
  * Side (looking north) and one of the north Side.  Starting from from Ply zero, the
  * south player creates the first Move.
  *
- * A concrete implementation of GameSpecification defines the implemented game.
+ * In order to play a game, create an instance of Match, giving it a GameSpecification and a MoveChooser.
+ * At the end of a Match, a PlayLine contains the moves that can be made.  The PlayLine consists
+ * of a sequence of Positions.  A Position is for a Ply and it describes the Board after the move is
+ * made for that Ply.
  *
- * TODO 200 describe how to implement a specific game
+ * An implementation of the GameSpecification specifies the Moves that can be made from a Position.
+ * A Move consists of one or more Steps.  A Step is a smal change on the Board.
+ *
  */
 namespace board_game {
 	using std::unique_ptr;
 	using std::shared_ptr;
 	using std::ostream;
 
-	/* TODO 100 How do we store the game tree?
-	 Possibilities:
-	 a. initial board -> move -> board  S = M + B; M = M + B
-	 b. initial -> move (with undo) -> move S = M + U
-	 */
 	/**
 	 * The integral value of a Piece
 	 */
@@ -67,8 +67,14 @@ namespace board_game {
 				return _value;
 			}
 			;
+
 		private:
 			square_value_t _value;
+		public:
+			static bool is_same(const Piece& p1, const Piece& p2, const Piece& p3) {
+				return (p1 == p2) && (p3 == p2);
+			}
+
 	};
 
 	ostream& operator <<(std::ostream& os, const Piece& v);
@@ -144,7 +150,7 @@ namespace board_game {
 	};
 
 	/**
-	 * A level in the game tree.
+	 * A level in the game tree, there are two plies for a move.
 	 */
 	class Ply {
 		public:

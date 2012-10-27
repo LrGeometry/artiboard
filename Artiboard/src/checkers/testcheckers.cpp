@@ -8,6 +8,8 @@ using namespace game;
 using namespace checkers;
 using namespace player;
 
+namespace tut {
+
 namespace boards {
 	const char * init =
 			"\
@@ -69,7 +71,7 @@ namespace boards {
 1 x   x   x   O   \n\
   1 2 3 4 5 6 7 8 \n";
 }
-namespace tut {
+
 
 	template<typename T> string toString(T& obj) {
 		std::ostringstream ss;

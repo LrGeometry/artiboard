@@ -40,7 +40,7 @@ subsystems :
 	$(MAKE) -C systemex   
 	# systemex provides basic system wide services
 	$(MAKE) -C boardgame   
-	# boardgame provides an improved foundation for atriboard games
+	# boardgame provides an improved foundation for artiboard games
 	$(MAKE) -C arimaagame   
 	# arimaagame is built on top of boardgame
 	$(MAKE) -C experiment 
