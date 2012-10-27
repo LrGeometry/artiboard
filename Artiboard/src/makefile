@@ -17,8 +17,8 @@ WEB_O = $(wildcard web/*.o)
 CONSOLE_O = $(wildcard console/*.o)
 
 OBJS= $(SYSTEMEX_O) $(GAME_O) $(CHECKERS_O) $(PLAYER_O) $(EXPERIMENT_O)
-BIN = ../../bin
-DOX = ../../dox
+BIN = ../bin
+DOX = ../dox
 GENERAL_DEPS = $(BIN) subsystems $(OBJS)
 
 $(TARGET): $(GENERAL_DEPS) $(CONSOLE_O)
@@ -63,7 +63,7 @@ all:	$(TESTTARGET)
 
 doc:
 	doxygen Doxyfile
-	"C:\Program Files (x86)\Mozilla Firefox\firefox.exe" file:///C:/development/github/artiboard/dox/html/index.html
+	"C:\Program Files (x86)\Mozilla Firefox\firefox.exe" file:///C:/development/github/artiboard/Artiboard/dox/html/index.html
 	
 clean:
 	$(MAKE) -C web clean        

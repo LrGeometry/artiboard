@@ -1,5 +1,0 @@
- <:
-0:> *** START <:
-0:> Tests complete <:
-0:> Program complete <:
-0:> *** END

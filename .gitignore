@@ -2,5 +2,5 @@
 /bin/
 /dox/
 src/.settings/
-src/log.txt
+*/log.txt
 .metadata
