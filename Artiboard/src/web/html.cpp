@@ -6,7 +6,7 @@
 namespace web {
 	using std::stringstream;
 
-	Part::Part(const string& outer, const string& inner) : _outer(outer), _inner(inner) {}
+	Part::Part(const string& outerTag, const string& innerBody) : _outer(outerTag), _inner(innerBody) {}
 
 	Part::~Part() {
 		for_each(e, (*this))

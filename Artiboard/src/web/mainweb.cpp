@@ -2,12 +2,13 @@
 #include <string.h>
 #include "mongoose.h"
 #include "../systemex/systemex.h"
-#include "html.h"
+#include "gamesite.h"
 #include <iostream>
 using systemex::string_from_file;
-using web::HtmlDocument;
-using web::Part;
 using namespace std;
+using namespace web;
+
+GameSite site;
 
 // TODO Implement interactive game in HTML5
 static const void *callback(enum mg_event event, struct mg_connection *conn,
@@ -15,7 +16,8 @@ static const void *callback(enum mg_event event, struct mg_connection *conn,
 	HtmlDocument doc;
 	try {
 		if (event == MG_NEW_REQUEST) {
-			doc.push_back(new Part("",string_from_file("content/index.html")));
+			Request req(request_info);
+			doc.push_back(site.create(req));
 		} else {
 			return NULL;
 		}

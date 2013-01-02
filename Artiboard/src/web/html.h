@@ -11,6 +11,13 @@ namespace web {
 	using std::string;
 	using std::ostream;
 
+	class Request {
+	public:
+		Request(const struct mg_request_info * info) : _info(info) {}
+	private:
+		const struct mg_request_info * _info;
+	};
+
 	class Part : public list<Part *> {
 		public:
 			Part(const string& outer, const string& inner);

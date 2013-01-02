@@ -9,7 +9,7 @@ Aims to become a framework for exploring AI and machine learning w.r.t. board ga
 ## Development tools
   MINGW + Eclipse
 
-## Things than can (or must) be done
+## Things that can (or must) be done
  * More complex checkers experiments
  * More board games, such as reversi, chess or arimaa
  * Interactive web interface for checkers (human vs. computer)
