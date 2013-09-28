@@ -11,6 +11,7 @@ using namespace systemex;
 namespace web {
 
 Part * GameSite::create(const Request& request) {
+
 	return new Part("",string_from_file("src/web/content/index.html"));
 }
 
