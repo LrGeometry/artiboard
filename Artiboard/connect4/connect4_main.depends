@@ -1,0 +1,2 @@
+connect4/connect4_main.o: connect4/connect4_main.cpp connect4/icu_data.h \
+ artilib/log.h artilib/systemex.h artilib/boardgame.h

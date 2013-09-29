@@ -1,0 +1,1 @@
+artilib/log.o: artilib/log.cpp artilib/log.h artilib/systemex.h

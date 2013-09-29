@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"Ma",
+				"MatchOutcome"
+			],
+			[
+				"_",
+				"_outcome"
+			],
+			[
+				"bo",
+				"Board"
+			],
+			[
+				"I",
+				"IcuEntry"
+			],
+			[
+				"re",
+				"read_data"
+			],
+			[
 				"in",
 				"include"
 			],
@@ -28,23 +48,39 @@
 	"buffers":
 	[
 		{
-			"file": "/C/development/github/artiboard/artiboard/src/makefile",
+			"file": "connect4/icu_data.cpp",
 			"settings":
 			{
-				"buffer_size": 2165,
-				"line_ending": "Unix"
+				"buffer_size": 719,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "artiboard.sublime-project",
+			"file": "RunDir/log.txt",
 			"settings":
 			{
-				"buffer_size": 195,
-				"line_ending": "Unix"
+				"buffer_size": 58,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "connect4/icu_data.h",
+			"settings":
+			{
+				"buffer_size": 637,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "connect4/connect4_main.cpp",
+			"settings":
+			{
+				"buffer_size": 278,
+				"line_ending": "Windows"
 			}
 		}
 	],
-	"build_system": "Packages/User/make.sublime-build",
+	"build_system": "Packages/Makefile/Make.sublime-build",
 	"command_palette":
 	{
 		"height": 81.0,
@@ -131,7 +167,12 @@
 	},
 	"console":
 	{
-		"height": 209.0
+		"height": 209.0,
+		"history":
+		[
+			"make",
+			"import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read()); print('Please restart Sublime Text to finish installation')"
+		]
 	},
 	"distraction_free":
 	{
@@ -144,8 +185,26 @@
 	},
 	"file_history":
 	[
-		"/C/Users/willemd/AppData/Roaming/Sublime Text 2/Packages/User/make.sublime-build",
+		"/C/development/github/artiboard/Artiboard/connect4/data/connect-4.data",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4_main.cpp",
+		"/C/development/github/artiboard/Artiboard/makefile",
+		"/C/development/github/artiboard/Artiboard/artilib/boardgame.h",
+		"/C/development/github/artiboard/Artiboard/artilib/log.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/icu_data.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/readme.md",
+		"/C/development/github/artiboard/Artiboard/connect4/icu_data.h",
+		"/C/development/github/artiboard/Artiboard/artilib/boardgame.cpp",
+		"/C/development/github/artiboard/Artiboard/tutlib/test_util.cpp",
 		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
+		"/C/development/github/artiboard/artiboard/src/makefile",
+		"/C/development/github/artiboard/Artiboard/artilib/log.h",
+		"/C/development/github/artiboard/Artiboard/artilib/systemex.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/systemex.h",
+		"/C/development/github/artiboard/Artiboard/connect4/.gitignore",
+		"/C/development/github/artiboard/Artiboard/src/boardgame/boardgame.h",
+		"/C/development/github/artiboard/Artiboard/src/console/main.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/testsystem.cpp",
+		"/C/Users/willemd/AppData/Roaming/Sublime Text 2/Packages/User/make.sublime-build",
 		"/C/Users/willemd/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/game/game_math.h",
 		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/game/game.cpp",
@@ -187,7 +246,7 @@
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 39.0
 	},
 	"find_in_files":
 	{
@@ -202,6 +261,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"{}\n",
+			"GameLandLib",
+			"TerrainDemo",
+			"TERRAIN_DEMO",
+			"exe",
+			"GAME_LAND_LIB",
 			"\\",
 			")\n",
 			"MainPage",
@@ -234,61 +299,112 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/C/development/github/artiboard/artiboard/src/makefile",
+					"file": "connect4/icu_data.cpp",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2165,
+						"buffer_size": 719,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								404,
-								404
+								285,
+								285
 							]
 						],
 						"settings":
 						{
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
-							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 162.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "artiboard.sublime-project",
+					"file": "RunDir/log.txt",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 195,
+						"buffer_size": 58,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								4,
+								4
 							]
 						],
 						"settings":
 						{
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "connect4/icu_data.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 637,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								587,
+								587
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 93.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "connect4/connect4_main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 278,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								273,
+								273
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -301,7 +417,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 49.0
+		"height": 39.0
 	},
 	"input":
 	{
@@ -334,9 +450,10 @@
 	{
 		"height": 320.0
 	},
+	"project": "artiboard.sublime-project",
 	"replace":
 	{
-		"height": 72.0
+		"height": 74.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -415,10 +532,48 @@
 		],
 		"width": 380.0
 	},
+	"select_symbol":
+	{
+		"height": 390.0,
+		"selected_items":
+		[
+			[
+				"TerrainO",
+				"TerrainObject"
+			],
+			[
+				"Terra",
+				"TerrainObject"
+			],
+			[
+				"",
+				".PHONY:"
+			],
+			[
+				"SsZ",
+				"SshZebraConnection"
+			],
+			[
+				"InstS",
+				"InstallationSpecification"
+			],
+			[
+				"Ssh",
+				"SshZebraConnection"
+			]
+		],
+		"width": 390.0
+	},
+	"settings":
+	{
+	},
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 215.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }

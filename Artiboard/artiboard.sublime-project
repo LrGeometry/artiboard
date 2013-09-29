@@ -1,12 +1,9 @@
 {
 	"folders":
-	[
-		{
-			"path": "C:/development/github/artiboard/artiboard"
-		},
-		{
-			"path": "C:/Users/willemd/AppData/Roaming/Sublime Text 2/Packages/User",
-			"name": "My packages"
-		}
+	[ {"name":"Root", "path":"/", "folder_exclude_patterns":["*"]},
+	  {"name":"Arti Lib", "path":"artilib"},
+	  {"name":"Connect 4", "path":"connect4"},
+	  {"name":"Run", "path":"RunDir"},
+	  {"name":"Old", "path":"src"}
 	]
 }
