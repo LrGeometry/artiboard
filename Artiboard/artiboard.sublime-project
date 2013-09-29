@@ -3,6 +3,7 @@
 	[ {"name":"Root", "path":"/", "folder_exclude_patterns":["*"]},
 	  {"name":"Arti Lib", "path":"artilib"},
 	  {"name":"Connect 4", "path":"connect4"},
+	  {"name":"Antlr", "path":"antlr"},
 	  {"name":"Run", "path":"RunDir"},
 	  {"name":"Old", "path":"src"}
 	]
