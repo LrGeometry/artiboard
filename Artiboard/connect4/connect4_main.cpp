@@ -19,11 +19,14 @@ int main(int argc, char* argv[])
                                             TOKENSOURCE(lex));
   parser = FeatParserNew(tokens);
 
-  FeatParser_formula_return r = parser->formula(parser);
+  FeatParser_program_return r = parser->program(parser);
 
   pANTLR3_BASE_TREE tree = r.tree;
 
-  std::cout << tree->toStringTree(tree)->chars;
+  std::cout << tree->toStringTree(tree)->chars << std::endl;
+
+  auto parseTree = antlr3CommonTreeNodeStreamNewTree(tree,ANTLR3_SIZE_HINT);
+
   // ExprTreeEvaluator eval;
   // int rr = eval.run(tree);
   // cout << "Evaluator result: " << rr << '\n';

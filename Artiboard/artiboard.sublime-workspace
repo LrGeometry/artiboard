@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"par",
+				"parseTree"
+			],
+			[
+				"to",
+				"toStringTree"
+			],
+			[
+				"ex",
+				"exception"
+			],
+			[
+				"ar",
+				"artilib"
+			],
+			[
 				"Ma",
 				"MatchOutcome"
 			],
@@ -48,26 +64,10 @@
 	"buffers":
 	[
 		{
-			"file": "connect4/icu_data.cpp",
+			"file": "makefile",
 			"settings":
 			{
-				"buffer_size": 719,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "RunDir/log.txt",
-			"settings":
-			{
-				"buffer_size": 58,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "connect4/icu_data.h",
-			"settings":
-			{
-				"buffer_size": 637,
+				"buffer_size": 1824,
 				"line_ending": "Windows"
 			}
 		},
@@ -75,7 +75,31 @@
 			"file": "connect4/connect4_main.cpp",
 			"settings":
 			{
-				"buffer_size": 278,
+				"buffer_size": 1042,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "artilib/grammars/FeatTree.g",
+			"settings":
+			{
+				"buffer_size": 105,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "artilib/grammars/Feat.g",
+			"settings":
+			{
+				"buffer_size": 757,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "connect4/data/testfun.txt",
+			"settings":
+			{
+				"buffer_size": 280,
 				"line_ending": "Windows"
 			}
 		}
@@ -83,19 +107,19 @@
 	"build_system": "Packages/Makefile/Make.sublime-build",
 	"command_palette":
 	{
-		"height": 81.0,
+		"height": 73.0,
 		"selected_items":
 		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
 			[
 				"Package Control: in",
 				"Package Control: Install Package"
 			],
 			[
 				"Package Control: install",
-				"Package Control: Install Package"
-			],
-			[
-				"install",
 				"Package Control: Install Package"
 			],
 			[
@@ -163,7 +187,7 @@
 				"Set Syntax: Makefile"
 			]
 		],
-		"width": 400.0
+		"width": 545.0
 	},
 	"console":
 	{
@@ -185,17 +209,39 @@
 	},
 	"file_history":
 	[
-		"/C/development/github/artiboard/Artiboard/connect4/data/connect-4.data",
+		"/C/development/github/artiboard/Artiboard/connect4/data/testfun.txt",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangLexer.c",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/Feat.g",
 		"/C/development/github/artiboard/Artiboard/connect4/connect4_main.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangParser.h",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangLexer.h",
+		"/C/Users/willemd/Downloads/Cpp-examples/Cpp/dynamic_scope/main.cpp",
+		"/C/development/github/artiboard/Artiboard/antlr/antlr3filestream.inl",
+		"/C/Users/willemd/Downloads/Cpp-examples/Cpp/dynamic_scope/T.g",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelang.g",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangParser.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/.gitignore",
 		"/C/development/github/artiboard/Artiboard/makefile",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangParser.hpp",
+		"/C/development/github/artiboard/Artiboard/antlr/antlr3defs.hpp",
+		"/C/development/github/artiboard/Artiboard/antlr/antlr3commontree.inl",
+		"/C/development/github/artiboard/Artiboard/antlr/antlr3commontreeadaptor.inl",
+		"/C/development/github/artiboard/Artiboard/antlr/antlr3exception.inl",
+		"/C/development/github/artiboard/Artiboard/antlr/antlr3traits.hpp",
+		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
+		"/C/development/github/artiboard/Artiboard/.gitignore",
+		"/C/development/github/artiboard/Artiboard/connect4/icu_data.cpp",
+		"/C/development/github/artiboard/Artiboard/RunDir/log.txt",
+		"/C/development/github/artiboard/Artiboard/connect4/icu_data.h",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangLexer.cpp",
+		"/C/development/github/artiboard/Artiboard/line 35",
+		"/C/development/github/artiboard/Artiboard/line 36",
+		"/C/development/github/artiboard/Artiboard/connect4/data/connect-4.data",
 		"/C/development/github/artiboard/Artiboard/artilib/boardgame.h",
 		"/C/development/github/artiboard/Artiboard/artilib/log.cpp",
-		"/C/development/github/artiboard/Artiboard/connect4/icu_data.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/readme.md",
-		"/C/development/github/artiboard/Artiboard/connect4/icu_data.h",
 		"/C/development/github/artiboard/Artiboard/artilib/boardgame.cpp",
 		"/C/development/github/artiboard/Artiboard/tutlib/test_util.cpp",
-		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
 		"/C/development/github/artiboard/artiboard/src/makefile",
 		"/C/development/github/artiboard/Artiboard/artilib/log.h",
 		"/C/development/github/artiboard/Artiboard/artilib/systemex.cpp",
@@ -246,7 +292,7 @@
 	],
 	"find":
 	{
-		"height": 39.0
+		"height": 46.0
 	},
 	"find_in_files":
 	{
@@ -261,6 +307,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"formula",
+			"featurelang",
+			"ExprCppTree",
 			"{}\n",
 			"GameLandLib",
 			"TerrainDemo",
@@ -290,7 +339,7 @@
 		[
 			"/"
 		],
-		"reverse": true,
+		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
 		"whole_word": false,
@@ -299,30 +348,29 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "connect4/icu_data.cpp",
+					"file": "makefile",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 719,
+						"buffer_size": 1824,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								285,
-								285
+								418,
+								418
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -332,19 +380,48 @@
 				},
 				{
 					"buffer": 1,
-					"file": "RunDir/log.txt",
+					"file": "connect4/connect4_main.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 58,
+						"buffer_size": 1042,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4,
-								4
+								642,
+								642
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 209.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "artilib/grammars/FeatTree.g",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 105,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								105,
+								105
 							]
 						],
 						"settings":
@@ -358,53 +435,52 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "connect4/icu_data.h",
+					"buffer": 3,
+					"file": "artilib/grammars/Feat.g",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 637,
+						"buffer_size": 757,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								587,
-								587
+								308,
+								308
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 93.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "connect4/connect4_main.cpp",
+					"buffer": 4,
+					"file": "connect4/data/testfun.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 278,
+						"buffer_size": 280,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								273,
-								273
+								33,
+								33
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -417,7 +493,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 39.0
+		"height": 36.0
 	},
 	"input":
 	{
@@ -448,12 +524,12 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 320.0
+		"height": 196.0
 	},
 	"project": "artiboard.sublime-project",
 	"replace":
 	{
-		"height": 74.0
+		"height": 68.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -571,7 +647,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 215.0,
+	"side_bar_width": 290.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
