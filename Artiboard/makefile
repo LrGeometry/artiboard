@@ -8,7 +8,7 @@ LINK_ARGS =  -L$(TARGET_DIR) -Llibs
 DIRS = artilib connect4 tutlib artilib/grammars
 # 3.3 does not have this problem: '_empty' was not declared in this scope
 #ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose -make 
-ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose -make
+ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose 
 #ANTLR = java -cp libs/antlrworks-1.5.1.jar org.antlr.Tool -verbose -make 
 GRAM_OBJS = artilib/grammars/FeatLexer.o artilib/grammars/FeatParser.o artilib/grammars/FeatTree.o
 GRAMMARS = $(GRAM_OBJS)
@@ -22,7 +22,12 @@ CONNECT_4 := $(TARGET_DIR)/connect4.exe
 .PHONY : clean all run_connect_4 dox 
 
 run_connect_4: $(CONNECT_4)
-	cd $(TARGET_DIR); ./connect4.exe	
+	cd $(TARGET_DIR); ./connect4.exe
+
+# sometimes this target must be called explicitly
+grammars:		
+	$(ANTLR) artilib\grammars\Feat.g
+	$(ANTLR) artilib\grammars\FeatTree.g
 
 artilib/grammars/FeatParser.h: artilib/grammars/Feat.g
 	$(ANTLR) artilib\grammars\Feat.g
@@ -37,6 +42,9 @@ artilib/grammars/FeatParser.o: artilib/grammars/Feat.g artilib/grammars/FeatPars
 	g++ $(COMPILE_ARGS) -c artilib/grammars/FeatParser.c -o artilib/grammars/FeatParser.o
 
 artilib/grammars/FeatTree.h: artilib/grammars/FeatLexer.h artilib/grammars/FeatTree.g
+	$(ANTLR) artilib\grammars\FeatTree.g
+
+artilib/grammars/FeatTree.c: artilib/grammars/FeatLexer.h artilib/grammars/FeatTree.g
 	$(ANTLR) artilib\grammars\FeatTree.g
 
 artilib/grammars/FeatTree.o: artilib/grammars/FeatTree.c	

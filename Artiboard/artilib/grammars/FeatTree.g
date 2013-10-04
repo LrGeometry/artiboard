@@ -8,7 +8,8 @@
 
  	@includes {
 		#include <map>
-		#include "../feat.h"
+		#include <exception>
+		#include "../feat_program.h"
 		using namespace artilib;
 	}
 
@@ -37,7 +38,7 @@
 		;
 
 	clause
-		: ^('region' ID square_set)
+		: ^('region' ID square_set) 
 		| ^('stateset' ID state_set)
 		| ^('formula' ID expression+)
 		| ^('function' ID fun_term+)	
@@ -66,5 +67,5 @@
 	 ;
 
 	square 
-		: ^(',' INTEGER INTEGER)	
+		: ^(',' INTEGER INTEGER)	//{throw std::exception();}
 		;	

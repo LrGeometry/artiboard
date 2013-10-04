@@ -1,5 +1,6 @@
+#pragma once
+#include <string>
+#include "feat_program.h"
 namespace artilib {
-	class FeatureProgram {
-
-	};
+	FeatureProgram * load_program(const std::string& filename);
 }

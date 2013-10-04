@@ -32,7 +32,6 @@ formula
  	
 term 
 	:	ground
-	| '(' ground ')' -> ground
 	| '(' orExpr ')' -> orExpr 
 	| '!'^ term
 	;

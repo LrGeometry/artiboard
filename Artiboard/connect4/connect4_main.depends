@@ -1,16 +1,3 @@
 connect4/connect4_main.o: connect4/connect4_main.cpp connect4/icu_data.h \
- artilib/log.h artilib/systemex.h artilib/boardgame.h \
- artilib/grammars/FeatLexer.h antlr/antlr3.h antlr/antlr3defs.h \
- antlr/antlr3errors.h antlr/antlr3interfaces.h antlr/antlr3convertutf.h \
- antlr/antlr3exception.h antlr/antlr3encodings.h antlr/antlr3string.h \
- antlr/antlr3collections.h antlr/antlr3bitset.h antlr/antlr3input.h \
- antlr/antlr3commontoken.h antlr/antlr3intstream.h \
- antlr/antlr3cyclicdfa.h antlr/antlr3baserecognizer.h \
- antlr/antlr3tokenstream.h antlr/antlr3debugeventlistener.h \
- antlr/antlr3basetree.h antlr/antlr3commontreenodestream.h \
- antlr/antlr3commontreeadaptor.h antlr/antlr3basetreeadaptor.h \
- antlr/antlr3commontree.h antlr/antlr3recognizersharedstate.h \
- antlr/antlr3lexer.h antlr/antlr3parser.h antlr/antlr3treeparser.h \
- antlr/antlr3filestream.h antlr/antlr3rewritestreams.h \
- artilib/grammars/FeatParser.h artilib/grammars/FeatTree.h \
- artilib/grammars/../feat.h
+ artilib/log.h artilib/systemex.h artilib/boardgame.h artilib/feat.h \
+ artilib/feat_program.h
