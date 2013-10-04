@@ -57,11 +57,12 @@
 
 	square_set
 		: ^('{' square+)
-		| ^('}' ID)
+		| ID
 		;
 
 	state_set
 	 : ^('{' ID+)	
+	 | ID
 	 ;
 
 	square 

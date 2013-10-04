@@ -8,7 +8,7 @@ LINK_ARGS =  -L$(TARGET_DIR) -Llibs
 DIRS = artilib connect4 tutlib artilib/grammars
 # 3.3 does not have this problem: '_empty' was not declared in this scope
 #ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose -make 
-ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose
+ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose -make
 #ANTLR = java -cp libs/antlrworks-1.5.1.jar org.antlr.Tool -verbose -make 
 GRAM_OBJS = artilib/grammars/FeatLexer.o artilib/grammars/FeatParser.o artilib/grammars/FeatTree.o
 GRAMMARS = $(GRAM_OBJS)

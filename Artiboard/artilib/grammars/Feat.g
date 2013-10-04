@@ -19,20 +19,21 @@ stateset
 	;	
 
 function
-	: 'function'^ ID '='! fun_term ('+'! (fun_term))+ ';'!
+	: 'function'^ ID '='! fun_term ('+'! (fun_term))* ';'!
 	;
 
 fun_term
-	: FLOAT '*'^ (formula)+;
+	: FLOAT '*'^ (orExpr|ID)
+	;
 
 formula
 	: 'formula' ID '=' orExpr ';' -> ^('formula' ID orExpr)
-	| ID -> ^('}' ID)
 	;
  	
 term 
 	:	ground
-	| '(' orExpr ')'
+	| '(' ground ')' -> ground
+	| '(' orExpr ')' -> orExpr 
 	| '!'^ term
 	;
 
@@ -46,24 +47,24 @@ andExpr
 
 	
 ground
-	: (state_set) '@'^ (square_set)
+	: (state_set | ID) '@'^ (square_set | ID)
 	;
-
 
 state_set
 	: '{' ID+ '}' -> ^('{' ID+)
-	| ID -> ^('{' ID)
 	;
 
 square_set
 	: '{' square+ '}' -> ^('{' square+)
-	| ID -> ^('}' ID)
 	;
 
 square
 	:  INTEGER ','^ INTEGER 
 	;					
 
+reference
+	: '$'^ ID 
+	;
 
 INTEGER 
 	: ('0'..'7')+
