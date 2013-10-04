@@ -3,3 +3,4 @@ Test
 /Web
 bin
 artilib/generated
+*.depends

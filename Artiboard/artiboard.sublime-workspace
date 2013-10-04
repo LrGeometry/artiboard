@@ -67,15 +67,7 @@
 			"file": "makefile",
 			"settings":
 			{
-				"buffer_size": 1824,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "connect4/connect4_main.cpp",
-			"settings":
-			{
-				"buffer_size": 1042,
+				"buffer_size": 2210,
 				"line_ending": "Windows"
 			}
 		},
@@ -83,23 +75,15 @@
 			"file": "artilib/grammars/FeatTree.g",
 			"settings":
 			{
-				"buffer_size": 105,
+				"buffer_size": 372,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "artilib/grammars/Feat.g",
+			"file": "artilib/grammars/FeatTree.h",
 			"settings":
 			{
-				"buffer_size": 757,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "connect4/data/testfun.txt",
-			"settings":
-			{
-				"buffer_size": 280,
+				"buffer_size": 7123,
 				"line_ending": "Windows"
 			}
 		}
@@ -209,10 +193,18 @@
 	},
 	"file_history":
 	[
-		"/C/development/github/artiboard/Artiboard/connect4/data/testfun.txt",
-		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangLexer.c",
-		"/C/development/github/artiboard/Artiboard/artilib/grammars/Feat.g",
 		"/C/development/github/artiboard/Artiboard/connect4/connect4_main.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.c",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.h",
+		"/C/development/github/artiboard/Artiboard/src/tictactoe/tictactoe.h",
+		"/C/development/github/artiboard/Artiboard/artilib/feat.h",
+		"/C/development/github/artiboard/Artiboard/artilib/feat.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.g",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/Feat.g",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/.gitignore",
+		"/C/development/github/artiboard/Artiboard/connect4/data/testfun.txt",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatLexer.c",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangLexer.c",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangParser.h",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangLexer.h",
 		"/C/Users/willemd/Downloads/Cpp-examples/Cpp/dynamic_scope/main.cpp",
@@ -220,7 +212,6 @@
 		"/C/Users/willemd/Downloads/Cpp-examples/Cpp/dynamic_scope/T.g",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelang.g",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangParser.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/grammars/.gitignore",
 		"/C/development/github/artiboard/Artiboard/makefile",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangParser.hpp",
 		"/C/development/github/artiboard/Artiboard/antlr/antlr3defs.hpp",
@@ -307,6 +298,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"USER1",
+			"#include <grammars/FeatParser.h>\n",
+			">\n",
+			"FeatTreeLexer",
+			"program",
+			")\n",
+			"Feat",
+			".",
 			"formula",
 			"featurelang",
 			"ExprCppTree",
@@ -348,7 +347,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -357,15 +356,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1824,
+						"buffer_size": 2210,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								418,
-								418
+								915,
+								915
 							]
 						],
 						"settings":
@@ -373,117 +372,61 @@
 							"syntax": "Packages/Makefile/Makefile.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 420.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "connect4/connect4_main.cpp",
+					"file": "artilib/grammars/FeatTree.g",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1042,
+						"buffer_size": 372,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								642,
-								642
+								23,
+								23
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 209.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "artilib/grammars/FeatTree.g",
+					"file": "artilib/grammars/FeatTree.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 105,
+						"buffer_size": 7123,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								105,
-								105
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "artilib/grammars/Feat.g",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 757,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								308,
-								308
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "connect4/data/testfun.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 280,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								33,
-								33
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2914.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

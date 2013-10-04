@@ -12,4 +12,5 @@ connect4/connect4_main.o: connect4/connect4_main.cpp connect4/icu_data.h \
  antlr/antlr3commontree.h antlr/antlr3recognizersharedstate.h \
  antlr/antlr3lexer.h antlr/antlr3parser.h antlr/antlr3treeparser.h \
  antlr/antlr3filestream.h antlr/antlr3rewritestreams.h \
- artilib/grammars/FeatParser.h
+ artilib/grammars/FeatParser.h artilib/grammars/FeatTree.h \
+ artilib/grammars/../feat.h

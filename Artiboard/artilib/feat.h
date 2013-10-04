@@ -1,0 +1,5 @@
+namespace artilib {
+	class FeatureProgram {
+
+	};
+}

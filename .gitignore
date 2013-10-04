@@ -1,6 +1,7 @@
 *.[oa]
 /bin/
 /dox/
+RunDir/
 src/.settings/
 */log.txt
 .metadata

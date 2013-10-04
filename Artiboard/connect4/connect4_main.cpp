@@ -3,6 +3,7 @@
 #include "icu_data.h"
 #include <grammars/FeatLexer.h>
 #include <grammars/FeatParser.h>
+#include <grammars/FeatTree.h>
 #include <antlr3.h> 
 #include <iostream>
 
@@ -26,6 +27,9 @@ int main(int argc, char* argv[])
   std::cout << tree->toStringTree(tree)->chars << std::endl;
 
   auto parseTree = antlr3CommonTreeNodeStreamNewTree(tree,ANTLR3_SIZE_HINT);
+  auto featTree = FeatTreeNew(parseTree);
+  std::cout << featTree->program(featTree);
+  // std::cout << featTree->result;
 
   // ExprTreeEvaluator eval;
   // int rr = eval.run(tree);

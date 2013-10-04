@@ -1,6 +1,10 @@
 {
 	"folders":
 	[ {"name":"Root", "path":"/", "folder_exclude_patterns":["*"]},
+		{ "name": "Blog",
+	 		"path" : "C:\\Users\\willemd\\Documents\\GitHub\\codespear.github.io",
+	 		"folder_include_patterns": ["_drafts","_posts"],
+	 		"file_include_patterns": ["*.md"]},
 	  {"name":"Arti Lib", "path":"artilib"},
 	  {"name":"Connect 4", "path":"connect4"},
 	  {"name":"Antlr", "path":"antlr"},

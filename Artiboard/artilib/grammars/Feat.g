@@ -1,6 +1,10 @@
 grammar Feat;
 
-options {language = C; output = AST; ASTLabelType=pANTLR3_BASE_TREE;} 
+options {
+	language = C; 
+	output = AST; 
+	ASTLabelType=pANTLR3_BASE_TREE;
+} 
 
 program
 	: (region|stateset|formula|function)+
@@ -19,12 +23,12 @@ function
 	;
 
 fun_term
-	: FLOAT '*'^ (formula|ID)+;
+	: FLOAT '*'^ (formula)+;
 
 formula
 	: 'formula' ID '=' orExpr ';' -> ^('formula' ID orExpr)
+	| ID -> ^('}' ID)
 	;
-
  	
 term 
 	:	ground
@@ -42,20 +46,22 @@ andExpr
 
 	
 ground
-	: (state_set|ID) '@'^ (square_set|ID)
+	: (state_set) '@'^ (square_set)
 	;
 
 
 state_set
 	: '{' ID+ '}' -> ^('{' ID+)
+	| ID -> ^('{' ID)
 	;
 
 square_set
 	: '{' square+ '}' -> ^('{' square+)
+	| ID -> ^('}' ID)
 	;
 
 square
-	:  INTEGER ','^ INTEGER  
+	:  INTEGER ','^ INTEGER 
 	;					
 
 
