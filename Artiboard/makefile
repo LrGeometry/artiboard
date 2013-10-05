@@ -39,10 +39,10 @@ artilib/grammars/FeatParser.h: artilib/grammars/Feat.g
 artilib/grammars/FeatLexer.h: artilib/grammars/Feat.g
 	$(ANTLR) artilib\grammars\Feat.g
 
-artilib/grammars/FeatLexer.o: artilib/grammars/Feat.g	artilib/grammars/FeatLexer.c
+artilib/grammars/FeatLexer.o: artilib/grammars/Feat.g	artilib/grammars/FeatLexer.c $(wildcard artilib/*.h)
 	g++ $(COMPILE_ARGS) -c artilib/grammars/FeatLexer.c -o artilib/grammars/FeatLexer.o
 
-artilib/grammars/FeatParser.o: artilib/grammars/Feat.g artilib/grammars/FeatParser.c
+artilib/grammars/FeatParser.o: artilib/grammars/Feat.g artilib/grammars/FeatParser.c $(wildcard artilib/*.h)
 	g++ $(COMPILE_ARGS) -c artilib/grammars/FeatParser.c -o artilib/grammars/FeatParser.o
 
 artilib/grammars/FeatTree.h: artilib/grammars/FeatLexer.h artilib/grammars/FeatTree.g
@@ -51,7 +51,7 @@ artilib/grammars/FeatTree.h: artilib/grammars/FeatLexer.h artilib/grammars/FeatT
 artilib/grammars/FeatTree.c: artilib/grammars/FeatLexer.h artilib/grammars/FeatTree.g
 	$(ANTLR) artilib\grammars\FeatTree.g
 
-artilib/grammars/FeatTree.o: artilib/grammars/FeatTree.c	
+artilib/grammars/FeatTree.o: artilib/grammars/FeatTree.c	$(wildcard artilib/*.h)
 	g++ $(COMPILE_ARGS) -c artilib/grammars/FeatTree.c -o artilib/grammars/FeatTree.o
 
 $(ARTI_TEST): $(OBJS) $(ARTI_LIB) $(TUT_LIB)

@@ -8,4 +8,8 @@ namespace arti {
 		return string_from_format("$_%d",name_index);
 	}
 
+	FeatureProgram::~FeatureProgram() {
+		for_each(E, _formulaMap) delete E->second;
+	}
+
 }

@@ -10,6 +10,7 @@
 		#include <map>
 		#include <exception>
 		#include <stdlib.h>
+		#include <iostream>
 		#include "../board.h"
 		#include "../feat_program.h"
 		using namespace arti;
@@ -48,20 +49,28 @@
 				string name = (const char*)$n.text->chars;
 				_ctx->states().add(name,$v.value);
 			}
-		| ^('formula' ID expression+)
+		| ^('formula' n=ID e=expression) {
+				string name = (const char*)$n.text->chars;
+				_ctx->formulas().add(name,$e.value);			
+		}
 		| ^('function' ID fun_term+)	
 		;
 
-	fun_term
-		: ^('*' FLOAT ID)
+	fun_term returns [FeatureTerm * value]
+		: ^('*' f=FLOAT n=ID) {
+				string name = (const char*)$n.text->chars;
+				auto w = (const char*)$f.text->chars;
+				_ctx->formulas().locate(name); // make sure the name exists
+				$value = new FeatureTerm(std::atof(w),name);		
+		}
 		| ^('*' FLOAT expression)	
 		;
 
-	expression
-		: ^('@' state_set_ref region_ref)
-		| ^('!' expression)
-		| ^('|' expression expression)
-		| ^('&' expression expression)
+	expression returns [FeatureExpression * value]
+		: ^('@' s=state_set_ref r=region_ref) {$value = new GroundExpression($s.value,$r.value);}
+		| ^('!' e=expression) {$value = new NotExpression($e.value);}
+		| ^('|' e1=expression e2=expression) {$value = new OrExpression($e1.value,$e2.value);}
+		| ^('&' e1=expression e2=expression) {$value = new AndExpression($e1.value,$e2.value);}
 		;
 
 	state_set_ref returns [string value]
