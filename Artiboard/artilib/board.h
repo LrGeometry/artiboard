@@ -79,6 +79,21 @@ namespace arti {
 	ostream& operator <<(std::ostream& os, const Piece& v);
 
 	typedef std::size_t index_t;
+
+	/**
+	 * A location (or coordinate) on the Board
+	 */
+	class Square {
+	public:
+		index_t col;
+		index_t row;
+		size_t index() const {return row * 8 + col; }
+		bool operator<(const Square& other) const {return index() < other.index(); }
+		bool operator==(const Square& other) const {return col == other.col && row == other.row; }
+	};
+
+
+
 	/**
 	 * An 8x8 matrix of Piece objects.
 	 * Left bottom square is (0,0), and right to is (7,7).

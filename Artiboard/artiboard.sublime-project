@@ -5,10 +5,12 @@
 	 		"path" : "C:\\Users\\willemd\\Documents\\GitHub\\codespear.github.io",
 	 		"folder_include_patterns": ["_drafts","_posts"],
 	 		"file_include_patterns": ["*.md"]},
-	  {"name":"Arti Lib", "path":"artilib"},
-	  {"name":"Connect 4", "path":"connect4"},
+	  {"name":"Arti Lib", "path":"artilib", "file_include_patterns": ["*.cpp","*.h","*.g"]},
+	  {"name":"Arti Lib Tests", "path":"artilibtest", "file_include_patterns": ["*.cpp","*.h", "*.txt"]},
+	  {"name":"Connect 4", "path":"connect4", "file_include_patterns": ["*.cpp","*.h", "*.txt"]},
 	  {"name":"Antlr", "path":"antlr"},
 	  {"name":"Run", "path":"RunDir"},
+	  {"name":"Tut Lib", "path":"tutlib", "file_include_patterns": ["*.cpp","*.h"]},
 	  {"name":"Old", "path":"src"}
 	]
 }

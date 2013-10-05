@@ -7,8 +7,8 @@
 #include <antlr3.h> 
 #include <iostream>
 
-namespace artilib {
-FeatureProgram * load_program(const std::string& filename) {
+namespace arti {
+FeatureProgram::u_ptr load_program(const std::string& filename) {
     pANTLR3_INPUT_STREAM input;
     pFeatLexer lex;
     pANTLR3_COMMON_TOKEN_STREAM tokens;
@@ -24,18 +24,22 @@ FeatureProgram * load_program(const std::string& filename) {
 
     pANTLR3_BASE_TREE tree = r.tree;
 
+    // I should implement a custom displayRecognitionError(), but have to figure out how first
+    const bool hasErrors = parser->pParser->rec->state->errorCount > 0;
     std::cout << tree->toStringTree(tree)->chars << std::endl;
 
-    auto parseTree = antlr3CommonTreeNodeStreamNewTree(tree,ANTLR3_SIZE_HINT);
-    auto featTree = FeatTreeNew(parseTree);
-    auto result = featTree->program(featTree);
-
-    featTree->free(featTree);
+  
+    if (!hasErrors) {
+        auto parseTree = antlr3CommonTreeNodeStreamNewTree(tree,ANTLR3_SIZE_HINT);
+        auto featTree = FeatTreeNew(parseTree);
+        auto result = featTree->program(featTree);
+        featTree->free(featTree);
+        return FeatureProgram::u_ptr(result); 
+    } else 
+        throw runtime_error("There were parse errors"); 
     parser->free(parser);
     tokens->free(tokens);
     lex->free(lex);
-    input->close(input);
-    return result;
-}
+    input->close(input);}
 
 }

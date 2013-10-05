@@ -2,6 +2,7 @@
 #pragma once
 #include <tut/tut.hpp>
 #include "systemex.h"
+
 /**
  * Template unit test framework, see <http://tut-framework.sourceforge.net/>
  */

@@ -1,6 +1,0 @@
-tutlib/test_main.o: tutlib/test_main.cpp tutlib/tut/tut.hpp \
- tutlib/tut/tut_config.hpp tutlib/tut/tut_exception.hpp \
- tutlib/tut/tut_result.hpp tutlib/tut/tut_posix.hpp \
- tutlib/tut/tut_assert.hpp tutlib/tut/tut_runner.hpp \
- tutlib/tut/tut_reporter.hpp tutlib/tut/tut_console_reporter.hpp \
- artilib/systemex.h

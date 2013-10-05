@@ -1,0 +1,17 @@
+stateset a1 = {all some and others};
+stateset ss = {all some and others};
+region a2 = {1,2 2,3};
+region ra = {1,2 2,3};
+region rb = {1,2 2,3};
+
+formula eq1 = ss @ {1,1} | ( {all} @ ra & {all} @ rb) | ( {all} @ ra & {all} @ rb);
+formula eq1 = !({all} @ {1,1});
+formula eq2 = {all some and others} @ {1,1} | !(   {all} @ {1,1} & {all} @ {1,2} | 
+{all} @ {1,3 1,4 5,2} );     
+
+
+function fun1 = 1.23 * {all} @ {1,3 1,4 5,2};
+function fun1 = 1.23 * a1 @ a2 + 1.23 * {all} @ {1,3 1,4 5,2};
+function fun1 = 1.23 * a1 @ a2;
+function fun1 = 1.23 * eq1 + 1.34 * eq2;
+

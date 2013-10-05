@@ -1,2 +1,0 @@
-artilib/boardgame.o: artilib/boardgame.cpp artilib/boardgame.h \
- artilib/systemex.h

@@ -1,4 +1,4 @@
-#include "boardgame.h"
+#include "board.h"
 #include "systemex.h"
 
 namespace arti {

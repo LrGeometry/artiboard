@@ -1,13 +1,26 @@
-/**
- * Copyright 2012 Willem Duminy
- * See LICENCE.txt
- */
-
-#include "test_util.h"
+#include <tut/tut.hpp>
+#include <tut/tut_reporter.hpp>
 #include <cstring>
 #include <systemex.h>
+
+#include "test_util.h"
+
+
+void test_main() {
+	tut::console_reporter reporter(std::cout);
+	tut::runner.get().set_callback(&reporter);
+	tut::runner.get().run_tests();
+	if (reporter.all_ok())
+		std::cout << "Unit tests passed" << std::endl;
+	else
+		std::cerr << "Some unit tests failed!" << std::endl;
+#ifdef FIND_LEAKS
+	puts(systemex::memoryLeakReport().c_str());
+#endif
+}
+
 namespace tut {
-using namespace arti;
+	using namespace arti;
 void ensure_contains(const char * text, const char * sought) {
 	char * fnd = std::strstr(text, sought);
 	if (fnd == 0) {

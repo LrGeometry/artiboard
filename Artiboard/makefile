@@ -5,21 +5,25 @@ MAX_SPEED = -O3 -DNDEBUG
 FLAGS = $(DEBUG) 
 COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -std=c++0x $(FLAGS)
 LINK_ARGS =  -L$(TARGET_DIR) -Llibs
-DIRS = artilib connect4 tutlib artilib/grammars
+DIRS = artilib connect4 tutlib artilib/grammars artilibtest
 # 3.3 does not have this problem: '_empty' was not declared in this scope
 #ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose -make 
 ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose 
 #ANTLR = java -cp libs/antlrworks-1.5.1.jar org.antlr.Tool -verbose -make 
 GRAM_OBJS = artilib/grammars/FeatLexer.o artilib/grammars/FeatParser.o artilib/grammars/FeatTree.o
 GRAMMARS = $(GRAM_OBJS)
-EXE_LIBS = -lArtiLib -lantlr34b3
+EXE_LIBS = -lArtiLib -lantlr34b3 -lTutLib
 SOURCES := $(foreach e, $(DIRS), $(wildcard $(e)/*.cpp))
 DEPS := $(patsubst %.cpp, %.depends, $(SOURCES))
 OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
 ARTI_LIB := $(TARGET_DIR)/libArtiLib.a
 TUT_LIB := $(TARGET_DIR)/libTutLib.a
 CONNECT_4 := $(TARGET_DIR)/connect4.exe
+ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
+
+run_arti_test: $(ARTI_TEST)
+	cd $(TARGET_DIR); ./artitest.exe
 
 run_connect_4: $(CONNECT_4)
 	cd $(TARGET_DIR); ./connect4.exe
@@ -49,6 +53,9 @@ artilib/grammars/FeatTree.c: artilib/grammars/FeatLexer.h artilib/grammars/FeatT
 
 artilib/grammars/FeatTree.o: artilib/grammars/FeatTree.c	
 	g++ $(COMPILE_ARGS) -c artilib/grammars/FeatTree.c -o artilib/grammars/FeatTree.o
+
+$(ARTI_TEST): $(OBJS) $(ARTI_LIB) $(TUT_LIB)
+	g++ $(wildcard artilibtest/*.o) -o $@ $(EXE_LIBS) $(LINK_ARGS)  
 
 $(CONNECT_4): $(OBJS) $(ARTI_LIB)
 	g++ $(wildcard connect4/*.o) -o $@ $(EXE_LIBS) $(LINK_ARGS)  

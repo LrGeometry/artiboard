@@ -1,5 +1,0 @@
-tutlib/test_util.o: tutlib/test_util.cpp tutlib/test_util.h \
- tutlib/tut/tut.hpp tutlib/tut/tut_config.hpp \
- tutlib/tut/tut_exception.hpp tutlib/tut/tut_result.hpp \
- tutlib/tut/tut_posix.hpp tutlib/tut/tut_assert.hpp \
- tutlib/tut/tut_runner.hpp artilib/systemex.h

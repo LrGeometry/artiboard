@@ -7,7 +7,7 @@ options {
 } 
 
 program
-	: (region|stateset|formula|function)+
+	: (region|stateset|formula|function)+ EOF
 	;
 
 region
