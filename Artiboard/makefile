@@ -23,7 +23,7 @@ ARTI_TEST := $(TARGET_DIR)/artitest.exe
 .PHONY : clean all run_connect_4 dox 
 
 run_arti_test: $(ARTI_TEST)
-	cd $(TARGET_DIR); ./artitest.exe
+	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
 
 run_connect_4: $(CONNECT_4)
 	cd $(TARGET_DIR); ./connect4.exe

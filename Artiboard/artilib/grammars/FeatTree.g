@@ -12,6 +12,7 @@
 		#include <stdlib.h>
 		#include <iostream>
 		#include "../board.h"
+		#include "../log.h"
 		#include "../feat_program.h"
 		using namespace arti;
 	}
@@ -23,12 +24,13 @@
 			auto result = programs.find(ctx);
 			if (result == programs.end()) {
 				auto newP = new FeatureProgram();
+				LOG << "creating program for " << ctx;
 				programs[ctx] = newP;
 				return newP;
 			} else
 				return result->second;
 		}
-
+		
 		#define _ctx pgm(CTX)
 	}
  
@@ -36,7 +38,7 @@
 		:	clause+ {
 				auto result = _ctx;
 				programs.erase(CTX);
-				return _ctx;
+				return result;
 			}
 		;
 
@@ -53,17 +55,28 @@
 				string name = (const char*)$n.text->chars;
 				_ctx->formulas().add(name,$e.value);			
 		}
-		| ^('function' ID fun_term+)	
+		| ^('function' n=ID t=term_list) {
+				string name = (const char*)$n.text->chars;
+				_ctx->functions().add(name, $t.value);		
+		}	
 		;
 
+	term_list returns [FeatureFunction * value]
+		: t=fun_term {$value = new FeatureFunction();$value->terms().emplace_back(FeatureTerm_u_ptr($t.value));}
+		  (t=fun_term {$value->terms().emplace_back(FeatureTerm_u_ptr($t.value));})*
+      
+		;
 	fun_term returns [FeatureTerm * value]
 		: ^('*' f=FLOAT n=ID) {
 				string name = (const char*)$n.text->chars;
 				auto w = (const char*)$f.text->chars;
 				_ctx->formulas().locate(name); // make sure the name exists
-				$value = new FeatureTerm(std::atof(w),name);		
+				$value = new FeatureTermWithFormula(std::atof(w),name);		
 		}
-		| ^('*' FLOAT expression)	
+		| ^('*' f=FLOAT e=expression)	{
+				auto w = (const char*)$f.text->chars;
+				$value = new FeatureTermWithExpression(std::atof(w),$e.value);		
+		}
 		;
 
 	expression returns [FeatureExpression * value]

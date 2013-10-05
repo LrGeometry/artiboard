@@ -3,6 +3,7 @@
 #include <set>
 #include <string>
 #include <map>
+#include <list>
 #include "systemex.h"
 #include "board.h"
 
@@ -37,12 +38,15 @@ namespace arti {
 			(new_name,value);
 			return new_name;
 		}
+
 	};
+
 
 	class FeatureExpression {
 	public:
-		typedef std::unique_ptr<FeatureExpression> u_ptr;
+		virtual ~FeatureExpression() {};
 	};
+	typedef std::unique_ptr<FeatureExpression> FeatureExpression_u_ptr;
 
 
 	class GroundExpression : public FeatureExpression {
@@ -54,10 +58,10 @@ namespace arti {
 	};
 
 	class UnaryExpression : public FeatureExpression {
-	public:
+	protected:
 		UnaryExpression(FeatureExpression* o):_other(o){}
 	private:
-		const FeatureExpression::u_ptr _other;
+		const FeatureExpression_u_ptr _other;
 	};
 
 	class NotExpression : public UnaryExpression {
@@ -67,11 +71,11 @@ namespace arti {
 
 
 	class BinaryExpression : public FeatureExpression {
-	public:
+	protected:
 		BinaryExpression(FeatureExpression* e1, FeatureExpression* e2): _e1(e1), _e2(e2) {}
 	private:	
-		const FeatureExpression::u_ptr _e1;
-		const FeatureExpression::u_ptr _e2;
+		const FeatureExpression_u_ptr _e1;
+		const FeatureExpression_u_ptr _e2;
 
 	};
 
@@ -86,23 +90,53 @@ namespace arti {
 	};
 
 	class FeatureTerm : public FeatureExpression {
-	public:
-		FeatureTerm(float weight, const string& formula_name) : _formula_name(formula_name), _weight(weight) {}
+	protected:
+		FeatureTerm(float weight) : _weight(weight) {}
 	private:
-		const string _formula_name;
 		float _weight;	
 	};
 
-	class FeatureProgram {
+	typedef std::unique_ptr<FeatureTerm> FeatureTerm_u_ptr;
+
+	class FeatureTermWithFormula : public FeatureTerm {
 	public:
+		FeatureTermWithFormula(float weight, const string& formula_name) : FeatureTerm(weight), _formula_name(formula_name) {}
+	private:
+		const string _formula_name;
+	};
+
+	class FeatureTermWithExpression : public FeatureTerm {
+	public:
+		FeatureTermWithExpression(float weight, FeatureExpression * e) : FeatureTerm(weight),_e(e) {}
+	private:
+		FeatureExpression_u_ptr _e;
+	};
+
+	class FeatureFunction : public FeatureExpression {
+	public:
+		FeatureFunction():_terms() {};
+		std::list<FeatureTerm_u_ptr>& terms() {return _terms;}
+	private:
+		std::list<FeatureTerm_u_ptr> _terms;
+	};
+
+	class FeatureProgram {
+		PREVENT_COPY(FeatureProgram)
+	public:
+		FeatureProgram() {};
 		typedef std::unique_ptr<FeatureProgram> u_ptr;
 		NameMap<StateSet>& states() {return _stateMap;}
 		NameMap<Region>& regions() {return _regionMap;}
 		NameMap<FeatureExpression*>& formulas() {return _formulaMap;}
+		NameMap<FeatureFunction*>& functions() {return _functionMap;}
 		~FeatureProgram();
 	private:
 		NameMap<StateSet> _stateMap;	
 		NameMap<Region> _regionMap;	
 		NameMap<FeatureExpression*> _formulaMap;
+		NameMap<FeatureFunction*> _functionMap;
+	public:
+		friend ostream& operator <<(std::ostream& os, const FeatureProgram& v);
 	};
+
 }

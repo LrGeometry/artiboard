@@ -90,8 +90,12 @@ namespace arti {
 		size_t index() const {return row * 8 + col; }
 		bool operator<(const Square& other) const {return index() < other.index(); }
 		bool operator==(const Square& other) const {return col == other.col && row == other.row; }
+
 	};
 
+  inline ostream& operator <<(std::ostream& os, const Square& v) {
+  	return os << v.col << "," << v.row << " ";
+  }
 
 
 	/**

@@ -11,7 +11,7 @@ formula eq3 = {all some and others} @ {1,1} | !(   {all} @ {1,1} & {all} @ {1,2}
 
 
 function fun1 = 1.23 * {all} @ {1,3 1,4 5,2};
-function fun1 = 1.23 * a1 @ a2 + 1.23 * {all} @ {1,3 1,4 5,2};
-function fun1 = 1.23 * a1 @ a2;
-function fun1 = 1.23 * eq1 + 1.34 * eq2;
+function fun2 = 1.23 * a1 @ a2 + 1.23 * {all} @ {1,3 1,4 5,2};
+function fun3 = 1.23 * a1 @ a2;
+function fun4 = 1.23 * eq1 + 1.34 * eq2;
 
