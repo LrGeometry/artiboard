@@ -9,29 +9,37 @@
 namespace arti {
 	typedef std::set<string> StateSet;
 	typedef std::set<Square> Region;
+	string create_sequenced_name();
+
+	template<class valueT> class NameMap : public std::map<string, valueT> {
+	public:
+		typedef std::map<string, valueT> baseT;
+		bool has_name(const string& name) const {return baseT::find(name) != baseT::end();}
+		bool add(const string& name, const valueT& value) {
+			if (has_name(name))
+				throw runtime_error_ex("The name '%s' has already been defined for this scope", name.c_str());
+			baseT::insert(std::pair<string,valueT>(name,value));
+		}
+		string assign_name(const valueT& value) {
+			for (auto e = baseT::begin(); e != baseT::end(); e++) {
+				if (e->second == value)
+					return e->first;
+			}
+			string new_name = create_sequenced_name();
+			while (has_name(new_name))
+				new_name = create_sequenced_name();
+			(new_name,value);
+			return new_name;
+		}
+	};
 
 	class FeatureProgram {
 	public:
 		typedef std::unique_ptr<FeatureProgram> u_ptr;
-		/** Creates new name if states do not exist */
-		string name_of(const StateSet& states);
-		/** Creates new name if squares do not exist */
-		string name_of(const Region& squares);
-		bool has_state_name(const string& name) const {return _stateMap.find(name) != _stateMap.end();}
-		bool has_region_name(const string& name) const {return _regionMap.find(name) != _regionMap.end();}
-		void add(const string& name, const StateSet& value) {
-			if (has_state_name(name))
-				throw runtime_error_ex("State set with name '%s' has already been defined", name.c_str());
-			_stateMap[name] = value;
-		}
-		void add(const string& name, const Region& value) {
-			if (has_region_name(name))
-				throw runtime_error_ex("Region with name '%s' has already been defined", name.c_str());
-			_regionMap[name] = value;
-		}
+		NameMap<StateSet>& states() {return _stateMap;}
+		NameMap<Region>& regions() {return _regionMap;}
 	private:
-		std::map<string, StateSet> _stateMap;	
-		std::map<string, Region> _regionMap;	
-		int _name_index = 0; // used for generting new names
+		NameMap<StateSet> _stateMap;	
+		NameMap<Region> _regionMap;	
 	};
 }

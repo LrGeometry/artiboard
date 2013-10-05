@@ -42,11 +42,11 @@
 	clause
 		: ^('region' n=ID r=region) {
 				string name = (const char*)$n.text->chars;
-				_ctx->add(name,$r.value);
+				_ctx->regions().add(name,$r.value);
 			} 
 		| ^('stateset' n=ID v=state_set) {
 				string name = (const char*)$n.text->chars;
-				_ctx->add(name,$v.value);
+				_ctx->states().add(name,$v.value);
 			}
 		| ^('formula' ID expression+)
 		| ^('function' ID fun_term+)	
@@ -66,11 +66,11 @@
 
 	state_set_ref returns [string value]
 	 : s = state_set {
-	 			$value = _ctx->name_of(s);
+	 			$value = _ctx->states().assign_name(s);
 	 		}
 	 | n=ID {
 		 		$value = (const char*)$n.text->chars;
-	 				if (!_ctx->has_state_name($value))
+	 				if (!_ctx->states().has_name($value))
 	 			throw runtime_error("State set with name '" + $value + "' has not been defined");
  			}
  		;
@@ -83,11 +83,11 @@
 
 	region_ref returns [string value]
 	 : s = region {
-	 			$value = _ctx->name_of(s);
+	 			$value = _ctx->regions().assign_name(s);
 	 		}
 	 | n=ID {
 	 		$value = (const char*)$n.text->chars;
-	 		if (!_ctx->has_region_name($value))
+	 		if (!_ctx->regions().has_name($value))
 	 			throw runtime_error("Region with name '" + $value + "' has not been defined");
 	 }
 	 ;
