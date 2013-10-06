@@ -85,6 +85,7 @@ namespace arti {
 	 */
 	class Square {
 	public:
+		Square(const index_t c=0, const index_t r=0): col(c), row(r) {}
 		index_t col;
 		index_t row;
 		size_t index() const {return row * 8 + col; }

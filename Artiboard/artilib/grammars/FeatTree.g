@@ -24,7 +24,6 @@
 			auto result = programs.find(ctx);
 			if (result == programs.end()) {
 				auto newP = new FeatureProgram();
-				LOG << "creating program for " << ctx;
 				programs[ctx] = newP;
 				return newP;
 			} else
@@ -62,8 +61,8 @@
 		;
 
 	term_list returns [FeatureFunction * value]
-		: t=fun_term {$value = new FeatureFunction();$value->terms().emplace_back(FeatureTerm_u_ptr($t.value));}
-		  (t=fun_term {$value->terms().emplace_back(FeatureTerm_u_ptr($t.value));})*
+		: t=fun_term {$value = new FeatureFunction();$value->terms().emplace_back(upFeatureTerm($t.value));}
+		  (t=fun_term {$value->terms().emplace_back(upFeatureTerm($t.value));})*
       
 		;
 	fun_term returns [FeatureTerm * value]
@@ -115,12 +114,12 @@
 	 ;
 
 	region returns [Region value]
-		: ^('{' (s=square{$value.insert(s);})+)
+		: ^('{' (s=square{$value.insert($s.value);})+)
 		;
 
 	square returns [Square value]
 		: ^(',' c=INTEGER r=INTEGER) {
-			Square{
+			$value = Square(
 				(index_t) atoi((const char*)$c.text->chars),
-				(index_t) atoi((const char*)$r.text->chars)};}
+				(index_t) atoi((const char*)$r.text->chars));}
 		;	

@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"in",
+				"index"
+			],
+			[
+				"inde",
+				"index_t"
+			],
+			[
 				"name",
 				"namespace"
 			],
@@ -112,10 +120,6 @@
 				"read_data"
 			],
 			[
-				"in",
-				"include"
-			],
-			[
 				"Main",
 				"MainPage"
 			],
@@ -135,6 +139,46 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "artilibtest/feat_tests.cpp",
+			"settings":
+			{
+				"buffer_size": 536,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "artilib/grammars/FeatTree.g",
+			"settings":
+			{
+				"buffer_size": 3363,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "artilib/feat_program.h",
+			"settings":
+			{
+				"buffer_size": 3964,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "artilib/feat_program.cpp",
+			"settings":
+			{
+				"buffer_size": 1330,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "artilib/board.h",
+			"settings":
+			{
+				"buffer_size": 9661,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "Packages/Makefile/Make.sublime-build",
 	"command_palette":
@@ -245,6 +289,7 @@
 	},
 	"file_history":
 	[
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.c",
 		"/C/development/github/artiboard/Artiboard/makefile",
 		"/C/development/github/artiboard/Artiboard/artilibtest/data/feat_language_test.txt",
 		"/C/development/github/artiboard/Artiboard/artilib/feat_program.h",
@@ -254,7 +299,6 @@
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.g",
 		"/C/development/github/artiboard/Artiboard/artilib/feat.h",
 		"/C/development/github/artiboard/Artiboard/artilib/feat.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.c",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.h",
 		"/C/development/github/artiboard/Artiboard/tutlib/test_main.cpp",
 		"/C/development/github/artiboard/Artiboard/artilibtest/arti_main.cpp",
@@ -350,7 +394,7 @@
 	],
 	"find":
 	{
-		"height": 46.0
+		"height": 138.0
 	},
 	"find_in_files":
 	{
@@ -365,6 +409,11 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"	ostream& operator <<(std::ostream& os, const FeatureFunction& v) {\n		return os;\n	}\n",
+			"formula",
+			"v._formulaMap",
+			"v",
+			"FeatureTerm_u_ptr",
 			"FeatureProgram",
 			".terms()",
 			"FeatureExpression::u_ptr",
@@ -447,14 +496,158 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "artilibtest/feat_tests.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 536,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								409,
+								409
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 90.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "artilib/grammars/FeatTree.g",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3363,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1434,
+								1434
+							],
+							[
+								1507,
+								1507
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1437.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "artilib/feat_program.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3964,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1352,
+								1352
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1123.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "artilib/feat_program.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1330,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								926,
+								926
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 695.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "artilib/board.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9661,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2292,
+								2292
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2340.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 36.0
+		"height": 38.0
 	},
 	"input":
 	{
@@ -490,7 +683,7 @@
 	"project": "artiboard.sublime-project",
 	"replace":
 	{
-		"height": 68.0
+		"height": 72.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -499,12 +692,28 @@
 		"selected_items":
 		[
 			[
-				"feat.h",
-				"Arti Lib\\feat.h"
+				"b",
+				"Arti Lib\\board.h"
+			],
+			[
+				"feap",
+				"Arti Lib\\feat_program.h"
 			],
 			[
 				"feat.g",
 				"Arti Lib\\grammars\\FeatTree.g"
+			],
+			[
+				"arttx",
+				"Arti Lib Tests\\data\\feat_language_test.txt"
+			],
+			[
+				"art",
+				"Arti Lib Tests\\feat_tests.cpp"
+			],
+			[
+				"feat.h",
+				"Arti Lib\\feat.h"
 			],
 			[
 				"arti_te",
@@ -513,10 +722,6 @@
 			[
 				"test",
 				"Tut Lib\\test_main.cpp"
-			],
-			[
-				"art",
-				"Arti Lib Tests\\feat_tests.cpp"
 			],
 			[
 				"arti",
