@@ -27,7 +27,8 @@ namespace arti {
 		color_t color() const;
 
 		// normal constructor
-		Square(const ordinal_t file=1, const ordinal_t rankValue=1);
+		Square(const ordinal_t file, const ordinal_t rankValue);
+		Square() : Square(1,1){};
 		// contruct a flip of another square
 		Square(const Square& source, bool flip=false);
 		// constucts an offset square

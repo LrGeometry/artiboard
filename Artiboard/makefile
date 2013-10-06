@@ -5,7 +5,7 @@ MAX_SPEED = -O3 -DNDEBUG
 FLAGS = $(DEBUG) 
 COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -std=c++0x $(FLAGS)
 LINK_ARGS =  -L$(TARGET_DIR) -Llibs
-DIRS = artilib connect4 tutlib artilib/grammars artilibtest
+DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers
 # 3.3 does not have this problem: '_empty' was not declared in this scope
 #ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose -make 
 ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose 
@@ -19,8 +19,12 @@ OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
 ARTI_LIB := $(TARGET_DIR)/libArtiLib.a
 TUT_LIB := $(TARGET_DIR)/libTutLib.a
 CONNECT_4 := $(TARGET_DIR)/connect4.exe
+CHECKERS := $(TARGET_DIR)/checkers.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
+
+run_checkers: $(CHECKERS)
+	cd $(TARGET_DIR); ./checkers.exe
 
 run_arti_test: $(ARTI_TEST)
 	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
@@ -59,6 +63,9 @@ $(ARTI_TEST): $(OBJS) $(ARTI_LIB) $(TUT_LIB)
 
 $(CONNECT_4): $(OBJS) $(ARTI_LIB)
 	g++ $(wildcard connect4/*.o) -o $@ $(EXE_LIBS) $(LINK_ARGS)  
+
+$(CHECKERS): $(OBJS) $(ARTI_LIB)
+	g++ $(wildcard checkers/*.o) -o $@ $(EXE_LIBS) $(LINK_ARGS)  
 
 $(ARTI_LIB): $(GRAMMARS) $(OBJS) 
 	ar -r $@ $(wildcard artilib/*.o) $(wildcard artilib/grammars/*.o)
