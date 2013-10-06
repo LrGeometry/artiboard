@@ -6,8 +6,13 @@
 #include <functional>
 #include <list>
 #define PREVENT_COPY(X) private: X(const X &source); X & operator=(const X&);
-#define ENSURE(P,M) if (!(P)) throw std::runtime_error(M)
-#define for_all_m(C,F,A) systemex::for_all(C,std::bind2nd(std::mem_fun(&F),A))
+#define ENSURE(P,M) if (!(P)) throw arti::runtime_error_ex("%s %s %d", M, __FILE__,__LINE__)
+#ifdef NDEBUG
+#define ASSERT(P) /*SKIP*/
+#else
+#define ASSERT(P) if (!(P)) throw arti::runtime_error_ex("assert fails: %s %s %d", #P, __FILE__,__LINE__)
+#endif
+#define for_all_m(C,F,A) arti::for_all(C,std::bind2nd(std::mem_fun(&F),A))
 
 
 // finding memory leaks

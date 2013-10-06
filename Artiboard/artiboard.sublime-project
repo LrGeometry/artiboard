@@ -11,6 +11,7 @@
 	  {"name":"Antlr", "path":"antlr"},
 	  {"name":"Run", "path":"RunDir"},
 	  {"name":"Tut Lib", "path":"tutlib", "file_include_patterns": ["*.cpp","*.h"]},
-	  {"name":"Old", "path":"src"}
+	  {"name":"Old", "path":"src"},
+	  {"name":"Checkers", "path":"checkers", "file_include_patterns": ["*.cpp","*.h", "*.txt"]}
 	]
 }

@@ -6,10 +6,10 @@
 #include <list>
 #include "systemex.h"
 #include "board.h"
+#include "square.h"
 
 namespace arti {
 	typedef std::set<string> StateSet;
-	typedef std::set<Square> Region;
 	string create_sequenced_name();
 
 	template<class valueT> class NameMap : public std::map<string, valueT> {
