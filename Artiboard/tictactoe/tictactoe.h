@@ -1,11 +1,6 @@
 #pragma once
-#include "../boardgame/boardgame.h"
-using namespace board_game;
-
-/**
- * Contains an minimal game example
- */
-namespace tictactoe {
+#include <board.h>
+using namespace arti;
 
 class TicTacView: public BoardView {
 public:
@@ -63,6 +58,4 @@ public:
 	static const Piece tictacCross; // north player
 
 };
-
-}
 

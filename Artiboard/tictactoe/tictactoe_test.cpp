@@ -1,15 +1,14 @@
 #include <tut/tut.hpp>
-#include "tictactoe.h"
 #include <exception>
 #include <memory>
-#include "../systemex/test_util.h"
+#include <test_util.h>
+#include "tictactoe.h"
 
 #define UTEST template<> template<> void test_group<tictacTestData>::object::test
 
 namespace tut {
-	using namespace tictactoe;
 	using namespace std;
-	using namespace board_game;
+	using namespace arti;
 
 	struct tictacTestData {
 	};
@@ -27,8 +26,6 @@ namespace tut {
 			}
 			;
 	};
-
-
 
 	UTEST <1>() {
 		set_test_name("TictacToe Play");

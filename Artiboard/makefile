@@ -5,7 +5,7 @@ MAX_SPEED = -O3 -DNDEBUG
 FLAGS = $(DEBUG) 
 COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -std=c++0x $(FLAGS)
 LINK_ARGS =  -L$(TARGET_DIR) -Llibs
-DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers
+DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers tictactoe
 # 3.3 does not have this problem: '_empty' was not declared in this scope
 #ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose -make 
 ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose 
@@ -20,8 +20,12 @@ ARTI_LIB := $(TARGET_DIR)/libArtiLib.a
 TUT_LIB := $(TARGET_DIR)/libTutLib.a
 CONNECT_4 := $(TARGET_DIR)/connect4.exe
 CHECKERS := $(TARGET_DIR)/checkers.exe
+TICTACTOE := $(TARGET_DIR)/tictactoe.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
+
+run_tictactoe: $(TICTACTOE)
+	cd $(TARGET_DIR); ./tictactoe.exe
 
 run_checkers: $(CHECKERS)
 	cd $(TARGET_DIR); ./checkers.exe
@@ -66,6 +70,9 @@ $(CONNECT_4): $(OBJS) $(ARTI_LIB)
 
 $(CHECKERS): $(OBJS) $(ARTI_LIB)
 	g++ $(wildcard checkers/*.o) -o $@ $(EXE_LIBS) $(LINK_ARGS)  
+
+$(TICTACTOE): $(OBJS) $(ARTI_LIB) $(TUT_LIB)
+	g++ $(wildcard tictactoe/*.o) -o $@ $(EXE_LIBS) $(LINK_ARGS)  
 
 $(ARTI_LIB): $(GRAMMARS) $(OBJS) 
 	ar -r $@ $(wildcard artilib/*.o) $(wildcard artilib/grammars/*.o)
