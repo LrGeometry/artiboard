@@ -24,6 +24,9 @@ TICTACTOE := $(TARGET_DIR)/tictactoe.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
 
+run_connect_4: $(CONNECT_4)
+	cd $(TARGET_DIR); ./connect4.exe; cat ./log.txt
+	
 run_tictactoe: $(TICTACTOE)
 	cd $(TARGET_DIR); ./tictactoe.exe
 
@@ -33,8 +36,6 @@ run_checkers: $(CHECKERS)
 run_arti_test: $(ARTI_TEST)
 	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
 
-run_connect_4: $(CONNECT_4)
-	cd $(TARGET_DIR); ./connect4.exe
 
 # sometimes this target must be called explicitly
 grammars:		
@@ -65,10 +66,10 @@ artilib/grammars/FeatTree.o: artilib/grammars/FeatTree.c	$(wildcard artilib/*.h)
 $(ARTI_TEST): $(OBJS) $(ARTI_LIB) $(TUT_LIB)
 	g++ $(wildcard artilibtest/*.o) -o $@ $(EXE_LIBS) $(LINK_ARGS)  
 
-$(CONNECT_4): $(OBJS) $(ARTI_LIB)
+$(CONNECT_4): $(OBJS) $(ARTI_LIB) $(TUT_LIB)
 	g++ $(wildcard connect4/*.o) -o $@ $(EXE_LIBS) $(LINK_ARGS)  
 
-$(CHECKERS): $(OBJS) $(ARTI_LIB)
+$(CHECKERS): $(OBJS) $(ARTI_LIB) $(TUT_LIB)
 	g++ $(wildcard checkers/*.o) -o $@ $(EXE_LIBS) $(LINK_ARGS)  
 
 $(TICTACTOE): $(OBJS) $(ARTI_LIB) $(TUT_LIB)
@@ -81,7 +82,7 @@ $(TUT_LIB):
 	ar -r $@ $(wildcard tutlib/*.o)
 
 clean:
-	rm -f $(foreach e, $(DIRS), $(wildcard $(e)/*.depends)) $(foreach e, $(DIRS), $(wildcard $(e)/*.o)) $(GRAM_OBJS)
+	rm -f $(TARGET_DIR)/* $(foreach e, $(DIRS), $(wildcard $(e)/*.depends)) $(foreach e, $(DIRS), $(wildcard $(e)/*.o)) $(GRAM_OBJS)
 
 %.o: %.cpp %.depends 
 	g++ $(COMPILE_ARGS) -c $< -o $@

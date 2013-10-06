@@ -15,5 +15,11 @@
 	  {"name":"Run", "path":"RunDir"},
 	  {"name":"Tut Lib", "path":"tutlib", "file_include_patterns": ["*.cpp","*.h"]},
 	  {"name":"Old", "path":"src"}
-	]
+	],
+	"settings":
+	{
+	     "sublimegdb_workingdir": "${folder:${project_path:RunDir/connect4.exe}}",
+	     "sublimegdb_commandline": "gdb --interpreter=mi connect4.exe"
+	}
+
 }

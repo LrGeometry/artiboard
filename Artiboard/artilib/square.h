@@ -3,11 +3,11 @@
 #include <set>
 
 namespace arti {
-	typedef short ordinal_t; 
+	typedef unsigned short ordinal_t; 
 	/*
 	* A square identifies a position on the gameboard
 	* A square is the ordered pair (file,rank) where the left-bottom
-	* is (1,1) and top-right is (8,8).
+	* is (0,0) and top-right is (7,7).
 	* A square is either light or dark. left-bottom is light.
 	* Squares are also indexed in to ways: 0 to 63, and by color index
 	* 0 to 31.
@@ -16,7 +16,7 @@ namespace arti {
 	{
 	public:
 		// check if f and r is from 1 to 8
-		static bool in_bounds(ordinal_t f, ordinal_t r)	{ return (f > 0) & (f < 9)& (r > 0) & (r < 9); }
+		static bool in_bounds(ordinal_t f, ordinal_t r)	{ return (f < 8) & (r < 8); }
 		enum color_t {Light, Dark};
 		// index for a valid square is 0 to 63
 		ordinal_t index(void) const;
@@ -63,6 +63,10 @@ namespace arti {
 	class Region:public std::set<Square>
 	{
 	public:
+		Region(){}
+		Region(ordinal_t files, ordinal_t ranks);
+		// collects squares from, from + inc , from + inc * count
+		Region(const Square &from, const int inc_f, const int inc_r, ordinal_t count);
 		// inserts the valid neighbours of the middle square into this
 		void insert_diag_neighbours(const Square& middle);
 		// inserts the valid second neighbours of the middle square into this
@@ -72,12 +76,10 @@ namespace arti {
 		{ if (s.is_valid()) insert(s); }
 		// this = this U (color squares of rank(r))
 		void insert_rank(const ordinal_t r, const Square::color_t color);
+
+		bool contains(const Square & s) const {return find(s) != end();}
 	private:
 
-		bool contains(const Square & s) const
-		{
-			return find(s) != end();
-		}
 		/* intersect_count returns the number of elements in this that * that 
 		are also in s. */
 		int intersect_count(const Region & s) const;
@@ -95,8 +97,6 @@ namespace arti {
 
 		/* flip Changes the state to the other players view */
 		void flip();
-
-		
 
 		// removes the squares of the given color
 		void remove_by_color(const Square::color_t color);

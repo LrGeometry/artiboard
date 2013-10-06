@@ -1,5 +1,8 @@
 #include "board.h"
 #include "systemex.h"
+#include "log.h"
+
+#define FOR_SQUARES(row,col) for (index_t row = 0; row < 8; row++) for (index_t col = 0; col < 8; col++)
 
 namespace arti {
 	const char out_of_bounds = '*';
@@ -14,19 +17,59 @@ namespace arti {
 	}
 	Board::Board() {};
 
-	const Piece& Board::operator () (const std::size_t colIndex, const std::size_t rowIndex) const {
+	const Piece& Board::at(const std::size_t colIndex, const std::size_t rowIndex) const {
 		if (colIndex < 0 || rowIndex < 0 || colIndex > 7 || rowIndex > 7)
 			return Piece::OUT_OF_BOUNDS;
 		else
 			return _data[rowIndex * 8 + colIndex];
 	}
 
-	void Board::operator() (const std::size_t colIndex, const std::size_t rowIndex, const Piece &v) {
+	void Board::place(const std::size_t colIndex, const std::size_t rowIndex, const Piece &v) {
 		if (colIndex < 0 || rowIndex < 0 || colIndex > 7 || rowIndex > 7)
 			throw runtime_error_ex("index out of bounds: col=%d row=%d",colIndex,rowIndex);
 		else if (v == Piece::OUT_OF_BOUNDS)
 			throw runtime_error_ex("cannot set square to out of bounds: col=%d row=%d",colIndex,rowIndex);
 		_data[rowIndex * 8 + colIndex] = v;
+	}
+
+	void Board::operator()(const Region& ss, const Piece &value) {
+		for (auto s = ss.cbegin(); s != ss.cend(); s++)
+			place(s->file(),s->rank(),value);
+	}
+
+	int Board::count(const Region& ss, const Piece &value) const {
+		int result = 0;
+		for (auto s = ss.cbegin(); s != ss.cend(); s++)
+			if (at(s->file(),s->rank()) == value)
+				result++;
+		return result;	
+	}
+
+
+	Region::const_iterator Board::find(const Region& ss, const Piece &value) const {
+		for (auto s = ss.cbegin(); s != ss.cend(); s++) {
+			if (at(s->file(),s->rank()) == value)
+				return s;
+		}
+		return ss.cend();	
+	}
+
+	int Board::count_repeats(const Region& ss, const Piece &value) const {
+		int result = 0;
+		bool repeating = false;
+		int count = 0;
+		for (auto s = ss.cbegin(); s != ss.cend(); s++)
+			if (at(s->file(),s->rank()) == value) {
+				if (repeating)
+					count++;
+				else
+					count = 1;
+				if (count > result)
+					result = count;
+				repeating = true;
+			} else
+				repeating = false;
+		return result;	
 	}
 
 	void PlayLine::add(unique_ptr<Board> &brd) {
@@ -66,14 +109,17 @@ namespace arti {
 	}
 
 	ostream& operator <<(std::ostream& os, const Board& v) {
-		for (index_t r = 8; r > 0; r--) {
-			auto row = r - 1;
-			os << row << " ";
+		for (int r = 7; r >= 0; r--) {
+			os << r << " ";
 			for (index_t c = 0; c < 8; c++) {
-				os << v(c,row) << " ";
+				os << v(c,r) << " ";
 			}
 			os << std::endl;
 		}
+		os << "  ";
+		for (index_t c = 0; c < 8; c++) 
+			os << c << " ";
+		os << std::endl;
 		return os;
 	}
 

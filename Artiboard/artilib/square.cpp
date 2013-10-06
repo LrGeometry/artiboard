@@ -1,36 +1,31 @@
 #include "square.h"
-#include "systemex.h"
+#include "log.h"
 namespace arti {
 	
-	Square::Square(const ordinal_t ix)
-	{
-		_rank = (ix) / 4 + 1;
-		_file = ((ix+1-(_rank-1)*4)<<1) - _rank%2;	
-		ASSERT(color_index() == ix);
-	}
+
 
 	Square::Square(const ordinal_t f, const ordinal_t r)
 	{
 		_file = f;
 		_rank = r;
-		ASSERT(_file > 0 && _file < 9);
-		ASSERT(_rank > 0 && _rank < 9);
+		ASSERT(_file < 8);
+		ASSERT(_rank < 8);
 	}
 
 	Square::Square(const Square& source, bool flip)
 	{
 		if (flip)
 		{
-			_file = 9 - source._file;
-			_rank = 9 - source._rank;
+			_file = 8 - source._file;
+			_rank = 8 - source._rank;
 		}
 		else
 		{
 			_file = source._file;
 			_rank = source._rank;
 		}
-		ASSERT(_file > 0 && _file < 9);
-		ASSERT(_rank > 0 && _rank < 9);
+		ASSERT(_file < 8);
+		ASSERT(_rank < 8);
 	}
 
 	Square::Square(const Square& source, 
@@ -51,12 +46,12 @@ namespace arti {
 
 	ordinal_t Square::index(void) const
 	{
-		return (_rank-1)*8 + (_file-1);
+		return (_rank)*8 + (_file);
 	}
 
 	ordinal_t Square::color_index(const bool flip) const
 	{
-		return flip ? (9 - _rank-1)*4 + (9 - _file - 1) / 2
+		return flip ? (8 - _rank-1)*4 + (8 - _file - 1) / 2
 			: (_rank-1)*4 + (_file-1) / 2;
 	}
 
@@ -65,6 +60,19 @@ namespace arti {
 		return o;
 	}
 
+
+	Region::Region(ordinal_t files, ordinal_t ranks) {
+		for (ordinal_t r = 0; r < ranks; r++)
+			for (ordinal_t f = 0; f < files; f++)
+				insert(Square(f,r));
+	}
+
+	Region::Region(const Square &from, const int inc_f, const int inc_r, ordinal_t count) {
+		ordinal_t f = from.file();
+		ordinal_t r = from.rank();
+		for (ordinal_t i = 0; i < count; i++)
+			insert(Square(f+i*inc_f,r+i*inc_r));
+	}
 
 
 	void Region::insert_diag_neighbours(const Square& middle)
@@ -116,7 +124,7 @@ namespace arti {
 
 	void Region::insert_rank(const ordinal_t r, const Square::color_t color)
 	{
-		for (ordinal_t f = 1; f < 9; f++)
+		for (ordinal_t f = 1; f < 8; f++)
 		{
 			Square s(f,r);
 			if (s.color() == color)
@@ -193,8 +201,8 @@ namespace arti {
 			{
 				if (rank == '?')
 				{
-					for (ordinal_t i=1; i<9; i++)
-						for (ordinal_t j=1; j<9; j++)
+					for (ordinal_t i=0; i<8; i++)
+						for (ordinal_t j=0; j<8; j++)
 						{
 							Square s(i,j);
 							if (s.color() == Square::Dark)
@@ -202,7 +210,7 @@ namespace arti {
 						}
 				}
 				else
-					for (ordinal_t i=1; i<9; i++)
+					for (ordinal_t i=0; i<8; i++)
 					{
 						Square s(i,rank-'0');
 						if (s.color() == Square::Dark)
@@ -211,7 +219,7 @@ namespace arti {
 			}
 			else if (rank == '?')
 			{
-				for (ordinal_t i=1; i<8; i++)
+				for (ordinal_t i=0; i<8; i++)
 				{
 					Square s(file-'0',i);
 					if (s.color() == Square::Dark)

@@ -4,8 +4,7 @@
 #include <list>
 #include <ostream>
 #include <memory>
-
-#define FOR_SQUARES(row,col) for (index_t row = 0; row < 8; row++) for (index_t col = 0; col < 8; col++)
+#include "square.h"
 /**
  * The framework presumes that a board game is played on a Board that contains 64 squares.
  * Each square on the board has a Piece.  There are two players, one on the south
@@ -96,16 +95,24 @@ namespace arti {
 			 * @param rowIndex
 			 * @return Piece::OUT_OF_BOUNDS if indexes are invalid
 			 */
-			const Piece& operator ()(const index_t colIndex,
-					const index_t rowIndex) const;
+			const Piece& at(const index_t colIndex,const index_t rowIndex) const;
+			const Piece& operator ()(const index_t colIndex,const index_t rowIndex) const {at(colIndex,rowIndex);}
+			const Piece& operator ()(const Square& s) const {at(s.file(),s.rank());}
 			/**
 			 * Place a Piece on a square
 			 * @param colIndex must be a valid index
 			 * @param rowIndex must be a valid index
 			 * @param value cannot be Piece::OUT_OF_BOUNDS
 			 */
-			void operator()(const std::size_t colIndex, const std::size_t rowIndex,
-					const Piece &value);
+			void place(const std::size_t colIndex, const std::size_t rowIndex,const Piece &value);
+			void operator()(const std::size_t colIndex, const std::size_t rowIndex,const Piece &value) {place(colIndex,rowIndex,value);}
+			void operator()(const Square& s, const Piece &value) {place(s.file(),s.rank(),value);}
+			void operator()(const Region& ss, const Piece &value); 
+			int count(const Region& ss, const Piece &value) const;
+			/** Max of value sequence length */
+			int count_repeats(const Region& ss, const Piece &value) const;
+			/** Return cend() if not found */
+			Region::const_iterator find(const Region& ss, const Piece &value) const;
 		private:
 			std::array<Piece, 64> _data;
 		public:
@@ -203,6 +210,8 @@ namespace arti {
 		public:
 			StepToPlace(const BoardView &view, const Piece &piece, StepOutcome outcome = StepOutcome::EndsMove)
 			   : StepWithCoords(view.col(),view.row(),outcome), _piece(piece) {};
+			StepToPlace(const Square &s, const Piece &piece, StepOutcome outcome = StepOutcome::EndsMove)
+			   : StepWithCoords(s.file(),s.rank(),outcome), _piece(piece) {};
 			void apply_on(Board &brd) const override {
 				brd(_col,_row, _piece);
 			};

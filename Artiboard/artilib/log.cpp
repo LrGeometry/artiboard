@@ -19,6 +19,10 @@ namespace arti {
 		return _file;
 	}
 
+	std::ostream& Log::newline() {
+		_file << std::endl;
+		return _file;
+	}
 	Log::~Log() {
 		record() << "*** END\n";
 	}

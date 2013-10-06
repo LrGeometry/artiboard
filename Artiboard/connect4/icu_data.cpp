@@ -19,6 +19,8 @@ IcuData::IcuData() : _entries() {
 				line >> v;
 				if (v != "b")
 					b(i,j,arti::Piece(v[0]));
+				else
+					b(i,j,arti::Piece('-'));
 			}
 		MatchOutcome r = MatchOutcome::Draw;
 		line >> v;
