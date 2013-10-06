@@ -4,8 +4,64 @@
 		"selected_items":
 		[
 			[
+				"num",
+				"num_ranks"
+			],
+			[
+				"bo",
+				"board"
+			],
+			[
+				"w",
+				"winningPiece"
+			],
+			[
+				"n",
+				"north"
+			],
+			[
+				"all",
+				"all_regions"
+			],
+			[
+				"re",
+				"repeating"
+			],
+			[
 				"in",
-				"index"
+				"inc_r"
+			],
+			[
+				"ic",
+				"inc	#include \"…\""
+			],
+			[
+				"r",
+				"rank"
+			],
+			[
+				"or",
+				"ordinal_t"
+			],
+			[
+				"ro",
+				"rowIndex"
+			],
+			[
+				"col",
+				"colIndex"
+			],
+			[
+				"_",
+				"_stateMap"
+			],
+			[
+				"c",
+				"cbegin"
+			],
+			[
+				"_r",
+				"_region"
 			],
 			[
 				"inde",
@@ -56,10 +112,6 @@
 				"FeatureExpression"
 			],
 			[
-				"_r",
-				"_regionMap"
-			],
-			[
 				"has",
 				"has_name"
 			],
@@ -104,20 +156,8 @@
 				"MatchOutcome"
 			],
 			[
-				"_",
-				"_outcome"
-			],
-			[
-				"bo",
-				"Board"
-			],
-			[
 				"I",
 				"IcuEntry"
-			],
-			[
-				"re",
-				"read_data"
 			],
 			[
 				"Main",
@@ -140,34 +180,10 @@
 	"buffers":
 	[
 		{
-			"file": "artilibtest/feat_tests.cpp",
+			"file": "artilib/board.cpp",
 			"settings":
 			{
-				"buffer_size": 536,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/grammars/FeatTree.g",
-			"settings":
-			{
-				"buffer_size": 3363,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/feat_program.h",
-			"settings":
-			{
-				"buffer_size": 3964,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/feat_program.cpp",
-			"settings":
-			{
-				"buffer_size": 1330,
+				"buffer_size": 4672,
 				"line_ending": "Windows"
 			}
 		},
@@ -175,7 +191,55 @@
 			"file": "artilib/board.h",
 			"settings":
 			{
-				"buffer_size": 9661,
+				"buffer_size": 9930,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "connect4/connect4_main.cpp",
+			"settings":
+			{
+				"buffer_size": 394,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "connect4/connect4_test.cpp",
+			"settings":
+			{
+				"buffer_size": 1081,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "artilib/square.h",
+			"settings":
+			{
+				"buffer_size": 3372,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "artilib/square.cpp",
+			"settings":
+			{
+				"buffer_size": 4554,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "connect4/connect4.cpp",
+			"settings":
+			{
+				"buffer_size": 2916,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "artilib/log.cpp",
+			"settings":
+			{
+				"buffer_size": 497,
 				"line_ending": "Windows"
 			}
 		}
@@ -183,9 +247,17 @@
 	"build_system": "Packages/Makefile/Make.sublime-build",
 	"command_palette":
 	{
-		"height": 157.0,
+		"height": 213.0,
 		"selected_items":
 		[
+			[
+				"dbg",
+				"SublimeGDB: Stop Debugging"
+			],
+			[
+				"debug",
+				"SublimeGDB: Start Debugging"
+			],
 			[
 				"pac",
 				"Package Control: Upgrade Package"
@@ -289,33 +361,58 @@
 	},
 	"file_history":
 	[
-		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.c",
+		"/C/development/github/artiboard/Artiboard/artilib/log.h",
+		"/C/development/github/artiboard/Artiboard/RunDir/log.txt",
+		"/C/development/github/artiboard/Artiboard/artilib/square.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/icu_data.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/icu_data.h",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4.h",
+		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
+		"/C/development/github/artiboard/Artiboard/artilib/square.h",
+		"/C/development/github/artiboard/Artiboard/tutlib/test_util.h",
+		"/0> connect4/connect4.cpp(83)",
+		"/C/development/github/artiboard/Artiboard/artilib/systemex.h",
 		"/C/development/github/artiboard/Artiboard/makefile",
-		"/C/development/github/artiboard/Artiboard/artilibtest/data/feat_language_test.txt",
+		"/C/development/github/artiboard/Artiboard/artilib/board.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/boardgame.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4_test.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/data/connect4.h",
+		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe.h",
+		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe.cpp",
+		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe_test.cpp",
+		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe_main.cpp",
+		"/C/development/github/artiboard/Artiboard/tutlib/test_main.cpp",
+		"/C/development/github/artiboard/Artiboard/checkers/checkers_board.cpp",
+		"/C/development/github/artiboard/Artiboard/checkers/checkers_board.h",
+		"/C/development/github/artiboard/Artiboard/src/checkers/testcheckers.cpp",
+		"/C/development/github/artiboard/Artiboard/src/tictactoe/test_tictactoe.cpp",
+		"/C/development/github/artiboard/Artiboard/checkers/checkers_main.cpp",
+		"/C/development/github/artiboard/Artiboard/artilibtest/feat_tests.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/feat_program.h",
+		"/C/development/github/artiboard/Artiboard/src/game/game.h",
+		"/C/development/github/artiboard/Artiboard/src/game/gamebase.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.g",
 		"/C/development/github/artiboard/Artiboard/artilib/feat_program.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/board.h",
-		"/C/development/github/artiboard/Artiboard/artilibtest/feat_tests.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.g",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.c",
+		"/C/development/github/artiboard/Artiboard/artilibtest/data/feat_language_test.txt",
+		"/C/development/github/artiboard/Artiboard/artilib/systemex.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/Feat.g",
+		"/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/bits/stl_tree.h",
+		"/C/development/github/artiboard/Artiboard/src/checkers/checkers.h",
 		"/C/development/github/artiboard/Artiboard/artilib/feat.h",
 		"/C/development/github/artiboard/Artiboard/artilib/feat.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.h",
-		"/C/development/github/artiboard/Artiboard/tutlib/test_main.cpp",
 		"/C/development/github/artiboard/Artiboard/artilibtest/arti_main.cpp",
-		"/C/development/github/artiboard/Artiboard/tutlib/test_util.h",
-		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
 		"/C/development/github/artiboard/Artiboard/tutlib/test_util.cpp",
 		"/C/development/github/artiboard/Artiboard/src/systemex/test_util.h",
 		"/C/development/github/artiboard/Artiboard/artilib/test_util.h",
 		"/C/development/github/artiboard/Artiboard/artilib/test_util.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/connect4_main.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/data/testfun.txt",
-		"/C/development/github/artiboard/Artiboard/artilib/grammars/Feat.g",
 		"/C/development/github/artiboard/Artiboard/src/conventions.txt",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatParser.h",
-		"/C/development/github/artiboard/Artiboard/artilib/board.cpp",
-		"/C/development/github/artiboard/Artiboard/connect4/icu_data.h",
-		"/C/development/github/artiboard/Artiboard/artilib/systemex.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatLexer.c",
 		"/C/Users/willemd/Documents/GitHub/codespear.github.io/_drafts/cpp-map.md",
 		"/C/development/github/artiboard/Artiboard/src/tictactoe/tictactoe.h",
@@ -335,8 +432,6 @@
 		"/C/development/github/artiboard/Artiboard/antlr/antlr3exception.inl",
 		"/C/development/github/artiboard/Artiboard/antlr/antlr3traits.hpp",
 		"/C/development/github/artiboard/Artiboard/.gitignore",
-		"/C/development/github/artiboard/Artiboard/connect4/icu_data.cpp",
-		"/C/development/github/artiboard/Artiboard/RunDir/log.txt",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/featurelangLexer.cpp",
 		"/C/development/github/artiboard/Artiboard/line 35",
 		"/C/development/github/artiboard/Artiboard/line 36",
@@ -344,10 +439,7 @@
 		"/C/development/github/artiboard/Artiboard/artilib/boardgame.h",
 		"/C/development/github/artiboard/Artiboard/artilib/log.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/readme.md",
-		"/C/development/github/artiboard/Artiboard/artilib/boardgame.cpp",
 		"/C/development/github/artiboard/artiboard/src/makefile",
-		"/C/development/github/artiboard/Artiboard/artilib/log.h",
-		"/C/development/github/artiboard/Artiboard/artilib/systemex.h",
 		"/C/development/github/artiboard/Artiboard/connect4/.gitignore",
 		"/C/development/github/artiboard/Artiboard/src/boardgame/boardgame.h",
 		"/C/development/github/artiboard/Artiboard/src/console/main.cpp",
@@ -394,7 +486,7 @@
 	],
 	"find":
 	{
-		"height": 138.0
+		"height": 46.0
 	},
 	"find_in_files":
 	{
@@ -409,6 +501,28 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"files",
+			"all_regions",
+			"b",
+			"void",
+			"all_regions",
+			"0",
+			");\n",
+			"toe",
+			"1",
+			"9",
+			"c",
+			"arti",
+			"tictac",
+			"$(CHECKERS): $(OBJS) $(ARTI_LIB)\n	g++ $(wildcard checkers/*.o) -o $@ $(EXE_LIBS) $(LINK_ARGS)  \n\n",
+			"checkers",
+			"\"\n",
+			"exe",
+			"SquareSet",
+			"assert",
+			"state",
+			"v",
+			"v._formulaMap",
 			"	ostream& operator <<(std::ostream& os, const FeatureFunction& v) {\n		return os;\n	}\n",
 			"formula",
 			"v._formulaMap",
@@ -496,24 +610,80 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 6,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "artilibtest/feat_tests.cpp",
+					"file": "artilib/board.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 536,
+						"buffer_size": 4672,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								409,
-								409
+								58,
+								58
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "artilib/board.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9930,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								130,
+								130
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 6784.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "connect4/connect4_main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 394,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								93,
+								93
 							]
 						],
 						"settings":
@@ -521,86 +691,26 @@
 							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 90.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "artilib/grammars/FeatTree.g",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3363,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1434,
-								1434
-							],
-							[
-								1507,
-								1507
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1437.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "artilib/feat_program.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3964,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1352,
-								1352
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1123.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "artilib/feat_program.cpp",
+					"file": "connect4/connect4_test.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1330,
+						"buffer_size": 1081,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								926,
-								926
+								801,
+								814
 							]
 						],
 						"settings":
@@ -609,26 +719,26 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 695.0,
+						"translation.y": 840.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "artilib/board.h",
+					"file": "artilib/square.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9661,
+						"buffer_size": 3372,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2292,
-								2292
+								2611,
+								2611
 							]
 						],
 						"settings":
@@ -637,7 +747,91 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2340.0,
+						"translation.y": 2158.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "artilib/square.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1484,
+								1484
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1614.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "connect4/connect4.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2916,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2356,
+								2356
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2002.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "artilib/log.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 497,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								408,
+								408
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 182.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -647,7 +841,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 38.0
+		"height": 33.0
 	},
 	"input":
 	{
@@ -678,12 +872,12 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 303.0
+		"height": 362.0
 	},
 	"project": "artiboard.sublime-project",
 	"replace":
 	{
-		"height": 72.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -691,6 +885,82 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"log",
+				"Arti Lib\\log.h"
+			],
+			[
+				"conn",
+				"Connect 4\\connect4.cpp"
+			],
+			[
+				"lo",
+				"Run\\log.txt"
+			],
+			[
+				"squ",
+				"Arti Lib\\square.h"
+			],
+			[
+				"ic",
+				"Connect 4\\icu_data.cpp"
+			],
+			[
+				"conncpp",
+				"Connect 4\\connect4.cpp"
+			],
+			[
+				"connec",
+				"Connect 4\\connect4_test.cpp"
+			],
+			[
+				"tes",
+				"Tut Lib\\test_util.h"
+			],
+			[
+				"syst",
+				"Arti Lib\\systemex.h"
+			],
+			[
+				"ma",
+				"Root\\makefile"
+			],
+			[
+				"squa",
+				"Arti Lib\\square.h"
+			],
+			[
+				"make",
+				"Root\\makefile"
+			],
+			[
+				"boad",
+				"Arti Lib\\board.h"
+			],
+			[
+				"bo",
+				"Arti Lib\\board.h"
+			],
+			[
+				"boa",
+				"Arti Lib\\board.h"
+			],
+			[
+				"test",
+				"Tut Lib\\test_util.h"
+			],
+			[
+				".g",
+				"Arti Lib\\grammars\\Feat.g"
+			],
+			[
+				"system",
+				"Arti Lib\\systemex.h"
+			],
+			[
+				"featest",
+				"Arti Lib Tests\\data\\feat_language_test.txt"
+			],
 			[
 				"b",
 				"Arti Lib\\board.h"
@@ -720,10 +990,6 @@
 				"Arti Lib Tests\\feat_tests.cpp"
 			],
 			[
-				"test",
-				"Tut Lib\\test_main.cpp"
-			],
-			[
 				"arti",
 				"Arti Lib Tests\\arti_main.cpp"
 			],
@@ -750,10 +1016,6 @@
 			[
 				"feat_pro",
 				"Arti Lib\\feat_program.h"
-			],
-			[
-				".g",
-				"Arti Lib\\grammars\\FeatTree.g"
 			],
 			[
 				"feat",
@@ -905,7 +1167,7 @@
 	"settings":
 	{
 	},
-	"show_minimap": true,
+	"show_minimap": false,
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": false,

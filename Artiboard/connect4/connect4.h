@@ -1,5 +1,5 @@
 #pragma once
-#include <board.h>
+#include <game.h>
 using namespace arti;
 class Connect4: public GameSpecification {
 	void setup(arti::Board&) const override;

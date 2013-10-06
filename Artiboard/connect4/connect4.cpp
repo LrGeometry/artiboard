@@ -8,19 +8,18 @@ const Piece open('-');
 const index_t num_files = 7;
 const index_t num_ranks = 6;
 const Region all(num_files,num_ranks);
-// diagonals
-const Region udl3(Square(0,3),1,1,4);
-const Region udl1(Square(0,1),1,1,6);
-const Region udl2(Square(0,2),1,1,5);
-const Region udb0(Square(0,0),1,1,7);
-const Region udb3(Square(3,0),1,1,4);
-const Region udb2(Square(2,0),1,1,5);
-const Region udb1(Square(1,0),1,1,6);
-
-const Region ddf2(Square(2,6),1,-1,4);
-const Region ddf1(Square(1,6),1,-1,5);
-const Region ddf0(Square(0,6),1,-1,6);
-const Region ddr5(Square(0,5),1,-1,6);
+// diagonals - up 
+const Region udr2(Square(0,2),1,1,4);
+const Region udr1(Square(0,1),1,1,5);
+const Region ud0(Square(0,0),1,1,6);
+const Region udf1(Square(1,0),1,1,6);
+const Region udf2(Square(2,0),1,1,5);
+const Region udf3(Square(3,0),1,1,4);
+// diagonals - down 
+const Region ddf3(Square(3,5),1,-1,4);
+const Region ddf2(Square(2,5),1,-1,5);
+const Region ddf1(Square(1,5),1,-1,6);
+const Region dd0(Square(0,5),1,-1,6);
 const Region ddr4(Square(0,4),1,-1,5);
 const Region ddr3(Square(0,3),1,-1,4);
 // files 
@@ -40,11 +39,10 @@ const Region r4(Square(0,4),1,0,num_files);
 const Region r5(Square(0,5),1,0,num_files);
 
 const std::vector<const Region*> all_regions{
-	&udl3,&udl1,&udl2,&udb0,&udb3,&udb2,&udb1,
-	&ddf2,&ddf1,&ddf0,&ddr5,&ddr4,&ddr3,
-	&r0,&r1,&r2,&r3,&r4,&r5,
-	&f0,&f1,&f2,&f3,&f4,&f5,&f6
-};
+	&udr2,&udr1,&ud0,&udf1,&udf2,&udf3,
+	&ddf3,&ddf2,&ddf1,&dd0,&ddr4,&ddr3,
+	&f0,&f1,&f2,&f3,&f4,&f5,&f6,
+	&r0,&r1,&r2,&r5,&r3,&r4};
 
 const std::vector<const Region*> ranks{&r0,&r1,&r2,&r3,&r4,&r5};
 const std::vector<const Region*> files{&f0,&f1,&f2,&f3,&f4,&f5,&f6};
@@ -71,8 +69,6 @@ void Connect4::setup(Board& b) const {
 
 /** The game is done when someone gets four in a row */
 MatchOutcome Connect4::outcome_of(const Position& p) const {
-	if (p.board().count(r5,open) == 0)
-			return Draw;
 	auto winningPiece = piece_for_other(p.ply().side_to_move());
 	for (auto i = 0; i < all_regions.size(); i++) {
 		const Region& r = *all_regions[i];
@@ -83,7 +79,10 @@ MatchOutcome Connect4::outcome_of(const Position& p) const {
 				return SouthPlayerWins;
 		} 
 	}
-	return Unknown;
+	if (p.board().count(r5,open) == 0)
+			return Draw;
+	else	
+		return Unknown;
 }
 
 /** Next open square in every file is a posible move */

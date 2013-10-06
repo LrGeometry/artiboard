@@ -3,7 +3,7 @@
 #include <string>
 #include <functional>
 #include <log.h>
-#include <board.h>
+#include <game.h>
 
 using namespace arti;
 

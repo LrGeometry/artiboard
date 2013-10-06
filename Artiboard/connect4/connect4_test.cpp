@@ -14,18 +14,6 @@ namespace tut {
 
 	test_group<connect4TestData> connect4Tests("010 Connect4 Play Tests");
 
-	/**
-	 * Using TicTacToe as a game to test.
-	 *
-	 */
-	class PickFirst: public MoveChooser {
-			virtual std::unique_ptr<Board>& select(const Position & current,
-					BoardOwnerList &list) {
-				return list.front();
-			}
-			;
-	};
-
 	BEGIN(1,"Simple Play Sequence")
 		Connect4 spec;
 		PickFirst picker;
