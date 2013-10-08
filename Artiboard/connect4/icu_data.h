@@ -2,6 +2,7 @@
 #include <sstream>
 #include <string>
 #include <functional>
+#include <map>
 #include <log.h>
 #include <game.h>
 
@@ -9,20 +10,16 @@ using namespace arti;
 
 class IcuEntry {
 public:
-	IcuEntry(const Board brd, const MatchOutcome outcome)
-		: _board(brd), _outcome(outcome) {}
-	const Board & board() const {return _board;}	
-private:
-	const Board _board;
-	const MatchOutcome _outcome;
+	IcuEntry(const MatchOutcome anOutcome)	:  outcome(anOutcome) {}
+	MatchOutcome outcome;
 };
 
-class IcuData {
+
+
+
+class IcuData : public std::map<Board,IcuEntry> {
 public:
-	IcuData();
-	typedef std::function<void (const IcuEntry& e)> fun_t;
-	const std::vector<IcuEntry> & entries() const { return _entries;}
-	const void apply(fun_t f) { for_each(e,_entries) { f(*e); }; }
+	static IcuData& instance();
 private:
-	std::vector<IcuEntry> _entries;
+	IcuData();
 };

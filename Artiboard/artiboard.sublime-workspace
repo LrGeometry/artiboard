@@ -183,15 +183,7 @@
 			"file": "artilib/board.cpp",
 			"settings":
 			{
-				"buffer_size": 4672,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/board.h",
-			"settings":
-			{
-				"buffer_size": 9930,
+				"buffer_size": 2009,
 				"line_ending": "Windows"
 			}
 		},
@@ -199,7 +191,15 @@
 			"file": "connect4/connect4_main.cpp",
 			"settings":
 			{
-				"buffer_size": 394,
+				"buffer_size": 481,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "connect4/connect4_exp.cpp",
+			"settings":
+			{
+				"buffer_size": 798,
 				"line_ending": "Windows"
 			}
 		},
@@ -207,23 +207,7 @@
 			"file": "connect4/connect4_test.cpp",
 			"settings":
 			{
-				"buffer_size": 1081,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/square.h",
-			"settings":
-			{
-				"buffer_size": 3372,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/square.cpp",
-			"settings":
-			{
-				"buffer_size": 4554,
+				"buffer_size": 852,
 				"line_ending": "Windows"
 			}
 		},
@@ -231,15 +215,7 @@
 			"file": "connect4/connect4.cpp",
 			"settings":
 			{
-				"buffer_size": 2916,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/log.cpp",
-			"settings":
-			{
-				"buffer_size": 497,
+				"buffer_size": 2901,
 				"line_ending": "Windows"
 			}
 		}
@@ -247,7 +223,7 @@
 	"build_system": "Packages/Makefile/Make.sublime-build",
 	"command_palette":
 	{
-		"height": 213.0,
+		"height": 45.0,
 		"selected_items":
 		[
 			[
@@ -361,24 +337,33 @@
 	},
 	"file_history":
 	[
-		"/C/development/github/artiboard/Artiboard/artilib/log.h",
-		"/C/development/github/artiboard/Artiboard/RunDir/log.txt",
+		"/C/development/github/artiboard/Artiboard/artilibtest/data/feat_language_test.txt",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4_test.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/game.h",
+		"/C/development/github/artiboard/Artiboard/artilib/game.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4.h",
+		"/C/development/github/artiboard/Artiboard/connect4/icu_data.h",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4_exp.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/board.h",
+		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe.h",
+		"/C/development/github/artiboard/Artiboard/artilib/square.h",
 		"/C/development/github/artiboard/Artiboard/artilib/square.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/connect4.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/experiment.h",
+		"/C/development/github/artiboard/Artiboard/artilib/experiment.cpp",
+		"/C/development/github/artiboard/Artiboard/RunDir/log.txt",
+		"/C/development/github/artiboard/Artiboard/connect4/data/testfun.txt",
+		"/C/development/github/artiboard/Artiboard/artilib/log.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/log.h",
 		"/C/development/github/artiboard/Artiboard/connect4/icu_data.cpp",
-		"/C/development/github/artiboard/Artiboard/connect4/icu_data.h",
-		"/C/development/github/artiboard/Artiboard/connect4/connect4.h",
 		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
-		"/C/development/github/artiboard/Artiboard/artilib/square.h",
 		"/C/development/github/artiboard/Artiboard/tutlib/test_util.h",
 		"/0> connect4/connect4.cpp(83)",
 		"/C/development/github/artiboard/Artiboard/artilib/systemex.h",
 		"/C/development/github/artiboard/Artiboard/makefile",
 		"/C/development/github/artiboard/Artiboard/artilib/board.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/boardgame.cpp",
-		"/C/development/github/artiboard/Artiboard/connect4/connect4_test.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/data/connect4.h",
-		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe.h",
 		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe.cpp",
 		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe_test.cpp",
 		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe_main.cpp",
@@ -394,9 +379,7 @@
 		"/C/development/github/artiboard/Artiboard/src/game/gamebase.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.g",
 		"/C/development/github/artiboard/Artiboard/artilib/feat_program.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/board.h",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.c",
-		"/C/development/github/artiboard/Artiboard/artilibtest/data/feat_language_test.txt",
 		"/C/development/github/artiboard/Artiboard/artilib/systemex.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/Feat.g",
 		"/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/bits/stl_tree.h",
@@ -410,7 +393,6 @@
 		"/C/development/github/artiboard/Artiboard/artilib/test_util.h",
 		"/C/development/github/artiboard/Artiboard/artilib/test_util.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/connect4_main.cpp",
-		"/C/development/github/artiboard/Artiboard/connect4/data/testfun.txt",
 		"/C/development/github/artiboard/Artiboard/src/conventions.txt",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatParser.h",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatLexer.c",
@@ -437,7 +419,6 @@
 		"/C/development/github/artiboard/Artiboard/line 36",
 		"/C/development/github/artiboard/Artiboard/connect4/data/connect-4.data",
 		"/C/development/github/artiboard/Artiboard/artilib/boardgame.h",
-		"/C/development/github/artiboard/Artiboard/artilib/log.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/readme.md",
 		"/C/development/github/artiboard/artiboard/src/makefile",
 		"/C/development/github/artiboard/Artiboard/connect4/.gitignore",
@@ -501,6 +482,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"systemex",
 			"files",
 			"all_regions",
 			"b",
@@ -610,7 +592,7 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -619,15 +601,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4672,
+						"buffer_size": 2009,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								58,
-								58
+								59,
+								59
 							]
 						],
 						"settings":
@@ -643,47 +625,46 @@
 				},
 				{
 					"buffer": 1,
-					"file": "artilib/board.h",
+					"file": "connect4/connect4_main.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9930,
+						"buffer_size": 481,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								130,
-								130
+								299,
+								299
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 6784.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "connect4/connect4_main.cpp",
+					"file": "connect4/connect4_exp.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 394,
+						"buffer_size": 798,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								93,
-								93
+								535,
+								535
 							]
 						],
 						"settings":
@@ -702,15 +683,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1081,
+						"buffer_size": 852,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								801,
-								814
+								518,
+								518
 							]
 						],
 						"settings":
@@ -719,82 +700,26 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 840.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "artilib/square.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3372,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2611,
-								2611
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2158.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "artilib/square.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4554,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1484,
-								1484
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1614.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
 					"file": "connect4/connect4.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2916,
+						"buffer_size": 2901,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2356,
-								2356
+								244,
+								244
 							]
 						],
 						"settings":
@@ -803,35 +728,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2002.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "artilib/log.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 497,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								408,
-								408
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 182.0,
+						"translation.y": 1350.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -885,6 +782,34 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				".txt",
+				"Arti Lib Tests\\data\\feat_language_test.txt"
+			],
+			[
+				"c4cpp",
+				"Connect 4\\connect4.cpp"
+			],
+			[
+				"cn4cp",
+				"Connect 4\\connect4.cpp"
+			],
+			[
+				"game",
+				"Arti Lib\\game.h"
+			],
+			[
+				"c4tes",
+				"Connect 4\\connect4_test.cpp"
+			],
+			[
+				"c4ex",
+				"Connect 4\\connect4_exp.cpp"
+			],
+			[
+				"cn4exp",
+				"Connect 4\\connect4_exp.cpp"
+			],
 			[
 				"log",
 				"Arti Lib\\log.h"
@@ -1047,10 +972,6 @@
 			],
 			[
 				"txt",
-				"Connect 4\\data\\testfun.txt"
-			],
-			[
-				".txt",
 				"Connect 4\\data\\testfun.txt"
 			],
 			[

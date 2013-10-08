@@ -15,6 +15,8 @@ FeatureProgram::u_ptr load_program(const std::string& filename) {
     pFeatParser parser;
 
     input = antlr3FileStreamNew((unsigned char *) filename.c_str(),ANTLR3_ENC_8BIT);
+    if (!input)
+        throw runtime_error_ex("file '%s' not found",filename.c_str());
     lex = FeatLexerNew(input);
     tokens = antlr3CommonTokenStreamSourceNew(ANTLR3_SIZE_HINT,
                                               TOKENSOURCE(lex));

@@ -45,26 +45,12 @@ namespace arti {
 			 */
 			const static Piece OUT_OF_BOUNDS;
 			explicit Piece(square_value_t v = EMPTY._value);
-			bool is_empty() const {
-				return _value == EMPTY._value;
-			}
-			;
-			bool is_out_of_bounds() const {
-				return _value == OUT_OF_BOUNDS._value;
-			}
-			;
-			bool operator !=(const Piece& other) const {
-				return _value != other._value;
-			}
-			;
-			bool operator ==(const Piece& other) const {
-				return _value == other._value;
-			}
-			;
-			square_value_t index() const {
-				return _value;
-			}
-			;
+			bool is_empty() const {return _value == EMPTY._value;}			;
+			bool is_out_of_bounds() const {return _value == OUT_OF_BOUNDS._value;}			;
+			bool operator !=(const Piece& other) const {return _value != other._value;}			;
+			bool operator ==(const Piece& other) const {return _value == other._value;}			;
+			bool operator <(const Piece& other) const {return _value < other._value;}			;
+			square_value_t index() const {return _value;}			;
 
 		private:
 			square_value_t _value;
@@ -113,6 +99,7 @@ namespace arti {
 			int count_repeats(const Region& ss, const Piece &value) const;
 			/** Return cend() if not found */
 			Region::const_iterator find(const Region& ss, const Piece &value) const;
+			bool operator< (const Board& o) const;
 		private:
 			std::array<Piece, 64> _data;
 		public:

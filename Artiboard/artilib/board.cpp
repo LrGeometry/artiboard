@@ -71,4 +71,11 @@ namespace arti {
 		return result;	
 	}
 
+	bool Board::operator<(const Board& o) const {
+		for (size_t i = 0; i < _data.size(); i++ )
+			if (_data[i] < o._data[i])
+				return true;
+		return false;	
+	}
+
 }

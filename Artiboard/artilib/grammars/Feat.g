@@ -66,7 +66,7 @@ reference
 	;
 
 INTEGER 
-	: ('1'..'8')+
+	: ('0'..'7')+
 	;
 
 FLOAT

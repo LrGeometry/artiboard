@@ -2,7 +2,15 @@
 const size_t column_count = 7;
 const size_t row_count = 6;
 
-IcuData::IcuData() : _entries() {
+static IcuData * loaded = 0;
+
+IcuData& IcuData::instance() {
+	if (!loaded)
+		loaded = new IcuData();
+	return *loaded;
+}
+
+IcuData::IcuData()  {
 	std::ifstream data("../connect4/data/connect-4.data");
 	std::string s;
 	while (data) {
@@ -26,8 +34,8 @@ IcuData::IcuData() : _entries() {
 		line >> v;
 		if (v == "win")
 			r = MatchOutcome::SouthPlayerWins;
-		else if (v == "lose")
+		else if (v == "loss")
 			r = MatchOutcome::NorthPlayerWins;
-		_entries.push_back(IcuEntry(b,r));			
+		insert({b,r});
 	}	
 }

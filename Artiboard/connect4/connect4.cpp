@@ -48,6 +48,10 @@ const std::vector<const Region*> ranks{&r0,&r1,&r2,&r3,&r4,&r5};
 const std::vector<const Region*> files{&f0,&f1,&f2,&f3,&f4,&f5,&f6};
 
 
+int ply_of(const Board& b) {
+	return num_files*num_ranks - b.count(all,open);
+}
+
 static const Piece& piece_for(const Side &side) {
 	if (side == Side::South)
 		return south;

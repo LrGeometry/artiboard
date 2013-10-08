@@ -1,6 +1,7 @@
 #include <experiment.h>
+#include <feat.h>
 #include "connect4.h"
-
+#include "icu_data.h"
 using namespace arti;
 
 class FairnessExperiment: public Experiment {
@@ -32,5 +33,68 @@ class FairnessExperiment: public Experiment {
 		}
 };
 
+struct DataStat {
+	DataStat() : wins(0), losses(0), draws(0) {};
+	void inc(const IcuEntry& e) {
+			if (e.outcome == NorthPlayerWins)
+				wins++;
+			else if (e.outcome == SouthPlayerWins)
+				losses++;
+			else
+				draws++;		
+	}
+
+	int wins;
+	int losses;
+	int draws;
+};
+
+std::ostream& operator << (std::ostream& os, const DataStat& s) {
+	os << " " << s.wins << " " << s.losses << " " << s.draws;
+	return os;
+} 
+
+class DataStatistics: public Experiment {
+public:
+	DataStatistics(): Experiment("c4-020","Connect-4 ICU data") {}
+	void doRun() override {
+		file() << "ply wins losses draws";
+		const IcuData& data = IcuData::instance();
+		std::map<int,DataStat> stats;
+		for_each(p,data) {
+			int ply = ply_of(p->first);
+			stats[ply].inc(p->second);
+		}
+		for_each(s,stats)
+			file() << s->first << s->second;
+		file() << data.size();
+	}
+};
+
+
+class FeatureStatistics: public Experiment {
+public:
+	FeatureStatistics(): Experiment("c4-030","Connect-4 ICU data features") {}
+	void doRun() override {
+		const IcuData& data = IcuData::instance();
+		file() << "region piece count wins losses draws";
+		const std::vector<Piece> pieces({Piece('-'), Piece('o'), Piece('x')});
+		auto program = load_program("../connect4/data/regions.txt");
+		for_each(nr,program->regions()) {
+			auto n = nr->first;
+			auto r = nr->second;
+			for_each(p,pieces) {
+				std::map<int,DataStat> counts;
+				for_each(b,data) 
+					counts[b->first.count(r,*p)].inc(b->second);
+				for_each(c,counts)
+					file() << n << " " << *p << " " << c->first << " " << c->second;	
+			}
+		}
+	}
+};
+
 // register experiments
 FairnessExperiment ex1;
+DataStatistics ex2;
+FeatureStatistics ex3;

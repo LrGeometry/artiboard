@@ -14,7 +14,9 @@
 	  {"name":"Antlr", "path":"antlr"},
 	  {"name":"Run", "path":"RunDir"},
 	  {"name":"Tut Lib", "path":"tutlib", "file_include_patterns": ["*.cpp","*.h"]},
+	  {"name":"Experiments", "path":"experiments"},
 	  {"name":"Old", "path":"src"}
+
 	],
 	"settings":
 	{
