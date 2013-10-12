@@ -4,12 +4,88 @@
 		"selected_items":
 		[
 			[
-				"no",
-				"north_annotations"
+				"fi",
+				"firstE"
+			],
+			[
+				"a",
+				"attrib"
+			],
+			[
+				"su",
+				"subset_entropy_of"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"for",
+				"forward_list"
+			],
+			[
+				"en",
+				"entropy_of"
+			],
+			[
+				"el",
+				"elemT"
+			],
+			[
+				"f",
+				"firstE"
+			],
+			[
+				"elem",
+				"elemItT"
+			],
+			[
+				"A",
+				"AnnotatedFeatureStatistics"
+			],
+			[
+				"co",
+				"collect_annos"
+			],
+			[
+				"op",
+				"open_annotations"
+			],
+			[
+				"an",
+				"annotations_per_side"
+			],
+			[
+				"ann",
+				"annotate"
 			],
 			[
 				"_",
-				"_it_b"
+				"_board"
+			],
+			[
+				"r",
+				"ro"
+			],
+			[
+				"Ann",
+				"AnnotatedFeatureCheck"
+			],
+			[
+				"em",
+				"emplace_front"
+			],
+			[
+				"annotation",
+				"annotation_pieces"
+			],
+			[
+				"Mat",
+				"MatchOutcome"
+			],
+			[
+				"no",
+				"north_annotations"
 			],
 			[
 				"_i",
@@ -20,24 +96,12 @@
 				"const_iterator"
 			],
 			[
-				"r",
-				"rhs"
-			],
-			[
 				"I",
 				"Iterator"
 			],
 			[
-				"an",
-				"annotations_per_side"
-			],
-			[
 				"sou",
 				"south_annotations"
-			],
-			[
-				"fi",
-				"firstA"
 			],
 			[
 				"e",
@@ -76,10 +140,6 @@
 				"valueT"
 			],
 			[
-				"a",
-				"attribT"
-			],
-			[
 				"att",
 				"attribT"
 			],
@@ -116,10 +176,6 @@
 				"c_str"
 			],
 			[
-				"for",
-				"for_each"
-			],
-			[
 				"connec",
 				"Connect4"
 			],
@@ -146,10 +202,6 @@
 			[
 				"all",
 				"all_regions"
-			],
-			[
-				"re",
-				"repeating"
 			],
 			[
 				"in",
@@ -284,45 +336,26 @@
 	"buffers":
 	[
 		{
-			"file": "artilib/id3.h",
-			"settings":
-			{
-				"buffer_size": 1312,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/id3.cpp",
-			"settings":
-			{
-				"buffer_size": 17,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "#include <experiment.h>\n#include <feat.h>\n#include <id3.h>\n#include \"connect4.h\"\n#include \"icu_data.h\"\nusing namespace arti;\n\nclass FairnessExperiment: public Experiment {\n	public:\n		FairnessExperiment() : Experiment(\"c4-010\",\"Connect-4 fairness\") {}\n	protected:\n		void doRun() override{\n			file() << \"sampleSize south north\";\n			Connect4 spec;\n			PickFirst picker;\n			int south = 0;\n			int north = 0;\n			int draw = 0;\n			int runs = 0;\n			while (runs < 10000) {\n				runs++;\n				Match match(spec,picker);\n				match.play();\n				auto result = match.outcome();\n				if (result == SouthPlayerWins)\n					south++;\n				else if (result == NorthPlayerWins)\n					north++;\n				else \n					draw++;\n				if (runs % 1000 == 0) \n					file() << runs << \" \" << (north * 100) / runs  << \" \" << (south * 100) / runs;\n			}\n		}\n};\n\nstruct DataStat {\n	DataStat() : wins(0), losses(0), draws(0) {};\n	void inc(const IcuEntry& e) {\n			if (e.outcome == NorthPlayerWins)\n				wins++;\n			else if (e.outcome == SouthPlayerWins)\n				losses++;\n			else\n				draws++;		\n	}\n\n	int wins;\n	int losses;\n	int draws;\n};\n\nstd::ostream& operator << (std::ostream& os, const DataStat& s) {\n	os << \" \" << s.wins << \" \" << s.losses << \" \" << s.draws;\n	return os;\n} \n\nclass DataStatistics: public Experiment {\npublic:\n	DataStatistics(): Experiment(\"c4-020\",\"Connect-4 ICU data\") {}\n	void doRun() override {\n		file() << \"ply wins losses draws\";\n		const IcuData& data = IcuData::instance();\n		std::map<int,DataStat> stats;\n		FOR_EACH(p,data) {\n			int ply = ply_of(p->first);\n			stats[ply].inc(p->second);\n		}\n		FOR_EACH(s,stats)\n			file() << s->first << s->second;\n		file() << data.size();\n	}\n};\n\n\nclass FeatureStatistics: public Experiment {\npublic:\n	FeatureStatistics(): Experiment(\"c4-030\",\"Connect-4 ICU data features\") {}\n	void doRun() override {\n		const IcuData& data = IcuData::instance();\n		file() << \"region piece count wins losses draws\";\n		const std::vector<Piece> pieces({Piece('-'), Piece('o'), Piece('x')});\n		auto program = load_program(\"../connect4/data/regions.txt\");\n		FOR_EACH(nr,program->regions()) {\n			auto n = nr->first;\n			auto r = nr->second;\n			FOR_EACH(p,pieces) {\n				std::map<int,DataStat> counts;\n				FOR_EACH(b,data) \n					counts[b->first.count(r,*p)].inc(b->second);\n				FOR_EACH(c,counts)\n					file() << n << \" \" << *p << \" \" << c->first << \" \" << c->second;	\n			}\n		}\n	}\n};\n\ntypedef std::pair<arti::Board, IcuEntry> element_type;\ntypedef std::pair<arti::Region&,arti::Piece> attrib_type;\n\nclass Connect4Classifier : public Classifier<attrib_type, element_type, MatchOutcome, int> {\n	int value_of(const element_type& e, const attrib_type &a) override {\n			return e.first.count_repeats((a.first),a.second);\n	};\n\n  MatchOutcome class_of(const element_type &e) override {\n			return e.second.outcome;\n	};\n};\n\nclass FeatureCheck: public Experiment {\npublic:\n	FeatureCheck(): Experiment(\"c4-040\",\"Impoved Connect-4 ICU data features\") {}\n	void doRun() override {\n		const IcuData& data = IcuData::instance();\n		file() << \"region is_mixed\";\n		const std::vector<Piece> pieces({Piece('-'), Piece('o'), Piece('x')});\n		auto program = load_program(\"../connect4/data/regions.txt\");\n		Connect4Classifier cf;\n		FOR_EACH(nr,program->regions()) \n			FOR_EACH(p,pieces) {\n				attrib_type a(nr->second,*p);\n				file() << nr->first << \" \" << *p << \" \" << (cf.is_mixed(a,data.begin(),data.end())?\"yes\":\"no\"); \n			}\n	}\n};\n\nstruct AnnotatedData {\n	\n};\n\nclass AnnotatedFeatureCheck: public Experiment {\npublic:\n	AnnotatedFeatureCheck(): Experiment(\"c4-050\",\"AnnotatedFeatureCheck Connect-4 ICU data features\") {}\n	void doRun() override {\n		const IcuData& data = IcuData::instance();\n		file() << \"region is_mixed\";\n		const std::vector<Piece> pieces({Piece('-'), Piece('o'), Piece('x')});\n		auto program = load_program(\"../connect4/data/regions.txt\");\n		Connect4Classifier cf;\n		FOR_EACH(nr,program->regions()) \n			FOR_EACH(p,pieces) {\n				attrib_type a(nr->second,*p);\n				file() << nr->first << \" \" << *p << \" \" << (cf.is_mixed(a,data.begin(),data.end())?\"yes\":\"no\"); \n			}\n	}\n};\n\n\n// register experiments\nFairnessExperiment ex1;\nDataStatistics ex2;\nFeatureStatistics ex3;\nFeatureCheck ex4;",
 			"file": "connect4/connect4_exp.cpp",
-			"file_size": 4296,
-			"file_write_time": 130260368401842378,
 			"settings":
 			{
-				"buffer_size": 4144,
+				"buffer_size": 6200,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/cstdio",
+			"file": "/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/bits/forward_list.h",
 			"settings":
 			{
-				"buffer_size": 4347,
+				"buffer_size": 45008,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "connect4/icu_data.h",
+			"file": "/c/development/github/artiboard/artiboard/artilib/id3.h",
 			"settings":
 			{
-				"buffer_size": 378,
+				"buffer_size": 2698,
 				"line_ending": "Windows"
 			}
 		},
@@ -330,47 +363,15 @@
 			"file": "connect4/connect4.cpp",
 			"settings":
 			{
-				"buffer_size": 3658,
+				"buffer_size": 4293,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "artilib/board.h",
+			"file": "/c/development/github/artiboard/artiboard/artilib/board.h",
 			"settings":
 			{
-				"buffer_size": 6167,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "connect4/icu_data.cpp",
-			"settings":
-			{
-				"buffer_size": 844,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/systemex.h",
-			"settings":
-			{
-				"buffer_size": 2900,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/game.cpp",
-			"settings":
-			{
-				"buffer_size": 2725,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/feat_program.cpp",
-			"settings":
-			{
-				"buffer_size": 1402,
+				"buffer_size": 6219,
 				"line_ending": "Windows"
 			}
 		},
@@ -378,17 +379,103 @@
 			"file": "artilib/board.cpp",
 			"settings":
 			{
-				"buffer_size": 2216,
+				"buffer_size": 2215,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "connect4/connect4_main.cpp",
+			"settings":
+			{
+				"buffer_size": 480,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "1-gdb-show interpreter\n=thread-group-added,id=\"i1\"\n~\"GNU gdb (GDB) 7.5\\n\"\n~\"Copyright (C) 2012 Free Software Foundation, Inc.\\n\"\n~\"License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\\nThis is free software: you are free to change and redistribute it.\\nThere is NO WARRANTY, to the extent permitted by law.  Type \\\"show copying\\\"\\nand \\\"show warranty\\\" for details.\\n\"\n~\"This GDB was configured as \\\"i686-pc-mingw32\\\".\\nFor bug reporting instructions, please see:\\n\"\n~\"<http://www.gnu.org/software/gdb/bugs/>...\\n\"\n~\"Reading symbols from C:\\\\development\\\\github\\\\artiboard\\\\Artiboard\\\\RunDir\\\\connect4.exe...\"\n~\"done.\\n\"\n(gdb)\n1^error,msg=\"Undefined show command: \\\"interpreter\\\".  Try \\\"help show\\\".\"\n(gdb)\n2-inferior-tty-set c:\\users\\willemd\\appdata\\local\\temp\\tmprzsof3\n2^done\n(gdb)\n3-gdb-set target-async 1\n4-gdb-set pagination off\n5-gdb-set disassembly-flavor intel\n6-break-insert \"\\\"c:/development/github/artiboard/artiboard/artilib/id3.h\\\":61\"\n3^done\n(gdb)\n4^done\n(gdb)\n5^done\n(gdb)\n6^error,msg=\"No source file named c:/development/github/artiboard/artiboard/artilib/id3.h.\"\n(gdb)\n7-exec-run\n&\"warning: Warning: Failed to open TTY c:\\\\users\\\\willemd\\\\appdata\\\\local\\\\temp\\\\tmprzsof3, error 0x20.\\n\"\n=thread-group-started,id=\"i1\",pid=\"6708\"\n=thread-created,id=\"1\",group-id=\"i1\"\n~\"[New Thread 6708.0x1780]\\n\"\n7^running\n*running,thread-id=\"all\"\n(gdb)\n=library-loaded,id=\"C:\\\\Windows\\\\system32\\\\ntdll.dll\",target-name=\"C:\\\\Windows\\\\system32\\\\ntdll.dll\",host-name=\"C:\\\\Windows\\\\system32\\\\ntdll.dll\",symbols-loaded=\"0\",thread-group=\"i1\"\n=library-loaded,id=\"C:\\\\Windows\\\\syswow64\\\\kernel32.dll\",target-name=\"C:\\\\Windows\\\\syswow64\\\\kernel32.dll\",host-name=\"C:\\\\Windows\\\\syswow64\\\\kernel32.dll\",symbols-loaded=\"0\",thread-group=\"i1\"\n=library-loaded,id=\"C:\\\\Windows\\\\syswow64\\\\KernelBase.dll\",target-name=\"C:\\\\Windows\\\\syswow64\\\\KernelBase.dll\",host-name=\"C:\\\\Windows\\\\syswow64\\\\KernelBase.dll\",symbols-loaded=\"0\",thread-group=\"i1\"\n=library-loaded,id=\"C:\\\\Windows\\\\syswow64\\\\msvcrt.dll\",target-name=\"C:\\\\Windows\\\\syswow64\\\\msvcrt.dll\",host-name=\"C:\\\\Windows\\\\syswow64\\\\msvcrt.dll\",symbols-loaded=\"0\",thread-group=\"i1\"\n=library-loaded,id=\"C:\\\\Program Files (x86)\\\\Graphviz 2.28\\\\bin\\\\libgcc_s_dw2-1.dll\",target-name=\"C:\\\\Program Files (x86)\\\\Graphviz 2.28\\\\bin\\\\libgcc_s_dw2-1.dll\",host-name=\"C:\\\\Program Files (x86)\\\\Graphviz 2.28\\\\bin\\\\libgcc_s_dw2-1.dll\",symbols-loaded=\"0\",thread-group=\"i1\"\n=library-loaded,id=\"c:\\\\mingw\\\\bin\\\\libstdc++-6.dll\",target-name=\"c:\\\\mingw\\\\bin\\\\libstdc++-6.dll\",host-name=\"c:\\\\mingw\\\\bin\\\\libstdc++-6.dll\",symbols-loaded=\"0\",thread-group=\"i1\"\n8-exec-interrupt --all\n9-exec-interrupt --all\n",
+			"settings":
+			{
+				"buffer_size": 2641,
+				"line_ending": "Windows",
+				"name": "GDB Session",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "GNU gdb (GDB) 7.5\nCopyright (C) 2012 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.  Type \"show copying\"\nand \"show warranty\" for details.\nThis GDB was configured as \"i686-pc-mingw32\".\nFor bug reporting instructions, please see:\n<http://www.gnu.org/software/gdb/bugs/>...\nReading symbols from C:\\\\development\\\\github\\\\artiboard\\\\Artiboard\\\\RunDir\\\\connect4.exe...done.\n[New Thread 6708.0x1780]\n",
+			"settings":
+			{
+				"buffer_size": 576,
+				"line_ending": "Windows",
+				"name": "GDB Console",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows",
+				"name": "GDB Variables",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows",
+				"name": "GDB Callstack",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows",
+				"name": "GDB Threads",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "-1 - c:\\development\\github\\artiboard\\artiboard\\artilib\\id3.h:61\n",
+			"settings":
+			{
+				"buffer_size": 64,
+				"line_ending": "Windows",
+				"name": "GDB Breakpoints",
+				"read_only": true,
+				"scratch": true
 			}
 		}
 	],
 	"build_system": "Packages/Makefile/Make.sublime-build",
 	"command_palette":
 	{
-		"height": 45.0,
+		"height": 185.0,
 		"selected_items":
 		[
+			[
+				"brea",
+				"SublimeGDB: Open Breakpoint View"
+			],
+			[
+				"break",
+				"SublimeGDB: Open Breakpoint View"
+			],
+			[
+				"gdb",
+				"SublimeGDB: Start Debugging"
+			],
 			[
 				"dbg",
 				"SublimeGDB: Stop Debugging"
@@ -500,32 +587,44 @@
 	},
 	"file_history":
 	[
-		"/C/development/github/artiboard/Artiboard/connect4/connect4.h",
-		"/C/development/github/artiboard/Artiboard/artilib/board.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/square.h",
-		"/C/development/github/artiboard/Artiboard/connect4/icu_data.h",
+		"/C/development/github/artiboard/Artiboard/artilib/id3.h",
+		"/C/development/github/artiboard/Artiboard/makefile",
+		"/C/development/github/artiboard/Artiboard/experiments/c4-070.txt",
+		"/C/development/github/artiboard/Artiboard/experiments/c4-060.txt",
+		"/C/development/github/artiboard/Artiboard/experiments/c4-050.txt",
 		"/C/development/github/artiboard/Artiboard/connect4/connect4_main.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/feat.cpp",
+		"/C/development/github/artiboard/Artiboard/artilibtest/board_tests.cpp",
+		"/C/development/github/artiboard/Artiboard/artilibtest/feat_tests.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/board.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/board.h",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4_exp.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4.cpp",
+		"/C/development/github/artiboard/Artiboard/artilibtest/data/feat_language_test.txt",
+		"/C/development/github/artiboard/Artiboard/src/boardgame/test_boardgame.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/systemex.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/systemex.h",
+		"/C/development/github/artiboard/Artiboard/artilib/id3.cpp",
+		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
+		"/C/development/github/artiboard/Artiboard/artilib/square.h",
+		"/C/development/github/artiboard/Artiboard/artilib/square.cpp",
+		"/C/development/github/artiboard/Artiboard/experiments/c4-030.txt",
+		"/C/development/github/artiboard/Artiboard/connect4/data/regions.txt",
 		"/C/development/github/artiboard/Artiboard/experiments/c4-040.txt",
+		"/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/cstdio",
+		"/C/development/github/artiboard/Artiboard/connect4/icu_data.h",
+		"/C/development/github/artiboard/Artiboard/connect4/icu_data.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/game.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/feat_program.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4.h",
 		"/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/bits/stl_pair.h",
 		"/C/development/github/artiboard/Artiboard/connect4/connect4_test.cpp",
 		"/G/code/cuffserver/test/com/vastech/cuff/workflow/WorkflowManagerTests.java",
-		"/C/development/github/artiboard/Artiboard/artilib/board.h",
 		"/c/development/github/artiboard/artiboard/artilib/feat.cpp",
-		"/C/development/github/artiboard/Artiboard/connect4/connect4_exp.cpp",
-		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
-		"/C/development/github/artiboard/Artiboard/connect4/connect4.cpp",
-		"/C/development/github/artiboard/Artiboard/connect4/icu_data.cpp",
-		"/C/development/github/artiboard/Artiboard/experiments/c4-030.txt",
 		"/C/development/github/artiboard/Artiboard/artilib/feat.h",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/Feat.g",
-		"/C/development/github/artiboard/Artiboard/artilib/systemex.h",
-		"/C/development/github/artiboard/Artiboard/artilib/systemex.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/feat.cpp",
-		"/C/development/github/artiboard/Artiboard/artilibtest/data/feat_language_test.txt",
 		"/C/development/github/artiboard/Artiboard/artilib/game.h",
-		"/C/development/github/artiboard/Artiboard/artilib/game.cpp",
 		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe.h",
-		"/C/development/github/artiboard/Artiboard/artilib/square.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/experiment.h",
 		"/C/development/github/artiboard/Artiboard/artilib/experiment.cpp",
 		"/C/development/github/artiboard/Artiboard/RunDir/log.txt",
@@ -534,7 +633,6 @@
 		"/C/development/github/artiboard/Artiboard/artilib/log.h",
 		"/C/development/github/artiboard/Artiboard/tutlib/test_util.h",
 		"/0> connect4/connect4.cpp(83)",
-		"/C/development/github/artiboard/Artiboard/makefile",
 		"/C/development/github/artiboard/Artiboard/artilib/boardgame.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/data/connect4.h",
 		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe.cpp",
@@ -546,12 +644,10 @@
 		"/C/development/github/artiboard/Artiboard/src/checkers/testcheckers.cpp",
 		"/C/development/github/artiboard/Artiboard/src/tictactoe/test_tictactoe.cpp",
 		"/C/development/github/artiboard/Artiboard/checkers/checkers_main.cpp",
-		"/C/development/github/artiboard/Artiboard/artilibtest/feat_tests.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/feat_program.h",
 		"/C/development/github/artiboard/Artiboard/src/game/game.h",
 		"/C/development/github/artiboard/Artiboard/src/game/gamebase.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.g",
-		"/C/development/github/artiboard/Artiboard/artilib/feat_program.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.c",
 		"/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/bits/stl_tree.h",
 		"/C/development/github/artiboard/Artiboard/src/checkers/checkers.h",
@@ -618,20 +714,11 @@
 		"/C/development/gui/code/badgerui/badger_model/com/vastech/localdb/project_004.sql",
 		"/C/development/gui/code/badgerui/badger_model/com/vastech/localdb/project_003.sql",
 		"/C/scratch/page006.xml",
-		"/C/development/ngmc/trunk/src-redist-full/Redistributables/OCR_Verus/Verus/crs-api-sample.cpp",
-		"/C/development/ngmc/trunk/src-redist-full/Redistributables/OCR_Verus/Verus/crs-api-sample-zone.cpp",
-		"/C/development/ngmc/trunk/src/MediaServer/.project",
-		"/C/development/ngmc/trunk/src/MediaServer/.classpath",
-		"/C/development/ngmc/trunk/src/MediaServer/build.xml",
-		"/C/development/ngmc/trunk/src/TextSearch/.classpath",
-		"/C/development/github/Racer/TorcsRCS/torcs/WrapperBaseDriver.h",
-		"/C/Users/willemd/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
-		"/C/development/boogaloo/build.xml",
-		"/C/development/boogaloo/src/boogaloo/Background.scala"
+		"/C/development/ngmc/trunk/src-redist-full/Redistributables/OCR_Verus/Verus/crs-api-sample.cpp"
 	],
 	"find":
 	{
-		"height": 43.0
+		"height": 49.0
 	},
 	"find_in_files":
 	{
@@ -646,6 +733,20 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"AnnotatedFeatureCheck",
+			"map",
+			"c",
+			"FeatureStatistics",
+			"no",
+			"non",
+			"no",
+			"BEGIN",
+			"UTEST",
+			"bgTestData",
+			"8",
+			"data",
+			"element_type",
+			".outcome",
 			"AnnoFeatureCheck",
 			"for_each",
 			"char",
@@ -774,81 +875,24 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "artilib/id3.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1312,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								590,
-								590
-							]
-						],
-						"settings":
-						{
-							"auto_name": "",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 3,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1020.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "artilib/id3.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 17,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								17,
-								17
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "connect4/connect4_exp.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4144,
+						"buffer_size": 6200,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3403,
-								3403
+								6029,
+								6029
 							]
 						],
 						"settings":
@@ -857,26 +901,26 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4158.0,
+						"translation.y": 6023.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/cstdio",
+					"buffer": 1,
+					"file": "/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/bits/forward_list.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4347,
+						"buffer_size": 45008,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4192,
-								4192
+								3681,
+								3681
 							]
 						],
 						"settings":
@@ -886,26 +930,287 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 5830.0,
+						"translation.y": 3574.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "connect4/icu_data.h",
+					"buffer": 2,
+					"file": "/c/development/github/artiboard/artiboard/artilib/id3.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 378,
+						"buffer_size": 2698,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								375,
-								375
+								1987,
+								1987
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1776.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "connect4/connect4.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4293,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3620,
+								3620
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3269.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/c/development/github/artiboard/artiboard/artilib/board.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6219,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4675,
+								4675
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3667.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "artilib/board.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2215,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1428,
+								1428
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 744.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "connect4/connect4_main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 480,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								293,
+								293
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 186.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 7,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2641,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2641,
+								2641
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimeGDB/gdb_session.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 576,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								576,
+								576
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 17515.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 10,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 11,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -919,213 +1224,28 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "connect4/connect4.cpp",
+					"buffer": 12,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3658,
+						"buffer_size": 64,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3559,
-								3564
+								64,
+								64
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"word_wrap": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3858.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "artilib/board.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6167,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4466,
-								4466
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3800.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "connect4/icu_data.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 844,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								360,
-								360
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 288.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "artilib/systemex.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2900,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2843,
-								2851
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3321.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "artilib/game.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2725,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								411,
-								411
-							],
-							[
-								979,
-								979
-							],
-							[
-								1688,
-								1688
-							],
-							[
-								2378,
-								2378
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2770.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "artilib/feat_program.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1402,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								269,
-								269
-							],
-							[
-								314,
-								314
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 118.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "artilib/board.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2216,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								336,
-								336
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 322.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1135,7 +1255,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 33.0
+		"height": 39.0
 	},
 	"input":
 	{
@@ -1148,18 +1268,39 @@
 			[
 				0,
 				0,
-				1,
+				3,
 				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
+			],
+			[
+				1,
+				1,
+				2,
+				2
+			],
+			[
+				2,
+				1,
+				3,
+				2
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.33,
+			0.66,
 			1.0
 		],
 		"rows":
 		[
 			0.0,
+			0.75,
 			1.0
 		]
 	},
@@ -1171,7 +1312,7 @@
 	"project": "artiboard.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 74.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1180,16 +1321,92 @@
 		"selected_items":
 		[
 			[
+				"make",
+				"Root\\makefile"
+			],
+			[
+				"070",
+				"Experiments\\c4-070.txt"
+			],
+			[
+				"id",
+				"Arti Lib\\id3.h"
+			],
+			[
+				"06",
+				"Experiments\\c4-060.txt"
+			],
+			[
+				"060",
+				"Experiments\\c4-060.txt"
+			],
+			[
+				"m",
+				"Root\\makefile"
+			],
+			[
+				"mai",
+				"Connect 4\\connect4_main.cpp"
+			],
+			[
+				"050",
+				"Experiments\\c4-050.txt"
+			],
+			[
+				"bo",
+				"Arti Lib\\board.cpp"
+			],
+			[
+				"c4cp",
+				"Connect 4\\connect4.cpp"
+			],
+			[
+				"c4exp",
+				"Connect 4\\connect4_exp.cpp"
+			],
+			[
+				"main",
+				"Connect 4\\connect4_main.cpp"
+			],
+			[
+				"fe",
+				"Arti Lib\\feat.cpp"
+			],
+			[
+				"libtest",
+				"Arti Lib Tests\\feat_tests.cpp"
+			],
+			[
+				"c4main",
+				"Connect 4\\connect4_main.cpp"
+			],
+			[
 				"sys",
 				"Arti Lib\\systemex.h"
 			],
 			[
-				"sq",
-				"Arti Lib\\square.h"
+				"syst",
+				"Arti Lib\\systemex.h"
 			],
 			[
-				"bo",
+				"con",
+				"Connect 4\\connect4_main.cpp"
+			],
+			[
+				"sq",
+				"Arti Lib\\square.cpp"
+			],
+			[
+				"region",
+				"Connect 4\\data\\regions.txt"
+			],
+			[
+				"boad",
 				"Arti Lib\\board.h"
+			],
+			[
+				"040",
+				"Experiments\\c4-040.txt"
 			],
 			[
 				"ba",
@@ -1208,16 +1425,8 @@
 				"Connect 4\\icu_data.h"
 			],
 			[
-				"040",
-				"Experiments\\c4-040.txt"
-			],
-			[
 				"con_main",
 				"Connect 4\\connect4_main.cpp"
-			],
-			[
-				"id",
-				"Arti Lib\\id3.h"
 			],
 			[
 				"board",
@@ -1246,10 +1455,6 @@
 			[
 				"reg",
 				"Connect 4\\data\\regions.txt"
-			],
-			[
-				"syst",
-				"Arti Lib\\systemex.h"
 			],
 			[
 				"feat",
@@ -1324,14 +1529,6 @@
 				"Arti Lib\\square.h"
 			],
 			[
-				"make",
-				"Root\\makefile"
-			],
-			[
-				"boad",
-				"Arti Lib\\board.h"
-			],
-			[
 				"boa",
 				"Arti Lib\\board.h"
 			],
@@ -1381,10 +1578,6 @@
 			],
 			[
 				"test_m",
-				"Tut Lib\\test_main.cpp"
-			],
-			[
-				"main",
 				"Tut Lib\\test_main.cpp"
 			],
 			[

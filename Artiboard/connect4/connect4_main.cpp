@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
   try {
     // auto program = load_program("../connect4/data/testfun.txt");
     //test_main();
-    ExperimentRepository::instance().find("c4-050").run();
+    ExperimentRepository::instance().find("c4-070").run();
     LOG << "Done";
   } catch (std::exception &ex) {
     LOG << "*** ERROR ***: " << ex.what() << std::endl;

@@ -45,7 +45,6 @@ namespace arti {
 		return result;	
 	}
 
-
 	Region::const_iterator Board::find(const Region& ss, const Piece &value) const {
 		for (auto s = ss.cbegin(); s != ss.cend(); s++) {
 			if (at(s->file(),s->rank()) == value)

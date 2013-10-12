@@ -134,7 +134,7 @@ struct AnnotatedData {
 
 class AnnotatedClassifier : public Classifier<attrib_type, AnnotatedData, MatchOutcome, int> {
 	int value_of(const AnnotatedData& e, const attrib_type &a) override {
-			return e._board.count_repeats((a.first),a.second);
+			return e._board.count((a.first),a.second) > 0 ? 1 : 0;
 	};
 
   MatchOutcome class_of(const AnnotatedData &e) override {
@@ -142,17 +142,18 @@ class AnnotatedClassifier : public Classifier<attrib_type, AnnotatedData, MatchO
 	};
 };
 
+void collect_annos(std::forward_list<AnnotatedData>& annos) {
+		const IcuData& data = IcuData::instance();
+		FOR_EACH(i,data) 
+			annos.emplace_front(AnnotatedData(AnnotatedBoard(i->first),i->second));
+}
+
 class AnnotatedFeatureCheck: public Experiment {
 public:
 	AnnotatedFeatureCheck(): Experiment("c4-050","AnnotatedFeatureCheck Connect-4 ICU data features") {}
 	void doRun() override {
-		const IcuData& data = IcuData::instance();
 		std::forward_list<AnnotatedData> annos;
-		FOR_EACH(i,data) {
-			LOG << i->first;
-			annos.emplace_front(AnnotatedData(AnnotatedBoard(i->first),i->second));
-			LOG << annos.front()._board;
-		}
+		collect_annos(annos);
 		file() << "region is_mixed";
 		auto pieces = annotation_pieces();
 		auto program = load_program("../connect4/data/regions.txt");
@@ -165,6 +166,47 @@ public:
 	}
 };
 
+class AnnotatedFeatureStatistics: public Experiment {
+public:
+	AnnotatedFeatureStatistics(): Experiment("c4-060","Connect-4 ICU data features") {}
+	void doRun() override {
+		std::forward_list<AnnotatedData> annos;
+		collect_annos(annos);
+		file() << "region piece count wins losses draws";
+		auto pieces = annotation_pieces();
+		auto program = load_program("../connect4/data/regions.txt");
+		FOR_EACH(nr,program->regions()) {
+			auto n = nr->first;
+			auto r = nr->second;
+			FOR_EACH(p,pieces) {
+				std::map<int,DataStat> counts;
+				FOR_EACH(b,annos) 
+					counts[b->_board.count(r,*p)].inc(b->_outcome);
+				FOR_EACH(c,counts)
+					file() << n << " " << *p << " " << c->first << " " << c->second;	
+			}
+		}
+	}
+};
+
+class AnnotatedEntropy: public Experiment {
+public:
+	AnnotatedEntropy(): Experiment("c4-070","AnnotatedEntropy Connect-4 ICU data features") {}
+	void doRun() override {
+		std::forward_list<AnnotatedData> annos;
+		collect_annos(annos);
+		file() << "region subset_entropy";
+		auto pieces = annotation_pieces();
+		auto program = load_program("../connect4/data/regions.txt");
+		AnnotatedClassifier cf;
+		FOR_EACH(nr,program->regions()) 
+			FOR_EACH(p,pieces) {
+				attrib_type a(nr->second,*p);
+				file() << nr->first << " " << *p << " " << cf.subset_entropy_of(a,annos.begin(),annos.end()); 
+			}
+	}
+};
+
 
 // register experiments
 FairnessExperiment ex1;
@@ -172,3 +214,5 @@ DataStatistics ex2;
 FeatureStatistics ex3;
 FeatureCheck ex4;
 AnnotatedFeatureCheck ex5;
+AnnotatedFeatureStatistics ex6;
+AnnotatedEntropy ex7;
