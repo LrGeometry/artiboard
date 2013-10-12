@@ -17,7 +17,7 @@ IcuData::IcuData()  {
 		data >> s;
 		if (!data)
 			return;
-		for_each(c,s) 
+		FOR_EACH(c,s) 
 			if (*c == ',') *c = ' ';
 		std::stringstream line(s);
 		arti::Board b;

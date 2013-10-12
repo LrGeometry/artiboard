@@ -28,17 +28,16 @@ FeatureProgram::u_ptr load_program(const std::string& filename) {
 
     // I should implement a custom displayRecognitionError(), but have to figure out how first
     const bool hasErrors = parser->pParser->rec->state->errorCount > 0;
-    std::cout << tree->toStringTree(tree)->chars << std::endl;
-
-  
     if (!hasErrors) {
         auto parseTree = antlr3CommonTreeNodeStreamNewTree(tree,ANTLR3_SIZE_HINT);
         auto featTree = FeatTreeNew(parseTree);
         auto result = featTree->program(featTree);
         featTree->free(featTree);
         return FeatureProgram::u_ptr(result); 
-    } else 
+    } else {
+        std::cout << tree->toStringTree(tree)->chars << std::endl;
         throw runtime_error("There were parse errors"); 
+    }
     parser->free(parser);
     tokens->free(tokens);
     lex->free(lex);

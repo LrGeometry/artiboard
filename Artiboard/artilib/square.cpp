@@ -77,18 +77,27 @@ namespace arti {
 
 	void Region::insert_diag_neighbours(const Square& middle)
 	{
-		*this += Square(middle,-1,1);
-		*this += Square(middle,1,1);
-		*this += Square(middle,1,-1);
-		*this += Square(middle,-1,-1);
+		add(middle,-1,1);
+		add(middle,1,1);
+		add(middle,1,-1);
+		add(middle,-1,-1);
+	}
+
+	void Region::insert_neighbours(const Square& middle)
+	{
+		insert_diag_neighbours(middle);
+		add(middle,-1,0);
+		add(middle,1,0);
+		add(middle,0,-1);
+		add(middle,0,1);
 	}
 
 	void Region::insert_diag_second_neighbours(const Square& middle)
 	{
-		*this += Square(middle,-2,2);
-		*this += Square(middle,2,2);
-		*this += Square(middle,2,-2);
-		*this += Square(middle,-2,-2);
+		add(middle,-2,2);
+		add(middle,2,2);
+		add(middle,2,-2);
+		add(middle,-2,-2);
 	}
 
 	void Region::insert_set(const Region & s)

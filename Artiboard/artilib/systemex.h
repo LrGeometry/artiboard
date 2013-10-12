@@ -104,4 +104,4 @@ namespace arti {
 	template <class T> inline void delete_all(std::list<T> coll) {for_all(coll,deleteF<T>);};
 
 }
-#define for_each(I,C) for(auto I = C.begin(); I != C.end(); ++I)
+#define FOR_EACH(I,C) for(auto I = C.begin(); I != C.end(); ++I)

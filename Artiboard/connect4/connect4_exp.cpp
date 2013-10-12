@@ -1,5 +1,7 @@
 #include <experiment.h>
 #include <feat.h>
+#include <id3.h>
+#include <forward_list>
 #include "connect4.h"
 #include "icu_data.h"
 using namespace arti;
@@ -35,10 +37,10 @@ class FairnessExperiment: public Experiment {
 
 struct DataStat {
 	DataStat() : wins(0), losses(0), draws(0) {};
-	void inc(const IcuEntry& e) {
-			if (e.outcome == NorthPlayerWins)
+	void inc(const MatchOutcome& e) {
+			if (e == NorthPlayerWins)
 				wins++;
-			else if (e.outcome == SouthPlayerWins)
+			else if (e == SouthPlayerWins)
 				losses++;
 			else
 				draws++;		
@@ -61,11 +63,11 @@ public:
 		file() << "ply wins losses draws";
 		const IcuData& data = IcuData::instance();
 		std::map<int,DataStat> stats;
-		for_each(p,data) {
+		FOR_EACH(p,data) {
 			int ply = ply_of(p->first);
 			stats[ply].inc(p->second);
 		}
-		for_each(s,stats)
+		FOR_EACH(s,stats)
 			file() << s->first << s->second;
 		file() << data.size();
 	}
@@ -80,21 +82,93 @@ public:
 		file() << "region piece count wins losses draws";
 		const std::vector<Piece> pieces({Piece('-'), Piece('o'), Piece('x')});
 		auto program = load_program("../connect4/data/regions.txt");
-		for_each(nr,program->regions()) {
+		FOR_EACH(nr,program->regions()) {
 			auto n = nr->first;
 			auto r = nr->second;
-			for_each(p,pieces) {
+			FOR_EACH(p,pieces) {
 				std::map<int,DataStat> counts;
-				for_each(b,data) 
+				FOR_EACH(b,data) 
 					counts[b->first.count(r,*p)].inc(b->second);
-				for_each(c,counts)
+				FOR_EACH(c,counts)
 					file() << n << " " << *p << " " << c->first << " " << c->second;	
 			}
 		}
 	}
 };
 
+typedef std::pair<arti::Board, MatchOutcome> element_type;
+typedef std::pair<arti::Region&,arti::Piece> attrib_type;
+
+class Connect4Classifier : public Classifier<attrib_type, element_type, MatchOutcome, int> {
+	int value_of(const element_type& e, const attrib_type &a) override {
+			return e.first.count_repeats((a.first),a.second);
+	};
+
+  MatchOutcome class_of(const element_type &e) override {
+			return e.second;
+	};
+};
+
+class FeatureCheck: public Experiment {
+public:
+	FeatureCheck(): Experiment("c4-040","Impoved Connect-4 ICU data features") {}
+	void doRun() override {
+		const IcuData& data = IcuData::instance();
+		file() << "region is_mixed";
+		const std::vector<Piece> pieces({Piece('-'), Piece('o'), Piece('x')});
+		auto program = load_program("../connect4/data/regions.txt");
+		Connect4Classifier cf;
+		FOR_EACH(nr,program->regions()) 
+			FOR_EACH(p,pieces) {
+				attrib_type a(nr->second,*p);
+				file() << nr->first << " " << *p << " " << (cf.is_mixed(a,data.begin(),data.end())?"yes":"no"); 
+			}
+	}
+};
+
+struct AnnotatedData {
+	AnnotatedData(AnnotatedBoard b, MatchOutcome o) : _board(b), _outcome(o) {}
+	const AnnotatedBoard _board;
+	const MatchOutcome _outcome;
+};
+
+class AnnotatedClassifier : public Classifier<attrib_type, AnnotatedData, MatchOutcome, int> {
+	int value_of(const AnnotatedData& e, const attrib_type &a) override {
+			return e._board.count_repeats((a.first),a.second);
+	};
+
+  MatchOutcome class_of(const AnnotatedData &e) override {
+			return e._outcome;
+	};
+};
+
+class AnnotatedFeatureCheck: public Experiment {
+public:
+	AnnotatedFeatureCheck(): Experiment("c4-050","AnnotatedFeatureCheck Connect-4 ICU data features") {}
+	void doRun() override {
+		const IcuData& data = IcuData::instance();
+		std::forward_list<AnnotatedData> annos;
+		FOR_EACH(i,data) {
+			LOG << i->first;
+			annos.emplace_front(AnnotatedData(AnnotatedBoard(i->first),i->second));
+			LOG << annos.front()._board;
+		}
+		file() << "region is_mixed";
+		auto pieces = annotation_pieces();
+		auto program = load_program("../connect4/data/regions.txt");
+		AnnotatedClassifier cf;
+		FOR_EACH(nr,program->regions()) 
+			FOR_EACH(p,pieces) {
+				attrib_type a(nr->second,*p);
+				file() << nr->first << " " << *p << " " << (cf.is_mixed(a,annos.begin(),annos.end())?"yes":"no"); 
+			}
+	}
+};
+
+
 // register experiments
 FairnessExperiment ex1;
 DataStatistics ex2;
 FeatureStatistics ex3;
+FeatureCheck ex4;
+AnnotatedFeatureCheck ex5;

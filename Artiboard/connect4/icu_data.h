@@ -8,16 +8,7 @@
 
 using namespace arti;
 
-class IcuEntry {
-public:
-	IcuEntry(const MatchOutcome anOutcome)	:  outcome(anOutcome) {}
-	MatchOutcome outcome;
-};
-
-
-
-
-class IcuData : public std::map<Board,IcuEntry> {
+class IcuData : public std::map<Board,MatchOutcome> {
 public:
 	static IcuData& instance();
 private:

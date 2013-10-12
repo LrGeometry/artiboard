@@ -5,6 +5,12 @@
 const Piece south('o');
 const Piece north('x');
 const Piece open('-');
+const char * annotations = "o12345678xabcdefgh-ijklmnop";
+const int annotations_per_side = 9;
+const char * south_annotations = annotations;
+const char * north_annotations = south_annotations + annotations_per_side;
+const char * open_annotations = north_annotations + annotations_per_side;
+
 const index_t num_files = 7;
 const index_t num_ranks = 6;
 const Region all(num_files,num_ranks);
@@ -47,6 +53,18 @@ const std::vector<const Region*> all_regions{
 const std::vector<const Region*> ranks{&r0,&r1,&r2,&r3,&r4,&r5};
 const std::vector<const Region*> files{&f0,&f1,&f2,&f3,&f4,&f5,&f6};
 
+std::forward_list<Piece> * annotation_piece_list = 0;
+
+const std::forward_list<Piece>& annotation_pieces() {
+	if (annotation_piece_list == 0) {
+		annotation_piece_list = new std::forward_list<Piece>();
+		const char * e = annotations;
+		while (*e != 0) 
+			annotation_piece_list->emplace_front(Piece(*(e++)));
+	};
+	return *annotation_piece_list;
+
+}
 
 int ply_of(const Board& b) {
 	return num_files*num_ranks - b.count(all,open);
@@ -89,7 +107,7 @@ MatchOutcome Connect4::outcome_of(const Position& p) const {
 		return Unknown;
 }
 
-/** Next open square in every file is a posible move */
+/** Next open square in every file is a possible move */
 void Connect4::collectMoves(const Position& pos, Move::SharedFWList &result) const {
 	auto piece = piece_for(pos.ply().side_to_move());
 	for (auto i = 0; i < files.size(); i++) {
@@ -101,3 +119,26 @@ void Connect4::collectMoves(const Position& pos, Move::SharedFWList &result) con
 		}
 	}
 }
+
+arti::Piece annotate(const Board::const_iterator& it) {
+	if (*it == Piece::EMPTY) return *it;
+	else { 
+		arti::Region n;
+		n.insert_neighbours(it.pos()); 
+		int r = it.board().count(n,*it);
+		if (*it == *south_annotations) return Piece(south_annotations[r]);
+		else if(*it == *north_annotations) return Piece(north_annotations[r]);
+		else if(*it == *open_annotations) return Piece(open_annotations[r]);
+		else throw runtime_error_ex("Invalid char %d",*it);
+	}
+};
+
+AnnotatedBoard::AnnotatedBoard(const Board& s) {
+	for(auto i = s.begin(); i != s.end(); i++) {
+		//TRACE << i.file() << " " << i.rank() << " " << annotate(i);
+		place(i.file(),i.rank(),annotate(i));
+	}
+}
+
+
+

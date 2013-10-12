@@ -10,7 +10,7 @@ namespace arti {
 
 	std::unique_ptr<Board> Move::apply_to(const Board &brd) const {
 		Board::u_ptr result(new Board(brd));
-		for_each(step,_steps) {
+		FOR_EACH(step,_steps) {
 			(*step)->apply_on(*result);
 		}
 		return result;
@@ -32,7 +32,7 @@ namespace arti {
 			view.go(r,c);
 			steps.clear();
 			collectSteps(pos,view,stepIndex,steps);
-			for_each(step, steps) {
+			FOR_EACH(step, steps) {
 				if ((*step)->outcome() == StepOutcome::EndsMoveAndContinue)
 					throw std::runtime_error("open steps not implemented yet");
 				result.emplace_front(new Move(*step));
@@ -62,7 +62,7 @@ namespace arti {
 	};
 
 	ostream& operator <<(ostream& os, const PlayLine& v) {
-		for_each(p,v.sequence()) {
+		FOR_EACH(p,v.sequence()) {
 			os << "Ply: " << (*p)->ply().index() << std::endl << (*p)->board() << std::endl;
 		}
 		return os;
@@ -87,7 +87,7 @@ namespace arti {
 				_outcome = MatchOutcome::Draw;
 			else {
 				std::forward_list<unique_ptr<Board>> boards;
-				for_each(m,moves) {
+				FOR_EACH(m,moves) {
 					boards.push_front((**m).apply_to(pos.board()));
 				}
 				_line.add(_chooser.select(pos, boards));

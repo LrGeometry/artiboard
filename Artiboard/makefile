@@ -27,14 +27,15 @@ ARTI_TEST := $(TARGET_DIR)/artitest.exe
 run_connect_4: $(CONNECT_4)
 	cd $(TARGET_DIR); ./connect4.exe; cat ./log.txt
 	
+run_arti_test: $(ARTI_TEST)
+	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
+	
 run_tictactoe: $(TICTACTOE)
 	cd $(TARGET_DIR); ./tictactoe.exe
 
 run_checkers: $(CHECKERS)
 	cd $(TARGET_DIR); ./checkers.exe
 
-run_arti_test: $(ARTI_TEST)
-	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
 
 
 # sometimes this target must be called explicitly

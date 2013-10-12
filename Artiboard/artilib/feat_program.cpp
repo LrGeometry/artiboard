@@ -9,8 +9,8 @@ namespace arti {
 	}
 
 	FeatureProgram::~FeatureProgram() {
-		for_each(E, _formulaMap) delete E->second;
-		for_each(E, _functionMap) delete E->second;
+		FOR_EACH(E, _formulaMap) delete E->second;
+		FOR_EACH(E, _functionMap) delete E->second;
 	}
 
 	template<class T> ostream& operator <<(std::ostream& os, const std::set<T>& v) {

@@ -38,6 +38,7 @@ namespace arti {
 		Square(const ordinal_t dark_color_index);
 		bool operator < (const Square& other) const { return index() < other.index();}
 		bool operator == (const Square& other) const { return index() == other.index(); }
+		
 	private:
 		/* updates */
 		// change to the mirror of the square
@@ -52,11 +53,10 @@ namespace arti {
 		{
 			return (_file == f && _rank == r);
 		}
-
-	private:
 		ordinal_t _file, _rank;
 	};
 	std::ostream & operator  <<(std::ostream &, const Square&) ;
+
 
 		// union = U
 	// intersect = I
@@ -69,11 +69,12 @@ namespace arti {
 		Region(const Square &from, const int inc_f, const int inc_r, ordinal_t count);
 		// inserts the valid neighbours of the middle square into this
 		void insert_diag_neighbours(const Square& middle);
+		void insert_neighbours(const Square& middle);
 		// inserts the valid second neighbours of the middle square into this
 		void insert_diag_second_neighbours(const Square& middle);
-		// adds s to this if s is valid
-		void operator += (const Square &s)
-		{ if (s.is_valid()) insert(s); }
+		// adds if values are valid
+		void add(ordinal_t f, ordinal_t r) { if (Square::in_bounds(f,r)) insert(Square(f,r)); }
+		void add(const Square& m, int fo, int ro) { add(m.file() + fo, m.rank() + ro); }
 		// this = this U (color squares of rank(r))
 		void insert_rank(const ordinal_t r, const Square::color_t color);
 

@@ -2,7 +2,7 @@ stateset a1 = {all some and others};
 stateset ss = {all some and others};
 region a2 = {1,2 2,3};
 region ra = {1,2 2,3};
-region rb = {1,2 1,8};
+region rb = {1,2 0,7};
 
 formula eq1 = ss @ {1,1} | ( {all} @ ra & {all} @ rb) | ( {all} @ ra & {all} @ rb);
 formula eq2 = !({all} @ {1,1} & a1@a2 & a1 @ ra);
