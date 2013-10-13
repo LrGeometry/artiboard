@@ -85,8 +85,8 @@ namespace arti {
 			 * @return Piece::OUT_OF_BOUNDS if indexes are invalid
 			 */
 			const Piece& at(const index_t colIndex,const index_t rowIndex) const;
-			const Piece& operator ()(const index_t colIndex,const index_t rowIndex) const {at(colIndex,rowIndex);}
-			const Piece& operator ()(const Square& s) const {at(s.file(),s.rank());}
+			const Piece& operator ()(const index_t colIndex,const index_t rowIndex) const {return at(colIndex,rowIndex);}
+			const Piece& operator ()(const Square& s) const {return at(s.file(),s.rank());}
 			/**
 			 * Place a Piece on a square
 			 * @param colIndex must be a valid index

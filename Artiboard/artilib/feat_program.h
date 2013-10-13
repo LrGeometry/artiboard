@@ -16,13 +16,8 @@ namespace arti {
 	public:
 		typedef std::map<string, valueT> baseT;
 		bool has_name(const string& name) const {return baseT::find(name) != baseT::end();}
-		valueT locate(const string& name) const {
-			auto result = baseT::find(name);
-			if (result == baseT::end())
-				throw runtime_error_ex("The name '%s' cannot be located in this scope", name.c_str());
-			return result->second;
-		}
-		bool add(const string& name, const valueT& value) {
+
+		void add(const string& name, const valueT& value) {
 			if (has_name(name))
 				throw runtime_error_ex("The name '%s' has already been defined for this scope", name.c_str());
 			baseT::insert(std::pair<string,valueT>(name,value));
@@ -139,6 +134,7 @@ namespace arti {
 		typedef std::unique_ptr<FeatureProgram> u_ptr;
 		NameMap<StateSet>& states() {return _stateMap;}
 		NameMap<Region>& regions() {return _regionMap;}
+		const NameMap<Region>& regions() const {return _regionMap;}
 		NameMap<FeatureExpression*>& formulas() {return _formulaMap;}
 		NameMap<FeatureFunction*>& functions() {return _functionMap;}
 		~FeatureProgram();

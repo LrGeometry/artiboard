@@ -97,7 +97,8 @@ public:
 };
 
 typedef std::pair<arti::Board, MatchOutcome> element_type;
-typedef std::pair<arti::Region&,arti::Piece> attrib_type;
+typedef std::pair<arti::Region,arti::Piece> attrib_type;
+typedef std::pair<std::string,arti::Piece> attrib_type2;
 
 class Connect4Classifier : public Classifier<attrib_type, element_type, MatchOutcome, int> {
 	int value_of(const element_type& e, const attrib_type &a) override {
@@ -132,35 +133,55 @@ struct AnnotatedData {
 	const MatchOutcome _outcome;
 };
 
-class AnnotatedClassifier : public Classifier<attrib_type, AnnotatedData, MatchOutcome, int> {
-	int value_of(const AnnotatedData& e, const attrib_type &a) override {
-			return e._board.count((a.first),a.second) > 0 ? 1 : 0;
-	};
-
+class AnnotatedClassifier : public Classifier<attrib_type2, AnnotatedData, MatchOutcome, int> {
+	FeatureProgram::u_ptr _program;
+public:
+	AnnotatedClassifier(FeatureProgram::u_ptr& p) : _program(std::move(p)) {}
+	AnnotatedClassifier() : _program(std::move(load_program("../connect4/data/regions.txt"))) {}
   MatchOutcome class_of(const AnnotatedData &e) override {
 			return e._outcome;
 	};
+
+	int value_of(const AnnotatedData& e, const attrib_type2 &a) override {
+			return e._board.count(program().regions().at(a.first),a.second);
+			//return e._board.count(program().regions().at(a.first),a.second) > 0 ? 1 : 0;
+			//return e._board.count_repeats(program().regions().at(a.first),a.second);
+	};
+
+	const FeatureProgram& program() const {return *_program;}
+
+
+	std::list<attrib_type2> collect_attribs() {
+		std::list<attrib_type2> result;
+		auto pieces = annotation_pieces();
+		FOR_EACH(nr,program().regions()) 
+			FOR_EACH(p,pieces) {
+				result.emplace_front(attrib_type2(nr->first,*p));
+			}
+		return result;	
+	}
+
 };
 
-void collect_annos(std::forward_list<AnnotatedData>& annos) {
-		const IcuData& data = IcuData::instance();
-		FOR_EACH(i,data) 
-			annos.emplace_front(AnnotatedData(AnnotatedBoard(i->first),i->second));
+std::forward_list<AnnotatedData> collect_annos() {
+	std::forward_list<AnnotatedData> result;
+	const IcuData& data = IcuData::instance();
+	FOR_EACH(i,data) 
+		result.emplace_front(AnnotatedData(AnnotatedBoard(i->first),i->second));
+	return result;	
 }
 
 class AnnotatedFeatureCheck: public Experiment {
 public:
 	AnnotatedFeatureCheck(): Experiment("c4-050","AnnotatedFeatureCheck Connect-4 ICU data features") {}
 	void doRun() override {
-		std::forward_list<AnnotatedData> annos;
-		collect_annos(annos);
+		auto annos = collect_annos();
 		file() << "region is_mixed";
 		auto pieces = annotation_pieces();
-		auto program = load_program("../connect4/data/regions.txt");
 		AnnotatedClassifier cf;
-		FOR_EACH(nr,program->regions()) 
+		FOR_EACH(nr,cf.program().regions()) 
 			FOR_EACH(p,pieces) {
-				attrib_type a(nr->second,*p);
+				attrib_type2 a(nr->first,*p);
 				file() << nr->first << " " << *p << " " << (cf.is_mixed(a,annos.begin(),annos.end())?"yes":"no"); 
 			}
 	}
@@ -170,43 +191,30 @@ class AnnotatedFeatureStatistics: public Experiment {
 public:
 	AnnotatedFeatureStatistics(): Experiment("c4-060","Connect-4 ICU data features") {}
 	void doRun() override {
-		std::forward_list<AnnotatedData> annos;
-		collect_annos(annos);
+		auto annos = collect_annos();
 		file() << "region piece count wins losses draws";
-		auto pieces = annotation_pieces();
-		auto program = load_program("../connect4/data/regions.txt");
-		FOR_EACH(nr,program->regions()) {
-			auto n = nr->first;
-			auto r = nr->second;
-			FOR_EACH(p,pieces) {
-				std::map<int,DataStat> counts;
-				FOR_EACH(b,annos) 
-					counts[b->_board.count(r,*p)].inc(b->_outcome);
-				FOR_EACH(c,counts)
-					file() << n << " " << *p << " " << c->first << " " << c->second;	
-			}
+		AnnotatedClassifier cf;
+		auto attribs = cf.collect_attribs();
+		FOR_EACH(a,attribs) {
+			std::map<int,DataStat> counts;
+			FOR_EACH(b,annos) 
+				counts[cf.value_of(*b,*a)].inc(b->_outcome);
+			FOR_EACH(c,counts)
+				file() << a->first << " " << a->second << " " << c->first << " " << c->second;	
 		}
 	}
 };
 
-class AnnotatedEntropy: public Experiment {
-public:
-	AnnotatedEntropy(): Experiment("c4-070","AnnotatedEntropy Connect-4 ICU data features") {}
-	void doRun() override {
-		std::forward_list<AnnotatedData> annos;
-		collect_annos(annos);
-		file() << "region subset_entropy";
-		auto pieces = annotation_pieces();
-		auto program = load_program("../connect4/data/regions.txt");
-		AnnotatedClassifier cf;
-		FOR_EACH(nr,program->regions()) 
-			FOR_EACH(p,pieces) {
-				attrib_type a(nr->second,*p);
-				file() << nr->first << " " << *p << " " << cf.subset_entropy_of(a,annos.begin(),annos.end()); 
-			}
-	}
-};
-
+std::list<attrib_type> collect_attribs() {
+	std::list<attrib_type> result;
+	auto pieces = annotation_pieces();
+	auto program = load_program("../connect4/data/regions.txt");
+	FOR_EACH(nr,program->regions()) 
+		FOR_EACH(p,pieces) {
+			result.emplace_front(attrib_type(nr->second,*p));
+		}
+	return result;	
+}
 
 // register experiments
 FairnessExperiment ex1;
@@ -215,4 +223,22 @@ FeatureStatistics ex3;
 FeatureCheck ex4;
 AnnotatedFeatureCheck ex5;
 AnnotatedFeatureStatistics ex6;
+
+class AnnotatedEntropy: public Experiment {
+public:
+	AnnotatedEntropy(): Experiment("c4-070","AnnotatedEntropy Connect-4 ICU data features") {}
+	void doRun() override {
+		auto annos =	collect_annos();
+		file() << "region subset_entropy";
+		AnnotatedClassifier cf;
+		auto attribs = cf.collect_attribs();
+		auto entrops = cf.collect_entropies_sorted(attribs.begin(),attribs.end(),annos.begin(),annos.end());
+		FOR_EACH(e,entrops) {
+			file() << e->first.first << " " << e->first.second << " " << e->second.value(); 
+		}
+	}
+};
 AnnotatedEntropy ex7;
+
+
+

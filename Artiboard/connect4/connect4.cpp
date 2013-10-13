@@ -92,7 +92,7 @@ void Connect4::setup(Board& b) const {
 /** The game is done when someone gets four in a row */
 MatchOutcome Connect4::outcome_of(const Position& p) const {
 	auto winningPiece = piece_for_other(p.ply().side_to_move());
-	for (auto i = 0; i < all_regions.size(); i++) {
+	for (auto i = 0U; i < all_regions.size(); i++) {
 		const Region& r = *all_regions[i];
 		if (p.board().count_repeats(r,winningPiece) > 3) {
 			if (winningPiece == north)
@@ -110,7 +110,7 @@ MatchOutcome Connect4::outcome_of(const Position& p) const {
 /** Next open square in every file is a possible move */
 void Connect4::collectMoves(const Position& pos, Move::SharedFWList &result) const {
 	auto piece = piece_for(pos.ply().side_to_move());
-	for (auto i = 0; i < files.size(); i++) {
+	for (auto i = 0U; i < files.size(); i++) {
 		const Region& r = *files[i];
 		auto it = pos.board().find(r,open);
 		if (it != r.cend()) {

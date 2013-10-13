@@ -69,7 +69,7 @@
 		: ^('*' f=FLOAT n=ID) {
 				string name = (const char*)$n.text->chars;
 				auto w = (const char*)$f.text->chars;
-				_ctx->formulas().locate(name); // make sure the name exists
+				_ctx->formulas().at(name); // make sure the name exists
 				$value = new FeatureTermWithFormula(std::atof(w),name);		
 		}
 		| ^('*' f=FLOAT e=expression)	{

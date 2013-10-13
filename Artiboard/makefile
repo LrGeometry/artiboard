@@ -2,8 +2,8 @@ TARGET_DIR = RunDir
 # choose a debug option -- the first one is for debugging ... the orther for fastest
 DEBUG = -O0 -g3 
 MAX_SPEED = -O3 -DNDEBUG
-FLAGS = $(DEBUG) 
-COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -std=c++0x $(FLAGS)
+FLAGS = $(MAX_SPEED) 
+COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -Werror=return-type -Wno-error=unknown-pragmas -std=c++0x -Wall $(FLAGS)
 LINK_ARGS =  -L$(TARGET_DIR) -Llibs
 DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers tictactoe
 # 3.3 does not have this problem: '_empty' was not declared in this scope
