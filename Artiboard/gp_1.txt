@@ -1,0 +1,550 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 53.24      1.97     1.97                             _fu95___ZNSs4_Rep20_S_empty_rep_storageE
+ 31.08      3.12     1.15 48438369     0.00     0.00  arti::Board::count(arti::Region const&, arti::Piece const&) const
+  3.78      3.26     0.14 20131986     0.00     0.00  std::pair<std::_Rb_tree_iterator<arti::Square>, bool> std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_insert_unique<arti::Square>(arti::Square&&)
+  3.78      3.40     0.14      675     0.21     0.21  std::_Rb_tree<int, std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > >, std::_Select1st<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::less<int>, std::allocator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > >::_M_erase(std::_Rb_tree_node<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >*)
+  2.70      3.50     0.10                             memcmp
+  1.89      3.57     0.07  2837519     0.00     0.00  std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*)
+  1.08      3.61     0.04  7093485     0.00     0.00  arti::Board::place(unsigned int, unsigned int, arti::Piece const&)
+  0.54      3.63     0.02  2837394     0.00     0.00  arti::Region::insert_neighbours(arti::Square const&)
+  0.54      3.65     0.02    67557     0.00     0.01  AnnotatedBoard::AnnotatedBoard(arti::Board const&)
+  0.27      3.66     0.01  1864957     0.00     0.00  arti::Board::operator<(arti::Board const&) const
+  0.27      3.67     0.01                             std::_Rb_tree_increment(std::_Rb_tree_node_base const*)
+  0.27      3.68     0.01                             operator delete(void*)
+  0.27      3.69     0.01                             _fu100___ZNSs4_Rep20_S_empty_rep_storageE
+  0.27      3.70     0.01                             _fu108___ZNSs4_Rep20_S_empty_rep_storageE
+  0.00      3.70     0.00 16213680     0.00     0.00  arti::Board::at(unsigned int, unsigned int) const
+  0.00      3.70     0.00  5674815     0.00     0.00  arti::Piece::Piece(char)
+  0.00      3.70     0.00  2837707     0.00     0.00  arti::Square::Square(unsigned short, unsigned short)
+  0.00      3.70     0.00   135168     0.00     0.00  main
+  0.00      3.70     0.00   135114     0.00     0.00  arti::Board::Board()
+  0.00      3.70     0.00    67557     0.00     0.00  std::pair<std::_Rb_tree_iterator<std::pair<arti::Board const, arti::MatchOutcome> >, bool> std::_Rb_tree<arti::Board, std::pair<arti::Board const, arti::MatchOutcome>, std::_Select1st<std::pair<arti::Board const, arti::MatchOutcome> >, std::less<arti::Board>, std::allocator<std::pair<arti::Board const, arti::MatchOutcome> > >::_M_insert_unique<std::pair<arti::Board const, arti::MatchOutcome> const&>(std::pair<arti::Board const, arti::MatchOutcome> const&)
+  0.00      3.70     0.00     4921     0.00     0.00  std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_get_insert_hint_unique_pos(std::_Rb_tree_const_iterator<std::pair<arti::MatchOutcome const, int> >, arti::MatchOutcome const&)
+  0.00      3.70     0.00     3078     0.00     0.00  std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> >*)
+  0.00      3.70     0.00     1582     0.00     0.00  std::_Rb_tree_iterator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > std::_Rb_tree<int, std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > >, std::_Select1st<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::less<int>, std::allocator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&)
+  0.00      3.70     0.00     1496     0.00     0.00  arti::operator<<(std::ostream&, arti::MatchOutcome const&)
+  0.00      3.70     0.00     1050     0.00     0.00  _monstartup
+  0.00      3.70     0.00     1002     0.00     0.00  arti::Square::index() const
+  0.00      3.70     0.00      861     0.00     0.00  arti::load_program(std::string const&)
+  0.00      3.70     0.00      375     0.00     0.00  arti::Experiment::file()
+  0.00      3.70     0.00      374     0.00     0.00  arti::operator<<(std::ostream&, arti::Piece const&)
+  0.00      3.70     0.00      374     0.00     0.00  std::ostream& arti::operator<< <arti::MatchOutcome>(std::ostream&, arti::EntropyMeasure<arti::MatchOutcome> const&)
+  0.00      3.70     0.00      374     0.00     0.00  std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_copy(std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> > const*, std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> >*)
+  0.00      3.70     0.00      288     0.00     0.00  arti::Square::Square(arti::Square const&, bool)
+  0.00      3.70     0.00      196     0.00     0.00  FeatLexerNew
+  0.00      3.70     0.00      146     0.00     0.00  FeatParserNew
+  0.00      3.70     0.00       52     0.00     0.00  pgm(FeatTree_Ctx_struct*)
+  0.00      3.70     0.00       26     0.00     0.00  FeatTreeNew
+  0.00      3.70     0.00       25     0.00     0.00  std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::find(std::string const&) const
+  0.00      3.70     0.00       25     0.00     0.00  std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_copy(std::_Rb_tree_node<arti::Square> const*, std::_Rb_tree_node<arti::Square>*)
+  0.00      3.70     0.00       25     0.00     0.00  std::_Rb_tree<std::string, std::string, std::_Identity<std::string>, std::less<std::string>, std::allocator<std::string> >::_M_erase(std::_Rb_tree_node<std::string>*)
+  0.00      3.70     0.00       25     0.00     0.00  std::pair<std::_Rb_tree_iterator<std::pair<std::string const, arti::Region> >, bool> std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::_M_insert_unique<std::pair<std::string, arti::Region> >(std::pair<std::string, arti::Region>&&)
+  0.00      3.70     0.00        3     0.00     0.00  arti::Log::record()
+  0.00      3.70     0.00        3     0.00     0.00  arti::Log::instance()
+  0.00      3.70     0.00        1     0.00     0.00  FeatLexerNewSSD
+  0.00      3.70     0.00        1     0.00     0.00  FeatParserNewSSD
+  0.00      3.70     0.00        1     0.00     0.00  FeatTreeNewSSD
+  0.00      3.70     0.00        1     0.00   341.36  collect_annos()
+  0.00      3.70     0.00        1     0.00     0.00  collect_attribs()
+  0.00      3.70     0.00        1     0.00     0.00  annotation_pieces()
+  0.00      3.70     0.00        1     0.00   341.36  AnnotatedEntropy::doRun()
+  0.00      3.70     0.00        1     0.00   341.36  arti::Experiment::run()
+  0.00      3.70     0.00        1     0.00     0.00  arti::create_dir(std::string const&)
+  0.00      3.70     0.00        1     0.00     0.00  arti::FeatureProgram::~FeatureProgram()
+  0.00      3.70     0.00        1     0.00     0.00  arti::string_from_format(char const*, ...)
+  0.00      3.70     0.00        1     0.00     0.00  arti::ExperimentRepository::find(char const*)
+  0.00      3.70     0.00        1     0.00     0.00  arti::ExperimentRepository::instance()
+  0.00      3.70     0.00        1     0.00     0.00  IcuData::instance()
+  0.00      3.70     0.00        1     0.00     0.00  IcuData::IcuData()
+  0.00      3.70     0.00        1     0.00     0.00  std::_Rb_tree_iterator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<FeatTree_Ctx_struct* const&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::piecewise_construct_t const&, std::tuple<FeatTree_Ctx_struct* const&>&&, std::tuple<>&&)
+  0.00      3.70     0.00        1     0.00     0.00  std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::erase(FeatTree_Ctx_struct* const&)
+  0.00      3.70     0.00        1     0.00     0.00  std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::_M_erase(std::_Rb_tree_node<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >*)
+  0.00      3.70     0.00        1     0.00     0.00  std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::Region> >*)
+  0.00      3.70     0.00        1     0.00     0.00  std::_Rb_tree<std::string, std::pair<std::string const, arti::FeatureFunction*>, std::_Select1st<std::pair<std::string const, arti::FeatureFunction*> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::FeatureFunction*> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::FeatureFunction*> >*)
+  0.00      3.70     0.00        1     0.00     0.00  std::_Rb_tree<std::string, std::pair<std::string const, arti::FeatureExpression*>, std::_Select1st<std::pair<std::string const, arti::FeatureExpression*> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::FeatureExpression*> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::FeatureExpression*> >*)
+  0.00      3.70     0.00        1     0.00     0.00  std::_Rb_tree<std::string, std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > >, std::_Select1st<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > >, std::less<std::string>, std::allocator<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > >*)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.27% of 3.70 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     86.3    1.97    1.22                 _fu95___ZNSs4_Rep20_S_empty_rep_storageE [1]
+                1.08    0.00 45600975/48438369     arti::Board::count(arti::Region const&, arti::Piece const&) const [2]
+                0.14    0.00     675/675         std::_Rb_tree<int, std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > >, std::_Select1st<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::less<int>, std::allocator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > >::_M_erase(std::_Rb_tree_node<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >*) [11]
+                0.00    0.00    4921/4921        std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_get_insert_hint_unique_pos(std::_Rb_tree_const_iterator<std::pair<arti::MatchOutcome const, int> >, arti::MatchOutcome const&) [38]
+                0.00    0.00    1655/3078        std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> >*) [39]
+                0.00    0.00    1582/1582        std::_Rb_tree_iterator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > std::_Rb_tree<int, std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > >, std::_Select1st<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::less<int>, std::allocator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&) [40]
+                0.00    0.00     374/374         std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_copy(std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> > const*, std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> >*) [48]
+                0.00    0.00       1/1050        _monstartup [42]
+-----------------------------------------------
+                0.07    0.00 2837394/48438369     AnnotatedBoard::AnnotatedBoard(arti::Board const&) [4]
+                1.08    0.00 45600975/48438369     _fu95___ZNSs4_Rep20_S_empty_rep_storageE [1]
+[2]     31.1    1.15    0.00 48438369         arti::Board::count(arti::Region const&, arti::Piece const&) const [2]
+-----------------------------------------------
+                0.00    0.00       1/135168      _fu183___ZNSs4_Rep20_S_empty_rep_storageE [25]
+                0.00    0.00       2/135168      _fu182___ZNSs4_Rep20_S_empty_rep_storageE [24]
+                0.00    0.00      25/135168      _fu208___ZNSs4_Rep20_S_empty_rep_storageE [23]
+                0.00    0.00      25/135168      _fu129___ZNSs4_Rep20_S_empty_rep_storageE [22]
+                0.00    0.34  135115/135168      _fu299___ZTVSt9basic_iosIcSt11char_traitsIcEE [8]
+[3]      9.2    0.00    0.34  135168         main [3]
+                0.00    0.34       1/1           arti::Experiment::run() [7]
+                0.00    0.00       1/1           arti::ExperimentRepository::instance() [69]
+                0.00    0.00       1/1           arti::ExperimentRepository::find(char const*) [68]
+                0.00    0.00       1/3           arti::Log::instance() [59]
+                0.00    0.00       1/3           arti::Log::record() [58]
+-----------------------------------------------
+                0.02    0.32   67557/67557       collect_annos() [5]
+[4]      9.2    0.02    0.32   67557         AnnotatedBoard::AnnotatedBoard(arti::Board const&) [4]
+                0.02    0.14 2837394/2837394     arti::Region::insert_neighbours(arti::Square const&) [9]
+                0.07    0.00 2837394/2837519     std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*) [13]
+                0.07    0.00 2837394/48438369     arti::Board::count(arti::Region const&, arti::Piece const&) const [2]
+                0.02    0.00 4256091/7093485     arti::Board::place(unsigned int, unsigned int, arti::Piece const&) [14]
+                0.00    0.00 16213680/16213680     arti::Board::at(unsigned int, unsigned int) const [34]
+                0.00    0.00 2837394/2837707     arti::Square::Square(unsigned short, unsigned short) [36]
+                0.00    0.00 2837394/5674815     arti::Piece::Piece(char) [35]
+                0.00    0.00   67557/135114      arti::Board::Board() [37]
+-----------------------------------------------
+                0.00    0.34       1/1           AnnotatedEntropy::doRun() [6]
+[5]      9.2    0.00    0.34       1         collect_annos() [5]
+                0.02    0.32   67557/67557       AnnotatedBoard::AnnotatedBoard(arti::Board const&) [4]
+                0.00    0.00       1/1           IcuData::instance() [70]
+-----------------------------------------------
+                0.00    0.34       1/1           arti::Experiment::run() [7]
+[6]      9.2    0.00    0.34       1         AnnotatedEntropy::doRun() [6]
+                0.00    0.34       1/1           collect_annos() [5]
+                0.00    0.00       1/375         arti::Experiment::file() [45]
+                0.00    0.00       1/861         arti::load_program(std::string const&) [44]
+-----------------------------------------------
+                0.00    0.34       1/1           main [3]
+[7]      9.2    0.00    0.34       1         arti::Experiment::run() [7]
+                0.00    0.34       1/1           AnnotatedEntropy::doRun() [6]
+                0.00    0.00       2/3           arti::Log::instance() [59]
+                0.00    0.00       2/3           arti::Log::record() [58]
+-----------------------------------------------
+                                                 <spontaneous>
+[8]      9.2    0.00    0.34                 _fu299___ZTVSt9basic_iosIcSt11char_traitsIcEE [8]
+                0.00    0.34  135115/135168      main [3]
+-----------------------------------------------
+                0.02    0.14 2837394/2837394     AnnotatedBoard::AnnotatedBoard(arti::Board const&) [4]
+[9]      4.3    0.02    0.14 2837394         arti::Region::insert_neighbours(arti::Square const&) [9]
+                0.14    0.00 20131986/20131986     std::pair<std::_Rb_tree_iterator<arti::Square>, bool> std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_insert_unique<arti::Square>(arti::Square&&) [10]
+-----------------------------------------------
+                0.14    0.00 20131986/20131986     arti::Region::insert_neighbours(arti::Square const&) [9]
+[10]     3.8    0.14    0.00 20131986         std::pair<std::_Rb_tree_iterator<arti::Square>, bool> std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_insert_unique<arti::Square>(arti::Square&&) [10]
+-----------------------------------------------
+                0.14    0.00     675/675         _fu95___ZNSs4_Rep20_S_empty_rep_storageE [1]
+[11]     3.8    0.14    0.00     675         std::_Rb_tree<int, std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > >, std::_Select1st<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::less<int>, std::allocator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > >::_M_erase(std::_Rb_tree_node<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >*) [11]
+-----------------------------------------------
+                                                 <spontaneous>
+[12]     2.7    0.10    0.00                 memcmp [12]
+-----------------------------------------------
+                0.00    0.00       2/2837519     _fu124___ZNSs4_Rep20_S_empty_rep_storageE [32]
+                0.00    0.00       4/2837519     _fu127___ZNSs4_Rep20_S_empty_rep_storageE [31]
+                0.00    0.00       5/2837519     _fu126___ZNSs4_Rep20_S_empty_rep_storageE [30]
+                0.00    0.00       6/2837519     _fu125___ZNSs4_Rep20_S_empty_rep_storageE [29]
+                0.00    0.00       8/2837519     _fu128___ZNSs4_Rep20_S_empty_rep_storageE [28]
+                0.00    0.00      25/2837519     clause(FeatTree_Ctx_struct*) [27]
+                0.00    0.00      75/2837519     _fu206___ZNSs4_Rep20_S_empty_rep_storageE [26]
+                0.07    0.00 2837394/2837519     AnnotatedBoard::AnnotatedBoard(arti::Board const&) [4]
+[13]     1.9    0.07    0.00 2837519         std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*) [13]
+-----------------------------------------------
+                0.02    0.00 2837394/7093485     _fu109___ZNSs4_Rep20_S_empty_rep_storageE [15]
+                0.02    0.00 4256091/7093485     AnnotatedBoard::AnnotatedBoard(arti::Board const&) [4]
+[14]     1.1    0.04    0.00 7093485         arti::Board::place(unsigned int, unsigned int, arti::Piece const&) [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[15]     0.7    0.00    0.03                 _fu109___ZNSs4_Rep20_S_empty_rep_storageE [15]
+                0.02    0.00 2837394/7093485     arti::Board::place(unsigned int, unsigned int, arti::Piece const&) [14]
+                0.00    0.01   67557/67557       std::pair<std::_Rb_tree_iterator<std::pair<arti::Board const, arti::MatchOutcome> >, bool> std::_Rb_tree<arti::Board, std::pair<arti::Board const, arti::MatchOutcome>, std::_Select1st<std::pair<arti::Board const, arti::MatchOutcome> >, std::less<arti::Board>, std::allocator<std::pair<arti::Board const, arti::MatchOutcome> > >::_M_insert_unique<std::pair<arti::Board const, arti::MatchOutcome> const&>(std::pair<arti::Board const, arti::MatchOutcome> const&) [17]
+                0.00    0.00 2837394/5674815     arti::Piece::Piece(char) [35]
+-----------------------------------------------
+                0.01    0.00 1864957/1864957     std::pair<std::_Rb_tree_iterator<std::pair<arti::Board const, arti::MatchOutcome> >, bool> std::_Rb_tree<arti::Board, std::pair<arti::Board const, arti::MatchOutcome>, std::_Select1st<std::pair<arti::Board const, arti::MatchOutcome> >, std::less<arti::Board>, std::allocator<std::pair<arti::Board const, arti::MatchOutcome> > >::_M_insert_unique<std::pair<arti::Board const, arti::MatchOutcome> const&>(std::pair<arti::Board const, arti::MatchOutcome> const&) [17]
+[16]     0.3    0.01    0.00 1864957         arti::Board::operator<(arti::Board const&) const [16]
+-----------------------------------------------
+                0.00    0.01   67557/67557       _fu109___ZNSs4_Rep20_S_empty_rep_storageE [15]
+[17]     0.3    0.00    0.01   67557         std::pair<std::_Rb_tree_iterator<std::pair<arti::Board const, arti::MatchOutcome> >, bool> std::_Rb_tree<arti::Board, std::pair<arti::Board const, arti::MatchOutcome>, std::_Select1st<std::pair<arti::Board const, arti::MatchOutcome> >, std::less<arti::Board>, std::allocator<std::pair<arti::Board const, arti::MatchOutcome> > >::_M_insert_unique<std::pair<arti::Board const, arti::MatchOutcome> const&>(std::pair<arti::Board const, arti::MatchOutcome> const&) [17]
+                0.01    0.00 1864957/1864957     arti::Board::operator<(arti::Board const&) const [16]
+-----------------------------------------------
+                                                 <spontaneous>
+[18]     0.3    0.01    0.00                 std::_Rb_tree_increment(std::_Rb_tree_node_base const*) [18]
+-----------------------------------------------
+                                                 <spontaneous>
+[19]     0.3    0.01    0.00                 operator delete(void*) [19]
+-----------------------------------------------
+                                                 <spontaneous>
+[20]     0.3    0.01    0.00                 _fu100___ZNSs4_Rep20_S_empty_rep_storageE [20]
+                0.00    0.00    1049/1050        _monstartup [42]
+                0.00    0.00       1/1           arti::FeatureProgram::~FeatureProgram() [66]
+-----------------------------------------------
+                                                 <spontaneous>
+[21]     0.3    0.01    0.00                 _fu108___ZNSs4_Rep20_S_empty_rep_storageE [21]
+-----------------------------------------------
+                                                 <spontaneous>
+[22]     0.0    0.00    0.00                 _fu129___ZNSs4_Rep20_S_empty_rep_storageE [22]
+                0.00    0.00      25/135168      main [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[23]     0.0    0.00    0.00                 _fu208___ZNSs4_Rep20_S_empty_rep_storageE [23]
+                0.00    0.00      25/135168      main [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[24]     0.0    0.00    0.00                 _fu182___ZNSs4_Rep20_S_empty_rep_storageE [24]
+                0.00    0.00       2/135168      main [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[25]     0.0    0.00    0.00                 _fu183___ZNSs4_Rep20_S_empty_rep_storageE [25]
+                0.00    0.00       1/135168      main [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[26]     0.0    0.00    0.00                 _fu206___ZNSs4_Rep20_S_empty_rep_storageE [26]
+                0.00    0.00      75/2837519     std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*) [13]
+                0.00    0.00      25/26          FeatTreeNew [53]
+                0.00    0.00      25/52          pgm(FeatTree_Ctx_struct*) [52]
+                0.00    0.00      25/25          std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::find(std::string const&) const [54]
+                0.00    0.00      25/25          std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_copy(std::_Rb_tree_node<arti::Square> const*, std::_Rb_tree_node<arti::Square>*) [55]
+                0.00    0.00      25/25          std::pair<std::_Rb_tree_iterator<std::pair<std::string const, arti::Region> >, bool> std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::_M_insert_unique<std::pair<std::string, arti::Region> >(std::pair<std::string, arti::Region>&&) [57]
+-----------------------------------------------
+                                                 <spontaneous>
+[27]     0.0    0.00    0.00                 clause(FeatTree_Ctx_struct*) [27]
+                0.00    0.00      25/2837519     std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*) [13]
+                0.00    0.00      25/25          std::_Rb_tree<std::string, std::string, std::_Identity<std::string>, std::less<std::string>, std::allocator<std::string> >::_M_erase(std::_Rb_tree_node<std::string>*) [56]
+-----------------------------------------------
+                                                 <spontaneous>
+[28]     0.0    0.00    0.00                 _fu128___ZNSs4_Rep20_S_empty_rep_storageE [28]
+                0.00    0.00       8/2837519     std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*) [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[29]     0.0    0.00    0.00                 _fu125___ZNSs4_Rep20_S_empty_rep_storageE [29]
+                0.00    0.00       6/2837519     std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*) [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[30]     0.0    0.00    0.00                 _fu126___ZNSs4_Rep20_S_empty_rep_storageE [30]
+                0.00    0.00       5/2837519     std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*) [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[31]     0.0    0.00    0.00                 _fu127___ZNSs4_Rep20_S_empty_rep_storageE [31]
+                0.00    0.00       4/2837519     std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*) [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[32]     0.0    0.00    0.00                 _fu124___ZNSs4_Rep20_S_empty_rep_storageE [32]
+                0.00    0.00       2/2837519     std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*) [13]
+-----------------------------------------------
+                0.00    0.00 16213680/16213680     AnnotatedBoard::AnnotatedBoard(arti::Board const&) [4]
+[34]     0.0    0.00    0.00 16213680         arti::Board::at(unsigned int, unsigned int) const [34]
+-----------------------------------------------
+                0.00    0.00      27/5674815     annotation_pieces() [64]
+                0.00    0.00 2837394/5674815     AnnotatedBoard::AnnotatedBoard(arti::Board const&) [4]
+                0.00    0.00 2837394/5674815     _fu109___ZNSs4_Rep20_S_empty_rep_storageE [15]
+[35]     0.0    0.00    0.00 5674815         arti::Piece::Piece(char) [35]
+-----------------------------------------------
+                0.00    0.00      25/2837707     region(FeatTree_Ctx_struct*) [177]
+                0.00    0.00     288/2837707     square(FeatTree_Ctx_struct*) [179]
+                0.00    0.00 2837394/2837707     AnnotatedBoard::AnnotatedBoard(arti::Board const&) [4]
+[36]     0.0    0.00    0.00 2837707         arti::Square::Square(unsigned short, unsigned short) [36]
+-----------------------------------------------
+                0.00    0.00   67557/135114      AnnotatedBoard::AnnotatedBoard(arti::Board const&) [4]
+                0.00    0.00   67557/135114      _fu228___ZTVSt15basic_stringbufIcSt11char_traitsIcESaIcEE [796]
+[37]     0.0    0.00    0.00  135114         arti::Board::Board() [37]
+-----------------------------------------------
+                0.00    0.00    4921/4921        _fu95___ZNSs4_Rep20_S_empty_rep_storageE [1]
+[38]     0.0    0.00    0.00    4921         std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_get_insert_hint_unique_pos(std::_Rb_tree_const_iterator<std::pair<arti::MatchOutcome const, int> >, arti::MatchOutcome const&) [38]
+-----------------------------------------------
+                0.00    0.00     374/3078        _fu96___ZNSs4_Rep20_S_empty_rep_storageE [1153]
+                0.00    0.00    1049/3078        _fu97___ZNSs4_Rep20_S_empty_rep_storageE [1154]
+                0.00    0.00    1655/3078        _fu95___ZNSs4_Rep20_S_empty_rep_storageE [1]
+[39]     0.0    0.00    0.00    3078         std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> >*) [39]
+-----------------------------------------------
+                0.00    0.00    1582/1582        _fu95___ZNSs4_Rep20_S_empty_rep_storageE [1]
+[40]     0.0    0.00    0.00    1582         std::_Rb_tree_iterator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > std::_Rb_tree<int, std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > >, std::_Select1st<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::less<int>, std::allocator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&) [40]
+-----------------------------------------------
+                0.00    0.00    1496/1496        std::ostream& arti::operator<< <arti::MatchOutcome>(std::ostream&, arti::EntropyMeasure<arti::MatchOutcome> const&) [47]
+[41]     0.0    0.00    0.00    1496         arti::operator<<(std::ostream&, arti::MatchOutcome const&) [41]
+-----------------------------------------------
+                0.00    0.00       1/1050        _fu95___ZNSs4_Rep20_S_empty_rep_storageE [1]
+                0.00    0.00    1049/1050        _fu100___ZNSs4_Rep20_S_empty_rep_storageE [20]
+[42]     0.0    0.00    0.00    1050         _monstartup [42]
+-----------------------------------------------
+                0.00    0.00    1002/1002        region(FeatTree_Ctx_struct*) [177]
+[43]     0.0    0.00    0.00    1002         arti::Square::index() const [43]
+-----------------------------------------------
+                0.00    0.00       1/861         AnnotatedEntropy::doRun() [6]
+                0.00    0.00     860/861         nextToken [1603]
+[44]     0.0    0.00    0.00     861         arti::load_program(std::string const&) [44]
+                0.00    0.00       2/196         FeatLexerNew [50]
+                0.00    0.00       2/146         FeatParserNew [51]
+                0.00    0.00       1/26          FeatTreeNew [53]
+                0.00    0.00       1/52          pgm(FeatTree_Ctx_struct*) [52]
+-----------------------------------------------
+                0.00    0.00       1/375         AnnotatedEntropy::doRun() [6]
+                0.00    0.00     374/375         _fu97___ZNSs4_Rep20_S_empty_rep_storageE [1154]
+[45]     0.0    0.00    0.00     375         arti::Experiment::file() [45]
+                0.00    0.00       1/1           arti::create_dir(std::string const&) [65]
+-----------------------------------------------
+                0.00    0.00     374/374         _fu97___ZNSs4_Rep20_S_empty_rep_storageE [1154]
+[46]     0.0    0.00    0.00     374         arti::operator<<(std::ostream&, arti::Piece const&) [46]
+-----------------------------------------------
+                0.00    0.00     374/374         _fu97___ZNSs4_Rep20_S_empty_rep_storageE [1154]
+[47]     0.0    0.00    0.00     374         std::ostream& arti::operator<< <arti::MatchOutcome>(std::ostream&, arti::EntropyMeasure<arti::MatchOutcome> const&) [47]
+                0.00    0.00    1496/1496        arti::operator<<(std::ostream&, arti::MatchOutcome const&) [41]
+-----------------------------------------------
+                                 374             std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_copy(std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> > const*, std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> >*) [48]
+                0.00    0.00     374/374         _fu95___ZNSs4_Rep20_S_empty_rep_storageE [1]
+[48]     0.0    0.00    0.00     374+374     std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_copy(std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> > const*, std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> >*) [48]
+                                 374             std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_copy(std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> > const*, std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> >*) [48]
+-----------------------------------------------
+                0.00    0.00     144/288         region(FeatTree_Ctx_struct*) [177]
+                0.00    0.00     144/288         std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_copy(std::_Rb_tree_node<arti::Square> const*, std::_Rb_tree_node<arti::Square>*) [55]
+[49]     0.0    0.00    0.00     288         arti::Square::Square(arti::Square const&, bool) [49]
+-----------------------------------------------
+                0.00    0.00       2/196         arti::load_program(std::string const&) [44]
+                0.00    0.00      25/196         region(FeatParser_Ctx_struct*) [178]
+                0.00    0.00      25/196         program(FeatParser_Ctx_struct*) [185]
+                0.00    0.00     144/196         square_set(FeatParser_Ctx_struct*) [142]
+[50]     0.0    0.00    0.00     196         FeatLexerNew [50]
+                0.00    0.00       1/1           FeatLexerNewSSD [60]
+-----------------------------------------------
+                0.00    0.00       2/146         arti::load_program(std::string const&) [44]
+                0.00    0.00     144/146         region(FeatTree_Ctx_struct*) [177]
+[51]     0.0    0.00    0.00     146         FeatParserNew [51]
+                0.00    0.00       1/1           FeatParserNewSSD [61]
+-----------------------------------------------
+                0.00    0.00       1/52          arti::load_program(std::string const&) [44]
+                0.00    0.00      25/52          _fu206___ZNSs4_Rep20_S_empty_rep_storageE [26]
+                0.00    0.00      26/52          program(FeatTree_Ctx_struct*) [184]
+[52]     0.0    0.00    0.00      52         pgm(FeatTree_Ctx_struct*) [52]
+                0.00    0.00       1/1           std::_Rb_tree_iterator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<FeatTree_Ctx_struct* const&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::piecewise_construct_t const&, std::tuple<FeatTree_Ctx_struct* const&>&&, std::tuple<>&&) [72]
+-----------------------------------------------
+                0.00    0.00       1/26          arti::load_program(std::string const&) [44]
+                0.00    0.00      25/26          _fu206___ZNSs4_Rep20_S_empty_rep_storageE [26]
+[53]     0.0    0.00    0.00      26         FeatTreeNew [53]
+                0.00    0.00       1/1           FeatTreeNewSSD [62]
+-----------------------------------------------
+                0.00    0.00      25/25          _fu206___ZNSs4_Rep20_S_empty_rep_storageE [26]
+[54]     0.0    0.00    0.00      25         std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::find(std::string const&) const [54]
+-----------------------------------------------
+                                  67             std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_copy(std::_Rb_tree_node<arti::Square> const*, std::_Rb_tree_node<arti::Square>*) [55]
+                0.00    0.00      25/25          _fu206___ZNSs4_Rep20_S_empty_rep_storageE [26]
+[55]     0.0    0.00    0.00      25+67      std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_copy(std::_Rb_tree_node<arti::Square> const*, std::_Rb_tree_node<arti::Square>*) [55]
+                0.00    0.00     144/288         arti::Square::Square(arti::Square const&, bool) [49]
+                                  67             std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_copy(std::_Rb_tree_node<arti::Square> const*, std::_Rb_tree_node<arti::Square>*) [55]
+-----------------------------------------------
+                0.00    0.00      25/25          clause(FeatTree_Ctx_struct*) [27]
+[56]     0.0    0.00    0.00      25         std::_Rb_tree<std::string, std::string, std::_Identity<std::string>, std::less<std::string>, std::allocator<std::string> >::_M_erase(std::_Rb_tree_node<std::string>*) [56]
+-----------------------------------------------
+                0.00    0.00      25/25          _fu206___ZNSs4_Rep20_S_empty_rep_storageE [26]
+[57]     0.0    0.00    0.00      25         std::pair<std::_Rb_tree_iterator<std::pair<std::string const, arti::Region> >, bool> std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::_M_insert_unique<std::pair<std::string, arti::Region> >(std::pair<std::string, arti::Region>&&) [57]
+-----------------------------------------------
+                0.00    0.00       1/3           main [3]
+                0.00    0.00       2/3           arti::Experiment::run() [7]
+[58]     0.0    0.00    0.00       3         arti::Log::record() [58]
+-----------------------------------------------
+                0.00    0.00       1/3           main [3]
+                0.00    0.00       2/3           arti::Experiment::run() [7]
+[59]     0.0    0.00    0.00       3         arti::Log::instance() [59]
+-----------------------------------------------
+                0.00    0.00       1/1           FeatLexerNew [50]
+[60]     0.0    0.00    0.00       1         FeatLexerNewSSD [60]
+-----------------------------------------------
+                0.00    0.00       1/1           FeatParserNew [51]
+[61]     0.0    0.00    0.00       1         FeatParserNewSSD [61]
+-----------------------------------------------
+                0.00    0.00       1/1           FeatTreeNew [53]
+[62]     0.0    0.00    0.00       1         FeatTreeNewSSD [62]
+-----------------------------------------------
+                0.00    0.00       1/1           _fu97___ZNSs4_Rep20_S_empty_rep_storageE [1154]
+[63]     0.0    0.00    0.00       1         collect_attribs() [63]
+-----------------------------------------------
+                0.00    0.00       1/1           _fu93___ZNSs4_Rep20_S_empty_rep_storageE [1151]
+[64]     0.0    0.00    0.00       1         annotation_pieces() [64]
+                0.00    0.00      27/5674815     arti::Piece::Piece(char) [35]
+-----------------------------------------------
+                0.00    0.00       1/1           arti::Experiment::file() [45]
+[65]     0.0    0.00    0.00       1         arti::create_dir(std::string const&) [65]
+-----------------------------------------------
+                0.00    0.00       1/1           _fu100___ZNSs4_Rep20_S_empty_rep_storageE [20]
+[66]     0.0    0.00    0.00       1         arti::FeatureProgram::~FeatureProgram() [66]
+                0.00    0.00       1/1           std::_Rb_tree<std::string, std::pair<std::string const, arti::FeatureFunction*>, std::_Select1st<std::pair<std::string const, arti::FeatureFunction*> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::FeatureFunction*> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::FeatureFunction*> >*) [76]
+                0.00    0.00       1/1           std::_Rb_tree<std::string, std::pair<std::string const, arti::FeatureExpression*>, std::_Select1st<std::pair<std::string const, arti::FeatureExpression*> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::FeatureExpression*> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::FeatureExpression*> >*) [77]
+                0.00    0.00       1/1           std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::Region> >*) [75]
+                0.00    0.00       1/1           std::_Rb_tree<std::string, std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > >, std::_Select1st<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > >, std::less<std::string>, std::allocator<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > >*) [78]
+-----------------------------------------------
+                0.00    0.00       1/1           _fu181___ZNSs4_Rep20_S_empty_rep_storageE [748]
+[67]     0.0    0.00    0.00       1         arti::string_from_format(char const*, ...) [67]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[68]     0.0    0.00    0.00       1         arti::ExperimentRepository::find(char const*) [68]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[69]     0.0    0.00    0.00       1         arti::ExperimentRepository::instance() [69]
+-----------------------------------------------
+                0.00    0.00       1/1           collect_annos() [5]
+[70]     0.0    0.00    0.00       1         IcuData::instance() [70]
+                0.00    0.00       1/1           IcuData::IcuData() [71]
+-----------------------------------------------
+                0.00    0.00       1/1           IcuData::instance() [70]
+[71]     0.0    0.00    0.00       1         IcuData::IcuData() [71]
+-----------------------------------------------
+                0.00    0.00       1/1           pgm(FeatTree_Ctx_struct*) [52]
+[72]     0.0    0.00    0.00       1         std::_Rb_tree_iterator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<FeatTree_Ctx_struct* const&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::piecewise_construct_t const&, std::tuple<FeatTree_Ctx_struct* const&>&&, std::tuple<>&&) [72]
+-----------------------------------------------
+                0.00    0.00       1/1           program(FeatTree_Ctx_struct*) [184]
+[73]     0.0    0.00    0.00       1         std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::erase(FeatTree_Ctx_struct* const&) [73]
+                0.00    0.00       1/1           std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::_M_erase(std::_Rb_tree_node<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >*) [74]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::erase(FeatTree_Ctx_struct* const&) [73]
+[74]     0.0    0.00    0.00       1         std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::_M_erase(std::_Rb_tree_node<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >*) [74]
+-----------------------------------------------
+                0.00    0.00       1/1           arti::FeatureProgram::~FeatureProgram() [66]
+[75]     0.0    0.00    0.00       1         std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::Region> >*) [75]
+-----------------------------------------------
+                0.00    0.00       1/1           arti::FeatureProgram::~FeatureProgram() [66]
+[76]     0.0    0.00    0.00       1         std::_Rb_tree<std::string, std::pair<std::string const, arti::FeatureFunction*>, std::_Select1st<std::pair<std::string const, arti::FeatureFunction*> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::FeatureFunction*> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::FeatureFunction*> >*) [76]
+-----------------------------------------------
+                0.00    0.00       1/1           arti::FeatureProgram::~FeatureProgram() [66]
+[77]     0.0    0.00    0.00       1         std::_Rb_tree<std::string, std::pair<std::string const, arti::FeatureExpression*>, std::_Select1st<std::pair<std::string const, arti::FeatureExpression*> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::FeatureExpression*> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::FeatureExpression*> >*) [77]
+-----------------------------------------------
+                0.00    0.00       1/1           arti::FeatureProgram::~FeatureProgram() [66]
+[78]     0.0    0.00    0.00       1         std::_Rb_tree<std::string, std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > >, std::_Select1st<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > >, std::less<std::string>, std::allocator<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > >*) [78]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+  [50] FeatLexerNew           [14] arti::Board::place(unsigned int, unsigned int, arti::Piece const&) [13] std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_erase(std::_Rb_tree_node<arti::Square>*)
+  [60] FeatLexerNewSSD        [37] arti::Board::Board()   [72] std::_Rb_tree_iterator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<FeatTree_Ctx_struct* const&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::piecewise_construct_t const&, std::tuple<FeatTree_Ctx_struct* const&>&&, std::tuple<>&&)
+  [51] FeatParserNew          [35] arti::Piece::Piece(char) [73] std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::erase(FeatTree_Ctx_struct* const&)
+  [61] FeatParserNewSSD        [9] arti::Region::insert_neighbours(arti::Square const&) [74] std::_Rb_tree<FeatTree_Ctx_struct*, std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*>, std::_Select1st<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >, std::less<FeatTree_Ctx_struct*>, std::allocator<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> > >::_M_erase(std::_Rb_tree_node<std::pair<FeatTree_Ctx_struct* const, arti::FeatureProgram*> >*)
+  [53] FeatTreeNew            [49] arti::Square::Square(arti::Square const&, bool) [56] std::_Rb_tree<std::string, std::string, std::_Identity<std::string>, std::less<std::string>, std::allocator<std::string> >::_M_erase(std::_Rb_tree_node<std::string>*)
+  [62] FeatTreeNewSSD         [36] arti::Square::Square(unsigned short, unsigned short) [57] std::pair<std::_Rb_tree_iterator<std::pair<std::string const, arti::Region> >, bool> std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::_M_insert_unique<std::pair<std::string, arti::Region> >(std::pair<std::string, arti::Region>&&)
+   [5] collect_annos()        [41] arti::operator<<(std::ostream&, arti::MatchOutcome const&) [75] std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::Region> >*)
+  [63] collect_attribs()      [46] arti::operator<<(std::ostream&, arti::Piece const&) [76] std::_Rb_tree<std::string, std::pair<std::string const, arti::FeatureFunction*>, std::_Select1st<std::pair<std::string const, arti::FeatureFunction*> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::FeatureFunction*> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::FeatureFunction*> >*)
+  [64] annotation_pieces()    [47] std::ostream& arti::operator<< <arti::MatchOutcome>(std::ostream&, arti::EntropyMeasure<arti::MatchOutcome> const&) [77] std::_Rb_tree<std::string, std::pair<std::string const, arti::FeatureExpression*>, std::_Select1st<std::pair<std::string const, arti::FeatureExpression*> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::FeatureExpression*> > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, arti::FeatureExpression*> >*)
+  [52] pgm(FeatTree_Ctx_struct*) [70] IcuData::instance() [78] std::_Rb_tree<std::string, std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > >, std::_Select1st<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > >, std::less<std::string>, std::allocator<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > > >::_M_erase(std::_Rb_tree_node<std::pair<std::string const, std::set<std::string, std::less<std::string>, std::allocator<std::string> > > >*)
+   [4] AnnotatedBoard::AnnotatedBoard(arti::Board const&) [71] IcuData::IcuData() [40] std::_Rb_tree_iterator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > std::_Rb_tree<int, std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > >, std::_Select1st<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::less<int>, std::allocator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > >::_M_emplace_hint_unique<std::piecewise_construct_t const&, std::tuple<int const&>, std::tuple<> >(std::_Rb_tree_const_iterator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::piecewise_construct_t const&, std::tuple<int const&>&&, std::tuple<>&&)
+   [6] AnnotatedEntropy::doRun() [34] arti::Board::at(unsigned int, unsigned int) const [11] std::_Rb_tree<int, std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > >, std::_Select1st<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >, std::less<int>, std::allocator<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > > >::_M_erase(std::_Rb_tree_node<std::pair<int const, std::list<AnnotatedData, std::allocator<AnnotatedData> > > >*)
+   [7] arti::Experiment::run() [2] arti::Board::count(arti::Region const&, arti::Piece const&) const [18] std::_Rb_tree_increment(std::_Rb_tree_node_base const*)
+  [45] arti::Experiment::file() [16] arti::Board::operator<(arti::Board const&) const [19] operator delete(void*)
+  [65] arti::create_dir(std::string const&) [43] arti::Square::index() const [20] _fu100___ZNSs4_Rep20_S_empty_rep_storageE
+  [44] arti::load_program(std::string const&) [54] std::_Rb_tree<std::string, std::pair<std::string const, arti::Region>, std::_Select1st<std::pair<std::string const, arti::Region> >, std::less<std::string>, std::allocator<std::pair<std::string const, arti::Region> > >::find(std::string const&) const [21] _fu108___ZNSs4_Rep20_S_empty_rep_storageE
+  [66] arti::FeatureProgram::~FeatureProgram() [38] std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_get_insert_hint_unique_pos(std::_Rb_tree_const_iterator<std::pair<arti::MatchOutcome const, int> >, arti::MatchOutcome const&) [1] _fu95___ZNSs4_Rep20_S_empty_rep_storageE
+  [67] arti::string_from_format(char const*, ...) [48] std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_copy(std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> > const*, std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> >*) [42] _monstartup
+  [68] arti::ExperimentRepository::find(char const*) [39] std::_Rb_tree<arti::MatchOutcome, std::pair<arti::MatchOutcome const, int>, std::_Select1st<std::pair<arti::MatchOutcome const, int> >, std::less<arti::MatchOutcome>, std::allocator<std::pair<arti::MatchOutcome const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<arti::MatchOutcome const, int> >*) [3] main
+  [69] arti::ExperimentRepository::instance() [17] std::pair<std::_Rb_tree_iterator<std::pair<arti::Board const, arti::MatchOutcome> >, bool> std::_Rb_tree<arti::Board, std::pair<arti::Board const, arti::MatchOutcome>, std::_Select1st<std::pair<arti::Board const, arti::MatchOutcome> >, std::less<arti::Board>, std::allocator<std::pair<arti::Board const, arti::MatchOutcome> > >::_M_insert_unique<std::pair<arti::Board const, arti::MatchOutcome> const&>(std::pair<arti::Board const, arti::MatchOutcome> const&) [12] memcmp
+  [58] arti::Log::record()    [10] std::pair<std::_Rb_tree_iterator<arti::Square>, bool> std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_insert_unique<arti::Square>(arti::Square&&)
+  [59] arti::Log::instance()  [55] std::_Rb_tree<arti::Square, arti::Square, std::_Identity<arti::Square>, std::less<arti::Square>, std::allocator<arti::Square> >::_M_copy(std::_Rb_tree_node<arti::Square> const*, std::_Rb_tree_node<arti::Square>*)

@@ -1,12 +1,16 @@
 #include "icu_data.h"
+#include <log.h>
+
 const size_t column_count = 7;
 const size_t row_count = 6;
 
 static IcuData * loaded = 0;
 
 IcuData& IcuData::instance() {
-	if (!loaded)
+	if (!loaded) {
 		loaded = new IcuData();
+		LOG << "ICU Data loaded";
+	}
 	return *loaded;
 }
 

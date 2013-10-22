@@ -1,10 +1,11 @@
 TARGET_DIR = RunDir
 # choose a debug option -- the first one is for debugging ... the orther for fastest
-DEBUG = -O0 -g3 
-MAX_SPEED = -O3 -DNDEBUG
-FLAGS = $(MAX_SPEED) 
+#GP=-pg 
+DEBUG = -O0 -g3 $(GP)
+MAX_SPEED = -O3 -DNDEBUG $(GP)
+FLAGS = $(DEBUG) 
 COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -Werror=return-type -Wno-error=unknown-pragmas -std=c++0x -Wall $(FLAGS)
-LINK_ARGS =  -L$(TARGET_DIR) -Llibs
+LINK_ARGS =  -L$(TARGET_DIR) -Llibs $(GP)
 DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers tictactoe
 # 3.3 does not have this problem: '_empty' was not declared in this scope
 #ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose -make 
@@ -24,6 +25,7 @@ TICTACTOE := $(TARGET_DIR)/tictactoe.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
 
+
 run_connect_4: $(CONNECT_4)
 	cd $(TARGET_DIR); ./connect4.exe; cat ./log.txt
 	
@@ -35,8 +37,6 @@ run_tictactoe: $(TICTACTOE)
 
 run_checkers: $(CHECKERS)
 	cd $(TARGET_DIR); ./checkers.exe
-
-
 
 # sometimes this target must be called explicitly
 grammars:		

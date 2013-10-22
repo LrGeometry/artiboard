@@ -102,4 +102,11 @@ namespace arti {
 		return os;
 	}
 
+ ostream& operator <<(std::ostream& os, const MatchOutcome& v) {
+		static const char* chars = "usnd";
+		os << chars[v];
+		return os;
+	}
+
+
 }

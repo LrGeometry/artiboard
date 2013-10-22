@@ -38,8 +38,8 @@ namespace arti {
 	}
 
 	int Board::count(const Region& ss, const Piece &value) const {
-		int result = 0;
-		for (auto s = ss.cbegin(); s != ss.cend(); s++)
+		register int result = 0;
+		for (auto s = ss.begin(); s != ss.end(); s++)
 			if (at(s->file(),s->rank()) == value)
 				result++;
 		return result;	

@@ -103,6 +103,9 @@ namespace arti {
 	enum MatchOutcome {
 		Unknown, SouthPlayerWins, NorthPlayerWins, Draw
 	};
+
+	ostream& operator <<(std::ostream& os, const MatchOutcome& v);
+
 	/**
 	 * Abstract class that describes the rules of a game.
 	 */

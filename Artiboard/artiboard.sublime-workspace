@@ -4,6 +4,142 @@
 		"selected_items":
 		[
 			[
+				"a",
+				"attrib"
+			],
+			[
+				"last",
+				"lastA"
+			],
+			[
+				"las",
+				"lastA"
+			],
+			[
+				"attr",
+				"attrib_type2"
+			],
+			[
+				"atr",
+				"attrib_entropy"
+			],
+			[
+				"is",
+				"is_better"
+			],
+			[
+				"_",
+				"_keys"
+			],
+			[
+				"c",
+				"cf"
+			],
+			[
+				"atti",
+				"attribute_names"
+			],
+			[
+				"Qu",
+				"QuinlanClassifier"
+			],
+			[
+				"clas",
+				"classV"
+			],
+			[
+				"class",
+				"class_t"
+			],
+			[
+				"at",
+				"attribute_names"
+			],
+			[
+				"att",
+				"_attribs"
+			],
+			[
+				"M",
+				"MAX_SPEED"
+			],
+			[
+				"fi",
+				"firstE"
+			],
+			[
+				"la",
+				"lastA"
+			],
+			[
+				"firt",
+				"firstA"
+			],
+			[
+				"cla",
+				"classify_down"
+			],
+			[
+				"cop",
+				"copy_matches"
+			],
+			[
+				"pa",
+				"parent_attribs"
+			],
+			[
+				"ES",
+				"ENSURE"
+			],
+			[
+				"f",
+				"firstA"
+			],
+			[
+				"not",
+				"node_t"
+			],
+			[
+				"m",
+				"match"
+			],
+			[
+				"vl",
+				"value_of"
+			],
+			[
+				"con",
+				"const"
+			],
+			[
+				"_at",
+				"_attrib_value"
+			],
+			[
+				"el",
+				"elemItT"
+			],
+			[
+				"E",
+				"ENSURE"
+			],
+			[
+				"is_",
+				"_is_leaf"
+			],
+			[
+				"os",
+				"ostream"
+			],
+			[
+				"cl",
+				"classT"
+			],
+			[
+				"se",
+				"set_value"
+			],
+			[
 				"en",
 				"entropy_t"
 			],
@@ -16,20 +152,8 @@
 				"result"
 			],
 			[
-				"_",
-				"_value"
-			],
-			[
 				"_c",
 				"_counts"
-			],
-			[
-				"at",
-				"attribT"
-			],
-			[
-				"cl",
-				"classT"
 			],
 			[
 				"D",
@@ -38,18 +162,6 @@
 			[
 				"l",
 				"lastE"
-			],
-			[
-				"f",
-				"firstE"
-			],
-			[
-				"las",
-				"lastA"
-			],
-			[
-				"att",
-				"attrib"
 			],
 			[
 				"r",
@@ -80,14 +192,6 @@
 				"annos"
 			],
 			[
-				"a",
-				"attribs"
-			],
-			[
-				"la",
-				"lastE"
-			],
-			[
 				"sub",
 				"subset_entropy_of"
 			],
@@ -104,16 +208,8 @@
 				"subsets"
 			],
 			[
-				"fi",
-				"firstE"
-			],
-			[
 				"for",
 				"forward_list"
-			],
-			[
-				"el",
-				"elemT"
 			],
 			[
 				"elem",
@@ -156,10 +252,6 @@
 				"_it_e"
 			],
 			[
-				"con",
-				"const_iterator"
-			],
-			[
 				"I",
 				"Iterator"
 			],
@@ -172,16 +264,8 @@
 				"elemT"
 			],
 			[
-				"attr",
-				"attribT"
-			],
-			[
 				"cou",
 				"count"
-			],
-			[
-				"last",
-				"lastE"
 			],
 			[
 				"b",
@@ -222,10 +306,6 @@
 			[
 				"Id3A",
 				"Id3AttribSet"
-			],
-			[
-				"c",
-				"c_str"
 			],
 			[
 				"connec",
@@ -298,10 +378,6 @@
 			[
 				"_f",
 				"_functionMap"
-			],
-			[
-				"se",
-				"second"
 			],
 			[
 				"va",
@@ -384,42 +460,26 @@
 	"buffers":
 	[
 		{
+			"file": "/c/development/github/artiboard/artiboard/artilib/id3.h",
+			"settings":
+			{
+				"buffer_size": 6947,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "connect4/connect4_exp.cpp",
 			"settings":
 			{
-				"buffer_size": 6983,
+				"buffer_size": 7146,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "artilib/id3.h",
+			"file": "artilibtest/id3_tests.cpp",
 			"settings":
 			{
-				"buffer_size": 4229,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/systemex.h",
-			"settings":
-			{
-				"buffer_size": 2900,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "makefile",
-			"settings":
-			{
-				"buffer_size": 3664,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "experiments/c4-070.txt",
-			"settings":
-			{
-				"buffer_size": 5162,
+				"buffer_size": 2623,
 				"line_ending": "Windows"
 			}
 		}
@@ -427,9 +487,21 @@
 	"build_system": "Packages/Makefile/Make.sublime-build",
 	"command_palette":
 	{
-		"height": 353.0,
+		"height": 129.0,
 		"selected_items":
 		[
+			[
+				"wrap",
+				"Word Wrap: Toggle"
+			],
+			[
+				"wra",
+				"Word Wrap: Toggle"
+			],
+			[
+				"wr",
+				"Word Wrap: Toggle"
+			],
 			[
 				"c++",
 				"Set Syntax: C++"
@@ -561,65 +633,89 @@
 	},
 	"file_history":
 	[
+		"/c/development/github/artiboard/artiboard/artilibtest/id3_tests.cpp",
+		"/c/development/github/artiboard/artiboard/tutlib/tut/tut.hpp",
+		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/bits/stl_vector.h",
+		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/bits/stl_bvector.h",
+		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/bits/stl_iterator.h",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4_exp.cpp",
+		"/C/development/github/artiboard/Artiboard/artilibtest/id3_tests.cpp",
+		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/bits/stl_list.h",
+		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/bits/stl_tree.h",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.c",
+		"/C/development/github/artiboard/Artiboard/tutlib/tut/tut.hpp",
+		"/C/development/github/artiboard/Artiboard/artilib/log.h",
+		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/ostream",
+		"/C/development/github/artiboard/Artiboard/artilibtest/feat_tests.cpp",
+		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
+		"/C/development/github/artiboard/Artiboard/makefile",
+		"/C/development/github/artiboard/Artiboard/artilib/id3.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/id3.h",
+		"/C/development/github/artiboard/Artiboard/src/makefile",
+		"/C/development/github/artiboard/Artiboard/artilib/game.h",
+		"/C/development/github/artiboard/Artiboard/artilib/game.cpp",
+		"/C/development/github/artiboard/Artiboard/src/web/mongoose.c",
+		"/C/development/github/artiboard/Artiboard/gp_1.txt",
+		"/C/development/github/artiboard/Artiboard/gp.txt",
+		"/C/development/github/artiboard/Artiboard/artilib/board.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/icu_data.cpp",
+		"/C/development/github/artiboard/Artiboard/RunDir/log.txt",
+		"/C/development/github/artiboard/Artiboard/artilib/log.cpp",
+		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/cstdlib",
 		"/C/development/github/artiboard/Artiboard/antlr/antlr3defs.h",
 		"/C/development/github/artiboard/Artiboard/antlr/antlr3cyclicdfa.h",
-		"/C/development/github/artiboard/Artiboard/artilib/feat_program.h",
-		"/C/development/github/artiboard/Artiboard/artilibtest/feat_tests.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.c",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatLexer.h",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatParser.h",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.h",
+		"/C/development/github/artiboard/Artiboard/RunDir/gp.txt",
+		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/mingw32/bits/gthr-default.h",
+		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/ext/atomicity.h",
+		"/C/development/github/artiboard/Artiboard/tutlib/tut/tut_assert.hpp",
 		"/C/development/github/artiboard/Artiboard/connect4/connect4_main.cpp",
-		"/C/development/github/artiboard/Artiboard/connect4/data/regions.txt",
-		"/C/development/github/artiboard/Artiboard/makefile",
-		"/C/development/github/artiboard/Artiboard/connect4/connect4.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/board.h",
-		"/C/development/github/artiboard/Artiboard/artilib/systemex.cpp",
+		"/c/mingw/include/io.h",
 		"/C/development/github/artiboard/Artiboard/experiments/c4-070.txt",
+		"/C/development/github/artiboard/Artiboard/artilib/systemex.h",
+		"/C/development/github/artiboard/Artiboard/artilib/board.h",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4_test.cpp",
+		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe_test.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatParser.c",
+		"/C/development/github/artiboard/Artiboard/artilib/feat_program.h",
+		"/C/development/github/artiboard/Artiboard/connect4/data/regions.txt",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/systemex.cpp",
 		"/C/development/github/artiboard/Artiboard/experiments/c4-060.txt",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.g",
 		"/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/bits/forward_list.h",
 		"/c/development/github/artiboard/artiboard/artilib/id3.h",
 		"/C/development/github/artiboard/Artiboard/artilib/feat.cpp",
 		"/c/development/github/artiboard/artiboard/artilib/board.h",
-		"/C/development/github/artiboard/Artiboard/artilib/board.cpp",
 		"/c/development/github/artiboard/artiboard/artilib/square.h",
 		"/C/development/github/artiboard/Artiboard/connect4/icu_data.h",
-		"/C/development/github/artiboard/Artiboard/RunDir/log.txt",
-		"/C/development/github/artiboard/Artiboard/artilib/id3.h",
 		"/C/development/github/artiboard/Artiboard/experiments/c4-050.txt",
 		"/C/development/github/artiboard/Artiboard/artilibtest/board_tests.cpp",
-		"/C/development/github/artiboard/Artiboard/connect4/connect4_exp.cpp",
 		"/C/development/github/artiboard/Artiboard/artilibtest/data/feat_language_test.txt",
 		"/C/development/github/artiboard/Artiboard/src/boardgame/test_boardgame.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/systemex.h",
-		"/C/development/github/artiboard/Artiboard/artilib/id3.cpp",
-		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
 		"/C/development/github/artiboard/Artiboard/artilib/square.h",
 		"/C/development/github/artiboard/Artiboard/artilib/square.cpp",
 		"/C/development/github/artiboard/Artiboard/experiments/c4-030.txt",
 		"/C/development/github/artiboard/Artiboard/experiments/c4-040.txt",
 		"/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/cstdio",
-		"/C/development/github/artiboard/Artiboard/connect4/icu_data.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/game.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/feat_program.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/connect4.h",
 		"/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/bits/stl_pair.h",
-		"/C/development/github/artiboard/Artiboard/connect4/connect4_test.cpp",
 		"/G/code/cuffserver/test/com/vastech/cuff/workflow/WorkflowManagerTests.java",
 		"/c/development/github/artiboard/artiboard/artilib/feat.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/feat.h",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/Feat.g",
-		"/C/development/github/artiboard/Artiboard/artilib/game.h",
 		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe.h",
 		"/C/development/github/artiboard/Artiboard/artilib/experiment.h",
 		"/C/development/github/artiboard/Artiboard/artilib/experiment.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/data/testfun.txt",
-		"/C/development/github/artiboard/Artiboard/artilib/log.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/log.h",
 		"/C/development/github/artiboard/Artiboard/tutlib/test_util.h",
 		"/0> connect4/connect4.cpp(83)",
 		"/C/development/github/artiboard/Artiboard/artilib/boardgame.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/data/connect4.h",
 		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe.cpp",
-		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe_test.cpp",
 		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe_main.cpp",
 		"/C/development/github/artiboard/Artiboard/tutlib/test_main.cpp",
 		"/C/development/github/artiboard/Artiboard/checkers/checkers_board.cpp",
@@ -631,14 +727,12 @@
 		"/C/development/github/artiboard/Artiboard/src/game/gamebase.cpp",
 		"/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/bits/stl_tree.h",
 		"/C/development/github/artiboard/Artiboard/src/checkers/checkers.h",
-		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.h",
 		"/C/development/github/artiboard/Artiboard/artilibtest/arti_main.cpp",
 		"/C/development/github/artiboard/Artiboard/tutlib/test_util.cpp",
 		"/C/development/github/artiboard/Artiboard/src/systemex/test_util.h",
 		"/C/development/github/artiboard/Artiboard/artilib/test_util.h",
 		"/C/development/github/artiboard/Artiboard/artilib/test_util.cpp",
 		"/C/development/github/artiboard/Artiboard/src/conventions.txt",
-		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatParser.h",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatLexer.c",
 		"/C/Users/willemd/Documents/GitHub/codespear.github.io/_drafts/cpp-map.md",
 		"/C/development/github/artiboard/Artiboard/src/tictactoe/tictactoe.h",
@@ -666,39 +760,18 @@
 		"/C/development/github/artiboard/Artiboard/connect4/readme.md",
 		"/C/development/github/artiboard/artiboard/src/makefile",
 		"/C/development/github/artiboard/Artiboard/connect4/.gitignore",
-		"/C/development/github/artiboard/Artiboard/src/boardgame/boardgame.h",
-		"/C/development/github/artiboard/Artiboard/src/console/main.cpp",
-		"/C/development/github/artiboard/Artiboard/artilib/testsystem.cpp",
-		"/C/Users/willemd/AppData/Roaming/Sublime Text 2/Packages/User/make.sublime-build",
-		"/C/Users/willemd/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/game/game_math.h",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/game/game.cpp",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/duality/duality_main.cpp",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/game/game_objects.h",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/duality/main_scene.h",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/game/font.h",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/game/game.h",
-		"/C/Users/willemd/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
-		"/C/Users/willemd/AppData/Roaming/Sublime Text 2/Packages/PlainTasks/messages/Tutorial.todo",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/my_tasks.todo",
-		"/C/Users/willemd/Documents/GitHub/GameEx/.gitignore",
-		"/C/Users/willemd/Documents/GitHub/GameEx/gameex.sublime-project",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/duality/controller.cpp",
-		"/C/Users/willemd/AppData/Roaming/Sublime Text 2/Packages/SideBarEnhancements/messages/11.13.2012.1305.0.txt",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/src/todo.txt",
-		"/C/Users/willemd/Documents/GitHub/GameEx/.metadata/.plugins/org.eclipse.core.resources/.projects/GameLand/org.eclipse.egit.core/GitProjectData.properties",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/media/duality/fence.frag",
-		"/C/Users/willemd/Documents/GitHub/GameEx/GameLand/media/duality/arena.frag"
+		"/C/development/github/artiboard/Artiboard/src/boardgame/boardgame.h"
 	],
 	"find":
 	{
-		"height": 49.0
+		"height": 43.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 126.0,
 		"where_history":
 		[
+			"*.h",
 			""
 		]
 	},
@@ -707,6 +780,39 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"classT",
+			"EntropyMeasure",
+			"classT",
+			"entropy_of",
+			"is_better",
+			";  ",
+			"  \n",
+			"	\n",
+			";\n",
+			"TRACE",
+			" <<",
+			"ostream",
+			";\n",
+			"FeatData",
+			"/\");\n",
+			"feat",
+			" \n",
+			"_start",
+			"\":",
+			"-pg",
+			"pg",
+			"arti::",
+			"std::",
+			"COMPILE",
+			"off64_t",
+			"attribs.begin()",
+			"attribs",
+			"MatchOutcome",
+			"Matchoutcome",
+			"e.",
+			"std::map<classT,int>",
+			"result.counts()",
+			"subsets",
 			"map",
 			"attrib_entropy",
 			"DataStat",
@@ -801,40 +907,7 @@
 			"identifier",
 			"reference",
 			"function fun1 = 1.23 * eq1 + 1.34 * eq2;",
-			"artilib/grammars/Feat.g",
-			"buld",
-			"\\",
-			"state",
-			"Ctx",
-			"USER1",
-			"#include <grammars/FeatParser.h>\n",
-			">\n",
-			"FeatTreeLexer",
-			"program",
-			")\n",
-			"Feat",
-			".",
-			"formula",
-			"featurelang",
-			"ExprCppTree",
-			"{}\n",
-			"GameLandLib",
-			"TerrainDemo",
-			"TERRAIN_DEMO",
-			"exe",
-			"GAME_LAND_LIB",
-			"\\",
-			")\n",
-			"MainPage",
-			"GameObject",
-			"GameObjectChainLink",
-			"ruler",
-			"systemex",
-			"DualityScene",
-			"our",
-			"L009",
-			"L010",
-			"lineID"
+			"artilib/grammars/Feat.g"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -853,52 +926,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "connect4/connect4_exp.cpp",
+					"file": "/c/development/github/artiboard/artiboard/artilib/id3.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6983,
+						"buffer_size": 6947,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6845,
-								6845
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 7700.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "artilib/id3.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4229,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								703,
-								703
+								3713,
+								3713
 							]
 						],
 						"settings":
@@ -908,26 +953,26 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2678.0,
+						"translation.y": 2187.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "artilib/systemex.h",
+					"buffer": 1,
+					"file": "connect4/connect4_exp.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2900,
+						"buffer_size": 7146,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2843,
-								2843
+								7008,
+								7008
 							]
 						],
 						"settings":
@@ -936,61 +981,35 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3167.0,
+						"translation.y": 5475.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "makefile",
+					"buffer": 2,
+					"file": "artilibtest/id3_tests.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3664,
+						"buffer_size": 2623,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								258,
-								258
+								2605,
+								2605
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "experiments/c4-070.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5162,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 848.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1000,7 +1019,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 39.0
+		"height": 32.0
 	},
 	"input":
 	{
@@ -1036,7 +1055,7 @@
 	"project": "artiboard.sublime-project",
 	"replace":
 	{
-		"height": 74.0
+		"height": 60.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1045,12 +1064,72 @@
 		"selected_items":
 		[
 			[
-				"070",
-				"Experiments\\c4-070.txt"
+				"id",
+				"Arti Lib Tests\\id3_tests.cpp"
+			],
+			[
+				"ids",
+				"Arti Lib Tests\\id3_tests.cpp"
+			],
+			[
+				"make",
+				"Root\\makefile"
+			],
+			[
+				"id3",
+				"Arti Lib\\id3.cpp"
+			],
+			[
+				"ic",
+				"Connect 4\\icu_data.cpp"
+			],
+			[
+				"bo",
+				"Arti Lib\\board.cpp"
+			],
+			[
+				"gp",
+				"Root\\gp.txt"
 			],
 			[
 				"mak",
 				"Root\\makefile"
+			],
+			[
+				"log",
+				"Arti Lib\\log.cpp"
+			],
+			[
+				"070",
+				"Experiments\\c4-070.txt"
+			],
+			[
+				"_exp",
+				"Connect 4\\connect4_exp.cpp"
+			],
+			[
+				"ga",
+				"Arti Lib\\game.h"
+			],
+			[
+				"board",
+				"Arti Lib\\board.h"
+			],
+			[
+				"agme",
+				"Arti Lib\\game.h"
+			],
+			[
+				"exp.c",
+				"Connect 4\\connect4_exp.cpp"
+			],
+			[
+				"main",
+				"Connect 4\\connect4_main.cpp"
+			],
+			[
+				"exp",
+				"Connect 4\\connect4_exp.cpp"
 			],
 			[
 				"060",
@@ -1065,32 +1144,12 @@
 				"Connect 4\\data\\regions.txt"
 			],
 			[
-				"main",
-				"Connect 4\\connect4_main.cpp"
-			],
-			[
 				"tree.g",
 				"Arti Lib\\grammars\\FeatTree.g"
 			],
 			[
-				"make",
-				"Root\\makefile"
-			],
-			[
 				"log.t",
 				"Run\\log.txt"
-			],
-			[
-				"exp.c",
-				"Connect 4\\connect4_exp.cpp"
-			],
-			[
-				"ic",
-				"Connect 4\\icu_data.h"
-			],
-			[
-				"id",
-				"Arti Lib\\id3.h"
 			],
 			[
 				"06",
@@ -1107,10 +1166,6 @@
 			[
 				"050",
 				"Experiments\\c4-050.txt"
-			],
-			[
-				"bo",
-				"Arti Lib\\board.cpp"
 			],
 			[
 				"c4cp",
@@ -1177,14 +1232,6 @@
 				"Connect 4\\connect4_main.cpp"
 			],
 			[
-				"board",
-				"Arti Lib\\board.h"
-			],
-			[
-				"_exp",
-				"Connect 4\\connect4_exp.cpp"
-			],
-			[
 				"c4",
 				"Experiments\\c4-030.txt"
 			],
@@ -1239,10 +1286,6 @@
 			[
 				"cn4exp",
 				"Connect 4\\connect4_exp.cpp"
-			],
-			[
-				"log",
-				"Arti Lib\\log.h"
 			],
 			[
 				"lo",

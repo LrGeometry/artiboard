@@ -100,6 +100,11 @@ typedef std::pair<arti::Board, MatchOutcome> element_type;
 typedef std::pair<arti::Region,arti::Piece> attrib_type;
 typedef std::pair<std::string,arti::Piece> attrib_type2;
 
+template<class S, class T> std::ostream& operator<<(std::ostream& os, const std::pair<S,T> & v) {
+	os << "(" << v.first << ":" << v.second << ")";
+	return os; 
+}
+
 class Connect4Classifier : public Classifier<attrib_type, element_type, MatchOutcome, int> {
 	int value_of(const element_type& e, const attrib_type &a) override {
 			return e.first.count_repeats((a.first),a.second);
@@ -234,7 +239,7 @@ public:
 		auto attribs = cf.collect_attribs();
 		auto entrops = cf.collect_entropies_sorted(attribs.begin(),attribs.end(),annos.begin(),annos.end());
 		FOR_EACH(e,entrops) {
-			file() << e->first.first << " " << e->first.second << " " << e->second.value(); 
+			file() << e->first.first << " " << e->first.second << " " << e->second; 
 		}
 	}
 };
