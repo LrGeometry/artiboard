@@ -34,6 +34,9 @@ class FairnessExperiment: public Experiment {
 			}
 		}
 };
+FairnessExperiment ex1;
+
+
 
 struct DataStat {
 	DataStat() : wins(0), losses(0), draws(0) {};
@@ -72,7 +75,7 @@ public:
 		file() << data.size();
 	}
 };
-
+DataStatistics ex2;
 
 class FeatureStatistics: public Experiment {
 public:
@@ -95,6 +98,8 @@ public:
 		}
 	}
 };
+FeatureStatistics ex3;
+
 
 typedef std::pair<arti::Board, MatchOutcome> element_type;
 typedef std::pair<arti::Region,arti::Piece> attrib_type;
@@ -131,119 +136,95 @@ public:
 			}
 	}
 };
+FeatureCheck ex4;
+
 
 struct AnnotatedData {
-	AnnotatedData(AnnotatedBoard b, MatchOutcome o) : _board(b), _outcome(o) {}
-	const AnnotatedBoard _board;
-	const MatchOutcome _outcome;
+	AnnotatedData(AnnotatedBoard b, MatchOutcome o) : board(b), outcome(o) {}
+	const AnnotatedBoard board;
+	const MatchOutcome outcome;
 };
 
-class AnnotatedClassifier : public Classifier<attrib_type2, AnnotatedData, MatchOutcome, int> {
-	FeatureProgram::u_ptr _program;
-public:
-	AnnotatedClassifier(FeatureProgram::u_ptr& p) : _program(std::move(p)) {}
-	AnnotatedClassifier() : _program(std::move(load_program("../connect4/data/regions.txt"))) {}
-  MatchOutcome class_of(const AnnotatedData &e) override {
-			return e._outcome;
-	};
-
-	int value_of(const AnnotatedData& e, const attrib_type2 &a) override {
-			return e._board.count(program().regions().at(a.first),a.second);
-			//return e._board.count(program().regions().at(a.first),a.second) > 0 ? 1 : 0;
-			//return e._board.count_repeats(program().regions().at(a.first),a.second);
-	};
-
-	const FeatureProgram& program() const {return *_program;}
-
-
-	std::list<attrib_type2> collect_attribs() {
-		std::list<attrib_type2> result;
-		auto pieces = annotation_pieces();
-		FOR_EACH(nr,program().regions()) 
-			FOR_EACH(p,pieces) {
-				result.emplace_front(attrib_type2(nr->first,*p));
-			}
-		return result;	
+class AnnotatedDatabase : public ID3NameResolver {
+public:	
+	std::vector<AnnotatedData> items;
+	std::vector<attrib_type2> attribs;
+	std::unique_ptr<FeatureProgram> program;
+	std::map<int,std::string> names;
+	AnnotatedDatabase() {collect_annos();collect_attribs();}
+  const std::string& value_name(const int a, const int v) {
+  	const auto &result = names[v];
+  	if (result.empty()) {
+  		return names[v] = string_from_format("%d",v);
+  	} else
+  		return result;
+  }
+  const std::string& attribute_name(const int a) {
+  	return attribs[a].first;
+  }
+  const std::string& class_name(const int c) {
+  	const auto &result = names[c];
+  	if (result.empty()) {
+  		return names[c] = string_from_format("%d",c);
+  	} else
+  		return result;
+  }
+private:
+	void collect_annos() {
+		const IcuData& data = IcuData::instance();
+		items.reserve(data.size());
+		FOR_EACH(i,data) 
+			items.emplace_back(AnnotatedBoard(i->first),i->second);
 	}
-
-};
-
-std::forward_list<AnnotatedData> collect_annos() {
-	std::forward_list<AnnotatedData> result;
-	const IcuData& data = IcuData::instance();
-	FOR_EACH(i,data) 
-		result.emplace_front(AnnotatedData(AnnotatedBoard(i->first),i->second));
-	return result;	
-}
-
-class AnnotatedFeatureCheck: public Experiment {
-public:
-	AnnotatedFeatureCheck(): Experiment("c4-050","AnnotatedFeatureCheck Connect-4 ICU data features") {}
-	void doRun() override {
-		auto annos = collect_annos();
-		file() << "region is_mixed";
-		auto pieces = annotation_pieces();
-		AnnotatedClassifier cf;
-		FOR_EACH(nr,cf.program().regions()) 
+	void collect_attribs() {
+		const auto &pieces = annotation_pieces();
+		program = std::move(load_program("../connect4/data/regions.txt"));
+		attribs.reserve(program->regions().size() * size_of(pieces));
+		FOR_EACH(nr,program->regions()) 
 			FOR_EACH(p,pieces) {
-				attrib_type2 a(nr->first,*p);
-				file() << nr->first << " " << *p << " " << (cf.is_mixed(a,annos.begin(),annos.end())?"yes":"no"); 
+				attribs.emplace_back(nr->first,*p);
 			}
 	}
+
 };
 
-class AnnotatedFeatureStatistics: public Experiment {
+class AnnotatedClassifier : public ID3Classifier {
 public:
-	AnnotatedFeatureStatistics(): Experiment("c4-060","Connect-4 ICU data features") {}
-	void doRun() override {
-		auto annos = collect_annos();
-		file() << "region piece count wins losses draws";
-		AnnotatedClassifier cf;
-		auto attribs = cf.collect_attribs();
-		FOR_EACH(a,attribs) {
-			std::map<int,DataStat> counts;
-			FOR_EACH(b,annos) 
-				counts[cf.value_of(*b,*a)].inc(b->_outcome);
-			FOR_EACH(c,counts)
-				file() << a->first << " " << a->second << " " << c->first << " " << c->second;	
-		}
+	AnnotatedDatabase *db;
+public:
+	explicit AnnotatedClassifier(AnnotatedDatabase *data, const size_t count_cut) : ID3Classifier(count_cut), db(data) {}
+  int class_of(const int element) override {
+  	return db->items[element].outcome;
+  }
+
+	int value_of(const int element, const int attribute) override	{
+		const auto &b = db->items[element].board;
+		const auto &r = db->program->regions()[db->attribs[attribute].first];
+		const auto &p = db->attribs[attribute].second;
+		return b.count(r,p) > 0 ? 1 : 0;
 	}
 };
 
-std::list<attrib_type> collect_attribs() {
-	std::list<attrib_type> result;
-	auto pieces = annotation_pieces();
-	auto program = load_program("../connect4/data/regions.txt");
-	FOR_EACH(nr,program->regions()) 
-		FOR_EACH(p,pieces) {
-			result.emplace_front(attrib_type(nr->second,*p));
-		}
-	return result;	
-}
-
-// register experiments
-FairnessExperiment ex1;
-DataStatistics ex2;
-FeatureStatistics ex3;
-FeatureCheck ex4;
-AnnotatedFeatureCheck ex5;
-AnnotatedFeatureStatistics ex6;
-
-class AnnotatedEntropy: public Experiment {
+class Classify: public Experiment {
 public:
-	AnnotatedEntropy(): Experiment("c4-070","AnnotatedEntropy Connect-4 ICU data features") {}
+	Classify(): Experiment("c4-070","Classify the ICU data set") {}
 	void doRun() override {
-		auto annos =	collect_annos();
-		file() << "region subset_entropy";
-		AnnotatedClassifier cf;
-		auto attribs = cf.collect_attribs();
-		auto entrops = cf.collect_entropies_sorted(attribs.begin(),attribs.end(),annos.begin(),annos.end());
-		FOR_EACH(e,entrops) {
-			file() << e->first.first << " " << e->first.second << " " << e->second; 
+		AnnotatedDatabase db;
+		file() << "fraction cutoff size certainty";
+		for (int f = 3; f < 10; f++) {
+			for (int i = 0; i < 20; i++) {
+				const int cutoff = i * 32;
+				LOG << "At " << f << ":" << i;
+				std::cout << "At " << f << ":" << i;
+				AnnotatedClassifier cf(&db,cutoff);
+				cf.train_and_test(db.items.size(),db.attribs.size(),f);
+				file() << f << " " << cutoff << " " << cf.root().size() <<" " << cf.root().certainty();
+				cf.root().to_stream(LOG,db);
+			}
 		}
 	}
 };
-AnnotatedEntropy ex7;
+Classify ex5;
 
 
 

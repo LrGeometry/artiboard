@@ -5,7 +5,7 @@
 #include "systemex.h"
 
 #define LOG ::arti::Log::instance().record()
-#define TRACE (::arti::Log::instance().record() << __FILE__ << ":" << __LINE__ << ":1 ")
+#define TRACE (::arti::Log::instance().newline()  << __FILE__ << ":" << __LINE__ << ":1 ")
 
 namespace arti {
 

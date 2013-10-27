@@ -1,9 +1,10 @@
 TARGET_DIR = RunDir
 # choose a debug option -- the first one is for debugging ... the orther for fastest
 #GP=-pg 
-DEBUG = -O0 -g3 $(GP)
+DEBUG = -O -g3 $(GP)
 MAX_SPEED = -O3 -DNDEBUG $(GP)
-FLAGS = $(DEBUG) 
+FLAGS = $(MAX_SPEED) 
+#FLAGS = $(DEBUG) 
 COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -Werror=return-type -Wno-error=unknown-pragmas -std=c++0x -Wall $(FLAGS)
 LINK_ARGS =  -L$(TARGET_DIR) -Llibs $(GP)
 DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers tictactoe
@@ -25,12 +26,14 @@ TICTACTOE := $(TARGET_DIR)/tictactoe.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
 
+all: c4
+#all: test
 
-run_connect_4: $(CONNECT_4)
-	cd $(TARGET_DIR); ./connect4.exe; cat ./log.txt
-	
-run_arti_test: $(ARTI_TEST)
+test: $(ARTI_TEST)
 	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
+
+c4: $(CONNECT_4)
+	cd $(TARGET_DIR); ./connect4.exe; cat ./log.txt
 	
 run_tictactoe: $(TICTACTOE)
 	cd $(TARGET_DIR); ./tictactoe.exe
