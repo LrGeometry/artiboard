@@ -212,7 +212,7 @@ public:
 		AnnotatedDatabase db;
 		file() << "fraction cutoff size certainty";
 		for (int f = 3; f < 10; f++) {
-			for (int i = 0; i < 20; i++) {
+			for (int i = 0; i < 30; i++) {
 				const int cutoff = i * 32;
 				LOG << "At " << f << ":" << i;
 				std::cout << "At " << f << ":" << i;
