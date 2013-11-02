@@ -5,3 +5,13 @@ Test
 bin
 artilib/generated
 *.depends
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.log
+*.pdf
+*.ps
+*.synctex
+*.tps
+*.bst
