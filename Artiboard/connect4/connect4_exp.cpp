@@ -110,35 +110,6 @@ template<class S, class T> std::ostream& operator<<(std::ostream& os, const std:
 	return os; 
 }
 
-class Connect4Classifier : public Classifier<attrib_type, element_type, MatchOutcome, int> {
-	int value_of(const element_type& e, const attrib_type &a) override {
-			return e.first.count_repeats((a.first),a.second);
-	};
-
-  MatchOutcome class_of(const element_type &e) override {
-			return e.second;
-	};
-};
-
-class FeatureCheck: public Experiment {
-public:
-	FeatureCheck(): Experiment("c4-040","Impoved Connect-4 ICU data features") {}
-	void doRun() override {
-		const IcuData& data = IcuData::instance();
-		file() << "region is_mixed";
-		const std::vector<Piece> pieces({Piece('-'), Piece('o'), Piece('x')});
-		auto program = load_program("../connect4/data/regions.txt");
-		Connect4Classifier cf;
-		FOR_EACH(nr,program->regions()) 
-			FOR_EACH(p,pieces) {
-				attrib_type a(nr->second,*p);
-				file() << nr->first << " " << *p << " " << (cf.is_mixed(a,data.begin(),data.end())?"yes":"no"); 
-			}
-	}
-};
-FeatureCheck ex4;
-
-
 struct AnnotatedData {
 	AnnotatedData(AnnotatedBoard b, MatchOutcome o) : board(b), outcome(o) {}
 	const AnnotatedBoard board;

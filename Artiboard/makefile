@@ -5,7 +5,7 @@ DEBUG = -O -g3 $(GP)
 MAX_SPEED = -O3 -DNDEBUG $(GP)
 FLAGS = $(MAX_SPEED) 
 #FLAGS = $(DEBUG) 
-COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -Werror=return-type -Wno-error=unknown-pragmas -std=c++0x -Wall $(FLAGS)
+COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -Werror=return-type -Wno-unknown-pragmas -std=c++0x -Wall $(FLAGS)
 LINK_ARGS =  -L$(TARGET_DIR) -Llibs $(GP)
 DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers tictactoe
 # 3.3 does not have this problem: '_empty' was not declared in this scope

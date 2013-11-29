@@ -26,7 +26,7 @@ TDB
 TBD
 \section{Decision trees}
 \label{sec:decision_tree}   
-% TODO: This section mus be rewritten
+% TODO: This section must be rewritten and shortened
 % definition 
 Many artificial intelligence problems can be viewed as classification problems \cite{wagacha:trees}. The ability to classify can be described as the ability to predict a particular attribute value of an entity based on the values of the other attributes of that entity.  
 
@@ -224,7 +224,7 @@ The information gain heuristic selects the attribute with the greatest informati
 \section{The discovery algorithm}
 \label{sec:discovery_algorithm}
 % Introduction
-The discovery algorithm is introduced in this section.  The purpose of this new algorithm is to build a phased evaluation function. As input the discovery algorithm is given a set of example positions. These positions are encoded and classified for ID3 using the method described in \refsec{encoding_examples}.
+The discovery algorithm is introduced in this section.  The purpose of this new algorithm is to build an evaluation function. As input the discovery algorithm is given a set of example positions. These positions are encoded and classified for ID3 using the method described in \refsec{encoding_examples}.
 Before ID3 is applied, the example positions are divided into \myterm{phased example sets}, such that all positions in the set are from the same game phase.  ID3 induces a decision tree for each game phase from the example set of that phase.   
 
 The decision rules in each tree are manipulated and transformed by the function deduction algorithm. This algorithm produces a function with terms weighted with $1.0$.  These functions are then combined to form the phased evaluation function used by the agent during game play.  The outline of the algorithm is listed in \refalg{fd}.  
