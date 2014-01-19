@@ -33,6 +33,7 @@
   linkbordercolor=white,
 	urlbordercolor=light-gray,
 }
+\newcommand{\mytermmark}[1]{{\sc #1}} % deprecated
 \newcommand{\myterm}[1]{\hyperlink{#1}{\sc #1}}
 \newcommand{\myterms}[1]{\hyperlink{#1}{\sc #1s}}
 \newcommand{\refterm}[1]{\myterm{#1} (p. \pageref{def:#1})}
@@ -46,11 +47,16 @@
 
 } 
 % mydef name definition
-\newcommand{\mydef}[2]{\mydefT{#1}{ }{#2}}
+\newcommand{\mydefs}[2]{\mydefT{#1}{ }{#2}}
 % mydefc name context definition
 \newcommand{\mydefc}[3]{\mydefT{#1}{[#2]}{#3}}
-\include{main}
-\bibliography{main}
+\include{two-player}
+\include{learning-function}
+\include{knowledge-discovery}
+
+\newpage
 \bibliographystyle{acm}
+
+\bibliography{main}
 \end{document}
 

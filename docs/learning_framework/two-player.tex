@@ -1,0 +1,1275 @@
+\chapter{Two-player games}
+\label{chap:two-player}
+{ \chapterintro
+This chapter reviews fundamental two-player definitions and concepts used in chapters that follow.  Furthermore, the reasons for using games in research and the properties that are typically used to classify two-player games are explored. Game convergence is such a property, and a new, more general definition of this property extends work done previously in this regard.  Throughout the chapter, the perspective remains on the influence the presented material might have on the definition of a learning framework.}
+
+\section{Introduction}
+\label{sec:two-player-intro}
+For centuries, two-player games continued to be a source of amusement to the human race.  This lasting interest can surely by attributed, at least in part, to the variety of games available.  From this variety many diverse strategies arise, such that a strategy that often wins any particular game is seldom transferable to another game. Because every game is a different kind of puzzle, many researchers found it best to choose a specific game as subject. Others, like David Fogel \cite{fogel:networks,fogel:edge,fogel:chess}  started with simpler games and turned their attention to more complex games as the research progressed. 
+
+An automated learning process that can be applied to all two-player games has not yet been discovered, and it is likely to remain unattainable for some time. This general problem can be divided into smaller steps by considering layers of knowledge. Each layer builds on the knowledge obtained by the previous layer.  At the bottom layer, there is the \myterm{playing agent} that has the knowledge of how to play the game.  The next layer is the \myterm{learning agent}; it needs to know how to play, but also has knowledge on how to learn to play better. The third layer is the \myterm{learning framework}; it extends the knowledge of how to learn a particular game to define a process by which other games of the same class can be learned.  Finally, at the top of the stack, the \myterm{two-player game agent} automates the improvement of learning frameworks and the development of new learning frameworks for other classes of two-player games. The current work contributes to the research conducted at the second and third layers. 
+ 
+At the start of this chapter, \refsec{concepts-and-terms} provides background on the terminology and the concepts pertaining to automated game-playing. Then, \refsec{motives}  reviews the most important drivers that motivate researchers to spend their time on the subject of games. Game playing cannot be automated without search, and \refsec{knowledge-and-search} highlights this important facet and considers the influence of search on the learning framework. \refsec{properties} addresses the classification problem by considering a few critical properties of two-player games.  The final section of this chapter provides a summary of the notable conclusions.  
+
+% must be the first section because the other sections depend upon the definitions contained here
+\section{Game playing terminology and concepts}
+\label{sec:concepts-and-terms}
+Fundamentally, a game is a set of rules.  In a \myterm{two-player game}, two participants compete in a contest determined by the game rules.  These rules define how the game starts, what the legal moves are,  when the game ends and who the winner is.  In an abstract sense,  game rules describe allowable changes to the \myterm{game state}.  For board games, the game state is usually referred to as a \myterm{position}. A \myterm{legal position} is one that can be constructed by playing the game according to the rules.  The \myterm{state-space} is the set of all legal positions.   
+
+Three mutually exclusive sets cover the set of legal positions: the set of \myterm{initial positions}; the set of \myterm{middle positions} and the set of \myterm{end positions}.  A game starts with an initial position and it ends with an end position.  Any legal position not in the initial- or end position set belongs to the set of middle positions. Many popular games have only one initial position, but there are exceptions.  For instance, in  \mygame{Tournament Checkers} the initial position is determined from a balloted sequence of three moves \cite{schaeffer:solving} -- and the set of  initial positions has 144 elements. \mygame{Arimaa} starts with each player in turn arranging 16 game pieces on the nearest two ranks on a \mygame{Chess} board.  In this game there are thousands of initial positions\footnote{See http://www.arimaa.com for the \mygame{Arimaa} game rules}.  
+%.  This game has approximately $10^{20}$ initial positions.  
+
+The outcome of a match is determined from the end position.  A game in which the outcome is either a win, a lose or a draw for each player is said to have a  \myterm{restricted outcome} \cite{davis:evolve}.  The player's goal is to make moves that force the outcome towards an end-game position in which he wins. With respect to a player, the symbol $\mylose$ signifies the lose outcome, $\mydraw$ signifies the draw, and $\mywin$ signifies the win of a match.   
+
+Using a position centric view, the rules of the game can be regarded as the input to a production system that starts from an initial position and produces all the legal positions that follow.  Repeating the production, level by level, results in a tree structure with the initial position as the root and end positions as leaf nodes. This tree structure is called a \myterm{game tree} and each level in the tree is called a \myterm{ply} \cite{samuel:checkers}.  The \myterm{branching factor} is a measure of the average number of child nodes. The set of all game trees with an initial position as root is called the \myterm{game forest}.  
+
+During the game, the nodes of the game tree is traversed and a path is constructed.  This path is called a \myterm{play-line} and it starts at the root of a game tree and extends towards the leaves of the tree as the game progresses.  The \myterm{active game tree} is the tree in which the play-line is found. The \myterm{active position} is the last node in the play line.  The \myterm{past positions} are the nodes that precede the active position, and the \myterm{future lines} are all the paths in the game tree with the active position as root.  
+
+For any given position, the \myterm{active player} is the player that must choose the next node in the play line.  The other player is called the \myterm{passive player}.  The player that is active at the first node in the play line is called the \myterm{first player} and the passive player for that node is referred to as the \myterm{second player}.
+
+
+\section{Motivations for using games in research}
+\label{sec:motives}
+The domain of two-player games presents a scientist in the field of artificial intelligence (A.I.) with an artificial problem that has well defined rules and a definite goal.  Even though the goal and the rules are elementary, devising a strategy to win a non-trivial game is a complex task that demands the use of intelligence. These qualities of game domains has been recognised as beneficial to A.I. research since the late 1950's \cite{samuel:checkers}.      
+
+The primary motivations for using games as a research tool support three different research objectives.  One objective aims to win tournaments and focus on creating the best player for a particular game.  Another objective aims to solve the game by producing an infallible strategy. The third objective regards games as ideal learning domains, and aims to investigate machine learning methods.
+
+When compared to research projects conducted to create winning computer players, projects that apply games to the problem of investigating learning methods are less prevalent. There is reason to expect that a solution to the latter coincides with progress made to the former; and notable contributions have been made in this regard.  However, it is also possible for competition matches, especially public exhibitions, to stifle research progress. In \refsec{winning} the contributive as well as the prohibitive aspects of these matches are explored. The objective to solve a game is discussed in \refsec{solving}. \refsec{investigating} considers the factors that make game domains ideal for automated learning.
+
+
+\subsection{Winning public tournaments}
+\label{sec:winning}
+Artificial intelligence is convincingly demonstrated when the behaviour of the artificial agent is understood by the audience. Therefore a game playing program that beats a human opponent is ideal for such displays. Annual tournament matches against \mygame{Chess} playing agents have been held since 1970 \cite{donskoy:grace}.  In 1992, the American Checkers Foundation and the English Draughts Association even established a Man-Machine World Championship title for \mygame{Checkers} \cite{schaeffer:solving}. The computer \mygame{Chess} match of 1997 that played off Deep Blue against Gary Kasparov (the world \mygame{Chess} champion since 1985) is arguably the most celebrated achievement in A.I. history.
+
+The desire to perform well in the spotlight is a strong motivation:  potential returns include monetary gains, publicity and prestige. 
+However, the famous Deep Blue vs. Kasparov match and other like-minded efforts had a less than expected  impact on the science of A.I.  This is partly because exhibition programs  implement techniques that many A.I. researchers regard as uninteresting.  Public exhibitions encourage small, short-term projects that focus on the player's performance, while A.I. research attempts  to find  solutions to problems that require a longer term commitment.  Some specific issues have been highlighted with regard to \mygame{Chess} programming endeavours  
+\cite{donskoy:grace}:
+\begin{mydesclist}
+\item While they were chasing deadlines, the neglect of \mygame{Chess} programmers to sell their ideas contributed to the diminution of the esteem once enjoyed by the game of \mygame{Chess} in A.I. research.
+\item Experiments conducted solely to test the strength of the player lead to a reliance on results of which the underlying theory was not always understood.  Even though a lot of research was conducted, there is little theory of \mygame{Chess} knowledge and its interactions with search.
+\item High pay-off to the winner eradicates incentives for the dissemination of research results.  The tendency is to hold back on ideas to maintain a competitive edge, leaving each team to discover principles that are already known to other teams.
+\end{mydesclist}
+
+Nonetheless, the exploration and definition of methods to create champion game software has become an established field with many research challenges. Even in \mygame{Chess},  human master players currently beat the best \mygame{Chess} programs more often than not \cite{sonas:strongest}; and the next frontier is the game \mygame{Go}. Research endeavours typically focus on high performance implementations that take advantage of specific hardware architectures and multiprocessor platforms. This commendable approach is likely to reassert itself as the most important factor in the next generation of champion game playing agents.
+
+\subsection{Solving the game}
+\label{sec:solving}
+A game is solved if a playing agent is available that is guaranteed to win from a position where a win can be forced.  In other words, the puzzle of winning the game against any opponent is solved.  After a game is solved, it is possible to determine whether the game is fair.  For example,  \mygame{Tic-tac-toe} is trivial to solve, and it is not fair. Except for the uninitiated, everybody knows the strategy that makes it impossible for the second player to win a game of \mygame{Tic-tac-toe}.
+
+A precise definition of what it means to solve a game is based on an irrefutable property of a game position, called the \myterm{game-theoretic value}.  This value is computed in a retrograde search that starts with the end positions in the game tree. A precise definition of the game-theoretic value follows.  
+
+In restricted outcome games, every end position determines the outcome of the game.  For end positions this outcome is the game theoretic value. The value is an element from the \myterm{outcome set} $\mydom{O} \equiv \{\mywin,\mylose,\mydraw\}$ that designates a win ($\mywin$), lose ($\mylose$) or a draw ($\mydraw$) for the active player. For an initial and middle position the game theoretic value is $\mywin$ if it is in a play line in which the active player can force a win.  Conversely, if the passive player can force a win from a position, the game-theoretic value of that position is $\mylose$.  If neither player is able to secure a winning outcome, the position leads to a draw, and has the game-theoretic value of $\mydraw$. 
+
+Formally, let the domain $\mydom{S}_g$ be the state-space of game $g$ and ${\bf C}_g:\mydom{S}_g \mymap \mysetof{\mydom{S}_g}$ be a set function that determines the positions that may legally follow from another.  Then, the \myterm{game-theoretic value} for the active player can be defined as the recursive function $\theta_g: \mydom{S}_g \mymap \mydom{O}$:
+
+\begin{equation}
+\label{eq:solve}
+\theta_g(s)  =  \left\{
+\begin{array}{l}
+\mbox{For the base step ($s$ is an end position):}\\
+	\left\{
+	\begin{array} {ll}
+		\mylose & $if the active player of $s$ loses$ \\
+		\mywin &  $if the active player of $s$ wins$ \\
+	    \mydraw & $if $s$ is a draw position$\\
+	\end{array}		
+	\right.
+	\\
+\\
+\\
+\mbox{For the recursive step ($s$ is not an end position):}\\
+	\left\{
+	\begin{array} {lcl}
+		\mylose & $if$ & \exists e \in {\bf C}_g(s) \myst  \theta_g(e) = \mywin  \\
+		\mywin & $if$ & \forall e \in {\bf C}_g(s) \;,\;  \theta_g(e) = \mylose  \\
+	    \mydraw & $if$ &  (\nexists e \in 
+	                      {\bf C}_g(s) \myst  \theta_g(e) = \mywin)\; \myand \\                         & &   
+	                      (\exists 
+	                      e \in {\bf C}_g(s) \myst  \theta_g(e) = \mydraw)
+	\end{array}		
+	\right.
+\end{array}
+\right.
+\end{equation}
+
+Although the computation is simple, the size of the state space for non-trivial games makes it impossible to compute the game-theoretic value for all positions.  However, as the availability of faster hardware and larger memory sizes increases it becomes slightly easier to compute these values.  
+
+From the game-theoretic value follows a definition in Allis \cite{allis94}:  A game is \myterm{strongly solved} when the game-theoretic value for both players can be determined for any legal position using reasonable computing resources.  Without the reference to ``reasonable resources", any two-player game is strongly solved, because the game-theoretic value can simply be determined using \refeq{solve}. A number of games have been strongly solved: these include \mygame{Connect-four}, \mygame{Qubic}, \mygame{Nine  Men's Morris}, \mygame{Go-Moku} and \mygame{Awari} \cite{vandenherik:games}. Because of the end-game database, Chinook strongly solved the end-game of \mygame{Checkers} \cite{schaeffer:reexamination}.
+
+The term \myterm{perfect play} is used to describe a move decision that ensures an outcome that is no less than the game theoretic value.  The weakness of perfect play is that once it has been determined that a position has been reached with an outcome of a draw, there is no reason to continue playing.  But, humans are not perfect players, and under draw conditions, the playing agent would do well to select a move that maximises the likelihood that the opponent makes an error.  Schaeffer \cite{schaeffer:solving} highlights this situation by introducing a stronger definition: A game is \myterm{ultra strongly solved}  when it is strongly solved and a strategy is known that improves the chance of achieving more than the game-theoretic value against a fallible opponent.  
+
+This aim to solve a game ultra strongly is interesting, but in practice the playing agent needs a fallible opponent that plays very close to perfection before this ability can be tested.  Even amongst master players, these individuals are extremely rare.  
+
+\subsection{Investigating methods in machine learning}
+\label{sec:investigating}
+Arthur Samuel was the first to use game playing to investigate machine learning methods. He felt compelled to win over his contemporaries to the notion that a computer program can learn \cite{samuel:checkers}.  With this end in mind, he set out to develop a \mygame{Checkers} program that uses previous experience to make a move decision.  As attested by the praise of another prominent A.I. researcher of the time, Marvin Minsky, Samuel's program proved to be a convincing demonstration of machine learning \cite{minsky:steps}.  
+
+
+There are four aspects of game playing that make them suitable for game learning: 1) game playing is non-deterministic in the sense that a practical algorithm that always wins is not known;  2) there is a definite goal - that is to win the game, and 3) the learning process is confined to a countable set of known rules; 4) it is easy to measure the performance of the learner.     
+
+Many real-world activities can be related to game playing; such as making business decisions in a competitive environment, deciding which shares to buy at the stock exchange, and so on.  It is then reasonable to suggest that learning methods obtained from game based research could be applied to many real-world problems.  However, there is another perspective: automating the learning process in the simplified game-world is a prerequisite to the automation of learning processes to real-world problems. 
+
+Even the strongest playing agents can benefit from, and contribute to machine learning research.  In lieu of the fact that game knowledge is difficult to obtain, Jonathan Schaeffer \cite{schaeffer:reexamination} focussed on the development of a large \mygame{Checkers} position database.  This database stored an extensive set of end-game positions with their evaluation values.  These values were obtained through a retrograde search that starts from the end positions. This decision proved to be well founded -- his program, called Chinook, became a world-champion player. Essentially, this database strongly solves the final end-game of \mygame{Checkers}. The next frontier for Chinook is to solve that part of the end-game ultra strongly; that is to maximise the chance of winning against a fallible opponent from a losing or draw position \cite{schaeffer:solving}. A solution to this problem is likely to require some form of machine learning because the playing agent has to obtain and employ knowledge regarding the current opponent's strengths and weaknesses during play. 
+
+
+\section{Knowledge and search}
+\label{sec:knowledge-and-search}
+Given a set of positions that follows from the active position, the playing agent uses game knowledge and look-ahead to identify the most promising move.  Look- ahead involves a \newline \myterm{game tree search} to find a position that is likely to lead to a win.  In order to play a game within reasonable time constraints, it is impractical to use search exclusively.  But, because of the longer term tactics required to win, knowledge exploitation on its own is also an insufficient winning strategy.  For these reasons, modern playing agents apply both knowledge and search. 
+
+The general relationship between knowledge level and search effort is illustrated in \reffig{knowledge}. The vertical axis shows an increase in knowledge (K), and the horisontal an increase in search (S). Three performance levels are in order of  increasing performance: $p_1$, $p_2$ and $p_3$. A playing agent at level $p_1$ can improve its playing performance to level $p_2$ by increasing its knowledge or by spending more time on search.  Better knowledge requires less searching, and more search makes up for weak knowledge. 
+
+\begin{figure} [!ht]
+\center
+\input {extras/kvs.tex}
+\caption{Knowledge and Search}
+\label{fig:knowledge}
+\end{figure}
+
+The curve drawn in \reffig{knowledge} is a generalisation that suggests the power of knowledge is roughly equal to the power of search.  However, this suggestion is imprecise. Deciding on the correct balance between the time spent to exploit knowledge and the time spent on searching is arguably the most critical decision when implementing a game playing agent.
+
+Deeper search is achieved by optimisation and improving the search algorithm.  Optimal search performance is achievable by architecture dependent implementations of algorithms that take advantage of specific multi-processor systems.  However, the amount of search conducted during game play remains a function of time.  This function is unfortunately not linear because the number of nodes grow exponentially as the search depth increases. In addition, experimental results \cite{schaeffer:reexamination} suggest that the incremental improvement  brought about by searching one more ply declines as the search goes deeper.  When the point of diminishing return is reached, or the exponential growth becomes too great, the only way to gain playing performance is to improve the knowledge level of the agent.
+
+The level of knowledge is improved by increasing the volume of the knowledge or by introducing more complex knowledge structures. Large volumes and complicated structures slow down the knowledge driven evaluation process.  Another pragmatic hindrance to the use of knowledge is the difficulty of acquiring the knowledge that the agent should use.  
+
+Clearly, a learning framework should improve the accuracy as well as quantity of the knowledge used by the playing agent.  Such a framework should be able to collect and represent complex knowledge.  Ideally, the framework should build knowledge that remain useful when deeper searches are conducted by the playing agent.  
+
+\section{Classification properties of games}
+\label{sec:properties}
+Two-player games are available in many forms. There are two reasons to consider these forms as part of the current research.  The first is to help with the selection of a subject domain; and the other is to assess the learning framework using games that are not too similar to the subject domain.  This section introduces three properties that can be used to classify two-player games.  The focus of the first property is the information available to the active player. The second property is called convergence, and it considers the changes to the game tree structure as the game progresses. The third property is the playing complexity of the game.  
+
+\subsection{Information}
+\label{sec:perfect}
+In a game of pure chance, the active player has no control over the outcome of the game, and no skill is required to win\footnote{An example of a  board game of chance is the game snakes-and-ladders}.   As the level of control available to the active player increases, the ability of the player has more influence on the game outcome.  There are two factors that determine the level of control: the freedom of choice, and state visibility. From these two factors, Schaeffer \cite{schaeffer:computers} distinguishes three classes of games: those with elements of chance, those with hidden information, and those without chance or hidden elements.  
+
+Games with an element of chance are called \myterm{stochastic games}. Chance influences the freedom of choice of the active player in two ways.  In the first case, chance places constraints on the states that may follow the active state.  The active player does not have at his disposal the information that describe the future options available to him or to his opponent. Examples of these games include \mygame{Monopoly}, \mygame{Ludo} and \mygame{Backgammon}. The second way in which chance influences the freedom of choice is when it determines the final state of the move after the player made a decision. In this case, the active player lacks the information regarding the result of his move decision.  A good example of this type of chance, is found in the game \myterm{Risk}.  Regardless of the way in which chance introduces uncertainty into the game; it always places a constraint on the information available to the active player.
+
+In \myterm{hidden information games}, the information is deliberately withheld by keeping some part of the active game state from the active player. In this case the active player is unable to determine the complete game state that follows the current state; rather, he decides how the visible part of the game state changes.   
+
+Many games have hidden as well as stochastic elements, and one can add another classification called {\it hidden-stochastic games} if the need arises.  In the literature, games with hidden information, stochastic elements, or both, are called  \myterm{imperfect-information games}. Most card games fall in this category. For example, in \mygame{Rummy}, the order of the cards in the closed pile provides the element of chance, and the cards held by his opponent is hidden from the active player.  However, the active player can decide which card to dispose from his hand, and in so doing, he decides how the part of the game state that is known to him will change.  
+ 
+In \myterm{perfect-information games}, the active player has access to the full game state and there is no element of chance to consider.  Examples of perfect-information games include \mygame{Chess}, \mygame{Checkers} and \mygame{Othello}.  
+
+Strategies that win perfect-information games are unlikely to be transferable to imperfect-information games, and {\it vice versa}. To achieve optimal play in a perfect information game, a  \myterm{pure strategy} must be followed. In such a strategy, the  aim is to select a move that is guarenteed to lead to a win.  For optimal play in an imperfect information game it is best to follow a \myterm{mixed strategy}.  In a mixed strategy the aim is to choose a move from a set of moves, where every element in the set has a non-zero probability of leading to a win \cite{allis:which}.
+
+Two reasons support the assertion that pure strategies should be preferred when defining a knowledge based learning framework.  The first reason is that a pure strategy demonstrates skill with more conviction than a mixed strategy.  It is less likely that the winner in a perfect information game is considered lucky; therefore  a pure strategy learner shows improvement in skill levels with greater accuracy.  The second reason is that it is easier to acquire knowledge when a pure strategy is sought.  In a stochastic game, a good move followed by bad luck, could be classified by the learner as a bad move.  In hidden information games, the move decision is based on an assessment of what the hidden elements contain. A good move may be overlooked because of an incorrect appraisal of the hidden state information.   In perfect information games the consequence of a good move (or a bad move) is more predictable. 
+
+\subsection{Convergence}
+\label{sec:games:convergence}
+Another property that can be used to classify games is that of convergence.  This property, introduced by Allis \cite{allis:which} identifies three classes:  converging games, diverging games and unchangeable games. The three classes depend on the frequency at which a particular type of move, called a converging move, occurs; and how that frequency changes as the game progresses.  
+
+A \myterm{conversion} is a move from position $p$ to position $q$ such that no position in the play-line leading to $p$ can occur in any of the future lines of $q$.  In other words, a conversion changes the game state such that the active state cannot be obtained later in the game. For most games, the main conversions involve adding or removing pieces from play, and Allis \cite{allis:which} provides a definition that takes these moves into account.  However, many games have conversions that do not alter the number of pieces in play; such as moving a pawn in \mygame{Chess} and a checker in \mygame{Checkers}.  Therefore, a new definition of a converging game is introduced. Because this definition includes all conversions, it can be applied to more games and as such, it is more general than the definition supplied by Allis.
+
+\begin{definition} {Conversion space}
+The \myterm{conversion-space} of position $p$ is the set of all conversions available in the future lines of $p$. The \myterm{conversion potential} of $p$ is the cardinality of its conversion space. 
+\end{definition}
+Note that every conversion decreases the conversion potential of the game. That means, every game with conversions has a gradual decrease in convergence potential as the game progresses.  
+
+\begin{definition} {Converging game}
+A \myterm{converging game} is one in which the average branching factor of the positions with the same conversion potential decreases as the conversion potential decreases.  If the average branching factor for a game increases as the potential decreases, it is a \myterm{diverging game}. A game that does not diverge or converge is an \myterm{unchanging game}.
+\end{definition}
+In \mygame{Checkers} all moves are conversions, except for the moves of kings at the end-game.  Generally, the branching factor decreases, and \myterm{Checkers} is a converging game. \mygame{Othello} and \mygame{Go} are diverging because every piece placement is a conversion that increases the future options available to the players. 
+
+For automated learning, there is no general reason to prefer either diverging or converging games.  However, it is more practical to implement an end-game database for converging games. Thus, if a learner is expected to learn open or middle game strategies, it would be more reasonable to choose a converging game as the subject domain.  End-game databases are available for \mygame{Checkers}, whereas the number of end positions in \mygame{Go} makes it close to impossible to create an end-game database of any practical use.  
+
+\subsection{Complexity}
+\label{sec:games:complexity}
+Perfect-information games are similar in many respects, but these games cover a wide range of complexity.  One of the simplest games to master is \mygame{Tic-tac-toe}, and one of the most challenging games is the game of \mygame{Go}.   On the complexity scale, somewhere between these two extremes lie the popular games of \mygame{Othello}, \mygame{Checkers} and \mygame{Chess}.  The advent of world class playing agents brought about innovative new games that are purposefully developed to be difficult for present-day approaches to automate game playing.  Examples of these game are \mygame{Octi} and \mygame{Arimaa}.  
+
+Complexity, especially the complexity of a game, can be a subjective measurement. Many may think of \mygame{Checkers} as a simple game, but to play this game at grandmaster level requires remarkable skill and talent.  One of the best players of our time, Dr. Marion Tinsley, was able to play at a level of $99.6\%$ perfection \cite{schaeffer:reexamination}.  This means he would make a less than perfect move only four times out of a thousand.  
+
+An objective measurement of complexity seems to require an assessment from the perspective of a grandmaster:  that is to consider the complexity of achieving perfect play.  Given two games, $A$ and $B$, one can consider game $A$ to be less complex than game $B$ if it takes less effort to learn how to play game $A$ perfectly than it would to learn how to play game $B$ perfectly. This does not remove the notion of subjectivity from the definition, but a clear line can be drawn between those games that are played perfectly by a computer and those that are not (see \refsec{solving}).  Games that are played perfectly could be considered less complex than those that are not solved.
+
+In an attempt to obtain a more precise and more objective measurement, the assumption that complexity is simply a function of the number of positions in the state-space seems reasonable. This suggests that a larger state-space is evidence of a more complex game.  Surprisingly, Allis \etal \cite{allis:survive} show that this assumption is incorrect using a trivial variant of \mygame{Go}. This variant is played on a $19 \times 19$ board, each player moves by placing a stone on an empty square, and it assigns the first person to fill 181 squares as the winner.  In this game there are $10^{170}$ positions in the state-space, but the game is trivial to solve. 
+
+Later, Allis \cite{allis:which} identifies two dimensions that contribute to a complete definition of complexity: space complexity and decision complexity: 
+\begin{mydesclist}
+\item {\bf Space complexity}: This is the total number of legal game positions reachable from any initial position of the game (i.e. the cardinality of the state-space). The space complexity of a game can be approximated by obtaining an upper bound and then sharpening that upper bound through the elimination of illegal positions.
+\item {\bf Decision complexity}: This is the number of nodes in the game forest.   The decision complexity is typically much larger than the space complexity because of the duplicate positions in the game tree.   The decision complexity can be approximated using the average branching factor and the average game length.  This branching factor can either be constant or a function of the depth of the game tree.  Allis suggests using tournament games from which the averages can be observed.   This approach provides a method in which the decision complexity of games that have tournaments can be compared.
+\end{mydesclist}
+
+Measuring the complexity of the game to which an automated learner is subjected is an important factor when the learning ability of dissimilar learning agents are compared. As a perfect-information game, the game of \mygame{Checkers} is a moderate choice.  It has not been solved, and therefore it cannot be considered simple. On the other hand, a world-class computer player has been developed, indicating that it is one of the less complicated games from the unsolved set. 
+
+\section{Conclusion}
+\label{sec:two-player-conclusion}
+The three drivers for using games in research, {\it i.e.} the creation of a winning agent, the solving of a game and the investigation of machine learning methods, provide a platform for cooperation amongst researchers.  However, endeavours that compete to create a winning playing agent can lead to the opposite.  The driver of the current research falls in the third category: it investigates the plausibility of establishing a learning framework for two-player games.
+
+A learning framework that aims to obtain the knowledge required to improve the playing performance of an automated agent cannot discard the importance of game tree search during play.  Search serves not only to amend shortcomings in knowledge, but it is also needed to develop (and to counter) longer term tactics during play.
+
+Perfect-information games are more predictable than imperfect information games; and therefore are more suitable for a knowledge based learning agent.  Games that converge has fewer moves in the end-game and are therefore more prone to have end-game databases.  This leaves the possibility of incorporating such a database to develop opening and middle game knowledge.  
+
+The complexity of a game is another important consideration when choosing a subject domain.  The game of \mygame{Checkers} is neither too simple, nor is it an example of the most complex games available; and it is a converging game.  Consequently, it has been chosen as the initial domain for which the learning framework will be developed.
+
+In the next chapter, the problem of representing the knowledge for two-player board games is explored in detail, and a new representation language is developed. \mygame{Checkers} is used to demonstrate how the new language can be used to express game knowledge.
+
+
+%A \myterm{region} is a set of squares such that every square in the set is adjacent to another square in the set.  Two playable squares, $s$ and $t$ are \myterm{adjacent} when a straight line can be drawn from the centre of $s$ to the centre of $t$ without crossing the lines around another playable square.  For example the squares $(1,1)$ and $(1,2)$ are considered to be adjacent. The features identified by Samuel, makes it clear that generalised observations that includes more than one square are typically applied to squares that form a region.  
+
+%Using regions, another language construct, called the atomic region feature is introduced. Consider a region $R$ that consists of the squares $\{r_1,r_2, \ldots ,r_n\}$ and an occupation state $t$.  If the feature $\{t\}\otimesR = |R|$ is active on position $p$, then the $R$ is called a \myterm{homogeneous region} of $p$.  $R$ is a \myterm{maximal homogeneous region} if there is no homogeneous region that contains $R$.  The region $R$ is a \myterm{set homogeneous region} of $p$ with relation to an occupation state set $T$ that consists of the types $\{t_1,t_2, \ldots ,t_n\}$  if the feature $T\otimesR = |R|$ is active on position $p$.  Likewise, a \myterm{maximal set homogeneous region} is a set homogeneous region that is not contained by another set homogeneous region.  The number of maximal set homogeneous regions on a position, is the basis for the atomic region feature:
+
+%\begin{definition}{Atomic Region Feature}
+%The \myterm{atomic region feature} describes an observation regarding the number of maximal homogeneous features.  It is a \mywff, and has the following form:
+%\[
+%	f_r(\{\mathcal{T}_1,\mathcal{T}_2,\ldots,\mathcal{T}_n\}) \mbox{\it op }  \mathcal{N}
+%\]
+%where $\forall_{1 \leq i \leq k} \mathcal{T}_i \in \mypieces$,  $\mathcal{N} \in \myints$ and {\it op} is a relational operator.
+
+%Let $c$ be the number of maximal set homogeneous regions with relation to the occupation set $\{\mathcal{T}_1,\mathcal{T}_2,\ldots,\mathcal{T}_n\}$.  Then, the value of the atomic feature above is 1 if {\it op} describes the relation between $c$ and $n$ accurately, and it is 0, otherwise.
+%\end{definition}
+
+\chapter{Representing game knowledge}
+\label{chap:kr}
+{\chapterintro
+In the previous chapter, an introduction to the broader concepts of two-player games were provided.  This chapter builds on those concepts by providing a review of the knowledge types and the knowledge representation schemes used by successful learning- and playing agents.  It also proposes a new representation language for game knowledge that includes symbols and numbers. A precise definition of this language is provided.}
+
+\section{Introduction}
+\label{sec:knowledge-intro}
+Arthur Samuel's \mygame{Checkers} player \cite{samuel:checkers} uses hand-crafted heuristics to decide on the next move, but he considered it a reasonable research objective to construct a program that could attain useful knowledge automatically.  Since then, it became clear that a world-class playing agent could be created by improving the search techniques, and the quest for knowledge become a secondary concern in the field (see \refsec{winning}).  However, a close interaction between knowledge exploitation and tree search is required during game play (\refsec{knowledge-and-search}).  Before the knowledge can be exploited it must be acquired and presented to the playing agent in a usable format.  If this format, or representation scheme used by the playing agent is also employed by the learning agent, a seamless transfer of knowledge from learner to player is guaranteed.  This chapter explores the aspects of representing game knowledge in this way, and defines a new representation scheme that combines symbolic components with numeric elements.
+
+\refsec{knowledge-representation} starts this chapter by considering the aspects that influence the choice of knowledge representation.  In order to improve its ability, a playing agent could employ different types of knowledge. These types are described in \refsec{knowledge-types}; and one of these types are selected for the game learning framework.  A question closely related to representation considers the foundation from which the learning agent should gain its knowledge. \refsec{knowledge-granularity} identifies the smallest components of representable knowledge. Using these components, this section also introduces the zero-knowledge concept.      
+
+\refsec{knowledge-function} defines an evaluation function and describes precisely how this function will be used by the playing agent. A term in this function encapsulates a knowledge component, and   \refsec{knowledge-language} describes a novel feature language used to express these terms.  Finally, \refsec{knowledge-conclusion} provides a discussion on the new language, and reviews the most important findings of this chapter.
+
+
+\section{Representation considerations}
+\label{sec:knowledge-representation}
+In order to choose a representation language for learning, three important  aspects must be carefully considered: the definition of the learning problem, the expected quality of the solution and the learning method. In the subsequent paragraphs, these aspects are addressed.
+
+\subsection*{The learning problem}
+The task of a learning agent (defined in \refsec{two-player-intro}) is to gain the knowledge for the playing agent. In order to gain this knowledge and to make it usable to the playing agent, a clear description is required of the composition of this knowledge.  The usefulness of this composition is determined by the number of games to which it can be applied. As a starting point, perfect information games represent the superset of games to which the knowledge must be applied (see \refsec{two-player-conclusion}). This superset is refined by placing two more constraints on the games. The first is that the game world consists of a countable number of game pieces, and the second constraint is that each piece in play could find itself in no more than one of a countable number of squares\footnote{Actually, the word {\it places} would be more precise.  But most known games have squares; and this association to squares simplifies the discussion a little.}.  The subset of perfect information games that satisfies these constraints is referred to as \myterm{two-player board games}.  This subset forms the  subject domain on which the learning framework is founded; and for which the representation scheme is required.          
+
+The problem of learning is to improve the skill by which a playing agent makes move decisions through the acquisition of knowledge.  Established methods to automate move decisions presuppose some function that obtains a numeric evaluation of a game position.  Using this function, the problem of the playing agent is conceptually reduced to choosing the game position with the highest evaluation; and the problem of the learning agent is to obtain such an evaluation function.  The conclusion is that the representation method should incorporate the notion of a function that facilitates the numeric comparison of game positions.  
+
+\subsection*{The quality of the solution} 
+The quality of the solution is a measure against an expected outcome.  The expected outcome of the envisaged learning process is a player that has shown an increase in winning performance.  In addition, there is also an expectation that the knowledge should be comprehensible. The comprehensibility of knowledge relates directly to the chosen representation method. Alternatives fall into two broad categories:   black box methods and knowledge oriented methods \cite{kubat:review}.  The \myterm{black box} methods are difficult to interpret and are less comprehensible.  The use of neural networks falls in this category.  The \myterm{knowledge oriented} methods are easier to comprehend, and symbolic representations such as PROLOG clauses fall within this category.  Some researchers from both of these categories aim to improve the comprehensibility of learned knowledge. In 1988, Michie \cite{michie:next}  identified three broad criteria that can be used to classify the comprehensibility of the representation method used by a system:
+\begin{mydesclist}
+\item[Weak criterion.\ ] 
+The system uses sample data for improved performance of subsequent data.  This criterion is met by all approaches to machine learning, including the black box approaches.
+\item[Strong criterion.\ ]
+The weak criterion is satisfied and the system can communicate its updates in explicit symbolic form.  In this case, the machine is able to present new information in a form that makes use of symbols.
+\item[Ultra-strong criterion.\ ]
+The strong criterion is satisfied and the system can communicate its updates in an operationally effective form.  The information presented by the machine must be usable by a person without the aid of a computer.  
+\end{mydesclist}
+
+Note that Michie's definition of the strong criterion does not exclude the use of numbers, but it excludes a representation that has no symbols.  If the ultra-strong criterion is met for game knowledge, humans will be able to learn how to improve their play by inspecting the knowledge produced by the program.
+
+The current work aims to produce a learning solution that satisfies the strong criterion.  Consequently, the learning agent should use a representation that includes symbols; and it should be able to communicate updates to its knowledge explicitly.  
+
+\subsection*{Learning method}
+The third consideration when choosing a representation is the learning method.  For the current study, this learning method is a learning frame that is introduced in chapters that follow this one.  However, it would not be practical to define a representation without (at least) a conceptual view on the application of this framework.  Conceptually, the learning framework consists of two learning steps. The first step discovers the symbolic knowledge from which a function is composed. The second step obtains optimal values for the numeric weights that is contained by this function.  These two steps form part of the greater four stage iterative process of the framework that is described later. 
+
+The framework places an important constraint on the representation:  it specifies that the representation should contain symbolic as well as numeric elements.  However, as the current chapter unfolds, it quickly becomes clear that such a representation is ideal for game knowledge.  One could therefore conclude that the method is defined for the language, and that the language does not follow from the method. This assessment is not entirely accurate. It is entirely possible to define other representation schemes that employ both symbols and numerics but use the same conceptual framework for learning.  Also, an alternative learning framework that uses the representation scheme provided in this chapter could be developed by another researcher in the field.  But without the concept of method, the concept of language would have no application; and without the concept of language, the concept of method would have no purpose.  In other words, the {\it concepts} are related; but the realisation of these concepts requires the language to be fully developed first, then the learning method can be detailed and implemented.  
+
+In this case, the conceptual framework requires the representation scheme to provide a separation between the symbolic and the numeric elements. This separation should allow symbolic elements to be obtained with little regard to the value of the numeric elements. Furthermore, the alteration of the values of the numeric elements should not change the semantics of the symbolic elements; allowing weight adjustments during optimisation with little regard to the meaning of the symbolic elements.
+
+\section{Types of game knowledge}
+\label{sec:knowledge-types}
+The learning process can be regarded as a process of gaining knowledge. In this section a brief overview of the types of knowledge available to two-player game programmers is provided. It is necessary to select from the available types because each type has a different application and is likely to lead to a different representation.  In this section,  a commitment is made to the knowledge type that is considered to be more fundamental.  
+
+To demonstrate what is meant by {\it more fundamental}, consider the activity of learning how to multiply. If the learner knows how to add, multiplication is easier to grasp - this is  because multiplication can be regarded as a sequence of additions. One can consider the knowledge of addition as a component of the knowledge of multiplication.  In this sense, addition is more fundamental than multiplication.  
+
+The source of the knowledge used during the game play provides a primary classification. Knowledge that was available when the game started is called \myterm{static knowledge}, and knowledge gained during game play is \myterm{dynamic knowledge}.  Dynamic knowledge cannot replace static knowledge.  The role of dynamic knowledge is to augment static knowledge: it provides additional information that influence a largely static knowledge driven decision process.  Of these two, dynamic is regarded as less fundamental, and is therefore not chosen.
+
+An example of dynamic knowledge is a set of rules that is used to represent the computational model of the opponent.  Each time the opponent makes a move these rules are updated. Schaeffer \cite{schaeffer:reexamination} suggested the use of such an opponent model to improve the outcome of a drawn or lost game against a fallible opponent.  For instance, a game can be changed from a draw to a win, by employing a tactic that is likely to be more difficult for a particular opponent to counter.  
+
+Static knowledge  is based on facts that do not change during the game.  However, the exclusive use of this knowledge does not imply that the computer player will make the same move in the same situation because the selection algorithm  could be non-deterministic.  However, with static knowledge, the performance (i.e. the average number of wins) against the same opponent will remain constant.  
+
+
+It is notoriously difficult to gather static knowledge from human experts.  A solution to this \myterm{knowledge acquisition bottleneck} is to provide a mechanism for the program to learn this knowledge for itself.  In general, this goal is elusive, but there are notable successes in the gaming domain. For instance,  Logistello, an \mygame{Othello} program that plays better than any human, used self-play to obtain values for parameters that choose which one of 11 play-patterns to apply.  The patterns themselves were supplied to the program. Another program, developed by Gerald Tesauro, called TD-Gammon, combined self-play and temporal difference learning to train a neural net.  The result was a backgammon game comparable to human champions \cite{tesauro:learning}.
+
+Static knowledge is further divisible into two subtypes: \newline \myterm{database knowledge} and \myterm{heuristic knowledge}.  
+%% Prof Andries: This section ... 
+
+\subsection{Database knowledge}
+An advantage the machine has over its human opponent is the ability to use vast amounts of information in a database.   The size of the available memory has grown considerably in recent years, enabling game playing programmers to use larger databases.   
+The reigning \mygame{Checkers} champion, Chinook \cite{schaeffer:solving}, is a playing agent that employs database knowledge extensively.  It uses three different databases: an opening book, an antibook and an endgame database.  Each one solves a different problem.
+
+The \myterm{opening book} solves the problem of  strategic planning.  Strategic planning is a natural ability of human players, but it is not easy to automate.  A weak opening is bound to end in a lose, especially when the program plays against a master player. The opening book  is a library of known opening lines, and the planning problem is reduced to making the best choice from this library.  Chinook has a large opening book that  contains opening lines collected from the \mygame{Checkers} literature.  These opening lines have been subjected to automatic verification which resulted in hundreds of corrections and also in some refutations of major lines of play.   
+
+The \myterm{antibook} is needed when the opening book is automatically extended.  Through self play, Chinook searches for new opening lines and it extends the opening book.  It often finds interesting opening innovations, but from the \mygame{Checkers} literature, some of these new opening lines are known by human players to be losing. The opening lines that should be avoided are part of the antibook.   Using the antibook, Chinook can play its own openings while avoiding play-lines known to be losing.
+
+The largest database Chinook uses is the \myterm{endgame database}.  This database contains the \myterm{game-theoretic value} of every position with eight or fewer pieces on the board (about  $4 \times 10 ^{11}$ entries). The game-theoretic value is the result of an exhaustive search that marks a position as either won, lost or drawn.  When perfect players compete, it is not possible to do better than the game-theoretic value in any future play-line that follows from the computed position.  Using the endgame database, Chinook is able to announce the result of a game within 15 moves of the start \cite{schaeffer:games}.
+
+Database knowledge effectively shrinks the problem space.  At the start of the game, the program selects only from positions in the stored opening lines, not from all possible moves.  Although the problem of selecting the opening line is significant, it is arguably easier than implementing a program with the ability to do strategic planning.  The endgame database prunes the game tree: the outcome of the game is determined when a position in the endgame database is reached, and not when an end position is reached.  If the opponent is fallible, the program could attempt to improve the outcome from a lost or drawn play-line. But, when it finds a winning play-line, the opponent cannot change the outcome.
+ 
+Extending the database, especially the opening book is a form of learning.  This extension process requires external knowledge because it is impossible to verify the final outcome of an opening line.  In order to decide which opening line is better, the last position in the candidate lines can be compared.  This comparison requires an evaluation that employs knowledge that is more fundamental than database knowledge.  This type of knowledge is discussed next.
+
+\subsection{Heuristic knowledge}
+\label{sec:heuristic}
+The \myterm{heuristic knowledge} employed during game play is based on the premise that characteristic features of a position can be used to choose the position that is more likely to lead to a win than the other positions in a set.  In the sections that follow features are explored in more depth, but for now it suffices to consider a feature as a function that divides the state-space into two parts:  those positions on which the feature is present, and those that do not exhibit the feature.   For two-player perfect information games, there are two dominant approaches to represent and use heuristic knowledge: artificial neural networks and static evaluation functions.  
+
+\subsubsection{Artificial Neural Networks}
+\label{sec:networks}
+
+%% Prof andries: Anaconda & franken et al gebruik onderskeidelik EP en PSO om die gewigte van die NN aan te pas en die evaluasie funksie te benader, sonder dat 'n datastel nodig is dmv coevolution.
+
+The development of training procedures for multi-layer neural networks has been the most important step on the road leading to automatic feature discovery.  In a network, the nodes in the hidden layers represent features.  Typically, the training of hidden layers is completely unconstrained and it is unclear what concepts will evolve.  Three primary design problems influence the knowledge representation scheme of the neural network: encoding the input, the network topology and the meaning of the output.   
+
+In game playing programs, the input is the position and the network is provided with an encoding of the position to evaluate. In many cases, the position is translated directly using trivial encoding methods, such as a bit-string representation for each square. In the \mygame{Checkers} domain, a program called Anaconda is a representative example \cite{chellapilla:defeats, chellapilla:without}, and it does not use a trivial encoding.  Anaconda uses a neural network with $5046$ weights, and provides as input, the position presented in a variety of spatial forms \cite{davis:evolve}. This program achieved expert play levels, and it was trained from no game knowledge other than the game rules.
+
+The topology is defined by the hidden layers and the connections in the network.  The number of nodes and the number of layers has a direct influence on the number of inter-dependencies that can be represented by the network. However, the optimal configuration for a particular problem is not known, and usually a commitment to a topology is made after a number of experiments. 
+
+It is also possible to discover the configuration of the network automatically. Fogel \cite{fogel:networks} developed a learning agent that discovers the number of nodes in the hidden layer of a neural network used by a \mygame{Tic-tac-toe} player. In his program that learned \mygame{Othello}, Moriarty  \cite{moriarty:evolving} evolved the entire network topology using a genetic algorithm. His learning agent played tournaments against a number of fixed playing agents during training and it discovered the concept of mobility\footnote{A tactic that aims to limit the opponent's choices}.  After this discovery, the evolved player was able to win 70\% of the games played against a 3-ply search program that used an evaluation function without mobility features.   
+
+The third design problem is a decision of how the output should be represented. A direct approach to use the output of the network is to output a single value that is compared with the output of another position to decide which position is more likely to lead to a win. This has been used by Franken and Engelbrecht in their \mygame{Checkers} program \cite{franken:checkers}. Anaconda uses this output in a minimax search \cite{davis:evolve}. In an alternative approach, Moriarty's Othello program used a network that has 64 output units, one for each square on the board. The unit value indicates the strength of the suggestion to move into that square.  The neural network of Fogel's \mygame{Tic-tac-toe} player selects the target square that is most likely to lead to a win.
+
+The training of neural networks has been the focus of many machine learning research endeavours.  A flagship contribution in this respect was temporal difference learning \cite{tesauro:learning}. TD-Gammon combined self-play and temporal difference learning to train a neural network.  The result was a \mygame{Backgammon} player that could challenge human champions \cite{schaeffer:games,tesauro:learning}.  The application of evolutionary methods to train neural networks is also an active research area.  For instance, Anaconda uses co-evolution as a learning mechanism.
+%% Prof andries: Anaconda & franken et al gebruik onderskeidelik EP en PSO om die gewigte van die NN aan te pas en die evaluasie funksie te benader, sonder dat 'n datastel nodig is dmv coevolution.
+
+The primary reason for not using neural networks in the current research has been explained in \refsec{knowledge-representation}.  However, for typical game playing programs, the comprehensibility of the knowledge is far less important than the ability to play well.  For this reason, neural networks will continue to be an integral part of many future computer game players.
+
+\subsubsection{Static Evaluation Functions}
+\label{sec:functions}
+A static evaluation function is used to compare positions.  It has the set of legal positions as domain, and it calculates a floating-point number called the position's \myterm{score}.  Usually, evaluation functions are linear and have the form $\sum w_i \times f_i$ where each $f_i$ quantifies some feature of the position, and each $w_i$ is the weight assigned to the feature.  The value of $w_i$ indicates the relative importance of the feature $f_i$.  The feature with the highest weight is considered to be the most important.  \myterm{Evaluation function tuning} is the process of determining weight values that produce an optimal function and it is the most extensively studied learning problem in game playing programs \cite{furnkranz:survey}.   For evaluation functions, the knowledge representation scheme is affected by two design considerations: feature design and the evaluation model.
+
+Samuel \cite{samuel:checkers} explicitly coded his features and based them on a study of \mygame{Checkers} literature.   In addition to the literature, Chinook incorporates knowledge acquired from Martin Bryant, a \mygame{Checkers} expert \cite{schaeffer:reexamination}. Existing source code is another source of heuristic knowledge. The hand-crafted knowledge for Fogel's \mygame{Chess} player was obtained from an inspection of open source \mygame{Chess} programs \cite{fogel:chess}. 
+
+Instead of hand-coding all the details explicitly, Buro used first-order predicate calculus to express the features of the evaluation function he used in GLEM (generalised linear evaluation model) \cite{buro:feature}. Compositional representations, such as Buro's are more suitable for knowledge discovery because new features can be constructed by abstraction, regression or specialisation of existing features \cite{furnkranz:survey}.
+
+Two perspectives on the mathematical model implemented by the evaluation  function (i.e. the meaning of the score) lead to two different optimisation strategies: move adaptation and value adaptation \cite{buro:statistical}.  The \myterm{move adaptation} strategy aims to mimic moves made by experts.  In this case the actual score is not important, as long as a move that is more likely to be chosen by the expert has a better score than a move less likely to be chosen. The \myterm{value adaptation}  strategy aims to accurately measure how well a position fits a specific model.  For instance, in a model where the evaluation function is defined to predict the outcome, a higher score could indicate that a position has a greater chance of winning.  
+
+As a game progresses from its opening and middle game to the endgame phase, the required set of features  to make an optimal decision does not remain constant.  Therefore, the ideal evaluation function cannot remain the same throughout the game's phases.  One way to achieve this goal, is  to create a different  function for each game phase.  This was done for \mygame{Checkers} and for Othello \cite{schaeffer:solving, buro:statistical}.   Chinook's evaluation function has 25 heuristic features and four phases. Each phase has its own set of weights.  For \mygame{Othello}, the disc count\footnote{The total number of pieces on the board} was found to be an adequate measure for the game phase, so the number of phases is the same as the number of moves in an Othello game.   
+  
+% about the normalisation problem
+Phased functions introduce a problem of their own.  During search, the scores from different evaluation functions are compared to find the optimal move.  For the comparison to work,  a normalisation method is needed to ensure that a score from one function has precisely the same winning chance as the same score from another function.  For example, in \mygame{Checkers}, a small advantage in the opening should outweigh larger advantages in the endgame.  This normalisation problem arises only when the search is  deep enough to transcend phase boundaries.  In Chess programs, the search depths are such that the search does not easily cross phase boundaries, and the issue of game phases and normalisation is less apparent \cite{schaeffer:reexamination}. 
+
+A function optimised for move adaptation is less suited for phase dependent evaluation than one based on value adaptation. This is because functions optimised by move  adaptation have no global interpretation.  The scores of value adapted functions can be used as long as the model is chosen such that the position score has a phase independent meaning \cite{buro:statistical}.
+
+
+\section{Feature granularity}
+\label{sec:knowledge-granularity}
+% Fogel early work to train a \mygame{Tic-tac-toe} player \cite{fogel:networks} is a good example of a Zero Knowledge learner.  The neural network employed for this task has 9 input and 9 output nodes -- using a straight forward encoding of the squares directly observable from the position.  In addition, this learner was also tasked with the problem of determining the number of hidden nodes in the middle layer.  However, he did use a near-perfect player to train the learner -- hence, his approach is disqualified. 
+% own ideas
+Michael Buro presented an approach to automate the construction of the evaluation function for Othello \cite{buro:feature}.  According to Buro, an evaluation function is built in two steps: first the features are selected and then they are combined to form complex expressions.  The process of combination includes the merging of selected features and the assignment of floating-point weights that occur in the resulting expression. The first step is difficult for the machine, whereas the processes of combining features and fitting weights are computationally feasible.
+
+When selecting features by hand, the compositional nature of features is soon realised.  A feature consists of smaller, probably less significant ones.  Buro exploits this notion and considers {\it atomic features} as those features  that cannot be expressed in terms of other features.  Instead of selecting a single complicated feature,  a small number of atomic features are selected. The selection of features to be used as building blocks is simpler than selecting the complicated terms of the evaluation function.  Buro stresses that ideal building blocks require domain knowledge and although atomic, these features may be complex.  In Buro's approach, the process to select features is not automated.  Buro's Generalised Linear Evaluation Model (GLEM) employs a representation that is suitable for learning. A brief overview of the evaluation function used in GLEM follows.
+
+%Buro's view of the evaluation function does not deviate from the usual - it is similar to the equation mentioned in section \ref{sec:functions}.  
+In GLEM, the evaluation function $e$ for the position $p$  has the following form,
+\[
+e(p) = g(\sum_{i=1}^n w_i \times f_i(p))
+\]
+As a statistical approach, the value of $e$ in GLEM estimates the probability that a position leads to a win, and as such this value must be between zero and one.  Because $w_i$ is in $\myreal$, $e$ cannot be guaranteed to be in $[0,1]$. The purpose of the link functions, $g$ is to ensure that the value $e$ falls within the required range\footnote{An example of a suitable function for $g$ is $\frac{1} {1+\exp^{-x}}$}. Least-squares optimisation on the error of applying $e$  to a set of labelled training positions is used to find values for the weights, $w_i$ for $(1 \leq i \leq n)$. Each $f_i$ is a combination of atomic features, called a \myterm{configuration}.  A configuration is a binary function that has a value of either $0$ or $1$.  Each weight, $w_i$ indicates the relative significance of the configuration $f_i$.  
+
+A configuration is composed from atomic features that range over  $\myints$. For each atomic feature $a_i$ and position $p$, there is one and only one integer $k_i$ such that  $a_i(p) = k_i$.  Let $A$ be the set of atomic features, then define relation $R_A$ as $R_A \equiv \{ a_i(p) = k_i \myst a_i  \in A, k_i \in \myints\}$. In other words, $R_A$ contains the feature-to-value mapping for a position, and $R_A \subset A \times \myints$. In the context of  position $p$, the \label{glem_triple} triple $(p,a_i,k)$, denoted as $r_i(p)$, takes the value $\mytrue$  if $r_i(p) \in R_A$, otherwise it is \myfalse.  A configuration  is a conjunction of these elements.  In particular, a configuration $c$ covering $n$ atomic features is denoted as $c =  r_1 \myand  r_2 \myand \ldots \myand r_n$.   The function associated with this feature, $f_c$ takes a value $1$ for a position $p$ if and only if $\forall_{i\leq n} r_i(p) = \mbox{\mytrue}$.  It takes value $0$ otherwise. 
+
+In order to define a suitable learning framework, a clear commitment needs to be made regarding the level of granularity of the acquired knowledge. Buro left the choice of granularity to the programmer. Before the learning process starts, the program is provided with established features, already known to be influential in the outcome of the game.  From the perspective that these features are further decomposable, it can be reasoned that Buro's features are not atomic. 
+
+Conceptually, the idea is to start the learner from zero knowledge.  However, the term zero knowledge is not absolute.  For instance, if a program has learned the rules of a game, it had less knowledge to start with than a program that employs a neural network trained through self play.  The latter  is currently regarded as a program that learnt from zero knowledge. Maybe in the future, the program that uses zero knowledge is the one that first identifies a particular activity as a game, then learns the rules, and then devises some way to improve its own ability to play.  
+
+A sensible choice for a granularity level is to consider the knowledge that can be obtained from visual inspection as atomic.  Consider a program that possesses the sense of sight and contains an implementation of the game rules.  Using the game rules, visual observations can be transformed into facts that have some relevance to the game.  For example, compare a program that sees a red puck on a chequered board to another program that looks at the same thing, but sees the opponent's man on the seventh rank.  The first program does not interpret the meaning of what is seen. The second program demonstrates a basic understanding of the rules of \mygame{Checkers} and it is a plausible subject for machine leaning research.  Using this idea, a definition of a zero knowledge agent is formulated:
+
+\begin{definition} {Zero Knowledge agent}
+\label{def:zero}\newline
+A \myterm{zero knowledge agent} is a game playing program that is provided with game rules and the ability to describe a game state in terms of those rules.  This description does not go beyond that which is observable by the human sense of sight.  In particular, zero knowledge does not contain any deductions, estimations or conclusions. 
+\end{definition}
+
+Angeline and Pollack \cite{angeline:evolve} trains a \mygame{Tic-tac-toe} player without giving it the rules for \mygame{Tic-tac-toe}.  If an invalid move is made, the player's move is forfeited -- giving significant advantage to its opponent. However, this approach is not an example of zero knowledge learning. The agent effectively learns an alternative version of \mygame{Tic-tac-Toe}.
+
+%\cite{messerchmidt:learning} claims that Fogel **\cite{fogel:edge} learned from zero knowledge, but he also lists three features implemented by Fogel that nullifies his assumption (maybe the origin of the term zero knowledge must be found!): fogel provided an indication of the pieces, a suitable encoding of the neural network, weights to different pieces his approach employed spatial features of the game board (are these features close to my definition of regions?)} 
+
+Clearly, an implementation of the GLEM features would not result in a zero knowledge agent,  the basic building blocks must be observable.   Having smaller building blocks is a natural progression towards the goal of automatic evaluation function construction.  It is in fact far simpler to define observable features than GLEM features, but the construction task left to the machine is much more complicated.  
+
+\section{The evaluation function}
+\label{sec:knowledge-function}
+This section introduces the evaluation function $F$ as the function used by a game playing agent that employs knowledge expressed in $\mathcal{F}$ to make move decisions. $F$ is a static evaluation function (see \refsec{functions}), and as such it compares game positions by mapping these positions onto floating-point numbers.  The function is based on the GLEM function (see \refsec{knowledge-granularity}), and is similar to that function in form.  However, unlike GLEM, the value of $F$ does not estimate the probability of winning.
+
+The evaluation function $F$ ranges from $0$ to $1$, such that $0$ is the value of a losing position,  $1$ the value of a winning position, and for draw positions, $F$ is $0.5$.  For positions that are not end positions, the range of $F$ is further constrained using a small positive constant, $\delta \in (0,0.05)$.  
+% changed on 26 January 2005
+% deleted The value $\delta$ is used to overcome rounding problems by ensuring a minimum difference between the value of end positions and other positions.  
+For non end positions, the value of $F$ is in $[\delta,1-\delta]$. Generally, a higher value for $F$ indicates a better position.
+% added start
+
+The $\delta$ constant is introduced to differentiate between an immediate win (or lose) and a high likelihood to lead to a win (or lose). Consider a choice between the  $n$ positions, \{$p_1,p_2,\ldots,p_n$\}, and two elements from this set, $p_w$ and $p_h$. Let  $p_w$ be a winning position; thus  $F(p_w) = 1$. Let $p_h$ be the best non end position possible, implying $F(p_h) = 1 - \delta$.  With a value of $0$  for $\delta$ (or omitting $\delta$ from the definition of $F$), the agent is unable to distinguish between the $p_w$ and $p_h$.  With $\delta$ set to some small positive constant the desired effect is achieved:  $p_w$ is regarded as a better position than $p_h$.
+% added end
+
+In addition to some arithmetic involving $\delta$, the function $F$ is defined using another function $h$. The function $h$ is composed from features, $f_i$, and weights, $w_i$.   Although features are complex structures (fully defined in  \refsec{knowledge-language}), it is sufficient for the purpose of this discussion to regard each feature, $f_i$, as a function that takes a legal position as argument.  The range of a feature is $[0,1]$.  Roughly, a value of $1$ indicates that the feature is present on the position, and $0$ means that the feature is absent from the position.   A higher value signifies a better fit of the position to the feature.  The weight $w_i$ is a positive floating-point value associated with a feature $f_i$ that indicates the relative importance of $f_i$. Because the weights have a relative meaning, the weights can be normalised to have a sum of $1$ without information loss.  Thus, the following equation always holds for the function $h$ with $k$ features:
+\begin{equation}
+\sum_{i=1}^k w_i = 1
+\label{eq:weights}
+\end{equation}
+
+Let $\mypositions_m$ denote the set of all legal positions that are not end positions. Consider the function $h : \mypositions_m \mymap [0,1]$ that uses $k$ features, such that each feature is denoted by $f_i$ and associated with a weight,  $w_i$  ($0 \leq i \leq k$). Then, $h$ is defined for position $p$ as follows:
+\begin{equation}
+h(p) \equiv \sum_{i=1}^k w_i \times f_i(p)  
+\label{eq:smallf}
+\end{equation}
+
+Note that equation \ref{eq:weights} restricts the range of $h$ to $[0,1]$.  One way to read the value of $h$ is to regard it as an indication of how well the position fits into the mould defined by the features: a higher value would be a closer fit to the weighted  features than a lower value.   
+
+The function $F$ provides an abstraction of a position that is used to compare the position to other positions.  This abstraction is called the model of $F$. For example, the function in GLEM models the probability that a position will lead to a win. Like GLEM's function, the model of $F$ must be able to compare any two positions from any of the future play-lines of the current position. As explained in section \ref{sec:functions}, the dissimilarity between these positions encourages the use of a value adaptation strategy. Also, the need to have separate functions  for different game phases implies that the chosen model has to be phase independent.
+
+The function $h$ manifests a model that measures ``feature fitness", where a better fit to the most important features, produces a higher evaluation. For example, if the most important feature is to have many game pieces, the feature counting the number of pieces will have a relatively large weight. Thus, a position with more pieces will be valued higher than a position with fewer pieces.
+
+If the positions from the same ply in the game tree are compared, $h$ would be a suitable evaluation function \cite{furnkranz:survey}.  However, even with the normalisation constraint of equation \ref{eq:weights}, the model of $h$ is inadequate when sufficiently dissimilar positions are compared. For example, in \mygame{Checkers} the opening positions have no kings, while closing positions typically have only kings.  However, it is always better to have kings than to be without kings. The problem is to define a model for the function that allows a meaningful comparison between the opening position on one play-line and a closing game position on a different play-line, even when both these positions have the same number of kings.  
+
+The solution to this problem lies in the observation that position strength is a measurement  relative to the opposing player.  Function $h$ can be evaluated from each player's perspective, and the player with the higher value has the upper hand. If position $a$ in the opening sequence fits the features from the agent's perspective better, and position $b$ is a better fit from the opponent's perspective, $a$ belongs to a play-line that is better than $b$'s play-line\footnote{assuming $h$ is accurate}.  
+
+This idea can be incorporated into the evaluation function by introducing a new concept: a \myterm{flip feature}.   The flip feature of the feature $f_i$, denoted as $\overline{f}_i$, is $f_i$ expressed from the perspective of the opponent. For example, let $f_1$ indicate ``the opponent has kings".  If the active player is red, this feature translates to ``there are white kings", and the corresponding flip feature, $\overline{f_1}$ is ``there are red kings".  Flip features are used to compose the \myterm{flip function $\overline{h}$}:
+\begin{equation}
+\overline{h}(p) \equiv \sum_{i=1}^k w_i \times \overline{f}_i(p)  
+\label{eq:smallh}
+\end{equation}
+
+The expression to determine values that can be used to compare two dissimilar positions, combines  $h$ and $\overline{h}$: for a position $p$, the value is  $(h(p) / (h(p)+\overline{h}(p))$.  If viewed from the active perspective, a value higher than $0.5$ indicates the active player has the upper hand, and a value of lower than $0.5$ indicates the passive player has the upper hand.  
+
+Finally, these concepts are combined to form the evaluation function $F$.  The maximum value of the expression, $(h(p) / (h(p)+\overline{h}(p))$ is $1$, and it occurs when the flip function evaluates to $0$.  In order to keep $F$ within the bounds, $[\delta,1-\delta]$, the value of this term is offset by $\delta$ after deflating it with $(1 - 2\delta)$.  Let $\mypositions$ denote the set of all legal positions, then $F : \mypositions \mymap [0,1]$ for position $p$ is defined as follows:
+\begin{equation}
+F(p) \equiv \left\{ 
+					\begin{array}{l}
+						0 \mbox{ if $p$ is a losing position} \\
+						0.5 \mbox{ if $p$ is a draw position} \\
+						1 \mbox{ if $p$ is a winning position} \\
+						 \delta + \left( \frac{h(p)} {h(p)+\overline{h}(p)}\right) \times(1-2\delta) \mbox{ otherwise} \\
+					\end{array}
+			\right. 
+\label{eq:evaluation}
+\end{equation}
+
+\section{The feature language}
+\label{sec:knowledge-language}
+In the section above, the function $F$ has been introduced as a method to compare board positions in order to select the next move in a play-line.  In this section the building blocks of $F$ are described as expressions in a formal language, denoted by $\mathcal{F}$.  All features are expressed and evaluated according to the rules of  $\mathcal{F}$.   The language can be applied to most perfect information, two-player board games.  The game \mygame{Checkers} is used to provide a concrete example of such an application. 
+
+As a formal language, $\mathcal{F}$ consists of symbols and operators.  These symbols and operators are combined to form \myterm{well-formed formulas}.  These formulas, or \mywffs{} conform to strict syntax rules and have precise semantics.  The semantics define the meaning of the \mywff.  A feature is in itself a \mywff, and like all other \mywffs, the meaning of a feature is the value the \mywff{} takes in the context of a given position.  This value is called the \myterm{valuation} of the \mywff{} and is defined by the function $V : \mypositions \times \mywff{} \mymap [0,1]$. For position $p \in \mypositions$ and a \mywff{} $\mathcal{A}$, the valuation is given by $V(p,\mathcal{A})$.  
+
+In this section the syntax and the valuation for all the formulas in $\mathcal{F}$ is provided.  Section \ref{sec:language-symbol} defines the symbols that are used to refer to squares, pieces and the relationship between the two. The two ground features of $\mathcal{F}$ are defined in section  \ref{sec:language-features}, namely the atomic occupation feature and the fuzzy occupation feature.  These ground features are combined to construct more complex features using the operators defined in section \ref{sec:language:operator}.  
+
+\subsection{Symbols}
+\label{sec:language-symbol}
+The \myterm{occupation state} of a square is the most specific observation on the board. The symbols in $\mathcal{F}$ identify and describe these states. The set of occupation states is determined from the game pieces and the game rules, and it is therefore different for every board game.  For the language $\mathcal{F}$ the set of occupation states is denoted as $\mypieces$.  
+
+The set $\mypieces$ has a finite number of elements. $\mathcal{F}$ places two constraints on the elements in $\mypieces$: 1) Every playable square (i.e. squares that can be occupied during the game) on a position must be occupied with one and only one state. 2) No state is impossible -- that is; for every state $o \in \mypieces$, a legal position exists that contains one or more squares occupied with $o$.  These constraints ensure that a functional mapping is possible from every square in any position to an element in the occupation set.
+
+The method used to determine the occupation states for a particular game starts with the composition of a list of the simplest Boolean properties that describe a square on a position.  When this list is ordered, any square in a position can be described by a binary string of values, where each character corresponds to the value of this square for the Boolean property.  This binary string is an occupation state.  However, the Boolean properties are not disjoint, and consequently the number of occupation states for $n$ Boolean properties is typically much smaller than $2^n$.  The final set is obtained by eliminating combinations that are impossible.
+
+For the game of \mygame{Checkers}, 10 Boolean properties are identified and listed in table \ref{tab:bool}.
+From the rules of \mygame{Checkers}, the dependencies amongst these properties are quite clear.  For example, if $b_7$ is {\it true}, $b_1$ must be {\it true}.  Also, $b_2, b_3, b_4$ and $b_5$ must be false.  After eliminating all impossible combinations, only 44 occupation states are found in the set $\mypieces$ for \mygame{Checkers}.  Instead of using clumsy binary strings as symbols for these occupation states, a short mnemonic string is employed.  Table \ref{tab:symbols} shows the 44 combinations. The mnemonic identifier is shown in the last column.  In other columns `T' indicates the property is {\it true} and 'F' indicates {\it false}.  The `-' indicates the value of the property is not relevant in this combination.  In table \ref{tab:mnemonic} the meaning of the mnemonics is supplied. As a shorthand notation, the suffix `*' is used to refer to a mnemonic group of occupation states.
+
+\begin{table}
+\caption {\mygame{Checkers} properties a for square $s$}
+\begin{center}
+\begin{tabular}[hbt]{|c|l|} 
+\hline
+$b_1$ & $s$ is occupied \\
+$b_2$ & An active piece can jump to $s$\\ 
+$b_3$ & An active piece can move to $s$ \\
+$b_4$ & A passive piece can jump to $s$\\ 
+$b_5$ & A passive piece can move to $s$ \\
+$b_6$ & The piece on $s$ is active \\
+$b_7$ & The piece on $s$ is a king \\
+$b_8$ & The piece on $s$ can be jumped \\
+$b_9$ & The piece on $s$ can move \\
+$b_{10}$ & The piece on $s$ can jump \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:bool}
+\end{table}
+
+\begin{table} [!ht]
+\caption {\mygame{Checkers} occupation states}
+\begin{center}
+\tiny
+\begin{tabular}[hbt]{|c|c|c|c|c|c|c|c|c|c|c|} 
+\hline
+$b_1$ & $b_2$ & $b_3$ & $b_4$ & $b_5$ & $b_6$ & $b_7$ & $b_8$ & $b_9$ & $b_{10}$ &Id \\
+\hline
+F & F & F & F & F & - & - & - & - & - & n \\
+\hline
+F & F & T & F & F & - & - & - & - & - & a1 \\
+F & T & F & F & F & - & - & - & - & - & a2 \\
+F & T & T & F & F & - & - & - &- & - & a3 \\
+\hline
+F & F & F & F & T & - & - & - & - & - & p1 \\
+F & F & F & T & F & - & - & - & - & - & p2 \\
+F & F & F & T & T & - & - & - & - & - & p3 \\
+\hline
+F & F & T & F & T & - & - & - &- & - & b1 \\
+F & F & T & T & F & - & - & - & - & - & b2 \\
+F & F & T & T & T & - & - & - & - & - & b3 \\
+F & T & F & F & T & - & - & - & - & - & b4 \\
+F & T & F & T & F & - & - & - & - & - & b5 \\
+F & T & F & T & T & - & - & - & - & - & b6 \\
+F & T & T & F & T & - & - & - & - & - & b7 \\
+F & T & T & T & F & - & - & - & - & - & b8 \\
+F & T & T & T & T & - & - & - & - & - & b9 \\
+\hline
+T & - & - & - & - & T & F & F & F & F & x0 \\
+T & - & - & - & - & T & F & F & F & T & x1 \\
+T & - & - & - & - & T & F & F & T & F & x2 \\
+T & - & - & - & - & T & F & F & T & T & x3 \\
+T & - & - & - & - & T & F & T & F & F & x4 \\
+T & - & - & - & - & T & F & T & F & T & x5 \\
+T & - & - & - & - & T & F & T & T & F & x6 \\
+T & - & - & - & - & T & F & T & T & T & x7 \\
+T & - & - & - & - & T & T & F & F & F & X0 \\
+T & - & - & - & - & T & T & F & F & T & X1 \\
+T & - & - & - & - & T & T & F & T & F & X2 \\
+T & - & - & - & - & T & T & F & T & T & X3 \\
+T & - & - & - & - & T & T & T & F & F & X4 \\
+T & - & - & - & - & T & T & T & F & T & X5 \\
+T & - & - & - & - & T & T & T & T & F & X6 \\
+T & - & - & - & - & T & T & T & T & T & X7 \\
+T & - & - & - & - & F & F & F & F & F & o0 \\
+T & - & - & - & - & F & F & F & F & T & o1 \\
+T & - & - & - & - & F & F & F & T & F & o2 \\
+T & - & - & - & - & F & F & F & T & T & o3 \\
+T & - & - & - & - & F & F & T & F & F & o4 \\
+T & - & - & - & - & F & F & T & F & T & o5 \\
+T & - & - & - & - & F & F & T & T & F & o6 \\
+T & - & - & - & - & F & F & T & T & T & o7 \\
+T & - & - & - & - & F & T & F & F & F & O0 \\
+T & - & - & - & - & F & T & F & F & T & O1 \\
+T & - & - & - & - & F & T & F & T & F & O2 \\
+T & - & - & - & - & F & T & F & T & T & O3 \\
+T & - & - & - & - & F & T & T & F & F & O4 \\
+T & - & - & - & - & F & T & T & F & T & O5 \\
+T & - & - & - & - & F & T & T & T & F & O6 \\
+T & - & - & - & - & F & T & T & T & T & O7 \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:symbols}
+\end{table}
+\newpage
+\begin{table} [!hb]
+\caption {Mnemonic meanings for \mygame{Checkers} symbols}
+\begin{center}
+\begin{tabular}[hbt]{|c|l|} 
+\hline
+Symbol(s) & Meaning \\
+\hline
+n & Noman's land \\
+a* & Active field \\	
+p* & Passive field \\
+x* & Active man \\
+X* & Active king \\
+O* & Opponent's man \\
+o* & Opponent's king \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:mnemonic}
+\end{table}
+
+The 44 symbols are the finest (i.e. least granular) selection of occupation states that can be derived from the given Boolean properties. Another valid, but more granular choice is to use the 7 mnemonic prefixes as occupation types.  An inspection of the hand-coded features of Samuel's \mygame{Checkers} program \cite{samuel:checkers} indicates that the mnemonic table may be adequate.  However, Samuel's features are defined from expert knowledge, while the 44 occupation states are derived directly from the game rules.  Thus, from the definition of a zero knowledge agent (\refsec{knowledge-granularity}) it follows that the set of 44 elements in $\mypieces$ is correct for \mygame{Checkers}.
+
+The agent uses states to refine its ``perception" of a game position. \myrefstepboard{} (page \pageref{board-ref}) shows how the occupation states are used to view one of the moves available from the initial position.  As indicated in the diagram, a  position is always viewed  from the passive player's perspective.  This is because the evaluation of the position occurs after the move under evaluation is applied.  For example, if the agent plays red, the red pieces will be perceived as the passive pieces on the position provided as argument to the evaluation function.   The diagram shows that the occupation states facilitate observations that provide rich and useful information.
+
+
+\myboard 
+ {  {o0} {o0} {o0} {o0}}
+ {{o0} {o0} {o0} {o0}  }
+ {  {o2} {o2} {o2} {o2}}
+ {{b5} {b5} {a2} {a2}  }
+ {  {x2} {p2} {p2} {p2}}
+ {{x2} {p2} {x2} {x2}  }
+ {  {x2} {x2} {x0} {x0}}
+ {{x0} {x0} {x0} {x0}  }
+\label{board-ref}
+
+Clearly, there is a need to address a square and therefore a notation to represent squares is required.  In $\mathcal{F}$ a square is represented by an ordered pair $(f,r)$ where $f$ denotes the \myterm{file} and $r$ the \myterm{rank} of the square.  At the bottom-left corner of the board the square $(1,1)$ is found, the file increases to the right and rank increases upwards.  In many games some squares, called \myterm{non-playable} squares can never be occupied (such as \mygame{Checkers} and Arimaa). The symbol $\mysquares$ is used to denote the set of \myterm{playable} squares. 
+
+In $\mathcal{F}$, the symbol function $S : \mypositions \times \mysquares \mymap \mypieces$ maps the square in a position to an occupation state.  For any position $p \in \mypositions$ and square $s \in \mysquares$, and for $o \in \mypieces$, where $O(p,s) = o$, there is no element in $\{\mypieces - o\}$ that also describes the state of $s$ in $p$.
+
+\subsection{Features}
+\label{sec:language-features}
+A feature is a floating-point valued function with the set of legal positions, $\mypositions$, as domain and a range of  $[0,1]$.  A value of 1 indicates that the feature is present on the position, and a value of 0 indicates an absence of the feature. For two features $\mathcal{A}$ and $\mathcal{B}$, the valuation with respect to position $p$ is represented as $V(p,\mathcal{A})$ and $V(p,\mathcal{B})$ respectively. If $V(p,\mathcal{A}) > V(p,\mathcal{B})$  then $p$ is a \myterm{closer fit} to $\mathcal{A}$  than it is to $\mathcal{B}$. In this section the two ground features, namely the atomic occupation feature and the fuzzy occupation feature are introduced.
+
+\begin{definition} {Atomic Occupation Feature}
+The \myterm{atomic occupation feature} epitomises a square in terms of its occupation state.   An atomic occupation feature is a \mywff{}  with the following form, 
+\[
+( o \oplus s )
+\]
+where $o \in \mypieces$ and $ s \in \mysquares$.
+
+For a position, $p$, $V(p,( o \oplus s ) )$ is 1 if $O(p,s) = t$.  If $O(p,s) \neq t$,  $V(p,(o \oplus s))$ is 0.
+\end{definition}
+
+As an example, consider the atomic feature $( x \oplus (1,1) )$.  On \myrefboard,  this feature evaluates to $1$.
+
+The atomic occupation feature is binary - either the square is occupied as specified or not.  However, some knowledge requires fuzzy definitions.  For example, consider the representation for this knowledge: {\it the first rank is occupied by active pieces}. The value of this feature ranges from $0$ to $1$, adding $0.25$ for each square in the first rank occupied with an $x$ or an $X$.
+
+From the example, one may conclude that the value of this feature must be computed as $\left(\frac {\mbox{count of matching squares}} {\mbox{count of squares}}\right)$, however, this is not accurate.  When the number of squares exceeds the maximum possible matches, the value may never be able to get close to 1.  For example, there can be at most 12 red pieces on a \mygame{Checkers} position, and if all squares are included, the highest value of the feature is $\frac{12}{32} \approx 0.38$.  According to this value, the feature is not present on the position.   The fuzzy occupation feature considers the fact that there are at most 12 red pieces, and concludes that the value for this position is $\frac{12}{12} = 1$.
+
+Before defining the fuzzy feature, a few new concepts must be introduced.  These are cardinality, size dependence, cardinality sets  and maximum cardinality.  These concepts relate to the occupation states and are derived directly from the game rules.
+
+The \myterm{cardinality} of an occupation state is the number of squares on the board that is occupied with that state.  For position $p$, the cardinality of $o \in \mypieces$, denoted as $|o|$ is defined as follows:
+\[
+	|o| \equiv \sum_{s \in \mysquares} V(p, o \oplus s ) 
+\]
+
+The \myterm{maximum cardinality} of an occupation state is an upper bound on the cardinality of the occupation state.  It is the maximum number of squares that can be occupied with that state on a non endgame position. For $o \in \mypieces$  with maximum cardinality, denoted as $|o|_m$, the following holds:
+\[
+	\forall_{p \in \mypositions} (|o| \leq |o|_m)
+\]
+
+In table \ref{tab:mc}, the maximum cardinality for each \mygame{Checkers} occupation state is shown.   Motivation for the
+first entry in the left column is provided.  The others have a similar derivation method.
+
+\begin{table}
+\caption {Maximum cardinality of \mygame{Checkers} occupation states}
+\begin{center}
+\small
+\begin{tabular}[hbt]{|l|l|} 
+\hline
+Occupation states & Maximum Cardinality \\
+\hline
+n & 28. There are 32 squares. At least 2 \\
+  & pieces on non end positions,    \\
+  & 30.  These two take up at 1 square \\
+  & of field, leaving a maximum of 28.   \\
+\hline  
+a1, p1 & 26. Consider a configuration  \\
+    &  with a king in the middle and 4 open \\
+    & squares around  it. This configuration\\
+    &  takes up 5 squares and  has 4 a1's. \\
+    &  There are 32 squares, so no more \\
+    & than 6 such configurations are possible \\
+    & giving 24 a1's.  Assuming that the 2 \\
+    & remaining  squares end up as a1, \\
+    & the value of 26 is  obtained. \\
+\hline  
+a2, p2 & 17. Using the same idea as \\
+    & above, but this time the size \\
+    & of the configuration that has \\
+    & 4 a2's is 9. Three of these \\
+    & fits in 32 squares with 5 spares.\\
+\hline    
+ a3, p3 & 14.  Expanding on the configuration \\
+  & above, adding 4 squares makes 13 \\
+  & for 4 configurations. Two of these make \\
+  & 26, leaving 6 squares.\\
+\hline  
+ b1 & 12.Requires a configuration of 3 \\
+     & squares for one b1, using 30 for \\
+     & 10 b1s and a remainder of 2\\
+\hline  
+b2, b4,x3,x5,X3,X5, & 8. Requires 4 squares in a configuration \\
+    o3,o5,O3,O5 &  that yields 1\\
+\hline  
+b3, b8,x7,X7,o7,O7  & 7. Requires 6 squares in a configuration \\
+    &  that yields 1 b3\\
+\hline  
+b6, b5 ,b7   & 7. Requires 5 squares in a configuration \\
+    &  that yields 1 b6\\
+\hline  
+b9 & 8.  Requires 7 squares in a configuration \\
+	& that provides 1 b9. \\     
+\hline
+x0,x1,x2,x4,x6, & 12.  The maximum number of pieces \\
+X0,X1,X2,X4,X6,    & on a side is 12. \\
+o0,o1,o2,o4,o6, & \\
+O0,O1,O2,X4,O6 & \\
+\hline	
+\end{tabular}
+\end{center}
+\label{tab:mc}
+\end{table}
+
+
+Two occupation states, $o_1$ and $o_2$ are \myterm{size dependent} when there is some integer $k$ such that  $0 < k < |o_1|_m + |o_2|_m$  and $|o_1| + |o_2| \leq k$ always hold. In general, a set of occupation states, $\myset{O}$, is size dependent if the following holds:
+\[ \exists_{k \in \myints}  (0 < k < \sum_{o \in \myset{O}}|o|_m), (\sum_{o \in \myset{O}}|o|) \leq k \]
+
+In the expression above, $k$ is an upper bound on the maximum cardinality of the set.   Ideally, the smallest possible value for $k$ must be chosen as  the maximum cardinality value.  Using a value closer to the smallest upper bound results in a more accurate evaluation of the fuzzy feature.   
+
+
+A \myterm{cardinality set} is a set of size dependent occupation states. The collection of cardinality sets, denoted as $\mycardinalities$ must be disjoint.  To keep to the zero knowledge principle, these sets must follow directly from the game rules.  Furthermore, the union of these sets must cover the set of occupation states (i.e. $\myunion_{\myset{C} \in \mycardinalities} \myset{C} = \mypieces$). The maximum cardinality of a cardinality set is an upper bound on the number of squares that can be occupied by any occupation state in the set on a non end-game position.  For $\myset{C} \in \mycardinalities$, the maximum cardinality is denoted as $|\myset{C}|_m$.  Note that the maximum cardinality of a set is less than the sum of the maximum cardinalities of the elements in the set:
+\[
+	\forall_{\myset{C} \in \mycardinalities} (|\myset{C}|_m < \sum_{o \in \myset{c}} |o|_m)
+\]
+
+For example, consider two simple occupation states of a \mygame{Checkers} position: $o_k$ indicates  {\sl the square is occupied by an active king} and $o_m$ that {\sl the square is occupied by an active man}. The maximum cardinality of these occupation states is 12. However, no position can contain more than 12 active pieces, so $|o_m| + |o_k| \leq 12$ holds for any \mygame{Checkers} position. This means the two occupation states are size dependent.  The set $\{o_m,o_k\}$ is a cardinality set of \mygame{Checkers} and it has a maximum cardinality of 12.
+
+The cardinality sets for \mygame{Checkers}, along with the maximum cardinality for each set are shown in table \ref{tab:csets}.
+\begin{table} [!ht]
+\caption {\mygame{Checkers} cardinality sets, together with their respective maximum cardinalities}
+\center
+\small
+\begin{tabular}[hbt]{|c|l|l|} 
+\hline
+Set & Elements & Maximum Cardinality \\
+\hline
+$\myset{C_1}$ & n,a*,p*,b* & 30.  At least two \\
+&& squares must be occupied \\
+\hline	
+$\myset{C_2}$ & x*,X* & 12.  There are at most \\
+&&12 active pieces \\
+\hline	
+$\myset{C_3}$ & o*,O* & 12.  There are at most \\
+&&12 passive pieces \\
+\hline	
+\end{tabular}
+\label{tab:csets}
+\end{table}
+The maximum cardinality values of the cardinality sets are used to determine the maximum number of squares that can be occupied by any element from an arbitrary set, $\myset{O} \myst \myset{O} \subseteq \mypieces$.   This maximum number is referred to as the \myterm{upper limit} of the set, and it is denoted as $|\myset{O}|_u$.  A recursive function is used to determine this upper limit, for a set $\myset{O}$:
+\[
+|\myset{O}|_u  \equiv \left\{
+\begin{array}{ll}
+0 & \mbox{ if } \myset{O} = \emptyset \\
+&\\
+     |\myset{O} / \myset{C}|_u +  &  \mbox {where } \\ 
+\mbox{min} \{|\myset{C}|_m, \sum_{o \in \myset{T}} |o|_m \} 
+												
+												&\myset{C} \in \mycardinalities, 
+												\myset{T} = \myset{O} \myintersect \myset{C},                    
+                 								\myset{T} \neq \emptyset  \\
+\end{array}
+\right.
+\]
+As an example consider the set of occupation states $\myset{O} = \{a3,b1,x3,X7\}$.  In order to determine $|\myset{O}|_u$, a cardinality set from table \ref{tab:csets} must be chosen such that the elements in $\myset{O}$ are also in the cardinality sets.  There are two valid selections: $\myset{C_1}$ and $\myset{C_2}$.  The order is not important, and below, $\myset{C_1}$ is chosen first:
+\[
+\begin{array}{lcl}
+|\myset{O}|_u &=& 
+       |\myset{O} / \myset{C_1}|_u + \mbox{min} \{|\myset{C_1}|_m, \sum_{o \in \myset{O} \myintersect \myset{C_1}} |o|_m \} \\
+ &=&  |\{x3,X7\}|_u  + \mbox \{30,14+12\} \\
+ &=&  |\{x3,X7\}|_u  + 26 \\
+ &=& |\{x3,X7\} / \myset{C_2}|_u  + \\
+ && \mbox{min} \{|\myset{C_2}|_m, \sum_{o \in \{x3,X7\} \myintersect \myset{C_2}} |o|_m \} + 26 \\
+ & = & |\emptyset|_u + \mbox{min} \{12, 8 + 7 \} + 26 \\
+ & = & 0 + 12 + 26 \\
+ & = & 38 \\
+ \end{array}
+\]
+
+As this example illustrates, the upper limit can be larger than the cardinality of the set of playable squares, $|\mysquares|$.  The definition of the fuzzy occupation feature given below takes this into account:
+
+\begin{definition}{Fuzzy Occupation Feature}
+Consider a set of squares, $\myset{S}$ ($ \myset{S} \subseteq \mysquares$)  and a set of occupation states, $\myset{O}$ ($ \myset{O} \subseteq \mypieces$).  A \myterm{fuzzy occupation feature} provides a measure of the fraction of squares in $\myset{S}$, that is occupied with an occupation state found in $\myset{O}$.  A fuzzy occupation feature is a \mywff{} with the form,
+\[
+(\{t_1,t_1, \ldots ,t_k \} \otimes \{s_1,s_2, \ldots, s_n\})
+\]
+where $\forall_{1 \leq i \leq k} t_i \in \mypieces$  
+and  $\forall_{1 \leq i \leq n}  s_i \in \mysquares$.
+
+Let $\myset{O} =  \{t_1, t_1, \ldots ,t_k \}$ and $\myset{S} = \{s_1,s_2, \ldots, s_n\}$. Then for position $p$ the value for $V(p,(\myset{O} \otimes \myset{S}))$  is calculated as follows:
+\[
+\frac { \sum_{i=1}^{k} \sum_{j=1}^{n} ( o_i \oplus s_j ) } 
+{\mbox{min}\{|\myset{S}|,|\myset{O}|_u\}}
+\]
+\end{definition}
+
+Consider the feature, \textsl{the first rank is occupied by active pieces}.  This feature is expressed in $\mathcal{F}$ as $(\{o*,O*\}\otimes\{(1,1),(3,1),(5,1),(7,1)\})$ and it has value of 1 with respect to the board in \myrefboard.
+%A \myterm{region} is a set of squares such that every square in the set is adjacent to another square in the set.  Two playable squares, $s$ and $t$ are \myterm{adjacent} when a straight line can be drawn from the centre of $s$ to the centre of $t$ without crossing the lines around another playable square.  For example the squares $(1,1)$ and $(1,2)$ are considered to be adjacent. The features identified by Samuel, makes it clear that generalised observations that includes more than one square are typically applied to squares that form a region.  
+%Using regions, another language construct, called the atomic region feature is introduced. Consider a region $R$ that consists of the squares $\{r_1,r_2, \ldots ,r_n\}$ and an occupation state $t$.  If the feature $\{t\}\otimesR = |R|$ is active on position $p$, then the $R$ is called a \myterm{homogeneous region} of $p$.  $R$ is a \myterm{maximal homogeneous region} if there is no homogeneous region that contains $R$.  The region $R$ is a \myterm{set homogeneous region} of $p$ with relation to an occupation state set $T$ that consists of the types $\{t_1,t_2, \ldots ,t_n\}$  if the feature $T\otimesR = |R|$ is active on position $p$.  Likewise, a \myterm{maximal set homogeneous region} is a set homogeneous region that is not contained by another set homogeneous region.  The number of maximal set homogeneous regions on a position, is the basis for the atomic region feature:
+%\begin{definition}{Atomic Region Feature}
+%The \myterm{atomic region feature} describes an observation regarding the number of maximal homogeneous features.  It is a \mywff, and has the following form:
+%\[
+%	f_r(\{\mathcal{T}_1,\mathcal{T}_2,\ldots,\mathcal{T}_n\}) \mbox{\it op }  \mathcal{N}
+%\]
+%where $\forall_{1 \leq i \leq k} \mathcal{T}_i \in \mypieces$,  $\mathcal{N} \in \myints$ and {\it op} is a relational operator.
+
+%Let $c$ be the number of maximal set homogeneous regions with relation to the occupation set $\{\mathcal{T}_1,\mathcal{T}_2,\ldots,\mathcal{T}_n\}$.  Then, the value of the atomic feature above is 1 if {\it op} describes the relation between $c$ and $n$ accurately, and it is 0, otherwise.
+%\end{definition}
+
+\subsection{Fuzzy Operators}
+\label{sec:language:operator}
+A feature is seldom considered in isolation.  The utility of one observation often depends on the availability of another  feature.  The following strategy demonstrates this idea: {\sl if the opponent has no kings, keep as many men in the first rank as you can}.  This strategy cannot be expressed if the feature language is unable to  indicate an association between the occupation feature in the first rank and the occupation feature regarding the opponent's kings.  To solve this problem, disjunction and conjunction operators are introduced.  The negation operator facilitates the use of negative features.  This operator is used in expressions that indicate the absence of some aspect of a position.
+
+\begin{definition} {Disjunction}
+A \myterm{disjunction}, denoted by $\myor$ combines two \mywffs{} to form another \mywff, and it has the following form,
+\[
+( \mathcal{A} \myor \mathcal{B} )
+\]
+where $\mathcal{A}$ and $\mathcal{B}$ are \mywffs{}.
+
+If $V(p,\mathcal{A}) = a$  and $V(p,\mathcal{B}) = b$ for a position $p$, then $V(p,(\mathcal{A} \myor \mathcal{B}))$ evaluates to max$\{a,b\}$.
+\end{definition}
+The disjunction operator, $\myor$ combines two \mywffs{}, $\mathcal{A}$ and $\mathcal{B}$, such that the value of $( \mathcal{A} \myor \mathcal{B} )$ is 1 if either $\mathcal{A}$ or $\mathcal{B}$ has a value of 1.
+
+\begin{definition} {Conjunction}
+A \myterm{conjunction}, denoted by $\myand$ combines two \mywffs{} to form another \mywff, and it has the following form,
+\[( \mathcal{A} \myand \mathcal{B} )\]
+where $\mathcal{A}$ and $\mathcal{B}$ are \mywffs.
+
+If $V(p,\mathcal{A}) = a$ and $V(p,\mathcal{B}) = b$ for a position $p$, then $V(p,(\mathcal{A} \myand \mathcal{B}))$ evaluates to min$\{a,b\}$.
+\end{definition}
+The conjunction operator, $\myand$ combines \mywffs, $\mathcal{A}$ and $\mathcal{B}$, such that the value of $( \mathcal{A} \myand \mathcal{B} )$ is 0 if either $\mathcal{A}$ or $\mathcal{B}$ has a value of 0.  It evaluates to 1 if and only if $\mathcal{A}$ and $\mathcal{B}$ has a value of 1.
+
+\begin{definition} {Negation}
+A \myterm{negation}, denoted by $\neg$ inverts the value of a  \mywff{} to form another \mywff, and it is used in following form,
+\[
+( \neg\mathcal{A} )
+\]
+where $\mathcal{A}$  is a \mywff.
+For a position $p$,  $V(p,(\neg \mathcal{A}))$ evaluates to $1 - V(p,\mathcal{A})$
+\end{definition}
+The negation operator, $\neg$ is a unary operator, and  the value of $\neg \mathcal{A}$ is 1 if $\mathcal{A}$ has a value 0 and it has the value of 0 if $\mathcal{A}$ is 1.
+
+Instead of operator precedence rules, $\mathcal{F}$ employs parentheses to eliminate ambiguity. Here follows the syntax of all the operators in $\mathcal{F}$ written in Backus-Naur form,
+
+{\tt \small
+\begin{tabbing}
+<formula> \=$\rightarrow$ \= ( $\neg$ <formula> ) \\
+	\>| \> ( <formula> $\myor$ <formula> ) \\
+	\>|\> ( <formula> $\myand$ <formula> ) \\
+	\>|\> ( <ground> )  \\
+	\\
+<ground> \>$\rightarrow$\> <square> $\oplus$ <state>	\\
+	\>|\> <square set> $\otimes$ <state set> \\
+\end{tabbing}
+}	
+
+\section{Conclusion}
+\label{sec:knowledge-conclusion}
+% the function
+ % This section considers whether other design objectives were achieved, and highlights some pertinent representation aspects. 
+ 
+$F$ is an evaluation function that provides an effective and a simple method to capture heuristic knowledge in terms of significant features. Each feature is associated with a weight that indicates its relative importance.  $F$ is used to map game positions to floating-point numbers, so that these numbers can be used to identify the best amongst various alternative moves. An useful characteristic of the function is that it can be used to compare positions that are very different.
+
+% the language
+Central to the definition of the evaluation function is the language $\mathcal{F}$ devised to be used in a learning framework. This language is able to represent knowledge to a game playing agent, such that the knowledge can be used in the evaluation function, $F$. The flexibility of the language $\mathcal{F}$ stems from the level of granularity chosen for the basic building blocks of the expressions, and also from the notion that the operators of the language allow for arbitrarily complex expressions. The classification of feature forms that cannot be expressed in $\mathcal{F}$ could lead to a more complete language definition.  However, a more intricate language could complicate the knowledge discovery process.  
+
+The use of Boolean operators ensures that known techniques can be used to construct, manipulate and evaluate expressions.  For instance, it is possible to translate $\mathcal{F}$ expressions to a disjunctive normal form, and to use and-or tree structures to store these expressions.  In addition, the weights in the evaluation function $F$ are easy to separate from the function expression.  This allows the use of numerical optimisation methods like Particle Swarm Optimisation (PSO) \cite{kennedy:swarm}. 
+
+An important notion is the fit-to-features model used by $F$. This model provides an opportunity to exploit and to further develop selective game tree search algorithms that do not assume the compared positions are on the same ply.  In the next chapter, the search activity is explored in more detail; and these concepts and the benefit of this model becomes clearer.
+
+\chapter{Exploring the game tree}
+\label{chap:tree}
+{ \chapterintro
+The previous chapter focussed on how knowledge can be presented and  used by the playing agent to make a move decision.  In this chapter, the manner in which the agent applies that knowledge to search the game tree is discussed.  A new search method called the best-first shallow search is presented and evaluated.
+}
+
+\section{Introduction}
+\label{sec:tree-info}
+Chapter \ref{chap:two-player} described the game tree structure and discussed the interaction between the knowledge exploitation process and the search process when a playing agent makes a move decision.  In the previous chapter, different types of knowledge were introduced and a knowledge representation language was developed.  In this chapter the search process is defined in detail, and the possibility of using  knowledge to guide the search path is explored.  
+
+Search algorithms can be classified into \myterm{fixed-depth search} and \myterm{selective search} algorithms. Fixed-depth algorithms explore the game tree to a specified depth. When the depth increases, the time to make a move decision increases dramatically, especially for games with high branching factors.  Selective search algorithms avoid this problem by searching some branches in the tree deeper than others.  The difficulty faced by these algorithms lies in the decision to abort a particular branch and selecting another branch in the tree to explore further.  
+
+Many variations of fixed-depth and selective algorithms exist.  In practise the two classes of search algorithms are often mixed; for instance switching over to a selective search when a node on the last ply of a fixed-depth search meets certain conditions. This chapter discusses two fundamental methods from which many of the other  approaches were developed\footnote{Refer to \cite{furnkranz:survey} for an overview of significant innovations in game tree search algorithms}. The reason for not exploring the available variety of search techniques is that the focus of this work is on knowledge discovery, and the application of a complicated search method could dissipate the conclusions of this study.    
+
+%\cite{schaeffer:games} Game researchers focus on developing high performance real-realtime solutions to challenging problems.  Success in this area is one of A.I.'s major triumphs. This article highlights some of the advances in \textit{computational} intelligence.
+
+%\cite{schaeffer:games} In order to overcome the \textit{effective knowledge representation and manipulation} problem, the computer applies brute-force searching.  The Deep Blue victory in 1997 exemplifies this approach.  It considered all \mygame{Chess} moves to the 12th ply while extending the search considerably for selected branches. It searched 200 million positions per second. 
+
+\refsec{tree-minimax} introduces the minimax algorithm and its companion, alpha-beta pruning. This popular algorithm searches the tree to a fixed depth and it does not employ knowledge to decide how the search through the tree must be conducted. A search method that does employ knowledge to direct the search, the best-first minimax algorithm is described in \refsec{tree-best-first}, together with the outline of a recursive algorithm that implements this approach.  Shortcomings of best-first minimax is discussed in \refsec{tree-shortcomings}, and an improvement developed by other researchers is described. \refsec{tree-frontier} introduces a new search algorithm called best-first shallow search.
+
+The first experiment of this chapter is described in \refsec{tree-exp-ab-span}.  This experiment establishes baseline values that describe the behaviour of alpha-beta at various search depths.  These baselines are used in \refsec{tree-exp-bfss-ab} to interpret the outcome of an experiment conducted to compare alpha-beta with best-first minimax and best-first shallow search. \refsec{tree-exp-first} describes the last experiment in this chapter that compares best-first shallow search with best-first minimax. 
+Finally, \refsec{tree-conclusion} highlights the important remarks and conclusions of this chapter.
+
+\section{The minimax approach to tree searching}
+\label{sec:tree-minimax}
+Searching is the key to many artificial intelligence problems. The typical approach involves representing the solution domain as a (possibly infinite) set of vertices and a set of edges that connects  these vertices to each other \cite{poole98,nilsson:principles}.  These edges and vertices form a \myterm{graph}, and the search process involves walking through this graph until a satisfying solution is found.  
+
+Even though the game tree is also a graph, general graph search methods do not apply to the game tree. The game tree is constructed ply by ply, where each alternating ply represents the moves available to a different player.  A general search method might find a `winning' position for the active player in this graph; and the agent could choose to move to the first position in the play-line that leads to the chosen vertex. However, that  play-line is likely to present move opportunities to the opponent such that the `winning' position is never reached. 
+
+The \myterm{minimax} algorithm\footnote{Minimax is a well known algorithm, but it is difficult to trace its origin.  It is described in many A.I. text books. See \cite{rich83} for an example.} takes advantage of the alternating layers in the game tree to define a simple, but effective, playing strategy. This strategy assumes that the positions in the game tree can be evaluated.  The value of a position is called the \myterm{static value}, and it is a floating-point value such that a position with a greater advtantage to the active player has a greater value. The evaluation function described in \refsec{knowledge-function} provides some insight into how such a value can be obtained.
+
+The minimax algorithm searches the game tree to a fixed depth. At a depth of one ply, only the  first position of all future play-lines are considered.  At this ply, the active player chooses the position with the maximum score. When the search depth is two, consideration is given to the next ply, and it might become apparent that a counter move is available to the opponent that would eliminate the advantage implied by the score of the first move. The opponent's best move is to choose the future play-line that starts with the lowest scoring position, {\it i.e.} the position that has the lowest advantage to the active player.  Generally, the passive player always minimises the score and the active player maximises the score. 
+
+The terminal nodes of the minimax search tree are the positions in the last ply and the end positions that were encountered during the search. A node in the minimax search tree is a \myterm{minimising node} if it is on a position from which the opponent must make a move.  A \myterm{maximising node} is a node on a position from which the active player must make a move.  Therefore, all the nodes in an even ply are maximising nodes, and those in an odd ply are minimising nodes.    
+
+The key to the minimax algorithm is the manner in which the score is propagated upward from the last ply to the first position in the future play-line. Every node in the minimax search tree has a \myterm{minimax value}. The minimax value of a terminal node is equal to the score of the associated position.  The minimax value of a minimising node is the smallest minimax value found in its child nodes.  Likewise, the minimax value of a maximising node is the greatest value found in its child nodes.  The active player chooses the node with the highest minimax value in the first ply as the next move.
+
+% describe alpha-beta 
+Interestingly, there is no need to visit every node in the minimax tree to determine the correct minimax value of every node in the first ply.  Hart and Edwards \cite{hart:alpha} developed the \myterm{alpha-beta} heuristic that prunes the branches from the minimax search tree that will not effect the outcome of the move decision.  The reasoning for alpha-beta is as follows: if a child of a maximising node has a minimax value less than the value of the child of a minimising node with a smaller ply, the maximising node must not be explored further.  There is no need to continue the exploration because the minimising player would have taken the move at the higher level.  The same reasoning is also extended to the minimising nodes - if a child of a minimising node has a minimax value that is greater than the value of the child of a maximising node higher up in the tree, the exploration of the minimising node is discontinued.     
+
+Alpha-beta obtains the same results that a full minimax tree traversal would obtain, but it requires much less effort. Therefore, applications for minimax and research activities that involves minimax tree searching typically use an implementation that employs alpha-beta pruning as the reference minimax algorithm.        
+% Most work on game tree search has focused on algorithms that make the same decisions as full-width, fixed depth minimax.  These include alpha-beta pruning **\cite{hart:alpha}, fixed and dynamic node ordering, SSS*, Scout and aspiration windows.  In contrast, \myterm{selective search algorithms} search to variable depth and explore some lines of play deeper than others.  Examples of these are B*, conspiracy search, min/max approximation, meta-greedy search and singular extensions. 
+%% Prof Andries: Verwysings: en ek neem aan dat jy hulle sal bepreek in jou tesis
+
+%All of these selective algorithms require exponential ($O(10^n)$) memory and most have a large time overhead for node generation. In addition, B* and meta-greedy search require more information than that provided by a static evaluation function.  
+%% Prof Andries: verwysing
+% Singular extensions is the only selective algorithm that has been successfully incorporated into a high-performance system (the Deep Thought machine).   
+  
+
+% \cite{buro:machine} \textit{ProbCut} is a procedure that eliminates the search of subtrees that are unlikely to affect the minimax value.  The approach capitalises on the fact that the values returned by minimax on different depths are highly correlated and that a \textit{quiescence function} is used.  In essence the assumption is that a shallow search $v(s)$ is a good predictor of the minimax value for a deep search $v(d)$.  Given $v(s)$ the likelihood that $v(s)$ lies outside the current alpha-beta window can be determined.  ProbCut won 74\% of the games played against the brute-force version.
+
+%\cite{schaeffer:reexamination} Chinook suffers from a problem caused by alpha-beta's inability to distinguish between moves that seems equally best. In such cases, the alpha-beta choice is essentially random one.  However, in practise some drawn positions are better than others.  This also applies to losing lines.  However, the correct ordering is not always clear: sometimes it is better to take a short loss line than a long loss line because the opponent may not see the short loss line and make a mistake. In addition to alpha-beta evaluation, other criteria are required to select the best move.  For instance the best move might be: an easy draw; the one that offers the opponent most chances to make mistakes, or the one that reduces the uncertainty of the position.  
+
+%\section{Selective search algorithms}
+
+\section{Best-first minimax search}
+\label{sec:tree-best-first}
+The \myterm{best-first minimax} algorithm formulated by Korf and Chickering  \cite{korf:best} is a selective algorithm that selects the best play-line discovered so far to explore further. Best-first minimax has been shown to outperform alpha-beta on the game of \mygame{Othello}.  Korf and Chickering concludes that best-first minimax performs best when only relatively shallow searches are feasible, and in games with accurate evaluation functions.  It is likely to be most valuable in games with large branching factors and/or expensive evaluations.  These games (such as \mygame{Go}) are those in which computers have been least successful against humans.    
+
+Best-first minimax has much in common with minimax. It starts with the current position as root node, and expands the tree as the search continues.  With every expansion, the static value of a new node is determined by passing the position it represents as argument to the evaluation function.  This value is then propagated towards the root node using the minimax method. If the parent is in a maximising ply, its value is set to the greatest value found in its children.  If it is in a minimising ply, the value is set to the smallest found in the child nodes.  The root node is in a maximising ply, and plies beneath it alternate between minimising and maximising. At the end of the search, a child of the root node with the highest value is selected as the next position in the play-line.  
+
+The difference between minimax and best-first minimax is in the way the next node is selected to expand.  Minimax does a breadth-first scan through the game tree.  In contrast, best-first minimax  applies the  knowledge encapsulated in the evaluation function to decide which node in the search tree must be expanded next. The strategy is a simple one: always explore the most promising path in the search tree, further.  
+
+The \myterm{principal variation} is the path from the root node to a leaf where every node in the path has the same value.  The \myterm{principal leaf} is the leaf node of a principal variation and its static value is propagated to the root node.  Best-first minimax always selects the current principal leaf node for expansion.  Using this approach, the search can stop at any time, and the best move found thus far can be chosen by the playing agent.
+
+Because the principal leaf is always expanded, it is possible that best-first minimax could explore a single path to the exclusion of all others.  Korf and Chickering note that this does not occur in practise because of the \myterm{tempo effect}. The tempo effect comes from the notion that the static value of a position tends to be an overestimate.  Each move strengthens  the position of the player moving, and when a child node expands, it becomes weaker from the parent's perspective.  Thus, if the principal leaf is expanded, its value tends to decrease, and it is likely that another play-line would become the principal variation.
+
+The simplest implementation of best-first minimax maintains the search tree in memory.  When a node is expanded, its children are evaluated and its value is updated.  This value is then propagated up the tree  until it reaches the root or a node  that does not need a value update.  The algorithm moves down the tree until it reaches a new principal leaf.  This implementation requires exponential memory.  
+
+The recursive best-first minimax search algorithm (RBFMS) is an implementation of best-first minimax that does not require exponential memory. RBFMS (also developed by Korf and Chickering \cite{korf:best}) associates with each node on the principal variation a lower bound $\alpha$ and an upper bound $\beta$, similar to the branches of alpha-beta pruning.  A node remains on the principal variation as long as its backed-up value stays within these bounds.  The root is bounded by $-\infty$ and $\infty$. RBFMS has two symmetric functions: one for MAX and the other for MIN.  Pseudo code listings for these functions are available in \refalg{rbfms}.  Each takes a node and the two bounds as arguments.  These functions perform a best-first minimax search on the sub-tree of a node as long as the backed-up minimax value remains within the $\alpha$ and $\beta$ bounds.  A value that falls outside these bounds is returned as the new value of the node.
+\begin{figure} [!ht]
+\begin{algorithm} 
+{Recursive best-first minimax}
+{A game position $p$ from which the search must be conducted, and an evaluation function $F$}
+{A child of $p$ that must be selected as the next move} 
+RBFMS($p$)\+\\
+	MAX($p$,$-\infty$,$\infty$) \\
+	return a child of $p$ in the principal variation\\
+	\-\\
+MAX($n$, $\alpha$, $\beta$)\+\\
+ 	for each $c$ in child nodes of $n$ \+ \\
+		 $c$.value = $F(c)$ \\
+		 if ($c$.value $>$ $\beta$) \\
+			\>return $c$.value; \- \\
+	do \+ \\
+	best = max valued node in siblings of $n$; \\
+	if  $n$ has more than 1 sibling \\
+		\> near-val = max valued node in (siblings without best) \\
+	else  \\
+		\> near-val = $-\infty$	 \\
+	best.value = MIN(best,maximum($\alpha$,near-val), $\beta$); \- \\
+	while ($\alpha <=$ best.value  $<= \beta$)  \\
+	return best.value; \- \\
+	\\
+MIN  ($n$, $\alpha$, $\beta$) \+ \\
+	for each $c$ in child nodes of $n$  \+ \\
+		$c$.value = $F(c)$ \\
+		if  ($c$.value $< \alpha$) \\
+			\> return $c$.value;	 \- \\
+	do  \+ \\
+	best = min valued node in siblings of $n$; \\
+	if  ($n$ has more than 1 siblings)  \\
+		\> near-val = min valued node in (siblings without best) \\
+	else  \\
+		\> near-val = $\infty$	 \\
+		best.value = MAX(best, $\alpha$, minimum($\beta$,near-val)); \- \\
+	while ($\alpha <=$ best.value  $<= \beta$)  \\
+	return best.value; 
+\end{algorithm}
+\caption{An outline of the RBFMS algorithm}	
+\label{alg:rbfms}
+\end{figure}
+On a MAX node, the lower bound is the same as that of the parent.  The upper bound is the least of the parent's upper bound and the smallest value among its siblings.  On a MIN value the upper bound is from the parent and the lower bound is the maximum of the parent's lower bound and the largest value amongst its siblings.  If the value of a MAX node's child exceeds its upper bound or the value of a MIN node's child is less than its lower bound, the child value is immediately returned without evaluating the other children.
+%At any point, the recursion stack contains the current principal variation and the siblings of all the nodes on this path, along with their current minimax values.  The space complexity of RBFMS is $O(db)$ where $b$ is the branching factor and $d$ is the maximum depth.
+
+Syntactically, RBFMS appears similar to alpha-beta, but it behaves differently.  The primary difference is that alpha-beta makes decisions based on nodes on the same ply, while RBFMS relies on node values on different levels.  Also, alpha-beta does not use the evaluation function to decide which nodes to expand, whereas RBFMS does.
+
+\section{Shortcomings of best-first minimax}
+\label{sec:tree-shortcomings}
+Korf and Chickering explored the performance of RBFMS when it is applied to \mygame{Othello}.  Certain peculiarities of \mygame{Othello} makes this game more ideal for RBFMS than it might be for other games.  In particular, a move in \mygame{Othello} alters the state of many squares on the board.  This influences the game tree in two significant ways: a) The tempo effect is more pronounced, and b)  the children of the current position are likely to have significant variations in static values.  Also, all the moves in \mygame{Othello} are conversions - this means any given position cannot re-occur in any of its future play-lines.  This property of \mygame{Othello} makes it less likely that nodes on the tree will have the same static value.  The third peculiarity is that the number of moves in an \mygame{Othello} game is limited to the number of squares on the board and every decision will lead to an end position.  At the endgame phase, all future play-lines will reach an end position at approximately the same depth.  The final aspect of importance is that draws in \mygame{Othello} are rare.
+
+These properties can be contrasted with other games such as \mygame{Checkers} and \mygame{Chess}.  (In the discussion that follows, reference is made to \mygame{Checkers}, but the argument also applies to \mygame{Chess}.)  Most moves in \mygame{Checkers} make small alterations to the game state, and the static value of a position tends to change gradually as the game progresses. Although the tempo effect exists, it is far less intrusive on the search of a \mygame{Checkers} game tree. The children of a node in the \mygame{Checkers} tree have more or less the same static value, and if there are variations, groups of moves can be identified, not individual moves.   Conversions in \mygame{Checkers} are found in the opening game, but become rarer as the number of kings increases.  This means, at some depth in the tree, there are many children that have the same backed-up value because they share a descendant.  In \mygame{Checkers}, if no limit is placed on the number of moves, a game can potentially have an infinite number of moves.  Searching such a play-line is fruitless. In practice, the number of moves are limited and consequently, many \mygame{Checkers} games end in a draw.
+
+RBFMS does not state what happens when an end position is reached.  Korf and Chickering decided to terminate the search when a winning position is found in the \mygame{Othello} game tree.  The rarity of equal values in \mygame{Othello} implies that the expanded tree will mostly contain a single principal variation, and the variation leading to a winning position is likely to be a good decision.  However, this strategy is not effective in \mygame{Checkers}.  In the partially expanded \mygame{Checkers} game tree, there is likely to be more than one principal variation.  If one leads to a win, search must continue, because another principal variation may also lead to a win, but in less moves.  In general (for \mygame{Othello} and \mygame{Checkers}), it is better to aim for the shorter win, because the decision is imperfect, and a longer strategy is less likely to materialise.  Also, in \mygame{Checkers}, many endgame positions are draws - termination of search when a draw is reached on a principal variation will exclude the possibility that another principal variation may lead to a win.  
+
+Shoham and Toledo \cite{shoham:randomized} postulate that the defect with best-first minimax is that it never attempts to raise the scores of the non-best children of a node.  Their solution to this problem is to choose amongst child nodes where the probability of choosing is higher for greater valued children than it is for smaller valued children.  This approach mitigates the problem of having more than one principal variation, but it weakens the best-first tactic of the algorithm. 
+
+The next problem of RBFMS is one of efficiency.  RBFMS preserves memory at the cost of losing the value of previous calculations and re-expanding nodes that were explored before. The call stack of RBFMS represents the current principal variation, and when the procedure backtracks, nodes and calculations are lost. This problem becomes more prevalent when there are two (or more) branches with the same values.  In this case, one branch can be aborted for another, only to be re-explored when the other branch has reached a weaker position.     
+
+It is reasonable to expect that an algorithm that works better for \mygame{Checkers} will also work better for \mygame{Othello}.  A solution to any one of the problems discussed above would not be damaging to the \mygame{Othello} game strategy.  Shoham and Toledo have shown that their algorithm, called the {\it Parallel Randomized Best-first Minimax Search}, performs better than RBFMS for the \mygame{Othello} game.  The reason why the Shoham and Toledo algorithm is not chosen for the current research is because it chooses the next move stochastically.   This non-deterministic selection is not ideal when the focus is on finding and refining knowledge. When the choice is stochastic, weaker knowledge may win against stronger knowledge, complicating the knowledge evaluation procedure.  
+
+\section{Best-first shallow search}
+\label{sec:tree-frontier}
+The shortcomings described in the previous section lead to the development of a novel game tree search algorithm called \myterm{best-first shallow search} (BFSS). Essentially, BFSS is a specialisation of  best-first minimax that allows a knowledge based search on a game tree in which multiple principal variations occur frequently during the search.  In addition, the BFSS implementation is a non-recursive procedure that eliminates the need to recalculate node values.     
+
+Best-first shallow search selects the next node to expand from a set of nodes called the search frontier.  This frontier is the unexplored `edge' of the search tree.  The search starts with the active position, referred to as the \myterm{search root}, as the only node in the frontier. The search procedure selects a node in the search frontier to expand, and removes it from the frontier.  When the node expands, its children are added to the frontier. If the node is an end position, it will not be replaced, and the frontier will shrink.  In general, non terminal nodes are encountered and the frontier grows as the search continues.    
+
+Deciding which node in the frontier to expand is a key aspect of BFSS.  The idea to select a node on the principal variation is kept; and if only one variation is available the choice will be no different from best-first minimax.  If more than one principal variation is available, the node with the smallest ply is selected.  The move decision is based on the value of the positions in the first ply.  A deeper search tree below one of these positions improves the accuracy of its value assessment.  By expanding the principal variation with the smallest ply first, the tree below the least accurate first-ply position is expanded, and its value becomes more accurate. Also, if the evaluation function is unable to distinguish between the nodes close to the root of the search tree, this smallest ply first strategy ensures that BFSS does a breadth-first walk through the game tree until a promising node is identified by the function. 
+
+BFSS uses a constant called the \myterm{search span} as a termination criterion. This approach was also used by Shoham and Toledo \cite{shoham:randomized}.  Except for the search root, the expansion of all nodes in the frontier count towards the termination condition.  When the number of expansions reaches the search span, BFSS terminates.  It is possible (especially during the end-game) that the game tree is completely traversed before the search span is reached.  In this case the search frontier would be empty and BFSS would terminate.  The third condition for termination is when a principal variation that leads to a win for the active player is found.  Because the smallest ply first strategy is applied when more than one principal variation is available, it is likely that the first winning variation encountered will also be the one with the fewest moves.
+
+Like best-first minimax, BFSS also makes use of the minimax value of a node.  However, instead of alternating the minimum and maximum operation, the minimax value of the minimising nodes are negative.  These values, called \myterm{negamax values} \cite{furnkranz:survey}, are calculated the same way for all nodes.  The negamax value of a node is the negation of the minimum value of the node's children.  The value of a terminal node in the search tree is calculated from the evaluation function.   The evaluation function values are negated for nodes in a ply from which the passive player makes a move.  An outline of the BFSS algorithm is shown in \refalg{bfss}.
+
+\begin{figure} [!ht]
+\begin{algorithm} 
+{Best-first shallow search}
+{A search root $r$ from which the search must be conducted, an evaluation function $F$, and a search span $s_{max}$}
+{A child of $p$ that must be selected as the next move} 
+SELECT($r$, $s_{max}$)  \+ \\
+	frontier = $r$ \\
+	nodesExpanded = 0 \\
+	while (frontier has nodes and nodesExpanded $<= s_{max}$  
+	       and principal is not an end-game) \+ \\
+	    bestNode = BEST(frontier, $r$)  \\
+	    remove bestNode from frontier \\
+	    if  \=(bestNode is not an endgame node)  \+ \\
+				append children of bestNode to frontier \\
+	     for \= (each node $n$ in the children of bestNode) \\
+	     \> EVALUATE($n$,$r$)\\
+				bestNode.value = $-$ (max value from bestNode's children) \\
+			parent = best \- \\
+			do \= \+ \\
+	    	parent = parent.parent \\
+	    	parent.value = $-$ (max value from best.childs) \- \\
+	    while (parent is not $r$)  \\
+	    nodeExpanded = nodesExpanded + 1 \-  \\
+	return the first node in the current principal variation \-\\
+	\\
+	EVALUATE($n$, $r$) \+\\
+	if (node is a negative node with respect to $r$) \\
+	\>$n$.value = - $F(n)$ \\
+	else \\
+	\>$n$.value = $F(n)$\\
+	\-\\
+	BEST($f$, $r$) \+\\
+	\label{line:bfss-sort}Sort nodes in $f$ in ascending ply depth order\\ 
+	selected = first node in $f$ \\
+	while (selected is not a principal leaf of $r$) \\
+		\> selected = next node in $f$ \\
+	return selected	
+\end{algorithm}
+\caption{Outline of Best-first shallow search}	
+\label{alg:bfss}
+\end{figure}
+
+The algorithm consists of two functions, SELECT and BEST, and one procedure EVALUATE.  SELECT returns the node chosen as the next move of the playing agent. BEST returns the next node to be searched in the frontier and EVALUATE calculates and stores the negamax value of a node.  
+
+EVALUATE takes two parameters, the node to evaluate, $n$, and the search root, $r$.  The search root is required to determine whether a node is in a negative ply or not. If the result of subtracting the ply of  $n$  from the ply of $r$ is even, the node is in a positive ply.  If not, the node is in a negative ply.  The evaluation function value is negated for nodes in a negative ply.
+
+BEST also has two parameters, the frontier $f$ and the search root $r$.  In this function, the search root is used to determine whether a node in $f$ is a principal leaf.  A node $p$ is a principal leaf if its absolute value is equal to the absolute value of $r$, and a path exists from $p$ to $r$ such that the absolute value of all the negamax values in that path are equal.  Because the frontier is sorted in descending ply depth, the principal leaf closest to the root will be found first and returned.  
+
+SELECT takes as argument the search root $r$ and the search span $s_{max}$.  After initialising the frontier to contain only $r$, the nodes in the frontier are expanded until the required number of expand operations are reached or one of the other termination criteria is met.
+
+If \refline{bfss-sort} in the outline of BFSS is changed to sort the frontier in ascending order, the algorithm would behave exactly like best-first minimax described by Korf and Chickering.  This frontier based implementation of best-first minimax will be referred to as best-first deep search, or BFDS.     
+ 
+%(** May be a good idea to analyse the space and time complexity of this algorithm **)
+%\subsection{An analysis of the complexity of BFSS}
+% is bffs a generalisation of RBFMS
+%This experiment was conducted to determine the influence of the search method on the performance of the agent.  The same games played to produce Table \ref{tab:player:dsde} was played using the longest path first selection method.  The BFSS  chooses the principal leaf with shortest path to expand, while the RBFMS expands the current principal variation if there are no change in the value of the node.  The effect is that RBFMS is essentially a longest path selection method.  The result obtained when using this method is shown in Table 
+
+\section{Experiment: The search span of alpha-beta} 
+\label{sec:tree-exp-ab-span}
+\subsection*{Objective} 
+The aim of this experiment is to determine the search span of alpha-beta.  Alpha-beta is a fixed depth search algorithm, and as such the search span of this algorithm cannot be finely tuned.  In order to establish a common ground for comparison with selective algorithms, the number of node expansions done by alpha-beta at various ply depths are determined. Only ply depths of 1, 2 and 3 are considered.  Deeper ply depths are too expensive to use in learning experiments.  
+   
+\subsection*{Method}
+% the function
+In this experiment \mygame{Checkers} playing agents use a simple but effective evaluation function called $F_a$.  The function is hand-crafted, and is defined as a feature language expression in \refeq{tree-fa}.  
+\begin{equation}
+ F_a \equiv \left( 
+\begin{array}{l}
+  \, 30 \times \{O*\} @ \{(*,*)\}  \\
++ \, 20 \times \{o*\} @ \{(*,*)\}  \\
++ \, 20 \times \neg \{O4,O6\} @ \{(*,*)\}  \\
++ \, 10 \times \neg \{o4,o6\} @ \{(*,*)\}  \\
++ \, 7 \times \{o*\} @ \{ (*,7) \}  \\
++	\, 6 \times \{o*\} @ \{ (*,6) \}  \\
++	\, 5 \times \{o*\} @ \{ (*,5) \} \\
++	\, 4 \times \{o*\} @ \{ (*,4) \} \\
++	\, 3 \times \{o*\} @ \{ (*,3) \} \\
++	\, 2 \times \{o*\} @ \{ (*,2) \} \\ 
++	\, 8 \times \{o*\} @ \{ (*,1) \} \\
++ \, 1 \times \{X4,X6 \} @ \{(*,*)\}  \\
++ \, 1 \times \{x4,x6 \} @ \{(*,*)\}  
+\end{array}
+\right)
+\label{eq:tree-fa}
+\end{equation}
+The precise meaning of the symbols used in this expression is described in \refsec{knowledge-language} (a table is available on page \pageref{tab:symbols}). The intention of the formula $F_a$ can be described by interpreting each term.  The first term asserts that it is good to own kings anywhere on the board.  The second term indicates that it is also good to own checkers anywhere on the board.  The third and fourth term says that owning a king or a checker that can be jumped is not so good.  The next six terms bring across the idea that a checker gains value when it moves towards the $7^{th}$ rank.  The term with a weight of $8$ indicates that it is valuable to keep your checkers in the $1^{st}$ rank.  The last two terms imply that it is advantageous to place the opponent's kings and the opponent's checkers under threat.      
+
+% the method
+Using $F_a$ as the evaluation function, a playing agent using alpha-beta at ply 1, ply 2 and ply 3 has been set to play against a playing agent that selects moves at random.  If the next move is a win, the playing agent chooses it.  If not, the move decision is made according to the agent's selection procedure.  At each level, 1000 games were played, each agent taking alternating turns to be the first player.  In total, 3000 games were played.  
+
+% the measurements
+For each game, the number of expand operations requested by alpha-beta was counted.  These measurements were aggregated to obtain a sample mean and a sample variance for each ply.  Using the aggregates, the population mean can be estimated with a confidence of 95\% to fall within the following interval \cite{underhill:stat}: 
+%underhill p. 186
+\begin{equation}
+(\mean{} - 1.96 \times \frac{\sigma} {\sqrt{1000}},
+\mean{} + 1.96 \times \frac{\sigma}{\sqrt{1000}})
+\label{eq:tree-conf95}
+\end{equation} 
+where  $\mean\ $ is the observed sample mean, $\sigma$ is the standard deviation, and $n$ is the number of measurements in the sample.    
+
+\subsection*{Results}
+\reftab{tree-ab-span} shows the results of the measurements.  As expected, the number of expansion operations conducted by alpha-beta increases dramatically as the ply depth increases.
+\begin{table}[ht!]
+	\caption{The search span of Alpha-beta at different ply depths}
+	\centering
+		\begin{tabular}{|c|r|r|r|r|}
+		\hline
+		\bf Depth & \bf Mean span (95\% conf.) & \bf Variance & \bf Minimum& \bf Maximum \\
+		\hline
+1 ply & $ 7.14355 \pm 0.0237925$ & 0.147356 & 5.9243 & 8.1421 \\
+2 ply & $22.32709 \pm 0.0501393$ & 0.654403 & 20.0000 & 25.0625 \\
+3 ply & $91.29213 \pm 0.3507121$ & 32.01764 & 75.4468 & 111.544 \\
+		\hline
+		\end{tabular}
+	\label{tab:tree-ab-span}
+\end{table}
+   
+\section{Experiment: Best-first {\it vs.} Alpha-beta}
+\label{sec:tree-exp-bfss-ab}
+\subsection*{Objective}
+The aim of this experiment is to measure how well the best-first search algorithms (BFSS and BFDS) perform when these are set against minimax with alpha-beta pruning.   
+\subsection*{Method}
+
+% what knowledge is used?
+All the playing agents used in this experiment employ the formula $F_a$ (\refeq{tree-fa}).  The alpha-beta agent always searches to the third ply.  In the previous experiment, the search span of alpha-beta at ply 3 was estimated to be approximately $91$, and the minimum span encountered was $75$.  In this experiment alpha-beta is set against best-first where the search span of best-first increases.  The search span ranges from 2 to 70. First BFSS is matched with  alpha-beta at each search span interval, then the sequence is repeated for BFDS.  In total, 138 matches (or 276 games) where played.
+
+% how is the performance measured
+The alpha-beta and best-first playing agents are deterministic; there are no stochastic elements that influence the move decision. The strength of moves selected by a deterministic agent could depend on playing order -- some strategies might work better when used by the first player.  For this reason, two games are required to determine whether one deterministic agent is better than another. Each agent gets a turn to be the first player in a \mygame{Checkers} game. At the end of each game, match points are awarded: the winner gains $2$ match points and $1$ match point is allocated to each player when there is a draw. In total, there are four match points awarded during the match.  
+
+% how is the results analysed?
+The score of an agent is that total of the match points it collected.  Only the scores for the best-first agent are recorded.  These scores provide some insight into how large the BFSS search span should be to beat alpha-beta with the same knowledge. In addition, it is possible to observe for each search span, whether BFSS or BFDS fares better against alpha-beta.
+  
+\subsection*{Results}
+The recorded scores are shown in \reftab{tree-ab-bffs}.  The maximum score an agent can achieve against alpha-beta is 4 (2 points per game).  The span associated to each result is the number of nodes the best-first was allowed to expand.  For alpha-beta the search span was set to 3 ply.  The totals at the end of this table is the sum of all match points, out of a possible score of 276.   
+\begin{table}[ht!]
+	\caption{Best-first against alpha-beta at various search spans}
+	\center
+	\small
+		\begin{tabular}{|r|r|r||r|r|r||r|r|r|}
+		\hline
+		\bf Span & \bf BFSS & \bf BFDS & \bf Span & \bf BFSS & \bf BFDS & \bf Span & \bf BFSS & \bf BFDS \\
+		\hline
+\bf 2 & 2 & 2 & \bf 25 & 3 & 3 & \bf 48 & 3 & 2 \\
+\bf 3 & 1 & 1 & \bf 26 & 2 & 2 & \bf 49 & 3 & 2 \\
+\bf 4 & 3 & 2 & \bf 27 & 3 & 2 & \bf 50 & 3 & 2 \\
+\bf 5 & 2 & 1 & \bf 28 & 2 & 2 & \bf 51 & 3 & 3 \\
+\bf 6 & 1 & 0 & \bf 29 & 2 & 3 & \bf 52 & 3 & 4 \\
+\bf 7 & 1 & 1 & \bf 30 & 2 & 3 & \bf 53 & 2 & 3 \\
+\bf 8 & 2 & 2 & \bf 31 & 2 & 2 & \bf 54 & 3 & 3 \\
+\bf 9 & 2 & 2 & \bf 32 & 3 & 4 & \bf 55 & 1 & 2 \\
+\bf 10 & 1 & 3 & \bf 33 & 3 & 3 & \bf 56 & 2 & 2 \\
+\bf 11 & 3 & 2 & \bf 34 & 3 & 3 & \bf 57 & 3 & 2 \\
+\bf 12 & 3 & 3 & \bf 35 & 3 & 3 & \bf 58 & 2 & 3 \\
+\bf 13 & 3 & 3 & \bf 36 & 3 & 2 & \bf 59 & 3 & 3 \\
+\bf 14 & 3 & 3 & \bf 37 & 2 & 2 & \bf 60 & 4 & 3 \\
+\bf 15 & 2 & 3 & \bf 38 & 3 & 2 & \bf 61 & 4 & 4 \\
+\bf 16 & 2 & 2 & \bf 39 & 2 & 2 & \bf 62 & 3 & 3 \\
+\bf 17 & 2 & 2 & \bf 40 & 2 & 2 & \bf 63 & 4 & 3 \\
+\bf 18 & 2 & 2 & \bf 41 & 3 & 1 & \bf 64 & 4 & 4 \\
+\bf 19 & 2 & 2 & \bf 42 & 3 & 3 & \bf 65 & 4 & 3 \\
+\bf 20 & 2 & 3 & \bf 43 & 3 & 3 & \bf 66 & 4 & 4 \\
+\bf 21 & 2 & 3 & \bf 44 & 3 & 3 & \bf 67 & 4 & 4 \\
+\bf 22 & 3 & 4 & \bf 45 & 3 & 3 & \bf 68 & 4 & 4 \\
+\bf 23 & 4 & 4 & \bf 46 & 3 & 4 & \bf 69 & 4 & 3 \\
+\bf 24 & 3 & 4 & \bf 47 & 2 & 2 & \bf 70 & 4 & 3 \\
+\hline
+& & & & & & Total & \bf 185 & \bf 182 \\
+		\hline
+		\end{tabular}
+	\label{tab:tree-ab-bffs}
+\end{table}
+
+These results do not show a gradual, or even a consistent increase in performance as the search span increases.  This is because the two strategies that are used in this experiment are very specific.  For instance, searching BFSS to a span of 10 with the given evaluation function provides the alpha-beta with an opportunity to win, while a search span of 9 does not. Albeit not consistent, the increase in performance is clear when observing that the frequency of $4$-point scores increases as the span increases.  The score of BFSS stabilises at 4 when the search span exceeds 62.  
+
+It is surprising that alpha-beta does not consistently beat best-first for the spans less than 10, and that it rarely beats (only exception at BFDS, span 41) best-first for spans greater than 10.
+
+The totals for BFSS and BFDS are very close (185 and 183), and as such these totals do not clearly indicate a superior strategy.   \reftab{tree-ab-bffs-sum} shows the average performance of these two strategies in intervals of ten. From these values, it is clear that BFSS performed better in the last interval (61-70).
+
+\begin{table}[ht!]
+	\caption{Best-first against alpha-beta at search span intervals}
+	\center
+	\small
+		\begin{tabular}{|r|r|r|}
+		\hline
+		\bf Span & \bf BFSS & \bf BFDS \\
+		\hline
+\bf 2  to  10 & 1.6667 & 1.5556 \\
+\bf 11  to  20 & 2.4000 & 2.5000 \\
+\bf 21  to  30 & 2.6000 & 3.0000 \\
+\bf 31  to  40 & 2.6000 & 2.5000 \\
+\bf 41  to  50 & 2.9000 & 2.5000 \\
+\bf 51  to  60 & 2.6000 & 2.8000 \\
+\bf 61  to  70 & 3.9000 & 3.5000 \\
+	\hline
+		\end{tabular}
+	\label{tab:tree-ab-bffs-sum}
+\end{table}
+\section{Experiment: Deep first {\it vs.} shallow first}
+\label{sec:tree-exp-first}
+\subsection*{Objective}
+The aim of this experiment is to determine which method is best to select the next node to expand during best-first search. The two alternatives are: select the shallowest principal variation  (BFSS) or select the deepest principal variation (BFDS).  Essentially, best-first shallow search is compared with best-first minimax search.  
+
+\subsection*{Method}
+For this experiment the best-first agents play \mygame{Checkers} against a random moving agent.  As before the random agent selects the next move at random when no immediate winning move is available.  For this experiment a match consists of 10 games.  Allocating 2 points for a win and 1 point for a draw leads to a maximum score of 20 points per match.      
+
+The primary difference between BFSS and BFDS is that BFSS searches the lowest ply first when more than one principal variation is available.  Multiple variations occur when an evaluation function is unable to distinguish clearly between different positions.  Thus, when comparing the two best-first searches, the evaluation function is likely to influence the outcome of the comparison.  For this reason, two evaluation functions are used: the first is the function $F_a$ from page \pageref{eq:tree-fa} and the second function, $F_b$, is adapted from $F_a$:  
+\begin{equation}
+ F_b \equiv \left( 
+\begin{array}{l}
+  \, 1 \times \{O*\} @ \{(*,*)\}  \\
++ \, 1 \times \{o*\} @ \{(*,*)\}  \\
++ \, 1 \times \neg \{O4,O6\} @ \{(*,*)\}  \\
++ \, 1 \times \neg \{o4,o6\} @ \{(*,*)\}  \\
++ \, 1 \times \{o*\} @ \{ (*,7) \}  \\
++	\, 1 \times \{o*\} @ \{ (*,6) \}  \\
++	\, 1 \times \{o*\} @ \{ (*,5) \} \\
++	\, 1 \times \{o*\} @ \{ (*,4) \} \\
++	\, 1 \times \{o*\} @ \{ (*,3) \} \\
++	\, 1 \times \{o*\} @ \{ (*,2) \} \\ 
++	\, 1 \times \{o*\} @ \{ (*,1) \} \\
++ \, 1 \times \{X4,X6 \} @ \{(*,*)\}  \\
++ \, 1 \times \{x4,x6 \} @ \{(*,*)\}  
+\end{array}
+\right)
+\label{eq:tree-fb}
+\end{equation}
+$F_b$ is $F_a$ with all the feature weights set to $1$.  Making all the weights equal produces a function that is more likely to find multiple principal variations during search, because this function would assign the same value to many positions.  Also, because the weights of $F_a$ was tuned (by hand), setting all terms to a weight of $1$ will produce a weaker evaluation function.       
+
+This experiment was conducted for search spans ranging from $2$ to $25$.  For each search span, 100 matches (1000 games) were played where the best-first agent competes with the random agent.  The mean match points for 100 matches can be determined at a $95\%$ confidence to be:
+\begin{equation}
+(\mean{} - 1.96 \times \frac{\sigma} {\sqrt{100}},
+\mean{} + 1.96 \times \frac{\sigma}{\sqrt{100}})
+\label{eq:tree-conf95_100}
+\end{equation} 
+where  $\mean\ $ is the mean of the observed match points, $\sigma$ is the standard deviation, and $n$ is the number of measurements in the sample.    
+
+Measurements were taken for BFSS and BFDS for the different search spans.  One set of measurements was collected for $F_a$ and another for $F_b$. 
+
+\subsection*{Results}
+The match points with $95\%$ confidence intervals achieved by the different configurations are listed in \reftab{tree-bfss-random}.  As expected the $F_a$ evaluation function clearly outperforms $F_b$. An increase in search span coincides with a decrease in variance, showing that the outcome becomes more predicable as the best-first agent searches further. 
+\begin{table}[ht!]
+	\caption{The performance of BFSS and BFDS against random}
+	\centering
+	\small
+		\begin{tabular}{|r|r@{$\,\pm\,$}l
+											|r@{$\,\pm\,$}l
+											|r@{$\,\pm\,$}l
+											|r@{$\,\pm\,$}l|}
+		\hline
+		\bf Span & \multicolumn 2 l {\bf BFSS $F_a$}\vline   
+						 & \multicolumn 2 l {\bf BFDS $F_a$}\vline   
+			       & \multicolumn 2 l {\bf BFSS $F_b$}\vline   
+			       & \multicolumn 2 l {\bf BFDS $F_b$}\vline  
+			       \\
+				       
+\hline
+  $ 2 $  &  $ 18.5700 $  &  $ 0.2617 $  &  $ 18.0714 $  &  $ 0.4312 $  &  $ 17.4800 $  &  $ 0.3337 $  &  $ 17.4300 $  &  $ 0.3516 $ \\
+  $ 3 $  &  $ 18.4500 $  &  $ 0.2544 $  &  $ 18.4400 $  &  $ 0.2450 $  &  $ 17.0200 $  &  $ 0.3225 $  &  $ 16.5800 $  &  $ 0.3981 $ \\
+  $ 4 $  &  $ 18.7200 $  &  $ 0.2282 $  &  $ 18.4900 $  &  $ 0.2322 $  &  $ 16.9400 $  &  $ 0.3294 $  &  $ 16.7000 $  &  $ 0.3616 $ \\
+  $ 5 $  &  $ 18.2900 $  &  $ 0.2199 $  &  $ 18.5600 $  &  $ 0.2497 $  &  $ 17.3400 $  &  $ 0.3802 $  &  $ 17.1300 $  &  $ 0.3397 $ \\
+  $ 6 $  &  $ 18.9400 $  &  $ 0.2005 $  &  $ 18.9700 $  &  $ 0.1815 $  &  $ 17.2600 $  &  $ 0.3047 $  &  $ 17.2400 $  &  $ 0.3015 $ \\
+  $ 7 $  &  $ 19.0800 $  &  $ 0.1777 $  &  $ 19.2600 $  &  $ 0.1819 $  &  $ 17.5900 $  &  $ 0.3344 $  &  $ 17.3800 $  &  $ 0.2945 $ \\
+  $ 8 $  &  $ 19.5000 $  &  $ 0.1461 $  &  $ 19.2500 $  &  $ 0.1535 $  &  $ 17.9800 $  &  $ 0.2868 $  &  $ 17.1500 $  &  $ 0.2979 $ \\
+  $ 9 $  &  $ 19.4400 $  &  $ 0.1256 $  &  $ 19.3600 $  &  $ 0.1613 $  &  $ 18.0200 $  &  $ 0.2974 $  &  $ 17.3700 $  &  $ 0.2739 $ \\
+  $ 10 $  &  $ 19.7200 $  &  $ 0.1045 $  &  $ 19.6600 $  &  $ 0.1221 $  &  $ 18.2100 $  &  $ 0.2558 $  &  $ 17.6000 $  &  $ 0.3139 $ \\
+  $ 11 $  &  $ 19.5900 $  &  $ 0.1185 $  &  $ 19.5600 $  &  $ 0.1345 $  &  $ 18.0700 $  &  $ 0.2449 $  &  $ 17.5000 $  &  $ 0.2765 $ \\
+  $ 12 $  &  $ 19.5300 $  &  $ 0.1406 $  &  $ 19.5500 $  &  $ 0.1347 $  &  $ 17.9500 $  &  $ 0.2777 $  &  $ 17.5700 $  &  $ 0.2761 $ \\
+  $ 13 $  &  $ 19.6100 $  &  $ 0.1273 $  &  $ 19.4300 $  &  $ 0.1607 $  &  $ 18.0500 $  &  $ 0.2678 $  &  $ 18.0400 $  &  $ 0.2743 $ \\
+  $ 14 $  &  $ 19.6400 $  &  $ 0.1097 $  &  $ 19.6700 $  &  $ 0.1216 $  &  $ 18.2700 $  &  $ 0.2328 $  &  $ 17.6800 $  &  $ 0.2867 $ \\
+  $ 15 $  &  $ 19.6700 $  &  $ 0.1184 $  &  $ 19.7000 $  &  $ 0.1165 $  &  $ 18.5000 $  &  $ 0.2272 $  &  $ 18.0700 $  &  $ 0.2647 $ \\
+  $ 16 $  &  $ 19.6400 $  &  $ 0.1166 $  &  $ 19.7600 $  &  $ 0.0929 $  &  $ 18.3300 $  &  $ 0.2461 $  &  $ 17.7600 $  &  $ 0.2976 $ \\
+  $ 17 $  &  $ 19.5700 $  &  $ 0.1284 $  &  $ 19.6100 $  &  $ 0.1178 $  &  $ 18.2800 $  &  $ 0.2446 $  &  $ 17.9200 $  &  $ 0.2609 $ \\
+  $ 18 $  &  $ 19.7100 $  &  $ 0.1090 $  &  $ 19.6700 $  &  $ 0.1007 $  &  $ 18.7300 $  &  $ 0.2044 $  &  $ 18.2300 $  &  $ 0.2489 $ \\
+  $ 19 $  &  $ 19.7600 $  &  $ 0.1047 $  &  $ 19.6300 $  &  $ 0.1296 $  &  $ 18.7600 $  &  $ 0.2178 $  &  $ 18.3200 $  &  $ 0.2261 $ \\
+  $ 20 $  &  $ 19.7000 $  &  $ 0.1097 $  &  $ 19.6900 $  &  $ 0.1068 $  &  $ 18.7300 $  &  $ 0.2226 $  &  $ 18.2700 $  &  $ 0.2442 $ \\
+  $ 21 $  &  $ 19.7700 $  &  $ 0.09592 $  &  $ 19.7700 $  &  $ 0.09178 $  &  $ 18.9900 $  &  $ 0.1816 $  &  $ 18.1200 $  &  $ 0.2858 $ \\
+  $ 22 $  &  $ 19.7300 $  &  $ 0.1074 $  &  $ 19.7500 $  &  $ 0.1019 $  &  $ 19.0200 $  &  $ 0.2047 $  &  $ 18.3700 $  &  $ 0.2358 $ \\
+  $ 23 $  &  $ 19.7700 $  &  $ 0.09178 $  &  $ 19.6900 $  &  $ 0.1205 $  &  $ 18.7800 $  &  $ 0.1901 $  &  $ 18.2778 $  &  $ 0.2837 $ \\
+  $ 24 $  &  $ 19.8000 $  &  $ 0.0924 $  &  $ 19.5600 $  &  $ 0.1429 $  &  $ 18.8300 $  &  $ 0.2029 $  &  $ 18.1300 $  &  $ 0.2407 $ \\
+  $ 25 $  &  $ 19.8300 $  &  $ 0.07907 $  &  $ 19.7100 $  &  $ 0.1016 $  &  $ 18.9700 $  &  $ 0.1899 $  &  $ 17.9900 $  &  $ 0.2591 $ \\
+\hline
+		\end{tabular}
+	\label{tab:tree-bfss-random}
+\end{table}
+\newpage
+Although BFSS performs better for both functions, the results for $F_b$ is more conclusive.  As expected, the weaker function performed better with a greater margin than the stronger function.  The line diagram in \reffig{tree-bffs-random} highlights this observation.
+\newpage
+\begin{figure}[!ht]
+	\centering
+		\includegraphics[width=30em]{extras/bestf_vs_random.ps}
+	\caption{The performance of BFSS and BFDS against random}
+	\label{fig:tree-bffs-random}
+\end{figure}
+
+%The conclusion is that BFSS does not perform worse than BFDS when a strong evaluation function is used. However, when the evaluation function is weak, BFSS performs better than BFDS.  This conclusion is predictable because a strong evaluation function is able to differentiate more clearly between positions than a weak function; leaving less opportunity for more than one principal variation to occur.  
+
+\section{Conclusion}
+\label{sec:tree-conclusion}
+Minimax search with alpha-beta pruning is a popular method used by game playing agents to search through the game tree.  This is a fixed-depth method, and as such it has two problems.  The first is that it is not possible to fine tune the amount of time used for the search, and the second is that it does not use knowledge during the search process.
+
+Best-first minimax is a selective search technique developed by Korf and Chickering that uses the knowledge encapsulated in the evaluation function to decide which branch in the game tree to explore further.  As a selective algorithm, the time it uses can be limited easily, and when the search is terminated the most promising move found thus far can be selected by the playing agent. A problem with best-first minimax is that it is more suited for games where the tempo effect is more pronounced, and the evaluation function is able to separate good positions from bad positions very accurately.    
+
+Best-first shallow search is a new game tree search algorithm proposed in this chapter that is able to work with weaker knowledge and possibly with more game types.  This new algorithm expands the principal variation with a leaf that is closest to the root of search tree first.  In this way it handles game trees with duplicate positions better and it is more likely to find the shortest winning play-line during the end-game phase.
+
+In the second experiment alpha-beta competed against the selective algorithms.  The results show that it is better to employ knowledge during search.  The last experiment compares best-first minimax with best-first shallow search.  For weaker knowledge it is clear that best-first shallow search is better, but with stronger knowledge neither algorithm dominates.  
+
+In the next chapter, the spotlight moves away from the playing agent and it provides a review of the machine learning techniques used  to optimise the weights of the evaluation function. 
