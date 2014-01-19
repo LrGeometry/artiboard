@@ -3,8 +3,8 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=Connect4FD.tex
-UseBibTeX=1
+MainFile=learning_framework.tex
+UseBibTeX=0
 UseMakeIndex=0
 ActiveProfile=LaTeX ⇨ PS ⇨ PDF
 ProjectLanguage=en

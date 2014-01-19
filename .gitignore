@@ -1,4 +1,6 @@
 *.[oa]
+*.out
+*.toc
 *.pdf
 *.aux
 *.dvi

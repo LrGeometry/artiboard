@@ -26,6 +26,7 @@ TICTACTOE := $(TARGET_DIR)/tictactoe.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
 
+all: test
 test: $(ARTI_TEST)
 	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
 

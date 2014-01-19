@@ -79,7 +79,6 @@
 \newcommand{\tdist}[2]{{\it t}^{(#1)}_{#2}} % t-Distribution
 \newcommand{\header}[1]{\subsubsection{#1}}
 \newcommand{\prob}[1]{\mbox{Pr}(#1)} % probability
-\newcommand{\myterm}[1]{{\sl #1}}  % a new term introduced in the text
 \newcommand{\mygame}[1]{\textsc{#1}}  % commands used for game names
 \newcommand{\myprogram}[1]{\textbf{\it #1}} % the name of a program 
 \newcommand{\myset}[1]{{\bf #1}} % a symbol representing a set
@@ -106,9 +105,9 @@
 \newcommand{\velepoch}[2]{v_{#2}(#1)}   
 	% component of velocity of particle
 \newcommand{\velepochcomp}[3]{v_{#2}(#1)[#3]}    
-\newcommand{\mywin}{{\cal W}}
-\newcommand{\mylose}{{\cal L}}
-\newcommand{\mydraw}{{\cal D}}
+\newcommand{\mywin}{{\mathcal W}}
+\newcommand{\mylose}{{\mathcal L}}
+\newcommand{\mydraw}{{\mathcal D}}
 \newcommand{\myor}{\vee}
 \newcommand{\myand}{\;\wedge\;}
 \newcommand{\myunion}{\cup}
@@ -138,21 +137,8 @@
 \newcommand \myeval [1] {\FPeval \val {#1} \FPround \rval \val 6 \FPprint \rval}
 
 % New Environments
-% \newtheorem{mydef}{Definition}[section]
-\newcounter{mydef}[chapter]
-\newenvironment{mydef}[1] 
-{	
-	\stepcounter{mydef}
-	\par
-%	\bigskip
-	{\bf Definition \arabic{chapter}.\arabic{mydef}: \sl{#1}.}
-%	\begin{minipage}[c]{315pt}
-}
-{ 	
-%	\end{minipage}
-%	\bigskip
-}
-
+%\newtheorem{mydef}{Definition}[section]
+%\newcounter{mydef}[chapter]
 % algorithms must be encapsulated in figures
 \newenvironment{algorithm}[3] 
 % the first parameters is the name
@@ -168,7 +154,7 @@
 	{\it Input} & #2  \\
 	{\it Output} & #3 \\
 \end{tabular}
-	\begin{sffamily}		
+%	\begin{sffamily}		
 	\small
 	\begin{ntabbing}
 
@@ -177,7 +163,7 @@
 	
 }{
 	\end{ntabbing}
-	\end{sffamily}
+%	\end{sffamily}
 }
 
 % Name of a new parameter function
