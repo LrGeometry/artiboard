@@ -1,0 +1,44 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 12.04.0 ] */
+
+/* [wxMaxima: comment start ]
+Consider an n-dimensional mapping f(a_1,..,a_n) where each a_i >=0, and such that the sum of the components must be equal to some number b.  
+The problem is to find a maximum value for f.
+
+This means each component gets a portion of b. 
+
+The values of these components can be visualised by imaging a string of length b.  Each component is represented by a bead on this string. 
+Each bead is numbered, the number representing the component.  Consider some arrangement of beads on th string.
+
+Let the left end of the string represent zero.  Now move the first bead to the point that is the value of component.  The next bead must be moved
+a distance that is the value of the second compoent.  Not that the last bead is always at the end of the string
+
+By moving any bead before the last one, we change the value of two components. Note that we have now reduced the problem to an (n-1) 
+dimensional problem.  
+
+ALGO A: Imaging new that we move the prior to last bead left and right until a maximal value for f is found.  Then we fix a value for the compoent
+represented by the last bead. We can now use b = sum of a_1 ... a_(n-1). and recursively perform this operation until all values determined.  
+
+This procedure would produce a maximising value -- but its accuracy depends heavily on the order on which the components are processed.  It is only the 
+order of the last two componets  that are significant. The sum of the others will stay the same, no matter what their order. So the question is: how can 
+we choose which components to use?
+
+Another assumption of ALGO A is that the maximum value of the last component is not greater than the sum of the initial values of the last two componens.  
+This assumption can be remedied by iterative refinement.  On way is to backtrack to the previous decision when it is proven to be incorrect.  And 
+another is to refine values by running ALGO A iteratovely until some stable condition is met.
+
+The problem of choosing which components are the last one in the string is a heuristic one.  One way is to give each component an equal value, v.  Then
+compute the value of f varying only that component.  You can take two measurement, one at zero and one at v.  Then choose the component with the biggest 
+diffrence between the value.  Another way is to find the minimum and maximum value for f for each component.  The latter seems more feasible, but is more 
+computationally intensive.  Essentially we choose the component that makes the most difference in f.  
+
+ALGO B:
+    1: Assign each component a value b/n
+    2: Determine the two components with the highest range variation for f, call them p and q
+    3: Fix a value for the last component.
+    4: Go to step 1, keeping the last component.
+      
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

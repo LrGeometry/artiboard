@@ -3,8 +3,8 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=KBDiscovery.tex
-UseBibTeX=1
+MainFile=randomwalks.tex
+UseBibTeX=0
 UseMakeIndex=0
 ActiveProfile=LaTeX ⇨ PS ⇨ PDF
 ProjectLanguage=en

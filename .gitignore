@@ -1,4 +1,13 @@
 *.[oa]
+*.pdf
+*.aux
+*.dvi
+*.synctex
+*.ps
+*.log
+*.tps
+*.bbl
+*.blg
 /bin/
 /dox/
 RunDir/

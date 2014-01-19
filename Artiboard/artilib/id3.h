@@ -18,8 +18,9 @@ template <class T> std::size_t size_of(const std::forward_list<T>& list) {
 }
 
 /** This classifier is an implementation of Quinlan's ID3 algorithm.
-In order to use it you have to index your attributes, elements attribute values 
-classes as ints. Attributes and element indexes are zero based and in sequence
+In order to use it you have to index your attributes and elements attribute values 
+classes as integers. Attributes and element indexes are zero based and in sequence
+The ID3NameResolver gives names to these indexes.
 */
 class ID3NameResolver {
 public:

@@ -1,0 +1,196 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 12.04.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+e : z^2 + z + 1 = 0;
+solve(e,z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Sketch the set of points satisfying  |z - 2 + 3i| = 2
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+declare(z,complex)$
+declare([x,y],real)$
+e1:z-2+3*%i;
+z = x + y *%i;
+rectform(subst(%,e1));
+e: cabs(%) = 2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d(grid      = true,
+
+
+       line_type = solid,
+
+
+       key       = string(e),
+
+
+       implicit(e, x, -1,6, y, -6,0) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Sketch Re (z + i) = 4
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+declare(z,complex)$
+z:%i*y+x;
+e:realpart(z+%i) = 4;
+draw2d(grid      = true,
+
+
+       line_type = solid,
+
+
+       key       = string(e),
+
+
+       implicit(e, x, -1,6, y, -6,0) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Sketch  |z - 1 + 2i| = |z + 3 + i|
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+declare(z,complex)$
+z:%i*y + x$
+cabs(z -1 + 2*%i) = cabs(z + 3 + %i);
+%^2;
+expand(%);
+% - rhs(%);
+e:solve(%,y)[1];
+draw2d(grid      = true,
+
+
+       line_type = solid,
+
+
+       key       = string(e),
+
+
+       implicit(e, x, -4,6, y, -4,4) );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+polarform(%i);
+polarform(-2);
+polarform(sqrt(3) + 3 * %i);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rectform(2*%e^(%i*3*%pi));
+rectform(10 * %e^(%i*%pi/6));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Exercise 9
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+z: 1 + %i;
+w: 1 + %i*sqrt(3);
+a: 7 * %pi / 12;
+polarform(z);
+polarform(w);
+carg(z) + carg(w);
+polarform(z * w);
+pe: rectform(%);
+pr:rectform(expand(z * w));
+solve(realpart(pe) = realpart(pr),cos(a));
+solve(imagpart(pe) = imagpart(pr),sin(a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+w: %i -1;
+polarform(w);
+polarform(%^a);
+subst([a=100],%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Find all z where z^3 = 1
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+z: r * %e^ (%i*t);
+z^3 = 1;
+solve(%,r^3)[1];
+solve(%,r);
+%*%e^(%i*t);
+subst([%e^(%i*t)*r=w],%);
+rectform(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Solve z ^4 = 16 * i
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+e: 16 * %i;
+z: r * %e^ (%i*t);
+z ^4 = polarform(e);
+solve(%,r^4)[1];
+solve(%,r);
+% * %e^(%i*t);
+e1: subst([%e^(%i*t)*r=w, %i = polarform(%i)],%);
+
+polarform(-1);
+e2: %^(1/8);
+e3: subst([(-1)^(1/8)= e2],e1);
+rectform(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+e1: 3*t + 4;
+e2: t-6;
+plot2d([parametric, e1, e2, 
+             [t, -8*%pi, 8*%pi], [nticks, 2000]])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+w: a + %i*b;
+z: c + %i*d;
+e1: expand((1-t)*w);
+e2: expand(t *z);
+e3: e1 + e2;
+rectform(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+e: y = 4 * x^3 + 1;
+wxplot2d(rhs(e),[x,0,10]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+subst([x=10],e);
+subst([x=0],e);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+assume(x > 0);
+assume(y > 1);
+solve(e,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

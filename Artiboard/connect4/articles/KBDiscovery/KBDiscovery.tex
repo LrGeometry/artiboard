@@ -23,12 +23,13 @@ TDB
 \end{abstract}
 
 \section{Introduction}
-TBD
+Many artificial intelligence problems can be viewed as classification problems \cite{wagacha:trees}.
+% TODO complete this section
 \section{Decision trees}
 \label{sec:decision_tree}   
 % TODO: This section must be rewritten and shortened
 % definition 
-Many artificial intelligence problems can be viewed as classification problems \cite{wagacha:trees}. The ability to classify can be described as the ability to predict a particular attribute value of an entity based on the values of the other attributes of that entity.  
+ The ability to classify can be described as the ability to predict a particular attribute value of an entity based on the values of the other attributes of that entity.  
 
 % What is a decision tree?
   The attribute to predict is called the \myterm{target attribute}, and its value is referred to as the \myterm{class} of the entity. A \myterm{decision tree} is a structure that contains rules that are used to predict the class of a given entity.  A leaf node of a tree indicates the class, and a non-leaf node, called a \myterm{decision node}. The non-leaf node specifies a condition to test. Each branch leading from a decision node signifies a possible outcome for the test.  The classification process starts at the root of the tree, tests the value of the attribute specified in the condition and follows the applicable branch to the next node. This process continues until a leaf node that defines the class for the entity, is reached \cite{jackson:learning}.

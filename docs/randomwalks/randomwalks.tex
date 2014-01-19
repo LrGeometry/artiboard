@@ -1,0 +1,202 @@
+\documentclass{amsbook}
+
+\include{preamble}
+\begin{document}
+\part{Complex Analysis}
+\chapter{Complex Numbers}
+\section{Introduction}
+\newcommand{\complex}[2]{#1 + i#2}
+\begin{mydef} {Complex Number}
+A complex number, $z \in \mycomplex$ is an ordered pair $(x,y)$ (written as written as $\complex x y$) where $x \in \myreal$ and $y \in \myreal$ that has the following properties:
+\begin{enumerate}
+\item $(x,y) = (u,v) \iif x = u \myand y=v$
+\item $((x,y) + (u,v) = (x+u,y+v)$
+\item $(x,y)(u,v) = (xu - yv, xv + yu)$
+
+\end{enumerate}
+
+\end{mydef}
+
+It follows from the definition that
+\begin{equation}
+\frac{z}{w} = \frac{xu + yv}{u^2 + v^2} + i \frac{yu-xv}{u^2 + v^2}
+\label{eq:complex_div}
+\end{equation}
+
+Also that
+\begin{equation}
+wz = 0 \iif w = 0 \myor z = 0 
+\label{eq:}
+\end{equation}
+\section{Geometry}
+\newcommand{\modulus}[1]{\left| #1 \right|}
+\begin{mydef}{Modulus}
+The modulus (or length) of $z$, denoted as $\modulus{z}$ is
+\begin{equation}
+\modulus{\complex x y} = \sqrt{x^2 + y^2}
+\label{eq:modulus}
+\end{equation}
+\end{mydef}
+
+\newcommand{\conjugate}{\overline}
+
+\begin{mydef}{Conjugate}
+The conjugate of $z = \complex x y$ is
+\begin{equation}
+\conjugate z = x - iy
+\label{eq:conjugate}
+\end{equation}
+\end{mydef}
+
+From these definitions it follows that:
+\begin{equation}
+\modulus{z}^2 = z \conjugate z
+\end{equation}
+
+\begin{equation}
+\conjugate{z + w} = \conjugate z + \conjugate w
+\label{eq:}
+\end{equation}
+
+\begin{equation}
+\conjugate{zw} = \conjugate z \,  \conjugate w
+\label{eq:}
+\end{equation}
+\newcommand{\realpart} {\mbox{Re}\,}
+\begin{mydef}{Real part}
+The real part of $z = \complex x y$ is 
+\begin{equation}
+\realpart z = x
+\end{equation}
+\end{mydef}
+
+\newcommand{\impart} {\mbox{Im}\,}
+\begin{mydef}{Imaginary part}
+The real part of $z = \complex x y$ is 
+\begin{equation}
+\impart z = y
+\end{equation}
+\end{mydef}
+
+More equations follow from these definitions
+\begin{equation}
+z + \conjugate z = 2 \realpart z 
+\end{equation}
+
+\begin{equation}
+z - \conjugate z = 2 \impart z 
+\end{equation}
+
+Also follows the {\bf traingle inquality}
+\begin{equation}
+\modulus{z + w} \leq \modulus{z} + \modulus{w}
+\end{equation}
+
+And some more equations:
+\begin{align}
+\conjugate{(\frac{z}{w})} &= \frac{\conjugate{z}} {\conjugate{w}} \\
+\modulus{\modulus z - \modulus w} &\leq \modulus {z - w} \\
+\modulus {zw} & = \modulus z \modulus z \\
+\modulus {\frac z w} &= \frac {\modulus z} {\modulus w}
+\end{align}
+
+\section{Polar coordinates}
+\begin{mydef}{Argument}
+The argument of $z = \modulus z (\cos\theta + i\sin\theta)$ is $\theta$ (a.k.a $\arg z$).  
+\end{mydef}
+\begin{mydef}{Principal argument}
+Is the unique value of $\arg z$ that lies in the interval	 $(-\pi,\pi)$.  
+\end{mydef}
+
+\begin{equation}
+r (\cos\theta + i\sin\theta) s (\cos\phi + i\sin\phi) = rs(\sin(\theta + \phi) + \cos(\theta + \phi))
+\end{equation}
+
+\begin{mydef}{$e^{i\theta}$}
+\begin{equation}
+e^{i\theta} = cos\theta + i\sin\theta
+\end{equation}
+\end{mydef}
+
+\newcommand{\polar}[2]{#1e^{i#2}}
+\begin{mydef}{Polar form} 
+The polar form of $z$ is $\polar r \theta$ where $r = \modulus z$ and $\theta$ is any $\arg z$.
+\end{mydef}
+
+From these definitions follow:
+\begin{align}
+\polar {}{\theta} \polar{}{\phi} &= \polar {} {\theta + \phi} \\
+e^{i\theta} e^{-i\theta} &= 1 \\
+\frac{1}{e^{i\theta}} &= e^{-i\theta} \\
+\frac{z}{w} = \frac{\polar r \theta} {\polar s \phi} &= \frac {r}{s} (\cos(\theta + \phi) + i \sin (\theta - \phi)) 
+\end{align}
+%C:\Users\willemd\Desktop\Reference\Mathematics\Complex Analysis
+\chapter{Complex Functions}
+\section{Functions of a real variable}
+
+The typical form of such functions are:
+\[ f(t) = x(t) + i y(t) \]
+Then we also have for the derivative
+\[ f'(t) = x'(t) + i y'(t) \]
+\section{Functions of a complex variable}
+These are functions of the form:
+\[ f(z) = f(x,y) = u(x,y) + iv(x,y) = (u(x,y),v(x,y)) \]
+
+\newcommand{\limit}[2]{\lim_{{#1} \to #2}}
+\begin{mydef}{Limit}
+\[\limit{z}{z_0} f(z) = L \]
+means that for any $\epsilon > 0$ there is a $\delta$ so that $|f(z)-L| < \epsilon$ whenever $0 < |z - z_0| < \delta$.
+\end{mydef}
+
+\begin{mydef}{Continuous at point}
+$f$ is continuous at $z_0$ if \[\limit {z} {z_0} f(z) = f(z_0)\].
+\end{mydef}
+
+\begin{mydef}{Continuous function}
+$f$ is continuous if it is continuous at every point in its domain.
+\end{mydef}
+
+\newcommand {\limitz}[0]{\limit z {z_0}}
+These equation follow:
+\begin{align}
+\limitz (f(z) + (-) g(z)) &= \limitz f(z) +(-) \limitz g(z) \\
+\limitz f(z)g(z)  &= \limitz f(z) \limitz g(z) \\
+\limitz \frac{f(z)}{g(z)}  &= \frac {\limitz f(z)} {\limitz g(z)} \\
+\limitz f(z) &= \limit {(x,y)}{x_0,y_0} u(x,y) + i \limit{(x,y)}{(x_0,y_0)} v(x,y) \\
+f \mbox{ is continuous} &\iif v \mbox{ is continuous} \myand u \mbox{ is continuous} \\
+\end{align} 
+
+\begin{mydef}{Derivative of a function}
+\[f'(z_0)= \limitz \frac{f(z)-f(z_0)} {z - z_0} \] 
+\end{mydef}
+
+\begin{mydef}{Differentiable at point}
+If $f$ has a derivative then it is differentiable at the point.
+\end{mydef}
+
+\begin{mydef}{Neighborhood of point}
+The set $S$ of $z_0$ where $D = {z : |z - z_0| < r, r > 0}$ so that $D \subset S$
+\end{mydef}
+
+\begin{mydef}{Analytic at point}
+If $f$ differentiable at every point in the neighborhood of a point then it is analytic at the point.
+\end{mydef}
+
+\begin{mydef}{Analytic on set}
+If $f$ differentiable at every point in the set then it is analytic on the set.
+\end{mydef}
+
+\begin{mydef}{Entire function}
+If $f$ is analytic on all complex numbers it is an entire function.
+\end{mydef}
+
+\bibliography{articlebib}
+\bibliographystyle{theapa}
+
+\end{document}
+
+
+
+
+
+
