@@ -33,7 +33,7 @@
   linkbordercolor=white,
 	urlbordercolor=light-gray,
 }
-\newcommand{\mytermmark}[1]{{\sc #1}} % deprecated
+\newcommand{\mytermmark}[1]{{\sc #1}} 
 \newcommand{\myterm}[1]{\hyperlink{#1}{\sc #1}}
 \newcommand{\myterms}[1]{\hyperlink{#1}{\sc #1s}}
 \newcommand{\refterm}[1]{\myterm{#1} (p. \pageref{def:#1})}
@@ -46,9 +46,9 @@
 \end{definition}
 
 } 
-% mydef name definition
+% simple definition: mydefs name definition
 \newcommand{\mydefs}[2]{\mydefT{#1}{ }{#2}}
-% mydefc name context definition
+% definition with context: mydefc name context definition
 \newcommand{\mydefc}[3]{\mydefT{#1}{[#2]}{#3}}
 \include{two-player}
 \include{learning-function}

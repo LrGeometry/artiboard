@@ -3,7 +3,8 @@
 	[ 
 	  {"name":"checkers", "path":"checkers", "file_include_patterns": ["*.cpp","*.h", "*.txt"]},
 	  {"name":"tictactoe", "path":"tictactoe", "file_include_patterns": ["*.cpp","*.h", "*.txt"]},
-		{"name":"Root", "path":"/", "folder_exclude_patterns":["*"]},
+		{"name":"Root", "path":"..", "folder_exclude_patterns":["kk"]},
+		{"name":"Learning framework", "path":"../docs/learning_framework","file_exclude_patterns":["learning_framework.*"]},
 		{ "name": "Blog",
 	 		"path" : "C:\\Users\\willemd\\Documents\\GitHub\\codespear.github.io",
 	 		"folder_include_patterns": ["_drafts","_posts"],

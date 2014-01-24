@@ -520,75 +520,10 @@
 	"buffers":
 	[
 		{
-			"file": "connect4/connect4_exp.cpp",
+			"file": "/C/development/github/artiboard/.gitignore",
 			"settings":
 			{
-				"buffer_size": 5382,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "antlr/antlr3defs.h",
-			"settings":
-			{
-				"buffer_size": 22908,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "connect4/connect4.cpp",
-			"settings":
-			{
-				"buffer_size": 4295,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/id3.h",
-			"settings":
-			{
-				"buffer_size": 3874,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/optimiser.h",
-			"settings":
-			{
-				"buffer_size": 689,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "!SESSION 2014-01-08 16:35:05.801 -----------------------------------------------\neclipse.buildId=unknown\njava.version=1.6.0_29\njava.vendor=Sun Microsystems Inc.\nBootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_ZA\nCommand-line arguments:  -os win32 -ws win32 -arch x86 -data @user.home/Badger/workspace\n!MESSAGE Missing required bundle org.apache.batik.util_0.0.0.\n\n!ENTRY org.eclipse.osgi 2 0 2014-01-08 16:35:06.548\n!MESSAGE One or more bundles are not resolved because the following root constraints are not resolved:\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.548\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.report.engine.script.javascript_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.script.javascript 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.eclipse.birt.data_[2.5.1,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.548\n!MESSAGE Bundle reference:file:plugins/org.eclipse.update.core.win32_3.2.200.v20100512.jar was not resolved.\n!SUBENTRY 2 org.eclipse.update.core.win32 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing host org.eclipse.update.core_[3.0.0,4.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.548\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.chart.device.extension_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.device.extension 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.apache.commons.codec_[1.3.0,2.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.548\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.report.engine_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.eclipse.birt.report.data.adapter_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.eclipse.birt.report.model_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.apache.batik.css_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.apache.batik.transcoder_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.eclipse.birt.data_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.apache.batik.util_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.w3c.css.sac_0.0.0.\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.548\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.chart.engine_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.engine 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.eclipse.emf.ecore.xmi_[2.2.0,3.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.engine 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.eclipse.emf.ecore_[2.2.0,3.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.548\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.chart.ui_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.ui 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing required bundle org.eclipse.birt.core.ui_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.548\n!MESSAGE Bundle reference:file:plugins/org.apache.batik.pdf_1.6.0.v201105071520.jar was not resolved.\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing imported package org.apache.batik.bridge_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing imported package org.apache.batik.transcoder.image_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing imported package org.apache.batik.util_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing imported package org.apache.batik.ext.awt_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing imported package org.apache.batik.gvt_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing imported package org.apache.batik.gvt.renderer_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing imported package org.apache.batik.dom.util_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing imported package org.apache.batik.transcoder.keys_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.548\n!MESSAGE Missing imported package org.apache.batik.transcoder_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing imported package org.apache.batik.ext.awt.g2d_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing imported package org.apache.batik.dom.svg_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing imported package org.apache.batik.gvt.text_[1.6.0,1.7.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.549\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.chart.device.svg_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.device.svg 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.apache.commons.codec_[1.3.0,2.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.549\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.chart.reportitem.ui_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.report.designer.ui.cubebuilder_[2.3.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.report.model_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.report.item.crosstab.ui_[2.2.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.data_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.report.designer.ui.views_[2.2.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.report.data.adapter_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.report.item.crosstab.core_[2.2.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.report.designer.core_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.report.designer.ui_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.549\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.chart.device.swt_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.device.swt 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.apache.commons.codec_[1.3.0,2.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.549\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.report.engine.emitter.html_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.html 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.report.model_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.html 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.eclipse.birt.data_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.549\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.core_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.core 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.mozilla.javascript_[1.6.0,2.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.549\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.chart.device.pdf_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.apache.batik.dom_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.apache.xerces_[2.8.0,3.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.apache.batik.util.gui_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.apache.batik.ext.awt_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.w3c.dom.svg_[1.1.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.549\n!MESSAGE Missing required bundle org.apache.batik.css_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.apache.batik.util_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.apache.batik.svggen_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.apache.batik.bridge_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.apache.batik.parser_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.apache.batik.xml_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.apache.batik.dom.svg_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.apache.batik.transcoder_[1.6.0,2.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.550\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.chart.reportitem_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.eclipse.birt.data.aggregation_[1.0.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.eclipse.birt.data_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.eclipse.birt.report.model_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.eclipse.birt.report.item.crosstab.core_[2.2.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.550\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.report.engine.emitter.pdf_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.pdf 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.eclipse.birt.report.model_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.pdf 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.apache.batik.transcoder_[1.6.0,2.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.550\n!MESSAGE Bundle reference:file:plugins/org.eclipse.birt.chart.ui.extension_3.7.2.v20120213.jar was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.ui.extension 2 0 2014-01-08 16:35:06.550\n!MESSAGE Missing required bundle org.apache.commons.codec_[1.3.0,2.0.0).\n\n!ENTRY org.eclipse.osgi 2 0 2014-01-08 16:35:06.558\n!MESSAGE The following is a complete list of bundles which are not resolved, see the prior log entry for the root cause if it exists:\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.558\n!MESSAGE Bundle com.vastech.badger_1.0.0.0 [4] was not resolved.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.558\n!MESSAGE Missing required bundle org.eclipse.birt.chart.device.extension_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.558\n!MESSAGE Missing required bundle org.eclipse.birt.chart.device.pdf_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.558\n!MESSAGE Missing required bundle org.eclipse.birt.chart.device.svg_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.558\n!MESSAGE Missing required bundle org.eclipse.birt.chart.device.swt_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.558\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.558\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine.extension_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.558\n!MESSAGE Missing required bundle org.eclipse.birt.chart.reportitem_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.558\n!MESSAGE Missing required bundle org.eclipse.birt.chart.reportitem.ui_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.558\n!MESSAGE Missing required bundle org.eclipse.birt.chart.ui_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.558\n!MESSAGE Missing required bundle org.eclipse.birt.chart.ui.extension_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.core_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.core.script.function_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.script.javascript_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.pdf_1.6.0.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.emitter.config.html_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.emitter.html_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.dataextraction_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.dataextraction.csv_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.emitter.config.pdf_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.emitter.pdf_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.emitter.config_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.emitter.config.excel_3.7.2.\n!SUBENTRY 2 com.vastech.badger 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.emitter.prototype.excel_3.7.2.\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.559\n!MESSAGE Bundle org.apache.batik.pdf_1.6.0.v201105071520 [6] was not resolved.\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.bridge_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.dom.svg_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.dom.util_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.ext.awt_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.ext.awt.g2d_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.gvt_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.gvt.renderer_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.gvt.text_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.transcoder_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.transcoder.image_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.transcoder.keys_[1.6.0,1.7.0).\n!SUBENTRY 2 org.apache.batik.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing imported package org.apache.batik.util_[1.6.0,1.7.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.559\n!MESSAGE Bundle org.eclipse.birt.chart.device.extension_3.7.2.v20120213 [8] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.device.extension 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.commons.codec_[1.3.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.extension 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.559\n!MESSAGE Bundle org.eclipse.birt.chart.device.pdf_3.7.2.v20120213 [9] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.chart.device.svg_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.transcoder_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.eclipse.birt.chart.device.extension_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.pdf_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.util_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.dom_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.bridge_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.css_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.dom.svg_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.ext.awt_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.parser_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.svggen_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.util.gui_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.apache.batik.xml_[1.6.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.559\n!MESSAGE Missing required bundle org.w3c.dom.svg_[1.1.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.pdf 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.apache.xerces_[2.8.0,3.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.chart.device.svg_3.7.2.v20120213 [10] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.device.svg 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.apache.commons.codec_[1.3.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.svg 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.svg 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.chart.device.extension_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.chart.device.swt_3.7.2.v20120213 [11] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.device.swt 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.apache.commons.codec_[1.3.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.device.swt 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.chart.engine_3.7.2.v20120213 [12] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.engine 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.emf.ecore_[2.2.0,3.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.engine 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.emf.ecore.xmi_[2.2.0,3.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.engine 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.core_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.chart.engine.extension_3.7.2.v20120213 [13] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.engine.extension 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.chart.reportitem_3.7.2.v20120213 [14] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.data_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.model_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.item.crosstab.core_[2.2.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.data.aggregation_[1.0.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.chart.reportitem.ui_3.7.2.v20120213 [15] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.chart.ui_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.chart.ui.extension_[2.5.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.chart.reportitem_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.data_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.model_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.designer.core_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.designer.ui_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.data.adapter_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.designer.ui.views_[2.2.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing optionally required bundle org.eclipse.birt.report.designer.ui.ide_[2.2.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.item.crosstab.core_[2.2.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.item.crosstab.ui_[2.2.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.reportitem.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.designer.ui.cubebuilder_[2.3.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.chart.ui_3.7.2.v20120213 [16] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.core.ui_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.ui 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.chart.ui.extension_3.7.2.v20120213 [17] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.chart.ui.extension 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.apache.commons.codec_[1.3.0,2.0.0).\n!SUBENTRY 2 org.eclipse.birt.chart.ui.extension 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.chart.ui_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.core_3.7.2.v20120213 [18] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.core 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.mozilla.javascript_[1.6.0,2.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.core.script.function_3.7.2.v20120213 [19] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.core.script.function 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.core_[2.3.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.560\n!MESSAGE Bundle org.eclipse.birt.report.engine_3.7.2.v20120213 [20] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.w3c.css.sac_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.core_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.report.model_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing required bundle org.eclipse.birt.data_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.560\n!MESSAGE Missing optionally required bundle org.apache.xerces_[2.8.0,3.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.data.adapter_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.apache.batik.transcoder_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.apache.batik.css_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.apache.batik.util_0.0.0.\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.birt.report.engine.dataextraction_3.7.2.v20120213 [21] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.dataextraction 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.3.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.birt.report.engine.dataextraction.csv_3.7.2.v20120213 [22] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.dataextraction.csv 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.dataextraction_[2.3.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.dataextraction.csv 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.3.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.birt.report.engine.emitter.config_3.7.2.v20120213 [23] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.config 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.5.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.birt.report.engine.emitter.config.excel_3.7.2.v20120213 [24] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.config.excel 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.core_[2.3.1,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.config.excel 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.3.1,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.config.excel 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.emitter.config_[2.3.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.birt.report.engine.emitter.config.html_3.7.2.v20120213 [25] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.config.html 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.core_[2.3.1,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.config.html 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.3.1,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.config.html 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.emitter.config_[2.3.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.birt.report.engine.emitter.config.pdf_3.7.2.v20120213 [26] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.config.pdf 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.core_[2.3.1,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.config.pdf 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.3.1,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.config.pdf 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine.emitter.config_[2.3.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.birt.report.engine.emitter.html_3.7.2.v20120213 [27] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.html 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.core_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.html 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.model_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.html 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.html 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.data_[2.1.0,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.birt.report.engine.emitter.pdf_3.7.2.v20120213 [28] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.pdf 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.core_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.pdf 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.model_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.pdf 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.1.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.pdf 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.apache.batik.transcoder_[1.6.0,2.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.birt.report.engine.emitter.prototype.excel_3.7.2.v20120213 [29] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.prototype.excel 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.prototype.excel 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.prototype.excel 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.chart.engine.extension_0.0.0.\n!SUBENTRY 2 org.eclipse.birt.report.engine.emitter.prototype.excel 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.chart.reportitem_0.0.0.\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.birt.report.engine.script.javascript_3.7.2.v20120213 [31] was not resolved.\n!SUBENTRY 2 org.eclipse.birt.report.engine.script.javascript 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.core_[2.5.0,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.script.javascript 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.report.engine_[2.5.1,5.0.0).\n!SUBENTRY 2 org.eclipse.birt.report.engine.script.javascript 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing required bundle org.eclipse.birt.data_[2.5.1,5.0.0).\n!SUBENTRY 1 org.eclipse.osgi 2 0 2014-01-08 16:35:06.561\n!MESSAGE Bundle org.eclipse.update.core.win32_3.2.200.v20100512 [91] was not resolved.\n!SUBENTRY 2 org.eclipse.update.core.win32 2 0 2014-01-08 16:35:06.561\n!MESSAGE Missing host org.eclipse.update.core_[3.0.0,4.0.0).\n\n!ENTRY org.eclipse.osgi 4 0 2014-01-08 16:35:06.565\n!MESSAGE Application error\n!STACK 1\njava.lang.RuntimeException: Application \"com.vastech.badger.application\" could not be found in the registry. The applications available are: org.eclipse.equinox.app.error, org.eclipse.equinox.p2.garbagecollector.application.\n	at org.eclipse.equinox.internal.app.EclipseAppContainer.startDefaultApp(EclipseAppContainer.java:248)\n	at org.eclipse.equinox.internal.app.MainApplicationLauncher.run(MainApplicationLauncher.java:29)\n	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)\n	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)\n	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:344)\n	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)\n	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)\n	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)\n	at java.lang.reflect.Method.invoke(Unknown Source)\n	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:622)\n	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:577)\n	at org.eclipse.equinox.launcher.Main.run(Main.java:1410)\n	at org.eclipse.equinox.launcher.Main.main(Main.java:1386)\n",
-			"settings":
-			{
-				"buffer_size": 36548,
-				"line_ending": "Windows",
-				"name": "!SESSION 2014-01-08 16:35:05.801 -----------------"
-			}
-		},
-		{
-			"file": "artilib/optimiser.cpp",
-			"settings":
-			{
-				"buffer_size": 477,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "artilib/systemex.h",
-			"settings":
-			{
-				"buffer_size": 2904,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "connect4/connect4_main.cpp",
-			"settings":
-			{
-				"buffer_size": 541,
+				"buffer_size": 139,
 				"line_ending": "Windows"
 			}
 		},
@@ -596,8 +531,24 @@
 			"file": "makefile",
 			"settings":
 			{
-				"buffer_size": 3685,
+				"buffer_size": 3695,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/willemd/Documents/GitHub/codespear.github.io/_config.yml",
+			"settings":
+			{
+				"buffer_size": 4276,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/willemd/Documents/GitHub/codespear.github.io/_plugins/plantuml.rb",
+			"settings":
+			{
+				"buffer_size": 1964,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -774,14 +725,19 @@
 	},
 	"file_history":
 	[
+		"/C/development/github/artiboard/Artiboard/connect4/connect4_exp.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4.cpp",
+		"/C/development/github/artiboard/Artiboard/artilib/id3.h",
+		"/C/development/github/artiboard/Artiboard/artilib/optimiser.h",
+		"/C/development/github/artiboard/Artiboard/artilib/optimiser.cpp",
+		"/C/development/github/artiboard/Artiboard/connect4/connect4_main.cpp",
+		"/C/development/github/artiboard/Artiboard/makefile",
 		"/C/Users/willemd/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/C/Users/willemd/Desktop/Reference/AI/thesis and books/duminy_thesis_msc/scripts/tournamentpso.R",
-		"/C/development/github/artiboard/Artiboard/makefile",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatParser.c",
 		"/C/development/github/artiboard/Artiboard/experiments/c4-070-2.txt",
 		"/C/Users/willemd/Desktop/Reference/AI/thesis and books/duminy_thesis_msc/scripts/analysispso.R",
 		"/C/development/github/artiboard/Artiboard/connect4/scripts/c4-070.r",
-		"/C/development/github/artiboard/Artiboard/connect4/connect4_exp.cpp",
 		"/C/development/github/artiboard/Artiboard/artilib/id3.cpp",
 		"/C/development/github/artiboard/Artiboard/.gitignore",
 		"/C/development/github/artiboard/Artiboard/connect4/articles/KBDiscovery/theapa.txt",
@@ -792,7 +748,6 @@
 		"/C/Users/willemd/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
 		"/C/Users/willemd/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
 		"/C/development/github/artiboard/Artiboard/artiboard.sublime-project",
-		"/C/development/github/artiboard/Artiboard/artilib/id3.h",
 		"/C/development/github/artiboard/Artiboard/experiments/c4-070-1.txt",
 		"/C/development/github/artiboard/Artiboard/artilib/log.h",
 		"/C/Users/willemd/Desktop/Reference/AI/thesis and books/duminy_thesis_msc/scripts/common.R",
@@ -821,7 +776,6 @@
 		"/C/Users/willemd/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
 		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/bits/unique_ptr.h",
 		"/0> artilibtest/id3_tests.cpp",
-		"/C/development/github/artiboard/Artiboard/connect4/connect4_main.cpp",
 		"/c/development/github/artiboard/artiboard/artilib/id3.h",
 		"/c/development/github/artiboard/artiboard/tutlib/tut/tut.hpp",
 		"/c/mingw/lib/gcc/mingw32/4.8.1/include/c++/bits/stl_vector.h",
@@ -853,7 +807,6 @@
 		"/C/development/github/artiboard/Artiboard/connect4/connect4_test.cpp",
 		"/C/development/github/artiboard/Artiboard/tictactoe/tictactoe_test.cpp",
 		"/C/development/github/artiboard/Artiboard/connect4/data/regions.txt",
-		"/C/development/github/artiboard/Artiboard/connect4/connect4.cpp",
 		"/C/development/github/artiboard/Artiboard/experiments/c4-060.txt",
 		"/C/development/github/artiboard/Artiboard/artilib/grammars/FeatTree.g",
 		"/c/mingw/lib/gcc/mingw32/4.7.2/include/c++/bits/forward_list.h",
@@ -899,9 +852,7 @@
 		"/C/development/github/artiboard/Artiboard/artilibtest/arti_main.cpp",
 		"/C/development/github/artiboard/Artiboard/tutlib/test_util.cpp",
 		"/C/development/github/artiboard/Artiboard/src/systemex/test_util.h",
-		"/C/development/github/artiboard/Artiboard/artilib/test_util.h",
-		"/C/development/github/artiboard/Artiboard/artilib/test_util.cpp",
-		"/C/development/github/artiboard/Artiboard/src/conventions.txt"
+		"/C/development/github/artiboard/Artiboard/artilib/test_util.h"
 	],
 	"find":
 	{
@@ -1067,216 +1018,16 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "connect4/connect4_exp.cpp",
+					"file": "/C/development/github/artiboard/.gitignore",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5382,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2758,
-								2758
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2406.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "antlr/antlr3defs.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 22908,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6984,
-								6984
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 6861.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "connect4/connect4.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4295,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2008,
-								2008
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 863.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "artilib/id3.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3874,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								695,
-								695
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 3,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "artilib/optimiser.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 689,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								47,
-								47
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 36548,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								12138,
-								12144
-							]
-						],
-						"settings":
-						{
-							"auto_name": "!SESSION 2014-01-08 16:35:05.801 -----------------",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 4648.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "artilib/optimiser.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 477,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								291,
-								291
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "artilib/systemex.h",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 2904,
+						"buffer_size": 139,
 						"regions":
 						{
 						},
@@ -1289,61 +1040,30 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "connect4/connect4_main.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 541,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								196,
-								196
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
+					"buffer": 1,
 					"file": "makefile",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3685,
+						"buffer_size": 3695,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1327,
-								1327
+								0,
+								3002
 							]
 						],
 						"settings":
@@ -1351,10 +1071,68 @@
 							"syntax": "Packages/Makefile/Makefile.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 400.0,
+						"translation.y": 1368.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/willemd/Documents/GitHub/codespear.github.io/_config.yml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4276,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4204,
+								4204
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/YAML/YAML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2520.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/Users/willemd/Documents/GitHub/codespear.github.io/_plugins/plantuml.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1964,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								268,
+								268
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1405,7 +1183,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 255.0
+		"height": 154.0
 	},
 	"output.find_results":
 	{

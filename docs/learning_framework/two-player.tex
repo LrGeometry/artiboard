@@ -157,11 +157,16 @@ Two reasons support the assertion that pure strategies should be preferred when 
 \label{sec:games:convergence}
 Another property that can be used to classify games is that of convergence.  This property, introduced by Allis \cite{allis:which} identifies three classes:  converging games, diverging games and unchangeable games. The three classes depend on the frequency at which a particular type of move, called a converging move, occurs; and how that frequency changes as the game progresses.  
 
-A \myterm{conversion} is a move from position $p$ to position $q$ such that no position in the play-line leading to $p$ can occur in any of the future lines of $q$.  In other words, a conversion changes the game state such that the active state cannot be obtained later in the game. For most games, the main conversions involve adding or removing pieces from play, and Allis \cite{allis:which} provides a definition that takes these moves into account.  However, many games have conversions that do not alter the number of pieces in play; such as moving a pawn in \mygame{Chess} and a checker in \mygame{Checkers}.  Therefore, a new definition of a converging game is introduced. Because this definition includes all conversions, it can be applied to more games and as such, it is more general than the definition supplied by Allis.
+\mydefc{conversion}{type of move}{A move from \myterm{position} $p$ to \myterm{position} $q$ such that no \myterm{position} in the \myterm{play-line} leading to $p$ can occur in any of the \myterms{future line} of $q$}.  
 
-\begin{definition} {Conversion space}
-The \myterm{conversion-space} of position $p$ is the set of all conversions available in the future lines of $p$. The \myterm{conversion potential} of $p$ is the cardinality of its conversion space. 
-\end{definition}
+In other words, a conversion changes the game state such that the active state cannot be obtained later in the game. For most games, the main conversions involve adding or removing pieces from play, and Allis \cite{allis:which} provides a definition that takes these moves into account.  However, many games have conversions that do not alter the number of pieces in play; such as moving a pawn in \mygame{Chess} and a checker in \mygame{Checkers}.  Therefore, a new definition of a converging game is introduced. Because this definition includes all conversions, it can be applied to more games and as such, it is more general than the definition supplied by Allis.
+
+\mydefc{conversion space} {of a position} {The set of all \myterms{conversion} available in the \myterms{future line} of the \myterm{position}.}
+ 
+\mydefc{conversion potential} {of a position} {The cardinality of the \mytermmark{conversion\-space} of the \myterm{position}.}
+
+\iamhere %define terms above the line -- change definitions below this line
+
 Note that every conversion decreases the conversion potential of the game. That means, every game with conversions has a gradual decrease in convergence potential as the game progresses.  
 
 \begin{definition} {Converging game}
