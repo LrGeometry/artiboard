@@ -157,7 +157,7 @@ Two reasons support the assertion that pure strategies should be preferred when 
 \label{sec:games:convergence}
 Another property that can be used to classify games is that of convergence.  This property, introduced by Allis \cite{allis:which} identifies three classes:  converging games, diverging games and unchangeable games. The three classes depend on the frequency at which a particular type of move, called a converging move, occurs; and how that frequency changes as the game progresses.  
 
-\mydefc{conversion}{type of move}{A move from \myterm{position} $p$ to \myterm{position} $q$ such that no \myterm{position} in the \myterm{play-line} leading to $p$ can occur in any of the \myterms{future line} of $q$}.  
+\mydefc{conversion}{type of move}{A move from \myterm{position} $p$ to \myterm{position} $q$ such that no \myterm{position} in the \myterm{play-line} leading to $p$ can occur in any of the \myterms{future line} of $q$.}  
 
 In other words, a conversion changes the game state such that the active state cannot be obtained later in the game. For most games, the main conversions involve adding or removing pieces from play, and Allis \cite{allis:which} provides a definition that takes these moves into account.  However, many games have conversions that do not alter the number of pieces in play; such as moving a pawn in \mygame{Chess} and a checker in \mygame{Checkers}.  Therefore, a new definition of a converging game is introduced. Because this definition includes all conversions, it can be applied to more games and as such, it is more general than the definition supplied by Allis.
 
@@ -194,6 +194,24 @@ Later, Allis \cite{allis:which} identifies two dimensions that contribute to a c
 
 Measuring the complexity of the game to which an automated learner is subjected is an important factor when the learning ability of dissimilar learning agents are compared. As a perfect-information game, the game of \mygame{Checkers} is a moderate choice.  It has not been solved, and therefore it cannot be considered simple. On the other hand, a world-class computer player has been developed, indicating that it is one of the less complicated games from the unsolved set. 
 
+\section{Selected games}
+% TODO section intro
+\subsection{Connect-Four}
+\mygame{Connect-Four} is a popular board game invented in 1974 by the psychologist, Howard Wexler.  In 1988, Victor Allis\cite{allis:masters} solved this game by showing that the first player wins.  
+
+\mydefs{Connect-Four} {A game played on a rectangular $7 \times 6$ board. The two players sit on the same side of the board. Each player has a set of $21$ men.  The first player has white men and the second player has black men. The rules are:     
+\begin{enumerate}
+  \item The board's orientation is such that the board is wider than it is high: it has $7$ columns and $6$ rows.  
+	\item The row furthest from the players is the top row and the closest one is the bottom row.
+	\item A column is open when it has squares that contains no men; otherwise it is closed.
+	\item If all the columns are closed, the game is drawn.
+	\item A move consists of the player selecting an open column in which to drop one of his men.  He places his man on the open square closest the bottom of this column.  
+	\item The goal of the game is to be the first player to get four men that are connected in a line.  The line can be horisontal, vertical or diagonal.
+\end{enumerate}
+}
+
+\subsubsection*{Convergence and complexity} All the moves of this game are \myterms{conversion} % TODO explore the complexity characteristics of this game -- may be in allis masters thesis.
+TODO \cite{stenmark:masters}
 \section{Conclusion}
 \label{sec:two-player-conclusion}
 The three drivers for using games in research, {\it i.e.} the creation of a winning agent, the solving of a game and the investigation of machine learning methods, provide a platform for cooperation amongst researchers.  However, endeavours that compete to create a winning playing agent can lead to the opposite.  The driver of the current research falls in the third category: it investigates the plausibility of establishing a learning framework for two-player games.
