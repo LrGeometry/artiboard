@@ -47,7 +47,6 @@ void ensure(bool cond)
 {
     if (!cond)
     {
-        // TODO: default ctor?
         throw failure("");
     }
 }
@@ -226,8 +225,6 @@ void ensure_equals(const LhsType *lhs_begin, const LhsType *lhs_end,
  * NB: T must have operator << defined somewhere, or
  * client code will not compile at all! Also, T shall have
  * operators + and -, and be comparable.
- *
- * TODO: domains are wrong, T - T might not yield T, but Q
  */
 template <typename M, class T>
 void ensure_distance(const M& msg, const T& actual, const T& expected, const T& distance)
