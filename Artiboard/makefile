@@ -6,7 +6,7 @@ FLAGS = $(DEBUG)
 #FLAGS = $(DEBUG) 
 COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -Werror=return-type -Wno-unknown-pragmas -std=c++0x -Wall $(FLAGS)
 LINK_ARGS =  -L$(TARGET_DIR) -Llibs $(GP)
-DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers tictactoe
+DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers tictactoe 
 # 3.3 does not have this problem: '_empty' was not declared in this scope
 #ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose -make 
 ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose 
@@ -17,6 +17,7 @@ EXE_LIBS = -lArtiLib -lantlr34b3 -lTutLib
 SOURCES := $(foreach e, $(DIRS), $(wildcard $(e)/*.cpp))
 DEPS := $(patsubst %.cpp, %.depends, $(SOURCES))
 OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
+ANTLR_LIB := $(TARGET_DIR)/libantlr34b3.a 
 ARTI_LIB := $(TARGET_DIR)/libArtiLib.a
 TUT_LIB := $(TARGET_DIR)/libTutLib.a
 CONNECT_4 := $(TARGET_DIR)/connect4.exe
@@ -25,7 +26,9 @@ TICTACTOE := $(TARGET_DIR)/tictactoe.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
 
-all: run_tictactoe
+ant: $(ANTLR_LIB)
+	echo "done"
+
 test: $(ARTI_TEST)
 	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
 
@@ -79,11 +82,41 @@ $(TICTACTOE): $(OBJS) $(ARTI_LIB) $(TUT_LIB)
 $(ARTI_LIB): $(GRAMMARS) $(OBJS) 
 	ar -r $@ $(wildcard artilib/*.o) $(wildcard artilib/grammars/*.o)
 
-$(TUT_LIB):  	
+$(TUT_LIB):  $(ANTLR_LIB)	
 	ar -r $@ $(wildcard tutlib/*.o)
 
+
+$(ANTLR_LIB): 	
+	cc -c -Iantlr -o antlr34b3/antlr3basetree.o antlr34b3/antlr3basetree.c
+	cc -c -Iantlr -o antlr34b3/antlr3baserecognizer.o antlr34b3/antlr3baserecognizer.c
+	cc -c -Iantlr -o antlr34b3/antlr3basetreeadaptor.o antlr34b3/antlr3basetreeadaptor.c
+	cc -c -Iantlr -o antlr34b3/antlr3bitset.o antlr34b3/antlr3bitset.c
+	cc -c -Iantlr -o antlr34b3/antlr3collections.o antlr34b3/antlr3collections.c
+	cc -c -Iantlr -o antlr34b3/antlr3commontoken.o antlr34b3/antlr3commontoken.c
+	cc -c -Iantlr -o antlr34b3/antlr3commontree.o antlr34b3/antlr3commontree.c
+	cc -c -Iantlr -o antlr34b3/antlr3commontreeadaptor.o antlr34b3/antlr3commontreeadaptor.c
+	cc -c -Iantlr -o antlr34b3/antlr3commontreenodestream.o antlr34b3/antlr3commontreenodestream.c
+	cc -c -Iantlr -o antlr34b3/antlr3convertutf.o antlr34b3/antlr3convertutf.c
+	cc -c -Iantlr -o antlr34b3/antlr3cyclicdfa.o antlr34b3/antlr3cyclicdfa.c
+	cc -c -Iantlr -o antlr34b3/antlr3debughandlers.o antlr34b3/antlr3debughandlers.c
+	cc -c -Iantlr -o antlr34b3/antlr3encodings.o antlr34b3/antlr3encodings.c
+	cc -c -Iantlr -o antlr34b3/antlr3exception.o antlr34b3/antlr3exception.c
+	cc -c -Iantlr -o antlr34b3/antlr3filestream.o antlr34b3/antlr3filestream.c
+	cc -c -Iantlr -o antlr34b3/antlr3inputstream.o antlr34b3/antlr3inputstream.c
+	cc -c -Iantlr -o antlr34b3/antlr3intstream.o antlr34b3/antlr3intstream.c
+	cc -c -Iantlr -o antlr34b3/antlr3lexer.o antlr34b3/antlr3lexer.c
+	cc -c -Iantlr -o antlr34b3/antlr3parser.o antlr34b3/antlr3parser.c
+	cc -c -Iantlr -o antlr34b3/antlr3rewritestreams.o antlr34b3/antlr3rewritestreams.c
+	cc -c -Iantlr -o antlr34b3/antlr3string.o antlr34b3/antlr3string.c
+	cc -c -Iantlr -o antlr34b3/antlr3tokenstream.o antlr34b3/antlr3tokenstream.c
+	cc -c -Iantlr -o antlr34b3/antlr3treeparser.o antlr34b3/antlr3treeparser.c
+	ar -r $@ $(wildcard antlr34b3/*.o)
+
+
 clean:
-	rm -f $(TARGET_DIR)/* $(foreach e, $(DIRS), $(wildcard $(e)/*.depends)) $(foreach e, $(DIRS), $(wildcard $(e)/*.o)) $(GRAM_OBJS)
+	rm -f $(ANTLR_LIB) $(TARGET_DIR)/* $(foreach e, $(DIRS), $(wildcard $(e)/*.depends)) $(foreach e, $(DIRS), $(wildcard $(e)/*.o)) $(GRAM_OBJS)
+
+
 
 %.o: %.cpp %.depends 
 	g++ $(COMPILE_ARGS) -c $< -o $@

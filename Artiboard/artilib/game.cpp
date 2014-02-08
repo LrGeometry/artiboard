@@ -104,7 +104,8 @@ namespace arti {
 			if (count == 0)
 				_outcome = MatchOutcome::Draw;
 			else {
-				auto selected = count==1?boards.begin():_chooser.select(pos, boards);
+				auto selected = count>1?boards.begin():_chooser.select(pos, boards);
+				ENSURE(selected != boards.end(), "Invalid selection made by the chooser");
 				_line.add(*selected);
 				_outcome = _spec.outcome_of(_line.last());
 			}
