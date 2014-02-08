@@ -30,7 +30,6 @@ namespace arti {
 			return 0;
 		else {
 			int c = 0;
-			std::forward_list<unique_ptr<Board>> result;
 			for(auto &m : moves) {
 				result.push_front(m->apply_to(pos.board()));
 				c++;
@@ -104,8 +103,9 @@ namespace arti {
 			if (count == 0)
 				_outcome = MatchOutcome::Draw;
 			else {
-				auto selected = count>1?boards.begin():_chooser.select(pos, boards);
-				ENSURE(selected != boards.end(), "Invalid selection made by the chooser");
+				ASSERT(boards.begin()!=boards.end());
+				auto selected = count==1?boards.begin():_chooser.select(pos, boards);
+				ENSURE(selected != boards.end(), "select returned end");
 				_line.add(*selected);
 				_outcome = _spec.outcome_of(_line.last());
 			}
