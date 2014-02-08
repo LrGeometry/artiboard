@@ -15,17 +15,6 @@ namespace tut {
 
 	test_group<tictacTestData> tictactoeTests("016 Tictactoe Tests");
 
-	/**
-	 * Using TicTacToe as a game to test.
-	 *
-	 */
-	class PickFirst: public MoveChooser {
-			virtual std::unique_ptr<Board>& select(const Position & current,
-					BoardOwnerList &list) {
-				return list.front();
-			}
-			;
-	};
 
 	UTEST <1>() {
 		set_test_name("TictacToe Play");

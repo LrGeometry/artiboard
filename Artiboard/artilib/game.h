@@ -118,6 +118,8 @@ namespace arti {
 			 * @param result
 			 */
 			virtual void collectMoves(const Position& pos, Move::SharedFWList &result) const = 0;
+			/* Add next Boards to result, return the number of Boards appended */
+			int collectBoards(const Position& pos, Board::u_ptr_list &result) const;
 			virtual MatchOutcome outcome_of(const Position& pos) const = 0;
 			virtual ~GameSpecification() {};
 		protected:
@@ -169,14 +171,16 @@ namespace arti {
 	 */
 	class MoveChooser {
 		public:
-			virtual unique_ptr<Board>& select(const Position & current, BoardOwnerList &list) = 0;
+			/** Choose a child from the list of children */
+			virtual Board::u_ptr_it select(const Position & current, Board::u_ptr_list &children) = 0;
 			virtual ~MoveChooser() {
 			}
 	};
 
 	class PickFirst: public MoveChooser {
-			virtual std::unique_ptr<Board>& select(const Position & current,BoardOwnerList &list) {
-				return list.front();
+		  /** Choose the first child in the list of children */
+			Board::u_ptr_it select(const Position & current,Board::u_ptr_list &children) override {
+				return children.begin();
 			}
 			;
 	};

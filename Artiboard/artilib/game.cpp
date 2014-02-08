@@ -23,6 +23,24 @@ namespace arti {
 		return unique_ptr<Board>(result);
 	}
 
+	int GameSpecification::collectBoards(const Position& pos, Board::u_ptr_list &result) const {
+		Move::SharedFWList moves;
+		collectMoves(pos, moves);
+		if (moves.empty())
+			return 0;
+		else {
+			int c = 0;
+			std::forward_list<unique_ptr<Board>> result;
+			for(auto &m : moves) {
+				result.push_front(m->apply_to(pos.board()));
+				c++;
+			}
+			return c;
+		}
+	}
+
+
+
 	void GameSpecificationWithLocalSteps::collectMoves(const Position& pos, Move::SharedFWList &result) const {
 		BoardView view(pos.board(),pos.ply().side_to_move());
 		Step::SharedFWList steps;
@@ -32,10 +50,10 @@ namespace arti {
 			view.go(r,c);
 			steps.clear();
 			collectSteps(pos,view,stepIndex,steps);
-			FOR_EACH(step, steps) {
-				if ((*step)->outcome() == StepOutcome::EndsMoveAndContinue)
+			for(auto &step : steps) {
+				if ((step)->outcome() == StepOutcome::EndsMoveAndContinue)
 					throw std::runtime_error("open steps not implemented yet");
-				result.emplace_front(new Move(*step));
+				result.emplace_front(new Move(step));
 			}
 		}
 	}
@@ -62,8 +80,8 @@ namespace arti {
 	};
 
 	ostream& operator <<(ostream& os, const PlayLine& v) {
-		FOR_EACH(p,v.sequence()) {
-			os << "Ply: " << (*p)->ply().index() << std::endl << (*p)->board() << std::endl;
+		for(auto &p:v.sequence()) {
+			os << "Ply: " << p->ply().index() << std::endl << p->board() << std::endl;
 		}
 		return os;
 	}
@@ -81,16 +99,13 @@ namespace arti {
 		Move::SharedFWList moves;
 		while (_outcome == MatchOutcome::Unknown) {
 			auto &pos = _line.last();
-			moves.clear();
-			_spec.collectMoves(pos, moves);
-			if (moves.empty())
+			std::forward_list<unique_ptr<Board>> boards;
+			const auto count = _spec.collectBoards(pos, boards);
+			if (count == 0)
 				_outcome = MatchOutcome::Draw;
 			else {
-				std::forward_list<unique_ptr<Board>> boards;
-				FOR_EACH(m,moves) {
-					boards.push_front((**m).apply_to(pos.board()));
-				}
-				_line.add(_chooser.select(pos, boards));
+				auto selected = count==1?boards.begin():_chooser.select(pos, boards);
+				_line.add(*selected);
 				_outcome = _spec.outcome_of(_line.last());
 			}
 		}

@@ -195,7 +195,10 @@ Later, Allis \cite{allis:which} identifies two dimensions that contribute to a c
 Measuring the complexity of the game to which an automated learner is subjected is an important factor when the learning ability of dissimilar learning agents are compared. As a perfect-information game, the game of \mygame{Checkers} is a moderate choice.  It has not been solved, and therefore it cannot be considered simple. On the other hand, a world-class computer player has been developed, indicating that it is one of the less complicated games from the unsolved set. 
 
 \section{Selected games}
-% TODO section intro
+% TODO section intro -- analyse the properties of each game
+\subsection{Tic-tac-toe}
+\mydefs{Tic-tac-toe} {A game played on a board with $3 \times 3$ squares.  The first player has white men, the second player has black men. A move consists of a a player placing a man on any open square.  The goal of the game is to be the first player to get three of his men in a line.  The line can be horisontal, vertical or diagonal.  If there are no more open squares, the game ends in a draw.}  
+
 \subsection{Connect-Four}
 \mygame{Connect-Four} is a popular board game invented in 1974 by the psychologist, Howard Wexler.  In 1988, Victor Allis\cite{allis:masters} solved this game by showing that the first player wins.  
 
@@ -210,7 +213,6 @@ Measuring the complexity of the game to which an automated learner is subjected 
 \end{enumerate}
 }
 
-\subsubsection*{Convergence and complexity} All the moves of this game are \myterms{conversion} % TODO explore the complexity characteristics of this game -- may be in allis masters thesis.
 TODO \cite{stenmark:masters}
 \section{Conclusion}
 \label{sec:two-player-conclusion}
@@ -875,13 +877,47 @@ Searching is the key to many artificial intelligence problems. The typical appro
 
 Even though the game tree is also a graph, general graph search methods do not apply to the game tree. The game tree is constructed ply by ply, where each alternating ply represents the moves available to a different player.  A general search method might find a `winning' position for the active player in this graph; and the agent could choose to move to the first position in the play-line that leads to the chosen vertex. However, that  play-line is likely to present move opportunities to the opponent such that the `winning' position is never reached. 
 
-The \myterm{minimax} algorithm\footnote{Minimax is a well known algorithm, but it is difficult to trace its origin.  It is described in many A.I. text books. See \cite{rich83} for an example.} takes advantage of the alternating layers in the game tree to define a simple, but effective, playing strategy. This strategy assumes that the positions in the game tree can be evaluated.  The value of a position is called the \myterm{static value}, and it is a floating-point value such that a position with a greater advtantage to the active player has a greater value. The evaluation function described in \refsec{knowledge-function} provides some insight into how such a value can be obtained.
+The \myterm{minimax} algorithm\footnote{Minimax is a well known algorithm, but it is difficult to trace its origin.  It is described in many A.I. text books. See \cite{rich83} for an example.} takes advantage of the alternating layers in the game tree to define a simple, but effective, playing strategy. This strategy assumes that the positions in the game tree can be evaluated.  The value of a position is called the \myterm{static value}, and it is a floating-point value such that a position with a greater advantage to the active player has a greater value. The evaluation function described in \refsec{knowledge-function} provides some insight into how such a value can be obtained.
 
 The minimax algorithm searches the game tree to a fixed depth. At a depth of one ply, only the  first position of all future play-lines are considered.  At this ply, the active player chooses the position with the maximum score. When the search depth is two, consideration is given to the next ply, and it might become apparent that a counter move is available to the opponent that would eliminate the advantage implied by the score of the first move. The opponent's best move is to choose the future play-line that starts with the lowest scoring position, {\it i.e.} the position that has the lowest advantage to the active player.  Generally, the passive player always minimises the score and the active player maximises the score. 
 
 The terminal nodes of the minimax search tree are the positions in the last ply and the end positions that were encountered during the search. A node in the minimax search tree is a \myterm{minimising node} if it is on a position from which the opponent must make a move.  A \myterm{maximising node} is a node on a position from which the active player must make a move.  Therefore, all the nodes in an even ply are maximising nodes, and those in an odd ply are minimising nodes.    
 
-The key to the minimax algorithm is the manner in which the score is propagated upward from the last ply to the first position in the future play-line. Every node in the minimax search tree has a \myterm{minimax value}. The minimax value of a terminal node is equal to the score of the associated position.  The minimax value of a minimising node is the smallest minimax value found in its child nodes.  Likewise, the minimax value of a maximising node is the greatest value found in its child nodes.  The active player chooses the node with the highest minimax value in the first ply as the next move.
+The key to the minimax algorithm is the manner in which the score is propagated upward from the last ply to the first position in the future play-line. Every node in the minimax search tree has a \myterm{minimax value}. The minimax value of a terminal node is equal to the score of the associated position.  The minimax value of a minimising node is the smallest minimax value found in its child nodes.  Likewise, the minimax value of a maximising node is the greatest value found in its child nodes.  The active player chooses the node with the highest minimax value in the first ply as the next move.  
+
+% introduce negamax
+Instead of alternating the minimum and maximum operation, the minimax value of the minimising can be negated. These values are called \myterm{negamax values} \cite{furnkranz:survey} and they turn minimax into a slightly simpler algorithm. See \refalg{alg:negamax} for an utline of this idea.
+
+\refalg{alg:negamax}.
+\begin{figure} [t]
+\begin{algorithm} 
+{Negamax}
+{A root $r$ from which the search must be conducted, an evaluation function $F$, and a search depth (number of ply to search) $p_{max}$}
+{A child of $p$ that must be selected as the next move} 
+SELECT($r$, $p_{max}$)  \+\\
+	return MAXIMISE($r$,1) \-\\
+
+MAXIMISE($n$,$p$) \+\\
+	if (odd($p$)) sign = 1 else sign = -1 \\
+	if ($p$ = $p_{max}$) \+\\
+	  n.value = sign $\times$ $F(r)$ \\
+		return null \-\\
+	else \+\\	
+		theChildren = children of $n$ \\
+		if (theChildren is empty) \+\\
+			n.value = sign $ \times F(r)$ \\
+			return null \-\\
+		else \+\\			
+			for each (c in theChildren) \+\\
+				MAXIMISE(c, $p$ + 1, $s_{max}$) \-\\ 
+			selected = node in theChildren with the maximum c.value \\
+			n.value = sign $\times$ selected.value \\
+			return selected \-\-\\
+\end{algorithm}
+\caption{Outline of the Negamax algorithm}	
+\label{alg:negamax}
+\end{figure}
+
 
 % describe alpha-beta 
 Interestingly, there is no need to visit every node in the minimax tree to determine the correct minimax value of every node in the first ply.  Hart and Edwards \cite{hart:alpha} developed the \myterm{alpha-beta} heuristic that prunes the branches from the minimax search tree that will not effect the outcome of the move decision.  The reasoning for alpha-beta is as follows: if a child of a maximising node has a minimax value less than the value of the child of a minimising node with a smaller ply, the maximising node must not be explored further.  There is no need to continue the exploration because the minimising player would have taken the move at the higher level.  The same reasoning is also extended to the minimising nodes - if a child of a minimising node has a minimax value that is greater than the value of the child of a maximising node higher up in the tree, the exploration of the minimising node is discontinued.     
@@ -987,7 +1023,7 @@ Deciding which node in the frontier to expand is a key aspect of BFSS.  The idea
 
 BFSS uses a constant called the \myterm{search span} as a termination criterion. This approach was also used by Shoham and Toledo \cite{shoham:randomized}.  Except for the search root, the expansion of all nodes in the frontier count towards the termination condition.  When the number of expansions reaches the search span, BFSS terminates.  It is possible (especially during the end-game) that the game tree is completely traversed before the search span is reached.  In this case the search frontier would be empty and BFSS would terminate.  The third condition for termination is when a principal variation that leads to a win for the active player is found.  Because the smallest ply first strategy is applied when more than one principal variation is available, it is likely that the first winning variation encountered will also be the one with the fewest moves.
 
-Like best-first minimax, BFSS also makes use of the minimax value of a node.  However, instead of alternating the minimum and maximum operation, the minimax value of the minimising nodes are negative.  These values, called \myterm{negamax values} \cite{furnkranz:survey}, are calculated the same way for all nodes.  The negamax value of a node is the negation of the minimum value of the node's children.  The value of a terminal node in the search tree is calculated from the evaluation function.   The evaluation function values are negated for nodes in a ply from which the passive player makes a move.  An outline of the BFSS algorithm is shown in \refalg{bfss}.
+Like best-first minimax, BFSS also makes use of the minimax value of a node, but it uses the negamax principle.  An outline of the BFSS algorithm is shown in \refalg{bfss}.
 
 \begin{figure} [!ht]
 \begin{algorithm} 

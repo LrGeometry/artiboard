@@ -1,9 +1,8 @@
 TARGET_DIR = RunDir
-# choose a debug option -- the first one is for debugging ... the orther for fastest
 #GP=-pg 
 DEBUG = -O -g3 $(GP)
 MAX_SPEED = -O3 -DNDEBUG $(GP)
-FLAGS = $(MAX_SPEED) 
+FLAGS = $(DEBUG) 
 #FLAGS = $(DEBUG) 
 COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -Werror=return-type -Wno-unknown-pragmas -std=c++0x -Wall $(FLAGS)
 LINK_ARGS =  -L$(TARGET_DIR) -Llibs $(GP)
@@ -34,7 +33,7 @@ c4: $(CONNECT_4)
 	cd $(TARGET_DIR); ./connect4.exe list; cat ./log.txt
 	
 run_tictactoe: $(TICTACTOE)
-	cd $(TARGET_DIR); ./tictactoe.exe list; cat ./log.txt
+	cd $(TARGET_DIR); ./tictactoe.exe test; cat ./log.txt
 
 run_checkers: $(CHECKERS)
 	cd $(TARGET_DIR); ./checkers.exe
