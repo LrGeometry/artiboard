@@ -5,6 +5,31 @@
 #include "log.h"
 
 namespace arti {
+
+	int experi_main(int argc, char* argv[])
+	{
+		try {
+			std::cout << "started" << std::endl;
+			LOG << argc << " argument(s) supplied:";
+			for (int c=0; c<argc;c++) LOG << "\t" << argv[c];
+			if (argc == 1)
+				throw runtime_error_ex("incorrect usage, expected:\n\t%s  experiment_name>|test|list",argv[0]);
+			std::string name(argv[1]);
+			if (name == "list")
+				for (const auto& e: ExperimentRepository::instance().all()) {LOG << e->name() << "\t" << e->description();}
+			else
+				ExperimentRepository::instance().find(argv[1]).run();
+			LOG << "Done";
+			std::cout << "ended OK" << std::endl;
+			return 0;
+		} catch (std::exception &ex) {
+			LOG << "*** ERROR ***: " << ex.what() << std::endl;
+			std::cout << "error:" << ex.what() << std::endl << "ended" << std::endl;
+			return 1;
+		}
+	}
+
+
 	Experiment::Experiment(const char * aName, const std::string aDescription) :
 			_name(aName), _description(aDescription), start(0), ofile() {
 		ExperimentRepository::instance().add(this);

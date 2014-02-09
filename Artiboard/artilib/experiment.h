@@ -7,6 +7,7 @@
 #include "systemex.h"
 
 namespace arti {
+	int experi_main(int argc, char* argv[]);
 	/**
 	 * When an experiment is created, it is registered
 	 * with the repository
