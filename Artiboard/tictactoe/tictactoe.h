@@ -31,8 +31,8 @@ public:
 		if (view.anchor() == tictacOpen)
 			list.emplace_front(
 					new StepToPlace(view, piece_for(pos.ply().side_to_move())));
-	}
-	;
+	};
+
 
 	MatchOutcome outcome_of(const Position& pos) const override {
 		for (index_t r = 0; r < 3; r++)

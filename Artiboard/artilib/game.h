@@ -1,5 +1,6 @@
 #pragma once
 #include "board.h"
+#include "systemex.h"
 namespace arti {
 	/**
 	 * A level in the game tree, there are two plies for a move.
@@ -11,6 +12,9 @@ namespace arti {
 			int index() const {return _index;}
 			Side side_to_move() const {return (_index%2 == 0)?Side::South:Side::North;}
 			Ply next() const { return Ply(_index+1); }
+			bool is_odd() const {return _index%2 == 1;}
+			bool operator==(int v) const {return _index == v; }
+			int operator+(int v) const {return _index + v; }
 		private:
 			int _index;
 	};
@@ -86,10 +90,11 @@ namespace arti {
 	 */
 	class Position {
 		public:
-			Position(const Ply &ply, unique_ptr<Board> &brd) : _ply(ply), _board(std::move(brd)) {}
+			Position(const Ply &ply, unique_ptr<Board> brd) : _ply(ply), _board(std::move(brd)) { ASSERT(_board);}
 			const Ply& ply() const {return _ply;}
 			const bool is_root() const {return ply().index() == 0;}
 			const Board& board() const {return *_board;}
+			unique_ptr<Board>& board_p() {return _board;}
 		private:
 			Ply _ply;
 			unique_ptr<Board> _board;
@@ -159,7 +164,7 @@ namespace arti {
 			 */
 			const Position& last() const {return *_plies.back();}
 			const Position& root() const {return *_plies.front();}
-			void add(unique_ptr<Board> &brd);
+			void add(unique_ptr<Board> brd);
 			const Position::SharedList& sequence() const {return _plies;}
 		private:
 			Position::SharedList _plies;

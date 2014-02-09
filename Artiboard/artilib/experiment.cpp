@@ -6,7 +6,7 @@
 
 namespace arti {
 	Experiment::Experiment(const char * aName, const std::string aDescription) :
-			_name(aName), _description(aDescription) {
+			_name(aName), _description(aDescription), start(0), ofile() {
 		ExperimentRepository::instance().add(this);
 	}
 

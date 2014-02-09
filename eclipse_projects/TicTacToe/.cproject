@@ -89,8 +89,9 @@
 							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.222910851" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.398938831"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.839565812" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.2140018910">
 								<option id="gnu.cpp.compiler.option.include.paths.917605208" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="\development\github\artiboard\Artiboard\tutlib"/>
-									<listOptionValue builtIn="false" value="\development\github\artiboard\Artiboard\artilib"/>
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\antlr&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\tutlib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\artilib&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2055252311" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -110,7 +111,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.1682641797" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.398938831"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.2096528791" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.2140018910">
 								<option id="gnu.cpp.compiler.option.include.paths.1606932556" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="\development\github\artiboard\Artiboard\artilib"/>
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\antlr&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\artilib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\tutlib&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1968190215" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -200,6 +202,50 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.release.1631965723" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.release.1037157632"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.release.1831507052" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.release.1045884602"/>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.mingw.exe.release.1030159675.70535331" name="/" resourcePath="tictactoe">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.exe.release.1011517599" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.exe.release" unusedChildren="">
+							<targetPlatform id="cdt.managedbuild.target.gnu.platform.mingw.exe.release" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.mingw.exe.release"/>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.release.425343224" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.release.466216168">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1671157123" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.1360389680" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.967272289"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.release.1476603016" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.release.287825525">
+								<option id="gnu.cpp.compiler.option.include.paths.406555706" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\antlr&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\tutlib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\artilib&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.490082845" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.release.1514980194" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.release.12860871">
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1228643713" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.release.1816722990" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.release.1037157632"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.release.252847582" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.release.1045884602"/>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.mingw.exe.release.1030159675.229895865" name="/" resourcePath="tutlib">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.exe.release.1248790141" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.exe.release" unusedChildren="">
+							<targetPlatform id="cdt.managedbuild.target.gnu.platform.mingw.exe.release" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.mingw.exe.release"/>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.release.553223196" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.release.466216168">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.86864526" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.390549943" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.967272289"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.release.35032625" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.release.287825525">
+								<option id="gnu.cpp.compiler.option.include.paths.742323801" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\antlr&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\artilib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;\development\github\artiboard\Artiboard\tutlib&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.982706361" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.release.2027121459" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.release.12860871">
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.816779046" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.release.392234651" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.release.1037157632"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.release.218383653" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.release.1045884602"/>
 						</toolChain>
 					</folderInfo>
 				</configuration>

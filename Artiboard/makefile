@@ -2,7 +2,7 @@ TARGET_DIR = RunDir
 #GP=-pg 
 DEBUG = -O -g3 $(GP)
 MAX_SPEED = -O3 -DNDEBUG $(GP)
-FLAGS = $(DEBUG) 
+FLAGS = $(MAX_SPEED) 
 #FLAGS = $(DEBUG) 
 COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -fmessage-length=0 -Werror=return-type -Wno-unknown-pragmas -std=c++0x -Wall $(FLAGS)
 LINK_ARGS =  -L$(TARGET_DIR) -Llibs $(GP)
@@ -26,6 +26,8 @@ TICTACTOE := $(TARGET_DIR)/tictactoe.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
 
+all: run_tictactoe
+
 ant: $(ANTLR_LIB)
 	echo "done"
 
@@ -36,7 +38,7 @@ c4: $(CONNECT_4)
 	cd $(TARGET_DIR); ./connect4.exe list; cat ./log.txt
 	
 run_tictactoe: $(TICTACTOE)
-	cd $(TARGET_DIR); ./tictactoe.exe test; cat ./log.txt
+	cd $(TARGET_DIR); ./tictactoe.exe t3-100; cat ./log.txt
 
 run_checkers: $(CHECKERS)
 	cd $(TARGET_DIR); ./checkers.exe

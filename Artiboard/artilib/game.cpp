@@ -4,8 +4,9 @@
 #define FOR_SQUARES(row,col) for (index_t row = 0; row < 8; row++) for (index_t col = 0; col < 8; col++)
 
 namespace arti {
-		void PlayLine::add(unique_ptr<Board> &brd) {
-		_plies.push_back(shared_ptr<Position>(new Position(last().ply().next(), brd)));
+		void PlayLine::add(unique_ptr<Board> brd) {
+			ASSERT(brd);
+		_plies.push_back(shared_ptr<Position>(new Position(last().ply().next(), std::move(brd))));
 	}
 
 	std::unique_ptr<Board> Move::apply_to(const Board &brd) const {
@@ -75,7 +76,7 @@ namespace arti {
 	const Ply Ply::ZERO(0);
 
 	PlayLine::PlayLine(unique_ptr<Board> initial) {
-		_plies.emplace_back(new Position(Ply::ZERO, initial));
+		_plies.emplace_back(new Position(Ply::ZERO, std::move(initial)));
 	};
 
 	ostream& operator <<(ostream& os, const PlayLine& v) {
@@ -106,7 +107,7 @@ namespace arti {
 				ASSERT(boards.begin()!=boards.end());
 				auto selected = count==1?boards.begin():_chooser.select(pos, boards);
 				ENSURE(selected != boards.end(), "select returned end");
-				_line.add(*selected);
+				_line.add(std::move(*selected));
 				_outcome = _spec.outcome_of(_line.last());
 			}
 		}
