@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		},
+		{
+			"follow_symlinks": true,
+			"path": "../../../Artiboard/experiments"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "../artifacts"
+		}
+	]
+}
