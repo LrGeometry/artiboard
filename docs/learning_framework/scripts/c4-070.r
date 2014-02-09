@@ -1,15 +1,4 @@
-# In sublime f7 runs this script
-# source("c4-07.r")
-rm()
-library(reshape) # for melt and cast
-# concat two strings
-concat <- function (a,b) {
-	paste(a,b,sep="")
-}
-
-baseDir <- "C:\\development\\github\\artiboard\\Artiboard\\"
-sourceDir <- concat(baseDir,"experiments\\")
-targetDir <- concat(baseDir,"connect4\\articles\\KBDiscovery\\")
+source("common.r")
 
 inFile <- concat(sourceDir,"c4-070-2.txt")
 

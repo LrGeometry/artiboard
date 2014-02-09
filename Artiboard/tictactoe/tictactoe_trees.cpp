@@ -42,7 +42,7 @@ protected:
 		spec.collectBoards(pos,boards);
 		PickNegamax picker(&spec,SmartEval,level);
 		picker.select(pos,boards);
-		file() << "negamax " << level << " " << picker.walk_count() << " " << picker.value();
+		file() << "Negamax " << level << " " << picker.walk_count() << " " << picker.value();
 	}
 
 	void pickAB(int level) {
@@ -53,7 +53,7 @@ protected:
 		spec.collectBoards(pos,boards);
 		PickNegamaxAlphaBeta picker(&spec,SmartEval,level);
 		picker.select(pos,boards);
-		file() << "negamax-ab " << level << " " << picker.walk_count() << " " << picker.value();
+		file() << "NegamaxAB " << level << " " << picker.walk_count() << " " << picker.value();
 	}
 
 

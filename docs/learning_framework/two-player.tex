@@ -925,6 +925,8 @@ MAXIMISE($n$,$d$,$s$) \+\\
 \label{alg:negamax}
 \end{figure}
 
+\myterms{search span} {The number of nodes traversed by an game ree search algorithm from a given position for a given depth}
+
 \subsection{Alpha-beta}
 % describe alpha-beta 
 Interestingly, there is no need to visit every node in the minimax tree to determine the correct minimax value of every node in the first ply.  Hart and Edwards \cite{hart:alpha} developed the \myterm{alpha-beta} heuristic that prunes the branches from the minimax search tree that does not effect the outcome of the move decision.  The reasoning for alpha-beta is as follows: if a child of a maximising node has a minimax value less than the value of the child of a minimising node with a smaller ply, the maximising node must not be explored further.  There is no need to continue the exploration because the minimising player would have taken the move at the higher level.  The same reasoning is also extended to the minimising nodes - if a child of a minimising node has a minimax value that is greater than the value of the child of a maximising node higher up in the tree, the exploration of the minimising node is discontinued.     
@@ -975,6 +977,74 @@ MAXIMISE($n$,$d$,$\alpha$,$\beta$,$s$) \+\\
 %\cite{schaeffer:reexamination} Chinook suffers from a problem caused by alpha-beta's inability to distinguish between moves that seems equally best. In such cases, the alpha-beta choice is essentially random one.  However, in practise some drawn positions are better than others.  This also applies to losing lines.  However, the correct ordering is not always clear: sometimes it is better to take a short loss line than a long loss line because the opponent may not see the short loss line and make a mistake. In addition to alpha-beta evaluation, other criteria are required to select the best move.  For instance the best move might be: an easy draw; the one that offers the opponent most chances to make mistakes, or the one that reduces the uncertainty of the position.  
 
 %\section{Selective search algorithms}
+
+\section{Experiment: Negamax vs. Negamax alpha-beta}
+\subsection*{Objective}
+\subsection*{Method}
+\subsection*{Result}
+\input{artifacts/t3-100}
+
+\section{Experiment: The search span of alpha-beta} 
+\label{sec:tree-exp-ab-span}
+\subsection*{Objective} 
+The aim of this experiment is to determine the \myterm{search span} of alpha-beta.  Alpha-beta is a fixed depth search algorithm, and as such the search span of this algorithm cannot be finely tuned.  In order to establish a common ground for comparison with selective algorithms, the number of node expansions done by alpha-beta at various ply depths are determined. Only ply depths of 1, 2 and 3 are considered.  Deeper ply depths are too expensive to use in learning experiments.  
+   
+\subsection*{Method}
+% the function
+In this experiment \mygame{Checkers} playing agents use a simple but effective evaluation function called $F_a$.  The function is hand-crafted, and is defined as a feature language expression in \refeq{tree-fa}.  
+\begin{equation}
+ F_a \equiv \left( 
+\begin{array}{l}
+  \, 30 \times \{O*\} @ \{(*,*)\}  \\
++ \, 20 \times \{o*\} @ \{(*,*)\}  \\
++ \, 20 \times \neg \{O4,O6\} @ \{(*,*)\}  \\
++ \, 10 \times \neg \{o4,o6\} @ \{(*,*)\}  \\
++ \, 7 \times \{o*\} @ \{ (*,7) \}  \\
++	\, 6 \times \{o*\} @ \{ (*,6) \}  \\
++	\, 5 \times \{o*\} @ \{ (*,5) \} \\
++	\, 4 \times \{o*\} @ \{ (*,4) \} \\
++	\, 3 \times \{o*\} @ \{ (*,3) \} \\
++	\, 2 \times \{o*\} @ \{ (*,2) \} \\ 
++	\, 8 \times \{o*\} @ \{ (*,1) \} \\
++ \, 1 \times \{X4,X6 \} @ \{(*,*)\}  \\
++ \, 1 \times \{x4,x6 \} @ \{(*,*)\}  
+\end{array}
+\right)
+\label{eq:tree-fa}
+\end{equation}
+The precise meaning of the symbols used in this expression is described in \refsec{knowledge-language} (a table is available on page \pageref{tab:symbols}). The intention of the formula $F_a$ can be described by interpreting each term.  The first term asserts that it is good to own kings anywhere on the board.  The second term indicates that it is also good to own checkers anywhere on the board.  The third and fourth term says that owning a king or a checker that can be jumped is not so good.  The next six terms bring across the idea that a checker gains value when it moves towards the $7^{th}$ rank.  The term with a weight of $8$ indicates that it is valuable to keep your checkers in the $1^{st}$ rank.  The last two terms imply that it is advantageous to place the opponent's kings and the opponent's checkers under threat.      
+
+% the method
+Using $F_a$ as the evaluation function, a playing agent using alpha-beta at ply 1, ply 2 and ply 3 has been set to play against a playing agent that selects moves at random.  If the next move is a win, the playing agent chooses it.  If not, the move decision is made according to the agent's selection procedure.  At each level, 1000 games were played, each agent taking alternating turns to be the first player.  In total, 3000 games were played.  
+
+% the measurements
+For each game, the number of expand operations requested by alpha-beta was counted.  These measurements were aggregated to obtain a sample mean and a sample variance for each ply.  Using the aggregates, the population mean can be estimated with a confidence of 95\% to fall within the following interval \cite{underhill:stat}: 
+%underhill p. 186
+\begin{equation}
+(\mean{} - 1.96 \times \frac{\sigma} {\sqrt{1000}},
+\mean{} + 1.96 \times \frac{\sigma}{\sqrt{1000}})
+\label{eq:tree-conf95}
+\end{equation} 
+where  $\mean\ $ is the observed sample mean, $\sigma$ is the standard deviation, and $n$ is the number of measurements in the sample.    
+
+\subsection*{Results}
+\reftab{tree-ab-span} shows the results of the measurements.  As expected, the number of expansion operations conducted by alpha-beta increases dramatically as the ply depth increases.
+\begin{table}[ht!]
+	\caption{The search span of Alpha-beta at different ply depths}
+	\centering
+		\begin{tabular}{|c|r|r|r|r|}
+		\hline
+		\bf Depth & \bf Mean span (95\% conf.) & \bf Variance & \bf Minimum& \bf Maximum \\
+		\hline
+1 ply & $ 7.14355 \pm 0.0237925$ & 0.147356 & 5.9243 & 8.1421 \\
+2 ply & $22.32709 \pm 0.0501393$ & 0.654403 & 20.0000 & 25.0625 \\
+3 ply & $91.29213 \pm 0.3507121$ & 32.01764 & 75.4468 & 111.544 \\
+		\hline
+		\end{tabular}
+	\label{tab:tree-ab-span}
+\end{table}
+   
+
 
 \section{Best-first minimax search}
 \label{sec:tree-best-first}
@@ -1121,66 +1191,6 @@ If \refline{bfss-sort} in the outline of BFSS is changed to sort the frontier in
 % is bffs a generalisation of RBFMS
 %This experiment was conducted to determine the influence of the search method on the performance of the agent.  The same games played to produce Table \ref{tab:player:dsde} was played using the longest path first selection method.  The BFSS  chooses the principal leaf with shortest path to expand, while the RBFMS expands the current principal variation if there are no change in the value of the node.  The effect is that RBFMS is essentially a longest path selection method.  The result obtained when using this method is shown in Table 
 
-\section{Experiment: The search span of alpha-beta} 
-\label{sec:tree-exp-ab-span}
-\subsection*{Objective} 
-The aim of this experiment is to determine the search span of alpha-beta.  Alpha-beta is a fixed depth search algorithm, and as such the search span of this algorithm cannot be finely tuned.  In order to establish a common ground for comparison with selective algorithms, the number of node expansions done by alpha-beta at various ply depths are determined. Only ply depths of 1, 2 and 3 are considered.  Deeper ply depths are too expensive to use in learning experiments.  
-   
-\subsection*{Method}
-% the function
-In this experiment \mygame{Checkers} playing agents use a simple but effective evaluation function called $F_a$.  The function is hand-crafted, and is defined as a feature language expression in \refeq{tree-fa}.  
-\begin{equation}
- F_a \equiv \left( 
-\begin{array}{l}
-  \, 30 \times \{O*\} @ \{(*,*)\}  \\
-+ \, 20 \times \{o*\} @ \{(*,*)\}  \\
-+ \, 20 \times \neg \{O4,O6\} @ \{(*,*)\}  \\
-+ \, 10 \times \neg \{o4,o6\} @ \{(*,*)\}  \\
-+ \, 7 \times \{o*\} @ \{ (*,7) \}  \\
-+	\, 6 \times \{o*\} @ \{ (*,6) \}  \\
-+	\, 5 \times \{o*\} @ \{ (*,5) \} \\
-+	\, 4 \times \{o*\} @ \{ (*,4) \} \\
-+	\, 3 \times \{o*\} @ \{ (*,3) \} \\
-+	\, 2 \times \{o*\} @ \{ (*,2) \} \\ 
-+	\, 8 \times \{o*\} @ \{ (*,1) \} \\
-+ \, 1 \times \{X4,X6 \} @ \{(*,*)\}  \\
-+ \, 1 \times \{x4,x6 \} @ \{(*,*)\}  
-\end{array}
-\right)
-\label{eq:tree-fa}
-\end{equation}
-The precise meaning of the symbols used in this expression is described in \refsec{knowledge-language} (a table is available on page \pageref{tab:symbols}). The intention of the formula $F_a$ can be described by interpreting each term.  The first term asserts that it is good to own kings anywhere on the board.  The second term indicates that it is also good to own checkers anywhere on the board.  The third and fourth term says that owning a king or a checker that can be jumped is not so good.  The next six terms bring across the idea that a checker gains value when it moves towards the $7^{th}$ rank.  The term with a weight of $8$ indicates that it is valuable to keep your checkers in the $1^{st}$ rank.  The last two terms imply that it is advantageous to place the opponent's kings and the opponent's checkers under threat.      
-
-% the method
-Using $F_a$ as the evaluation function, a playing agent using alpha-beta at ply 1, ply 2 and ply 3 has been set to play against a playing agent that selects moves at random.  If the next move is a win, the playing agent chooses it.  If not, the move decision is made according to the agent's selection procedure.  At each level, 1000 games were played, each agent taking alternating turns to be the first player.  In total, 3000 games were played.  
-
-% the measurements
-For each game, the number of expand operations requested by alpha-beta was counted.  These measurements were aggregated to obtain a sample mean and a sample variance for each ply.  Using the aggregates, the population mean can be estimated with a confidence of 95\% to fall within the following interval \cite{underhill:stat}: 
-%underhill p. 186
-\begin{equation}
-(\mean{} - 1.96 \times \frac{\sigma} {\sqrt{1000}},
-\mean{} + 1.96 \times \frac{\sigma}{\sqrt{1000}})
-\label{eq:tree-conf95}
-\end{equation} 
-where  $\mean\ $ is the observed sample mean, $\sigma$ is the standard deviation, and $n$ is the number of measurements in the sample.    
-
-\subsection*{Results}
-\reftab{tree-ab-span} shows the results of the measurements.  As expected, the number of expansion operations conducted by alpha-beta increases dramatically as the ply depth increases.
-\begin{table}[ht!]
-	\caption{The search span of Alpha-beta at different ply depths}
-	\centering
-		\begin{tabular}{|c|r|r|r|r|}
-		\hline
-		\bf Depth & \bf Mean span (95\% conf.) & \bf Variance & \bf Minimum& \bf Maximum \\
-		\hline
-1 ply & $ 7.14355 \pm 0.0237925$ & 0.147356 & 5.9243 & 8.1421 \\
-2 ply & $22.32709 \pm 0.0501393$ & 0.654403 & 20.0000 & 25.0625 \\
-3 ply & $91.29213 \pm 0.3507121$ & 32.01764 & 75.4468 & 111.544 \\
-		\hline
-		\end{tabular}
-	\label{tab:tree-ab-span}
-\end{table}
-   
 \section{Experiment: Best-first {\it vs.} Alpha-beta}
 \label{sec:tree-exp-bfss-ab}
 \subsection*{Objective}
