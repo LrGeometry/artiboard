@@ -336,6 +336,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_main.o</locationURI>
 		</link>
 		<link>
+			<name>connect4/connect4_negamax.cpp</name>
+			<type>1</type>
+			<location>C:/development/github/artiboard/Artiboard/connect4/connect4_negamax.cpp</location>
+		</link>
+		<link>
 			<name>connect4/connect4_test.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_test.cpp</locationURI>

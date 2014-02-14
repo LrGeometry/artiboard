@@ -27,6 +27,7 @@ public:
    virtual const std::string& attribute_name(const int a) = 0;
    virtual const std::string& value_name(const int a, const int v) = 0;
    virtual const std::string& class_name(const int c) = 0;
+   virtual ~ID3NameResolver(){}
 };
 typedef std::map<int,int> mapii;
 /** A node in the classification tree. 
@@ -54,8 +55,10 @@ public:
    size_t size() const {int result = 1; FOR_EACH(c, childs) {result+=c->size();}; return result;} 
    void to_stream(std::ostream& os, ID3NameResolver &r) const;
    bool pruned() const {return is_leaf() && !is_classified_leaf;}
-   int pruned_count() const {if (pruned()) return 1; else {int r = 0; FOR_EACH(c,childs) r+=c->pruned_count();return r;};}
-   int leaf_count() const {if (is_leaf()) return 1; else {int r = 0; FOR_EACH(c,childs) r+=c->leaf_count();return r;};}
+   int pruned_count() const {
+  	 if (pruned()) return 1;
+  	 int r = 0; for(auto &c:childs)r+=c.pruned_count();return r;}
+   int leaf_count() const { if (is_leaf()) return 1; else {int r = 0; for(auto &c:childs)r+=c.leaf_count();return r;}}
    bool is_tested() const {return test_count > -1;}
    float certainty() const {if (test_count <= 0) return 0; else return ((test_count-test_errors)*100)/(test_count*1.0f);}  
    void clear_test_data() {test_count=0;test_errors=0;FOR_EACH(c,childs) c->clear_test_data();}
@@ -81,6 +84,7 @@ public:
    const ID3Node& root() const {return _root;}
    int classify(const int element) {return classify(element, _root);}
    void test(const std::forward_list<int> &elements);
+   virtual ~ID3Classifier() {}
 private:
    int classify(const int element, const ID3Node &node);
    bool test_classify(const int element, ID3Node &node, const int expected_class);

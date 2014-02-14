@@ -2,9 +2,9 @@
 #include <log.h>
 #include <vector>
 
-const Piece south('o');
-const Piece north('x');
-const Piece open('-');
+const Piece Connect4::south('o');
+const Piece Connect4::north('x');
+const Piece Connect4::open('-');
 const char * annotations = "o12345678xabcdefgh-ijklmnop";
 const int annotations_per_side = 9;
 const char * south_annotations = annotations;
@@ -67,26 +67,26 @@ const std::forward_list<Piece>& annotation_pieces() {
 }
 
 int ply_of(const Board& b) {
-	return num_files*num_ranks - b.count(all,open);
+	return num_files*num_ranks - b.count(all,Connect4::open);
 }
 
 static const Piece& piece_for(const Side &side) {
 	if (side == Side::South)
-		return south;
+		return Connect4::south;
 	else
-		return north;
+		return Connect4::north;
 };
 
 static const Piece& piece_for_other(const Side &side) {
 	if (side == Side::South)
-		return north;
+		return Connect4::north;
 	else
-		return south;
+		return Connect4::south;
 };
 
 /** Start with an empty board */
 void Connect4::setup(Board& b) const {
-	b(all, open);
+	b(all, Connect4::open);
 }
 
 /** The game is done when someone gets four in a row */

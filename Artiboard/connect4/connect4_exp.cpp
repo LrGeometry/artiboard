@@ -140,6 +140,7 @@ public:
   	} else
   		return result;
   }
+  virtual ~AnnotatedDatabase() {}
 private:
 	void collect_annos() {
 		const IcuData& data = IcuData::instance();

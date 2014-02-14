@@ -12,7 +12,11 @@ public:
 };
 
 class Connect4: public GameSpecification {
+public:
 	void setup(arti::Board&) const override;
 	MatchOutcome outcome_of(const Position&) const override;
 	void collectMoves(const Position& pos, Move::SharedFWList &result) const override;
+	static const Piece north;
+	static const Piece south;
+	static const Piece open;
 };
