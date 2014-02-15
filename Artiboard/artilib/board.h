@@ -135,7 +135,7 @@ namespace arti {
 			const_iterator _it_b, _it_e;
 		public:
 			typedef std::unique_ptr<Board> u_ptr;
-			typedef std::forward_list<std::unique_ptr<Board>> u_ptr_list;
+			typedef std::list<std::unique_ptr<Board>> u_ptr_list;
 			typedef u_ptr_list::iterator u_ptr_it;
 	};
 

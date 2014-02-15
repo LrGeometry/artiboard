@@ -17,3 +17,6 @@ src/.settings/
 */log.txt
 .metadata
 *.tokens
+*.RData
+*.Rhistory
+*.sublime-workspace

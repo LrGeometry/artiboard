@@ -37,7 +37,7 @@ protected:
 	void pickNormal(int level) {
 		Board::u_ptr board(new Board());
 		spec.setup(*board);
-		Position pos(0, std::move(board));
+		PositionThatOwns pos(0, std::move(board));
 		Board::u_ptr_list boards;
 		spec.collectBoards(pos,boards);
 		PickNegamax picker(&spec,SmartEval,level);
@@ -48,10 +48,10 @@ protected:
 	void pickAB(int level) {
 		Board::u_ptr board(new Board());
 		spec.setup(*board);
-		Position pos(0, std::move(board));
+		PositionThatOwns pos(0, std::move(board));
 		Board::u_ptr_list boards;
 		spec.collectBoards(pos,boards);
-		PickNegamaxAlphaBeta picker(&spec,SmartEval,level);
+		PickNegamaxAlphaBeta picker(&spec,SmartEval,level,false);
 		picker.select(pos,boards);
 		file() << "NegamaxAB " << level << " " << picker.walk_count() << " " << picker.value();
 	}

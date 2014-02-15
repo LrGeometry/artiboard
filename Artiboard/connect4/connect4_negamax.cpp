@@ -65,6 +65,11 @@ float StenMarkIBEF(const Position& pos) {
 	return result;
 }
 
+float StenMarkIBEFS(const Position& pos) {
+	return weighted_south(stenmark_ibef,pos);
+}
+
+
 float StenMarkADATE(const Position& pos) {
 	auto result = WinLoseEval(pos);
 	if (result == 0.0) {
@@ -98,24 +103,13 @@ public:
 	NegamaxExploration() : Experiment("c4-100","Does negamax alpha-beta have an impact on the items search? ") {}
 protected:
 
-	void pickNormal(int level) {
-		Board::u_ptr board(new Board());
-		spec.setup(*board);
-		Position pos(0, std::move(board));
-		Board::u_ptr_list boards;
-		spec.collectBoards(pos,boards);
-		PickNegamax picker(&spec,WinLoseEval,level);
-		picker.select(pos,boards);
-		file() << "Negamax " << level << " " << picker.walk_count() << " " << picker.value();
-	}
-
 	void pickAB(int level, const char * fn_name, eval_function_t fn) {
 		Board::u_ptr board(new Board());
 		spec.setup(*board);
-		Position pos(0, std::move(board));
+		PositionThatOwns pos(0, std::move(board));
 		Board::u_ptr_list boards;
 		spec.collectBoards(pos,boards);
-		PickNegamaxAlphaBeta picker(&spec,fn,level);
+		PickNegamaxAlphaBeta picker(&spec,fn,level,false);
 		picker.select(pos,boards);
 		file() << fn_name << " " << level << " " << picker.walk_count() << " " << picker.value();
 	}
@@ -127,11 +121,45 @@ protected:
 			pickAB(i,"WinLose",WinLoseEval);
 			pickAB(i,"IBEF",StenMarkIBEF);
 			pickAB(i,"ADATE",StenMarkADATE);
-			pickAB(i,"IBEF-B",StenMarkIBEFB);
-			pickAB(i,"ADATE-B",StenMarkADATEB);
+			pickAB(i,"IBEFB",StenMarkIBEFB);
+			pickAB(i,"ADATEB",StenMarkADATEB);
 		}
-	  //pickLevel(2);
 	}
-};
+} nme;
 
-static NegamaxExploration minimax;
+class NegamaxOrdered : Experiment {
+	public:
+		NegamaxOrdered() : Experiment("c4-200", "Explore the effect of ordering nodes in negamax"){}
+	protected:
+		void pickAB(int level, const char * fn_name, eval_function_t fn, bool ordered) {
+			Board::u_ptr board(new Board());
+			spec.setup(*board);
+			PositionThatOwns pos(0, std::move(board));
+			Board::u_ptr_list boards;
+			spec.collectBoards(pos,boards);
+			PickNegamaxAlphaBeta picker(&spec,fn,level,ordered);
+			picker.select(pos,boards);
+			file() << fn_name << (ordered?"-O ":" ") << level << " " << picker.walk_count() << " " << picker.value();
+		}
+
+
+		void doRun() override	{
+			file() << "Function Depth Positions Value";
+			for (int i=1;i<10;i++) 	{
+				pickAB(i,"WinLose",WinLoseEval,false);
+				pickAB(i,"IBEF",StenMarkIBEF,false);
+				pickAB(i,"ADATE",StenMarkADATE,false);
+				pickAB(i,"IBEFB",StenMarkIBEFB,false);
+				pickAB(i,"ADATEB",StenMarkADATEB,false);
+				pickAB(i,"IBEFS",StenMarkIBEFS,false);
+				pickAB(i,"WinLose",WinLoseEval,true);
+				pickAB(i,"IBEF",StenMarkIBEF,true);
+				pickAB(i,"ADATE",StenMarkADATE,true);
+				pickAB(i,"IBEFB",StenMarkIBEFB,true);
+				pickAB(i,"IBEFS",StenMarkIBEFS,true);
+				pickAB(i,"ADATEB",StenMarkADATEB,true);
+			}
+		  //pickLevel(2);
+		}
+} nmo;
+

@@ -6,7 +6,7 @@
 namespace arti {
 		void PlayLine::add(unique_ptr<Board> brd) {
 			ASSERT(brd);
-		_plies.push_back(shared_ptr<Position>(new Position(last().ply().next(), std::move(brd))));
+		_plies.push_back(shared_ptr<PositionThatOwns>(new PositionThatOwns(last().ply().next(), std::move(brd))));
 	}
 
 	std::unique_ptr<Board> Move::apply_to(const Board &brd) const {
@@ -76,7 +76,7 @@ namespace arti {
 	const Ply Ply::ZERO(0);
 
 	PlayLine::PlayLine(unique_ptr<Board> initial) {
-		_plies.emplace_back(new Position(Ply::ZERO, std::move(initial)));
+		_plies.emplace_back(new PositionThatOwns(Ply::ZERO, std::move(initial)));
 	};
 
 	ostream& operator <<(ostream& os, const PlayLine& v) {
@@ -99,7 +99,7 @@ namespace arti {
 		Move::SharedFWList moves;
 		while (_outcome == MatchOutcome::Unknown) {
 			auto &pos = _line.last();
-			std::forward_list<unique_ptr<Board>> boards;
+			Board::u_ptr_list boards;
 			const auto count = _spec.collectBoards(pos, boards);
 			if (count == 0)
 				_outcome = MatchOutcome::Draw;

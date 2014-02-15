@@ -83,27 +83,41 @@ namespace arti {
 			typedef std::forward_list<s_ptr> SharedFWList;
 	};
 
-
-
 	/**
 	 * The state of the game at a particular Ply.
 	 */
 	class Position {
-		public:
-			Position(const Ply &ply, unique_ptr<Board> brd) : _ply(ply), _board(std::move(brd)) { ASSERT(_board);}
-			const Ply& ply() const {return _ply;}
-			const bool is_root() const {return ply().index() == 0;}
-			const Board& board() const {return *_board;}
-			unique_ptr<Board>& board_p() {return _board;}
 		private:
-			Ply _ply;
-			unique_ptr<Board> _board;
+			const Ply ply_;
 		public:
-			typedef std::shared_ptr<Position> s_ptr;
-			typedef std::list<std::shared_ptr<Position>> SharedList;
+			Position(const Ply &ply):ply_(ply){}
+			const Ply& ply() const {return ply_;}
+			const bool is_root() const {return ply().index() == 0;}
+			virtual const Board& board() const = 0;
 	};
 
-	ostream& operator <<(std::ostream& os, const Position& v);
+
+	class PositionThatOwns : public Position {
+		private:
+			unique_ptr<Board> board_;
+		public:
+			PositionThatOwns(const Ply &ply, unique_ptr<Board> brd) : Position(ply), board_(std::move(brd)) { ASSERT(board_);}
+			const Board& board() const override {return *board_;}
+			unique_ptr<Board>& board_p() {return board_;}
+			typedef std::shared_ptr<PositionThatOwns> s_ptr;
+			typedef std::list<std::shared_ptr<PositionThatOwns>> SharedList;
+	};
+
+	class PositionThatPoints : public Position {
+		private:
+			const Board * board_;
+		public:
+			PositionThatPoints(const Ply &ply, const Board * brd) : Position(ply), board_(brd) { ASSERT(board_);}
+			const Board& board() const override {return *board_;}
+	};
+
+
+	ostream& operator <<(std::ostream& os, const PositionThatOwns& v);
 
 	enum MatchOutcome {
 		Unknown, SouthPlayerWins, NorthPlayerWins, Draw
@@ -162,12 +176,12 @@ namespace arti {
 			 * The current Position
 			 * @return
 			 */
-			const Position& last() const {return *_plies.back();}
-			const Position& root() const {return *_plies.front();}
+			const PositionThatOwns& last() const {return *_plies.back();}
+			const PositionThatOwns& root() const {return *_plies.front();}
 			void add(unique_ptr<Board> brd);
-			const Position::SharedList& sequence() const {return _plies;}
+			const PositionThatOwns::SharedList& sequence() const {return _plies;}
 		private:
-			Position::SharedList _plies;
+			PositionThatOwns::SharedList _plies;
 	};
 
 	ostream& operator <<(std::ostream& os, const PlayLine& v);
