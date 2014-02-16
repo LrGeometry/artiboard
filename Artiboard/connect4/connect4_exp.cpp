@@ -116,47 +116,52 @@ struct AnnotatedData {
 	const MatchOutcome outcome;
 };
 
-class AnnotatedDatabase : public ID3NameResolver {
-public:	
-	std::vector<AnnotatedData> items;
-	std::vector<attrib_type2> attribs;
-	std::unique_ptr<FeatureProgram> program;
-	std::map<int,std::string> names;
-	AnnotatedDatabase() {collect_annos();collect_attribs();}
-  const std::string& value_name(const int a, const int v) {
-  	const auto &result = names[v];
-  	if (result.empty()) {
-  		return names[v] = string_from_format("%d",v);
-  	} else
-  		return result;
-  }
-  const std::string& attribute_name(const int a) {
-  	return attribs[a].first;
-  }
-  const std::string& class_name(const int c) {
-  	const auto &result = names[c];
-  	if (result.empty()) {
-  		return names[c] = string_from_format("%d",c);
-  	} else
-  		return result;
-  }
-  virtual ~AnnotatedDatabase() {}
-private:
-	void collect_annos() {
-		const IcuData& data = IcuData::instance();
-		items.reserve(data.size());
-		FOR_EACH(i,data) 
-			items.emplace_back(AnnotatedBoard(i->first),i->second);
-	}
-	void collect_attribs() {
-		const auto &pieces = annotation_pieces();
-		program = std::move(load_program("../connect4/data/regions.txt"));
-		attribs.reserve(program->regions().size() * size_of(pieces));
-		FOR_EACH(nr,program->regions()) 
-			FOR_EACH(p,pieces) {
-				attribs.emplace_back(nr->first,*p);
-			}
-	}
+class AnnotatedDatabase: public ID3NameResolver {
+	private:
+		const std::string region_file_name_;
+	public:
+		std::vector<AnnotatedData> items;
+		std::vector<attrib_type2> attribs;
+		std::unique_ptr<FeatureProgram> program;
+		std::map<int, std::string> names;
+		AnnotatedDatabase(const std::string& region_file_name) : region_file_name_(region_file_name) {
+			collect_annos();
+			collect_attribs();
+		}
+		const std::string& value_name(const int a, const int v) {
+			const auto &result = names[v];
+			if (result.empty()) {
+				return names[v] = string_from_format("%d", v);
+			} else return result;
+		}
+		const std::string& attribute_name(const int a) {
+			return attribs[a].first;
+		}
+		const std::string& class_name(const int c) {
+			const auto &result = names[c];
+			if (result.empty()) {
+				return names[c] = string_from_format("%d", c);
+			} else return result;
+		}
+		virtual ~AnnotatedDatabase() {
+		}
+	private:
+		void collect_annos() {
+			const IcuData& data = IcuData::instance();
+			items.reserve(data.size());
+			FOR_EACH(i,data)
+				items.emplace_back(AnnotatedBoard(i->first), i->second);
+		}
+		void collect_attribs() {
+			const auto &pieces = annotation_pieces();
+			program = std::move(load_program(region_file_name_));
+			attribs.reserve(program->regions().size() * size_of(pieces));
+			FOR_EACH(nr,program->regions())
+				FOR_EACH(p,pieces)
+				{
+					attribs.emplace_back(nr->first, *p);
+				}
+		}
 
 };
 
@@ -179,9 +184,11 @@ public:
 
 class Classify: public Experiment {
 public:
-	Classify(): Experiment("c4-070","Classify the ICU data set") {}
+	Classify(): Experiment("c4-300","Classify the ICU data set") {}
 	void doRun() override {
-		AnnotatedDatabase db;
+		// datadir = ../connect4/data/
+		auto datadir = args()["data_dir"];
+		AnnotatedDatabase db(datadir + "regions.txt");
 		file() << "fraction cutoff size certainty";
 		for (int f = 3; f < 10; f++) {
 			for (int i = 0; i < 30; i++) {
@@ -195,8 +202,7 @@ public:
 			}
 		}
 	}
-};
-Classify ex5;
+} classfy;
 
 
 

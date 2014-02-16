@@ -3,8 +3,27 @@
 #include <time.h>
 #include "experiment.h"
 #include "log.h"
-
+#include <map>
+namespace {
+}
 namespace arti {
+	void ArgList::reset(int argc, char * argv[]) {
+		values_.clear();
+		for (int i=0; i < argc; i++) {
+			std::string e(argv[i]);
+			auto p = e.find("=");
+			if (p != std::string::npos)
+				values_.emplace(std::string(e,0,p),std::string(e,p+1));
+		}
+	}
+
+	const std::string& ArgList::operator[](const std::string& k) const {
+		auto it = values_.find(k);
+		if (it == values_.end())
+			throw runtime_error_ex("Argument with name '%s' was not provided.",k.c_str());
+		return it->second;
+	}
+
 
 	int experi_main(int argc, char* argv[])
 	{
@@ -18,7 +37,7 @@ namespace arti {
 			if (name == "list")
 				for (const auto& e: ExperimentRepository::instance().all()) {LOG << e->name() << "\t" << e->description();}
 			else
-				ExperimentRepository::instance().find(argv[1]).run();
+				ExperimentRepository::instance().find(argv[1]).run(argc-2,argv+2);
 			LOG << "Done";
 			std::cout << "ended OK" << std::endl;
 			return 0;
@@ -50,7 +69,8 @@ namespace arti {
 	}
 
 
-	void Experiment::run() {
+	void Experiment::run(int argc, char* argv[]) {
+		args_.reset(argc,argv);
 		time(&start);
 		LOG << "Start " << _name << ":" << _description;
 		doRun();
