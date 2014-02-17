@@ -70,7 +70,7 @@ namespace arti {
 
 	/**
 	 * An 8x8 matrix of Piece objects.
-	 * Left bottom square is (0,0), and right to is (7,7).
+	 * Left bottom square is (0,0), and right top is (7,7).
 	 */
 	class Board {
 		public:

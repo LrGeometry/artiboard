@@ -14,8 +14,7 @@ using namespace arti;
   * The outcome class is the game theoretical value for the first player.
 	*/
 class IcuData : public std::map<Board,MatchOutcome> {
+		PREVENT_COPY(IcuData);
 public:
-	static IcuData& instance();
-private:
-	IcuData();
+	IcuData(const std::string& filename);
 };

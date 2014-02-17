@@ -34,14 +34,14 @@ namespace arti {
 					result = featTree->program(featTree);
 					featTree->free(featTree);
 			} else {
-					std::cout << tree->toStringTree(tree)->chars << std::endl;
+					LOG << tree->toStringTree(tree)->chars << std::endl;
 			}
 			parser->free(parser);
 			tokens->free(tokens);
 			lex->free(lex);
 			input->close(input);
 			if (!result)
-				throw runtime_error("There were parse errors");
+				throw runtime_error_ex("There were parse errors in '%s'", filename.c_str());
 			return FeatureProgram::u_ptr(result);
 	}
 }

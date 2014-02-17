@@ -64,7 +64,7 @@ public:
 	DataStatistics(): Experiment("c4-020","Connect-4 ICU data") {}
 	void doRun() override {
 		file() << "ply wins losses draws";
-		const IcuData& data = IcuData::instance();
+		const IcuData data(args()["icu_file"]);
 		std::map<int,DataStat> stats;
 		FOR_EACH(p,data) {
 			int ply = ply_of(p->first);
@@ -81,10 +81,10 @@ class FeatureStatistics: public Experiment {
 public:
 	FeatureStatistics(): Experiment("c4-030","Connect-4 ICU data features") {}
 	void doRun() override {
-		const IcuData& data = IcuData::instance();
+		const IcuData data(args()["icu_file"]);
 		file() << "region piece count wins losses draws";
 		const std::vector<Piece> pieces({Piece('-'), Piece('o'), Piece('x')});
-		auto program = load_program("../connect4/data/regions.txt");
+		auto program = load_program("../connect4/data/squares.txt"); 
 		FOR_EACH(nr,program->regions()) {
 			auto n = nr->first;
 			auto r = nr->second;
@@ -124,7 +124,9 @@ class AnnotatedDatabase: public ID3NameResolver {
 		std::vector<attrib_type2> attribs;
 		std::unique_ptr<FeatureProgram> program;
 		std::map<int, std::string> names;
-		AnnotatedDatabase(const std::string& region_file_name) : region_file_name_(region_file_name) {
+		const IcuData& data_;
+		AnnotatedDatabase(const std::string& region_file_name, const IcuData& data) :
+			region_file_name_(region_file_name), data_(data) {
 			collect_annos();
 			collect_attribs();
 		}
@@ -147,9 +149,9 @@ class AnnotatedDatabase: public ID3NameResolver {
 		}
 	private:
 		void collect_annos() {
-			const IcuData& data = IcuData::instance();
-			items.reserve(data.size());
-			FOR_EACH(i,data)
+
+			items.reserve(data_.size());
+			FOR_EACH(i,data_)
 				items.emplace_back(AnnotatedBoard(i->first), i->second);
 		}
 		void collect_attribs() {
@@ -188,17 +190,18 @@ public:
 	void doRun() override {
 		// datadir = ../connect4/data/
 		auto datadir = args()["data_dir"];
-		AnnotatedDatabase db(datadir + "regions.txt");
+		IcuData data(datadir + "/downloaded/connect-4.data");
+		AnnotatedDatabase db(datadir + "\\regions.txt", data);
 		file() << "fraction cutoff size certainty";
 		for (int f = 3; f < 10; f++) {
-			for (int i = 0; i < 30; i++) {
+			for (int i = 0; i < 10; i++) {
 				const int cutoff = i * 32;
 				LOG << "At " << f << ":" << i;
 				std::cout << "At " << f << ":" << i;
 				AnnotatedClassifier cf(&db,cutoff);
 				cf.train_and_test(db.items.size(),db.attribs.size(),f);
 				file() << f << " " << cutoff << " " << cf.root().size() <<" " << cf.root().certainty();
-				cf.root().to_stream(LOG,db);
+				//cf.root().to_stream(LOG,db);
 			}
 		}
 	}

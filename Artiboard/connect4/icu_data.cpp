@@ -4,18 +4,11 @@
 const size_t column_count = 7;
 const size_t row_count = 6;
 
-static IcuData * loaded = 0;
 
-IcuData& IcuData::instance() {
-	if (!loaded) {
-		loaded = new IcuData();
-		LOG << "ICU Data loaded";
-	}
-	return *loaded;
-}
-
-IcuData::IcuData()  {
-	std::ifstream data("../connect4/data/connect-4.data");
+IcuData::IcuData(const std::string& file_name)  {
+	// std::ifstream data("../connect4/data/connect-4.data");
+	std::ifstream data(file_name);
+	if (!data) throw runtime_error_ex("could not open file '%s'", file_name.c_str());
 	std::string s;
 	while (data) {
 		data >> s;

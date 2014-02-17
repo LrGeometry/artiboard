@@ -97,7 +97,7 @@ namespace arti {
 		std::forward_list<int> elems,attribs,test_elems;
 		if (test_denominator > 0) {
 			fill_split(elems,test_elems,elementCount,test_denominator);
-			ENSURE(size_of(test_elems) > 0, "test_denominator identifed no test elements");
+			ENSURE(size_of(test_elems) > 0, "test_denominator identified no test elements");
 		} else
 			fill(elems,elementCount);
 		fill(attribs,attributeCount);
