@@ -1,10 +1,5 @@
-# Connect four
-## ID3 article idea
-Use the connect 4 dataset to refine the classification ideas of thesis wrt ID3.
-
-
-## External sources
-###[Connect-4 dataset](http://archive.ics.uci.edu/ml/machine-learning-databases/connect-4/)
+# Connect-four
+## [Connect-4 dataset](http://archive.ics.uci.edu/ml/machine-learning-databases/connect-4/)
 1. Title: Connect-4 opening database
 
 2. Source Information

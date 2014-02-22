@@ -276,24 +276,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/c4_class_exp.cpp</locationURI>
 		</link>
 		<link>
-			<name>connect4/c4_class_exp.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/c4_class_exp.depends</locationURI>
-		</link>
-		<link>
-			<name>connect4/c4_class_exp.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/c4_class_exp.o</locationURI>
-		</link>
-		<link>
 			<name>connect4/connect4.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4.cpp</locationURI>
-		</link>
-		<link>
-			<name>connect4/connect4.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4.depends</locationURI>
 		</link>
 		<link>
 			<name>connect4/connect4.h</name>
@@ -301,39 +286,14 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4.h</locationURI>
 		</link>
 		<link>
-			<name>connect4/connect4.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4.o</locationURI>
-		</link>
-		<link>
 			<name>connect4/connect4_exp.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_exp.cpp</locationURI>
 		</link>
 		<link>
-			<name>connect4/connect4_exp.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_exp.depends</locationURI>
-		</link>
-		<link>
-			<name>connect4/connect4_exp.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_exp.o</locationURI>
-		</link>
-		<link>
 			<name>connect4/connect4_main.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_main.cpp</locationURI>
-		</link>
-		<link>
-			<name>connect4/connect4_main.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_main.depends</locationURI>
-		</link>
-		<link>
-			<name>connect4/connect4_main.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_main.o</locationURI>
 		</link>
 		<link>
 			<name>connect4/connect4_negamax.cpp</name>
@@ -346,34 +306,14 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_test.cpp</locationURI>
 		</link>
 		<link>
-			<name>connect4/connect4_test.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_test.depends</locationURI>
-		</link>
-		<link>
-			<name>connect4/connect4_test.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_test.o</locationURI>
-		</link>
-		<link>
 			<name>connect4/icu_data.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/icu_data.cpp</locationURI>
 		</link>
 		<link>
-			<name>connect4/icu_data.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/icu_data.depends</locationURI>
-		</link>
-		<link>
 			<name>connect4/icu_data.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/icu_data.h</locationURI>
-		</link>
-		<link>
-			<name>connect4/icu_data.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/icu_data.o</locationURI>
 		</link>
 		<link>
 			<name>connect4/readme.md</name>

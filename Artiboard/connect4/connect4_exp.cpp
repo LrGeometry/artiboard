@@ -10,7 +10,7 @@ class FairnessExperiment: public Experiment {
 	public:
 		FairnessExperiment() : Experiment("c4-010","Connect-4 fairness") {}
 	protected:
-		void doRun() override{
+		void do_run() override{
 			file() << "sampleSize south north";
 			Connect4 spec;
 			PickFirst picker;
@@ -62,7 +62,7 @@ std::ostream& operator << (std::ostream& os, const DataStat& s) {
 class DataStatistics: public Experiment {
 public:
 	DataStatistics(): Experiment("c4-020","Connect-4 ICU data") {}
-	void doRun() override {
+	void do_run() override {
 		file() << "ply wins losses draws";
 		const IcuData data(args()["icu_file"]);
 		std::map<int,DataStat> stats;
@@ -80,7 +80,7 @@ DataStatistics ex2;
 class FeatureStatistics: public Experiment {
 public:
 	FeatureStatistics(): Experiment("c4-030","Connect-4 ICU data features") {}
-	void doRun() override {
+	void do_run() override {
 		const IcuData data(args()["icu_file"]);
 		file() << "region piece count wins losses draws";
 		const std::vector<Piece> pieces({Piece('-'), Piece('o'), Piece('x')});
@@ -186,9 +186,8 @@ public:
 
 class Classify: public Experiment {
 public:
-	Classify(): Experiment("c4-300","Classify the ICU data set") {}
-	void doRun() override {
-		// datadir = ../connect4/data/
+	Classify(): Experiment("c4-300","Find a good cutoff value") {}
+	void do_run() override {
 		auto datadir = args()["data_dir"];
 		IcuData data(datadir + "/downloaded/connect-4.data");
 		AnnotatedDatabase db(datadir + "\\regions.txt", data);
@@ -201,11 +200,16 @@ public:
 				AnnotatedClassifier cf(&db,cutoff);
 				cf.train_and_test(db.items.size(),db.attribs.size(),f);
 				file() << f << " " << cutoff << " " << cf.root().size() <<" " << cf.root().certainty();
-				//cf.root().to_stream(LOG,db);
 			}
 		}
 	}
 } classfy;
 
+class ClassifyRegions: public Experiment {
+public:
+		ClassifyRegions() : Experiment("c4-400","Which regions classifies better?") {}
+		void do_run() override {
 
+		}
+} c4_400;
 

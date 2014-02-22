@@ -50,43 +50,43 @@ namespace arti {
 
 
 	Experiment::Experiment(const char * aName, const std::string aDescription) :
-			_name(aName), _description(aDescription), start(0), ofile() {
+			name_(aName), description_(aDescription), start_(0), ofile_() {
 		ExperimentRepository::instance().add(this);
 	}
 
 	std::ostream & Experiment::file() {
-		if (!ofile.is_open()) {
+		if (!ofile_.is_open()) {
 			create_dir("..\\experiments");
 			std::string fileName = string_from_format("..\\experiments\\%s.txt",
-					_name);
-			ofile.open(fileName.c_str());
-			if (!ofile.is_open())
+					name_);
+			ofile_.open(fileName.c_str());
+			if (!ofile_.is_open())
 				throw runtime_error_ex("Cannot create file %s",
 						fileName.c_str());
 		} else
-			ofile << std::endl;
-		return ofile;
+			ofile_ << std::endl;
+		return ofile_;
 	}
 
 
 	void Experiment::run(int argc, char* argv[]) {
 		args_.reset(argc,argv);
-		time(&start);
-		LOG << "Start " << _name << ":" << _description;
-		doRun();
-		if (ofile.is_open()) {
-			ofile << std::endl;
-			ofile.close();
+		time(&start_);
+		LOG << "Start " << name_ << ":" << description_;
+		do_run();
+		if (ofile_.is_open()) {
+			ofile_ << std::endl;
+			ofile_.close();
 		}
-		LOG << "Complete " << _name << std::endl;
+		LOG << "Complete " << name_ << std::endl;
 	}
 
-	ExperimentRepository* ExperimentRepository::_instance = 0;
+	ExperimentRepository* ExperimentRepository::instance_ = 0;
 
 	ExperimentRepository& ExperimentRepository::instance() {
-		if (_instance == 0)
-			_instance = new ExperimentRepository();
-		return *_instance;
+		if (instance_ == 0)
+			instance_ = new ExperimentRepository();
+		return *instance_;
 	}
 
 	ExperimentRepository::ExperimentRepository() {
@@ -94,13 +94,13 @@ namespace arti {
 	}
 
 	void ExperimentRepository::add(Experiment * value) {
-		_map[std::string(value->name())] = value;
-		_list.push_back(value);
+		map_[std::string(value->name())] = value;
+		list_.push_back(value);
 	}
 
 	Experiment & ExperimentRepository::find(const char * name) {
-		auto result = _map.find(std::string(name));
-		if (result == _map.end())
+		auto result = map_.find(std::string(name));
+		if (result == map_.end())
 			throw runtime_error_ex("Could not find experiment with name: '%s'",name);
 		return *(result->second);
 	}

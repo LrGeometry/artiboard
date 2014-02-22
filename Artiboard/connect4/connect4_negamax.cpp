@@ -115,7 +115,7 @@ protected:
 	}
 
 
-	void doRun() override	{
+	void do_run() override	{
 		file() << "Function Depth Positions Value";
 		for (int i=1;i<11;i++) 	{
 			pickAB(i,"WinLose",WinLoseEval);
@@ -143,7 +143,7 @@ class NegamaxOrdered : Experiment {
 		}
 
 
-		void doRun() override	{
+		void do_run() override	{
 			file() << "Function Depth Positions Value";
 			for (int i=1;i<10;i++) 	{
 				pickAB(i,"WinLose",WinLoseEval,false);

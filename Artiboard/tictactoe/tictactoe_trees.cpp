@@ -57,7 +57,7 @@ protected:
 	}
 
 
-	void doRun() override	{
+	void do_run() override	{
 		file() << "Method Depth Positions Value";
 		for (int i=1;i<10;i++) 	{
 			pickNormal(i);

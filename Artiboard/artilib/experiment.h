@@ -26,8 +26,8 @@ namespace arti {
 		public:
 			void run(int argc=0,char *argv[]=nullptr);
 			virtual ~Experiment(){};
-			const char * name() const {return _name;}
-			const std::string & description() const {return _description;}
+			const char * name() const {return name_;}
+			const std::string & description() const {return description_;}
 		protected:
 			/**
 			 * name is used to create files
@@ -36,13 +36,13 @@ namespace arti {
 			Experiment(const char * name, const std::string description);
 			// writes newline
 			std::ostream& file();
-			virtual void doRun() = 0;
+			virtual void do_run() = 0;
 			const ArgList& args() const {return args_;}
 		private:
-			const char * _name;
-			const std::string _description;
-			time_t start;
-			std::ofstream ofile;
+			const char * name_;
+			const std::string description_;
+			time_t start_;
+			std::ofstream ofile_;
 			ArgList args_;
 	};
 
@@ -51,14 +51,14 @@ namespace arti {
 		public:
 			static ExperimentRepository& instance();
 			Experiment & find(const char * name);
-			const std::list<Experiment*>& all() const {return _list;};
+			const std::list<Experiment*>& all() const {return list_;};
 		private:
 			void add(Experiment * value);
-			static ExperimentRepository * _instance;
+			static ExperimentRepository * instance_;
 			ExperimentRepository();
 		private:
-			std::map<std::string, Experiment *> _map;
-			std::list<Experiment*> _list;
+			std::map<std::string, Experiment *> map_;
+			std::list<Experiment*> list_;
 	};
 
 }
