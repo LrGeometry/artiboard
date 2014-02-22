@@ -4,9 +4,9 @@ R = $(REXEC) $(ROPTIONS)
 
 IDIR = ../../../Artiboard/experiments
 ODIR = ../artifacts
+.phony = c4-300
 
-
-$(ODIR)/c4-300.tex: c4-300.r $(IDIR)/c4-300.txt
+c4-300: c4-300.r $(IDIR)/c4-300.txt
 	$(R) -f c4-300.r
 
 $(ODIR)/c4-200.tex: c4-200.r $(IDIR)/c4-200.txt

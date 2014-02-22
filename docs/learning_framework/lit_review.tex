@@ -1,6 +1,7 @@
 \chapter{Literature studies}
-\section{Synthesizing Board Evaluation Functions for Connect4
-using Machine Learning Techniques} \cite{stenmark:masters}
+
+\section{Synthesizing Board Evaluation Functions for Connect4 using Machine Learning Techniques} 
+\cite{stenmark:masters}
 This work contains a description of minimax and the alpha-beta enhancement.  An evaluation function IBEF is defined as an initial attempt.  This function place a weight on each square.  The weight is simply the count of the number of lines that crosses through the square: for example left bottom corner has value 3.  IBEF is the sum of a positive weight of squares occupied by the player minus the sum of the negative weights of the squares occupied by the opponent. Experiments show that the first player wins a random player at about $90\%$ and the second player wins about $98\%$ of the time (one level search). 
 \subsection{The ADATE Experiment}
 The ADATE system does automatic programming using standard ML (Olsson,1995).  The aim was to use ADATE to come up with a function that beats IBEF.  For this a set of example start positions were provided -- the number of wins for this example set provides the fitness function for ADATE. The examples given were the starting position, all possible first moves and all possible second moves (a total of 57 examples).  Then a number of examples positions were added by picking them from random playing games (the details of how selection was done is not described).  Two sets of examples are provided -- the training set of 155, and the validation set of 556.  Both sets contain the 57 fixed examples, but differ in their random examples (I assumed).  The training process used level and level 2 sets -- switching the first player.

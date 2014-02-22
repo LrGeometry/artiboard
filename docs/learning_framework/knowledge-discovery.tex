@@ -763,11 +763,29 @@ A simplification strategy can be obtained by choosing an exclusion rule and a cu
 	\label{tab:simplify_strategies}
 \end{table*}
 
-\section{Experiment: Discovering Connect-Four features from examples}
-\subsection{Objective*}
+\section{Experiment: The effect of cutoff on size and certainty}
+\subsection*{Objective}
 
-\subsection{Method*}
-\subsection{Results*}
+\subsection*{Method}
+\subsection*{Results}
+
+\begin{figure} [!ht]
+\center
+\includegraphics{artifacts/c4-300cs.eps}
+\caption{Cutoff and size}
+\label{fig:id3cs}
+\end{figure}
+As cutoff increases, size decreases.
+A cutoff of 32 and 64 has about the same certainty.  
+So in general cutoff of 64 seems to be optimal.
+\begin{figure} [!ht]
+\center
+\includegraphics{artifacts/c4-300cc.eps}
+\caption{Cutoff and certainty}
+\label{fig:id3cs}
+\end{figure}
+
+ 
 
 
 
