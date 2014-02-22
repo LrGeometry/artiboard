@@ -184,6 +184,7 @@ public:
 	}
 };
 
+
 class Classify: public Experiment {
 public:
 	Classify(): Experiment("c4-300","Find a good cutoff value") {}
@@ -209,7 +210,19 @@ class ClassifyRegions: public Experiment {
 public:
 		ClassifyRegions() : Experiment("c4-400","Which regions classifies better?") {}
 		void do_run() override {
-
+			IcuData data(data_fn("downloaded/connect-4.data"));
+			file() << "region size certainty";
+			do_step("regions.txt","all-lines",data);
+			do_step("regions-diag.txt","diagonal-lines",data);
+			do_step("regions-sq.txt", "squares",data);
+			do_step("regions-cr.txt", "adjacent-lines",data);
+		}
+private:
+		void do_step(const string& filename, const string& regionname, const IcuData& data) {
+			AnnotatedDatabase db(data_fn(filename), data);
+			AnnotatedClassifier cf(&db,64);
+			cf.train_and_test(db.items.size(),db.attribs.size(),9);
+			file() << regionname << " " << cf.root().size() <<" " << cf.root().certainty();
 		}
 } c4_400;
 

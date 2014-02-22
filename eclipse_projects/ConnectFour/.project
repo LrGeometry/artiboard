@@ -46,19 +46,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/board.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/board.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/board.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/board.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/board.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/board.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/board.o</locationURI>
 		</link>
 		<link>
 			<name>artilib/experiment.cpp</name>
@@ -66,19 +56,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/experiment.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/experiment.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/experiment.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/experiment.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/experiment.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/experiment.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/experiment.o</locationURI>
 		</link>
 		<link>
 			<name>artilib/feat.cpp</name>
@@ -86,19 +66,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/feat.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/feat.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/feat.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/feat.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/feat.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/feat.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/feat.o</locationURI>
 		</link>
 		<link>
 			<name>artilib/feat_program.cpp</name>
@@ -106,19 +76,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/feat_program.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/feat_program.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/feat_program.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/feat_program.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/feat_program.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/feat_program.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/feat_program.o</locationURI>
 		</link>
 		<link>
 			<name>artilib/game.cpp</name>
@@ -126,19 +86,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/game.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/game.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/game.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/game.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/game.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/game.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/game.o</locationURI>
 		</link>
 		<link>
 			<name>artilib/grammars</name>
@@ -151,19 +101,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/id3.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/id3.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/id3.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/id3.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/id3.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/id3.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/id3.o</locationURI>
 		</link>
 		<link>
 			<name>artilib/log.cpp</name>
@@ -171,19 +111,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/log.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/log.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/log.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/log.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/log.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/log.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/log.o</locationURI>
 		</link>
 		<link>
 			<name>artilib/negamax.cpp</name>
@@ -191,19 +121,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/negamax.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/negamax.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/negamax.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/negamax.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/negamax.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/negamax.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/negamax.o</locationURI>
 		</link>
 		<link>
 			<name>artilib/optimiser.cpp</name>
@@ -211,19 +131,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/optimiser.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/optimiser.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/optimiser.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/optimiser.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/optimiser.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/optimiser.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/optimiser.o</locationURI>
 		</link>
 		<link>
 			<name>artilib/square.cpp</name>
@@ -231,19 +141,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/square.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/square.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/square.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/square.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/square.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/square.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/square.o</locationURI>
 		</link>
 		<link>
 			<name>artilib/systemex.cpp</name>
@@ -251,19 +151,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/systemex.cpp</locationURI>
 		</link>
 		<link>
-			<name>artilib/systemex.depends</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/systemex.depends</locationURI>
-		</link>
-		<link>
 			<name>artilib/systemex.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/systemex.h</locationURI>
-		</link>
-		<link>
-			<name>artilib/systemex.o</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/systemex.o</locationURI>
 		</link>
 		<link>
 			<name>connect4/.gitignore</name>

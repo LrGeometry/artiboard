@@ -5,6 +5,7 @@ concat <- function (a,b) {
 }
 library(reshape) 
 library(xtable)
+library(MASS)
 
 baseDir <- "..\\..\\..\\Artiboard\\"
 sourceDir <- concat(baseDir,"experiments\\")

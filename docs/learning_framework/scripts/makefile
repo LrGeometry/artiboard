@@ -6,6 +6,9 @@ IDIR = ../../../Artiboard/experiments
 ODIR = ../artifacts
 .phony = c4-300
 
+c4-400: 
+	$(R) -f c4-400.r
+
 c4-300: c4-300.r $(IDIR)/c4-300.txt
 	$(R) -f c4-300.r
 

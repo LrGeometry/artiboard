@@ -106,7 +106,6 @@ struct LessThanFnComparer {
 
 
 void PickNegamaxAlphaBeta::sort_by_function(Board::u_ptr_list& boards, const Ply parent_ply) const {
-	// TODO 050 implement sort
 	BetterThanFnFunctor bt{function_, parent_ply};
 	LessThanFnComparer compare{bt};
 	boards.sort(compare);

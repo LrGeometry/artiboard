@@ -1,0 +1,33 @@
+region ud7 = {7,0};
+region ud5 = {5,0 6,1 7,2};
+region ud4 = {4,0 5,1 6,2 7,3};
+region ud3 = {3,0 4,1 5,2 6,3 7,4};
+region ud2 = {2,0 3,1 4,2 5,3 6,4 7,5};
+region ud1 = {1,0 2,1 3,2 4,3 5,4 6,5 7,6};
+
+region dul = {0,0 1,1 2,2 3,3 4,4 5,5 6,6 7,7};
+
+region ld7 = {0,7};
+region ld5 = {0,5 1,6 2,7};
+region ld4 = {0,4 1,5 2,6 3,7};
+region ld3 = {0,3 1,4 2,5 3,6 4,7};
+region ld2 = {0,2 1,3 2,4 3,5 4,6 5,7};
+region ld1 = {0,1 1,2 2,3 3,4 4,5 5,6 6,7};
+
+ 
+region ubd0 = {0,0};
+region ubd7 = {7,0 6,1 5,2 4,3 3,4 2,5 1,6 0,7};
+region ubd6 = {6,0 5,1 4,2 3,3 2,4 1,5 0,6};
+region ubd5 = {5,0 4,1 3,2 2,3 1,4 0,5};
+region ubd4 = {4,0  3,1  2,2  1,3  0,4 };
+region ubd3 = {3,0 2,1 1,2 0,3};
+region ubd2 = {2,0 1,1 0,2};
+region ubd1 = {1,0 0,1};
+ 
+region lbd1 = {7,1 6,2 5,3 4,4 3,5 2,6 1,7};
+region lbd2 = {7,2 6,3 5,4 4,5 3,6 2,7 };
+region lbd3 = {7,3 6,4 5,5 4,6 3,7 };
+region lbd4 = {7,4 6,5 5,6 4,7 };
+region lbd5 = {7,5 6,6 5,7 };
+region lbd6 = {7,6 6,7 };
+region lbd7 = {7,7};

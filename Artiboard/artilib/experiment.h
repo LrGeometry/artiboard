@@ -38,6 +38,8 @@ namespace arti {
 			std::ostream& file();
 			virtual void do_run() = 0;
 			const ArgList& args() const {return args_;}
+			const string& data_dir() const {return args_["data_dir"];}
+			const string data_fn(const string& filename) {return data_dir() + "/" + filename;}
 		private:
 			const char * name_;
 			const std::string description_;

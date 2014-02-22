@@ -1,0 +1,5 @@
+region size certainty
+all-lines 3255 74.9567
+diagonal-lines 3485 73.4648
+squares 3767 75.676
+adjacent-lines 3309 73.8511
