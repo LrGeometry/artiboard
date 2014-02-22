@@ -1,6 +1,8 @@
 #include "game.h"
 #include "systemex.h"
-
+#include <random>
+#include <math.h>
+#include "log.h"
 #define FOR_SQUARES(row,col) for (index_t row = 0; row < 8; row++) for (index_t col = 0; col < 8; col++)
 
 namespace arti {
@@ -126,4 +128,24 @@ namespace arti {
 	}
 
 
-}
+ Board::u_ptr_it PickRandom::select(const Position & current,Board::u_ptr_list &children) {
+	 static std::default_random_engine engine;
+	 static std::uniform_real_distribution<float> distro(0.0f,1.0f);
+	 static auto random = std::bind(distro,engine);
+	 // if there is a winnning move, take it
+	 for (auto b = children.begin(); b!= children.end(); b++) {
+		 PositionThatPoints p(current.ply().next(),b->get());
+		 auto oc = spec_.outcome_of(p);
+		 if (oc == SouthPlayerWins && current.ply().is_player_a())
+			 return b;
+		 if (oc == NorthPlayerWins && current.ply().is_player_b())
+			 return b;
+	 }
+	 const int count = std::round((children.size()+1) * random() - 0.5f);
+	 //TRACE << children.size() << " " << count;
+	 auto it = children.begin();
+	 // advance to (i+1)-th child
+	 for (int i=0;i<count-1;i++) it++;
+	 return it;
+ }
+ }

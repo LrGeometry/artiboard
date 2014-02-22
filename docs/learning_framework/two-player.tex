@@ -986,14 +986,14 @@ Does alpha-beta make a difference?
 \input{artifacts/t3-100}
 Alpha-beta does make a huge difference
 
-\section{Experiment: What is the effect of the heuristic on Negamax?}
+\section{Experiment: The affect of the heuristic on Negamax}
 \subsection*{Objective}
 \subsection*{Method}
 \subsection*{Result}
 \input{artifacts/c4-100}
 The strength of the Negamax function does not seems make a difference.  WinLose is the worst function and it manages to obtain the smallest search span -- because all the nodes have the same value.  However, the balanced functions uses the same rules but seem to produce must smaller trees -- it does seem that these functions are better.  It is also interesting that the 10th level produces a decrease in most of the function.  It could be that the 10th level is a crucial look-ahead for connect4 for some reason? Maybe winning and loosing positions are more easily found here.  Could it be that ADATE-B is the best function?  Generally the balanced functions seem to produce smaller search spans.
 
-\section{Experiment: What is the effect of ordering on alpha-beta?}
+\section{Experiment: The affect of ordering on alpha-beta}
 \subsection*{Objective}
 Order should make some difference -- the cut-off is relatively arbitrary.
 \subsection*{Method}

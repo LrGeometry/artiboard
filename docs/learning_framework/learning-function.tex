@@ -448,20 +448,26 @@ During the evaluate stage, the new knowledge (i.e. an optimised phased evaluatio
 \section{Measuring performance}
 \label{sec:learning-performance}
 This section describes a method to measure a player's performance. A method to measure of performance is needed to determine the progress made by the learner.  One way to measure performance is to play against a random moving player.  This measure is weak in the sense that it becomes invalid when a player always beats the random moving player.    
-\mydefc{random performance measure} {of a player} {A value between $0$ and $100$ such that a greater value indicates better performance.
-   Let $p$ be any player, and $N$ be the number of games played in a competition between a random moving player. Let $L(p)$ denote the number of games lost and $W(p)$ denotes the number of games won by $p$, then the performance measure of $p$ is determined by:
+\mydefs{random metric} {A quantification of the performance of a player that takes a value in the range $[0,100]$ such that a greater value indicates better performance.  For player $p$, it is calculated as:
 \begin{equation}
 	M_r(N,p) =  \frac{N + W(p) - L(p)}{2 \times N} \times 100
 	\label{eq:performance}
 \end{equation}
+where $L(p)$ is the number of games lost by $p$, $W(p)$ is the number of games won by $p$, and $N$ is the number of games played in a competition between a random moving player and $p$.
 }
 
-This measurement is equivalent to the Franken and Engelbrecht \cite{franken:checkers} function called the \myterm{F- measure}.  Like the F-measure, this function does consider the number of draws. This ins important in games where draws are common, like in \mygame{Checkers} matches. 
+This measurement is algebraically equivalent to the Franken and Engelbrecht \cite{franken:checkers} function called the \myterm{F- measure}.  Like the F-measure, this function does consider the number of draws. This is important in games where draws are common, like in \mygame{Checkers} matches. 
 %Previous experiments done by Messerschmidt {\it et al} \cite{messerschmidt:learning}  used a function that did not factor in the significance of the number of games drawn.  
+%Given the fact that perfect Tic-tac-toe play always ends in a draw, \refeq{messperf}  becomes less effective as the skill of the competitors improve.  This is because the performance criterion in unable to distinguish between a drawn and a lost game. This flaw in this equation is exasperated by the decision to penalise losses, and leave the score unchanged for draws when determining the fitness function.  In other words: the particles are trained that lost game are far worse than draw games, while the performance criterion does not give credit for this lesson.  Hence, the possibility exists that an experiment with a better performance measurement will confute  Messerschmidt's conclusion.  
 
 A larger value for $N$ would increase the accuracy of the measurement, at the expense of computing resources. The need for computing resources is determined by the game chosen as domain - for example, a single \mygame{Tic-tac-toe} match requires much less computation than a single \mygame{Chess} match. For the game \mygame{Tic-tac-toe}, Franken and Engelbrecht \cite{franken:checkers} used a value of $200000$ while Messerschmidt and Engelbrecht \cite{messerschmidt:learning} used $20000$.      
 %\footnote{*** ALSO \cite{angeline:evolve} uses 2000 games to determine the fitness of a \mygame{Tic-tac-toe} player (three player were used: random, near and best)}
 
+Another issue related to the measurement is how the random player chooses its move.  The approach taken here is to consider that the player faces a move decision by being forced to choose one of $k$ moves.  A random variable $r$ chosen from a uniform distribution from $[0,1)$ is used to determine an index.  The index is calculated as $i = \mbox{round}(r \times (k+1) - 0.5) + 1$, is used to choose the $i$-th move in the provided list.
+
+There is one more decision regarding the random player that is not always clarified.  The random player only chooses a random move, if there is not a winning move available. Clearly this decision would have a drastic affect on the metric itself. 
+
+\section{Experiment: Measure count for \mygame{Checkers}}
 In order to determine a reasonable value for $N$ for the \mygame{Checkers} game, an illustrative experiment was conducted using five different phased evaluation functions \{A,B,C,D,E\}\footnote{The idea was to use a few arbitrary functions for this experiment. The five functions used here were taken from initial work conducted on the discovery process. The detail of this process is described in the next chapter.}. A total of 20 000 games were played using each of the functions. The value of \refeq{performance} was measured using an increasing value for $N$ at intervals of  $1000$.  Then, using the final measurement (that is $F(20000,p)$ as a yardstick, the `error' of the preceding measurements was calculated as absolute value of the difference the measurement and the yardstick.  Thus, a high error value at interval $I$ indicates that $F(I,p)$ is an inaccurate prediction for $F(20000,p)$.  The result of these calculations can be seen in \reffig{error}.
 \begin{figure}[htp]
 	\centering
@@ -470,6 +476,9 @@ In order to determine a reasonable value for $N$ for the \mygame{Checkers} game,
 	\label{fig:error}
 \end{figure}
 At $N = 15000$, the error is well below $0.5$ (the horisontal line). In effect, this is an error of $0.5\%$, and therefore a value of $15000$ for $N$ is considered adequate.
+
+
+
 %
 %\subsubsection{ALSO} [from \cite{angeline:evolve}] Axelrod uses a weighted sum of 8 predetermined strategies for the "independent fitness function", using the weights and representative strategies from previous experiments. [idea: maybe I can use the 360 functions, and their performance measure as weights]  **\cite{axelrod:evolution}
 %
@@ -479,7 +488,7 @@ At $N = 15000$, the error is well below $0.5$ (the horisontal line). In effect, 
 %
 %Messerschmidt concludes that lbest is an improvement over gbest and also that PSO outperforms the evolutionary method as described by Fogel (in \cite{fogel:edge}).  Also, more particles in the swarm has a positive effect on the performance of the player.
 %
-%Given the fact that perfect Tic-tac-toe play always ends in a draw, \refeq{messperf}  becomes less effective as the skill of the competitors improve.  This is because the performance criterion in unable to distinguish between a drawn and a lost game. This flaw in this equation is exasperated by the decision to penalise losses, and leave the score unchanged for draws when determining the fitness function.  In other words: the particles are trained that lost game are far worse than draw games, while the performance criterion does not give credit for this lesson.  Hence, the possibility exists that an experiment with a better performance measurement will confute  Messerschmidt's conclusion.  
+
 
 %\subsection{Assessing the influence of the play order}
 %It has been shown that Checkers is a fair game: neither the first nor the second player has the advantage \cite{franken:checkers}. However, if the first player's knowledge is not transferrable to the second player, it will be beneficial to train two agents, one for the first player, and one for the second player. In order to determined the knowledge required by first player is different from the knowledge seconds by the second player another experiment was conducted.
@@ -520,7 +529,8 @@ At $N = 15000$, the error is well below $0.5$ (the horisontal line). In effect, 
 One expects the performance to increase as the search depth increases.
 \subsection*{Method}
 Using the known functions of Connect4; determine the \myterm{random performance measure} at different ply depths; using $N = 15000$.
-\susection*{Results}
+Using ordered alpha-beta (should not be significant).
+\subsection*{Results}
 \section{Conclusion}
 \label{sec:learning-conclusion}
 The use of a phased evaluation function instead of a single linear evaluation function introduces non-linearity into the evaluation process. Research endeavours using phased functions indicate that these function do indeed contribute to an improvement in the  performance of learning agents.  As a research problem, the discovery of features for linear functions is not as active as the problem of weight optimisation.  The approach Buro used for GLEM finds the specific features that were found in a representative number of instances of a given example set.

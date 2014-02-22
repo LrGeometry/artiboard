@@ -53,14 +53,14 @@ namespace arti {
 		public:
 			static ExperimentRepository& instance();
 			Experiment & find(const char * name);
-			const std::list<Experiment*>& all() const {return list_;};
+			/* The experiments sorted by name.  */
+			std::list<const Experiment *> all() const;
 		private:
 			void add(Experiment * value);
 			static ExperimentRepository * instance_;
 			ExperimentRepository();
 		private:
 			std::map<std::string, Experiment *> map_;
-			std::list<Experiment*> list_;
 	};
 
 }

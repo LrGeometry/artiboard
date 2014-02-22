@@ -13,6 +13,9 @@ namespace arti {
 			Side side_to_move() const {return (_index%2 == 0)?Side::South:Side::North;}
 			Ply next() const { return Ply(_index+1); }
 			bool is_odd() const {return _index%2 == 1;}
+			/* is it the first player's move */
+			bool is_player_a() const {return !is_odd(); }
+			bool is_player_b() const {return is_odd(); }
 			bool operator==(int v) const {return _index == v; }
 			int operator+(int v) const {return _index + v; }
 		private:
@@ -202,6 +205,30 @@ namespace arti {
 				return children.begin();
 			}
 			;
+	};
+
+	class PickRandom: public MoveChooser {
+		private:
+			const GameSpecification& spec_;
+		public:
+			PickRandom(const GameSpecification& spec): spec_(spec){}
+		  /** Choose any child in the list of children */
+			Board::u_ptr_it select(const Position & current,Board::u_ptr_list &children) override;
+	};
+
+	class PickDual: public MoveChooser {
+		private:
+			MoveChooser& pickerA_;
+			MoveChooser& pickerB_;
+		public:
+			PickDual(MoveChooser& a, MoveChooser& b) : pickerA_(a), pickerB_(b) {};
+		  /** Choose picker for player and pick accordingly */
+			Board::u_ptr_it select(const Position & current,Board::u_ptr_list &children) override {
+				if (current.ply().is_player_a())
+					return pickerA_.select(current,children);
+				else
+					return pickerB_.select(current,children);
+			}
 	};
 
 	/**

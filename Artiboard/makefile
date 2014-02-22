@@ -35,7 +35,7 @@ test: $(ARTI_TEST)
 	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
 
 c4: $(CONNECT_4)
-	cd $(TARGET_DIR); ./connect4.exe list data_dir=../../input; cat ./log.txt
+	cd $(TARGET_DIR); ./connect4.exe c4-350 data_dir=../../input; cat ./log.txt
 	
 run_tictactoe: $(TICTACTOE)
 	cd $(TARGET_DIR); ./tictactoe.exe t3-100; cat ./log.txt

@@ -35,7 +35,8 @@ namespace arti {
 				throw runtime_error_ex("incorrect usage, expected:\n\t%s  experiment_name>|test|list",argv[0]);
 			std::string name(argv[1]);
 			if (name == "list")
-				for (const auto& e: ExperimentRepository::instance().all()) {LOG << e->name() << "\t" << e->description();}
+				for (auto e: ExperimentRepository::instance().all())
+					std::cout << e->name() << "\t" << e->description() << std::endl;
 			else
 				ExperimentRepository::instance().find(argv[1]).run(argc-2,argv+2);
 			LOG << "Done";
@@ -48,6 +49,11 @@ namespace arti {
 		}
 	}
 
+	std::list<const Experiment*> ExperimentRepository::all() const {
+		std::list<const Experiment*> result;
+		for (auto &e : map_) result.push_back(e.second);
+		return result;
+	}
 
 	Experiment::Experiment(const char * aName, const std::string aDescription) :
 			name_(aName), description_(aDescription), start_(0), ofile_() {
@@ -95,7 +101,6 @@ namespace arti {
 
 	void ExperimentRepository::add(Experiment * value) {
 		map_[std::string(value->name())] = value;
-		list_.push_back(value);
 	}
 
 	Experiment & ExperimentRepository::find(const char * name) {
