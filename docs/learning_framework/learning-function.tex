@@ -445,19 +445,21 @@ The new phased evaluation function is input to the \textsl{optimise stage}.  Dur
 During the evaluate stage, the new knowledge (i.e. an optimised phased evaluation function) is incorporated into a \myterm{champion list}.  The champion list is kept in order of descending strength, and a new champion competes with the functions in this list (starting from the top) to determine its placement in this list.
 % decribe the idea of stages in this chapter
 % As described in a previous chapter (**ref**), a set of functions is required -- one function for each game phase.  For Checkers, the phase is incremented every time a piece is taken from the position. That is, the \myterm{phase} is the count of the number pieces removed from play in the given position.  The feature discovery agent does not determine the weights of the terms in the function - it decides on the terms of the function.  In any game, no more than 23 pieces can be taken, and when the last piece is taken, the game is won.  That gives us 22 stages in which decisions needs to be made.  This covers all legal game positions with two or more pieces on the board.  Also, there must be at least one piece from every player. The objective of the feature discovery agent is to compose 23 functions, one function for each phase, such that the features in each function is likely to be an important factor during play.
-\section{The performance of a function}
+\section{Measuring performance}
 \label{sec:learning-performance}
-In this section, a method to evaluate a player's performance is described.  It is not possible to measure the progress of the learner if the method to evaluate the resulting playing agent is undecided. Let $f$ be a phased evaluation function, and $N$ be the number of games played in a competition between an agent that uses $f$ and random moving player. If $L(f)$ denotes the number of games lost and $W(f)$ denotes the number of games won, then the performance measure of $f$ is determined as follows:
+This section describes a method to measure a player's performance. A method to measure of performance is needed to determine the progress made by the learner.  One way to measure performance is to play against a random moving player.  This measure is weak in the sense that it becomes invalid when a player always beats the random moving player.    
+\mydefc{random performance measure} {of a player} {A value between $0$ and $100$ such that a greater value indicates better performance.
+   Let $p$ be any player, and $N$ be the number of games played in a competition between a random moving player. Let $L(p)$ denote the number of games lost and $W(p)$ denotes the number of games won by $p$, then the performance measure of $p$ is determined by:
 \begin{equation}
-	F(N,p) =  \frac{N + W(f) - L(f)}{2 \times N} \times 100
+	M_r(N,p) =  \frac{N + W(p) - L(p)}{2 \times N} \times 100
 	\label{eq:performance}
 \end{equation}
+}
 
-During the measurement, the number of games played as first player and second player are equal (that is $N/2$). The measurement ranges from $0$ to $100$, and a greater value indicates a better performance. 
-
-This measurement is equivalent to the Franken and Engelbrecht \cite{franken:checkers} function called the \myterm{F- measure}.  Like the F-measure, this function also accounts for the large number of draws that often arises in \mygame{Checkers} matches. 
+This measurement is equivalent to the Franken and Engelbrecht \cite{franken:checkers} function called the \myterm{F- measure}.  Like the F-measure, this function does consider the number of draws. This ins important in games where draws are common, like in \mygame{Checkers} matches. 
 %Previous experiments done by Messerschmidt {\it et al} \cite{messerschmidt:learning}  used a function that did not factor in the significance of the number of games drawn.  
-Clearly, a larger value for $N$ would increase the accuracy of the measurement. Franken and Engelbrecht \cite{franken:checkers} used a value of 200 000 and Messerschmidt and Engelbrecht \cite{messerschmidt:learning} used 20 000 for \mygame{Tic-tac-toe}  as a value for $N$. This is a ten-fold increase in the computational resources required to measure the performance of an agent.  The value chosen for $N$ depends on the required accuracy, and also on the available computing resources.  The need for computing resources is determined by the game chosen as domain - for example, a single \mygame{Tic-tac-toe} match requires much less computation than a single \mygame{Chess} match.      
+
+A larger value for $N$ would increase the accuracy of the measurement, at the expense of computing resources. The need for computing resources is determined by the game chosen as domain - for example, a single \mygame{Tic-tac-toe} match requires much less computation than a single \mygame{Chess} match. For the game \mygame{Tic-tac-toe}, Franken and Engelbrecht \cite{franken:checkers} used a value of $200000$ while Messerschmidt and Engelbrecht \cite{messerschmidt:learning} used $20000$.      
 %\footnote{*** ALSO \cite{angeline:evolve} uses 2000 games to determine the fitness of a \mygame{Tic-tac-toe} player (three player were used: random, near and best)}
 
 In order to determine a reasonable value for $N$ for the \mygame{Checkers} game, an illustrative experiment was conducted using five different phased evaluation functions \{A,B,C,D,E\}\footnote{The idea was to use a few arbitrary functions for this experiment. The five functions used here were taken from initial work conducted on the discovery process. The detail of this process is described in the next chapter.}. A total of 20 000 games were played using each of the functions. The value of \refeq{performance} was measured using an increasing value for $N$ at intervals of  $1000$.  Then, using the final measurement (that is $F(20000,p)$ as a yardstick, the `error' of the preceding measurements was calculated as absolute value of the difference the measurement and the yardstick.  Thus, a high error value at interval $I$ indicates that $F(I,p)$ is an inaccurate prediction for $F(20000,p)$.  The result of these calculations can be seen in \reffig{error}.
@@ -512,6 +514,13 @@ At $N = 15000$, the error is well below $0.5$ (the horisontal line). In effect, 
 %
 %\subsection{Measuring the learning rate}
 %\cite{fogel:networks} uses the mean of the best player's score.
+
+\section{Experiment: Does more search improve performance?}
+\subsection*{Objective}
+One expects the performance to increase as the search depth increases.
+\subsection*{Method}
+Using the known functions of Connect4; determine the \myterm{random performance measure} at different ply depths; using $N = 15000$.
+\susection*{Results}
 \section{Conclusion}
 \label{sec:learning-conclusion}
 The use of a phased evaluation function instead of a single linear evaluation function introduces non-linearity into the evaluation process. Research endeavours using phased functions indicate that these function do indeed contribute to an improvement in the  performance of learning agents.  As a research problem, the discovery of features for linear functions is not as active as the problem of weight optimisation.  The approach Buro used for GLEM finds the specific features that were found in a representative number of instances of a given example set.

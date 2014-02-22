@@ -1,7 +1,6 @@
 #include "game.h"
 
 namespace arti {
-typedef std::function<float(const Position&)> eval_function_t;
 
 struct EvalResult {
 		Board::u_ptr_it it;
@@ -16,7 +15,7 @@ protected:
 		int walk_count_;
 		float value_;
 protected:
-		MinimaxChooser(GameSpecification* spec, eval_function_t fn, int ply) : spec_(spec), function_(fn), max_plies_(ply), walk_count_(0), value_(0.0f) {};
+		MinimaxChooser(const GameSpecification* spec, eval_function_t fn, int ply) : spec_(spec), function_(fn), max_plies_(ply), walk_count_(0), value_(0.0f) {};
 public:
 		/** The number of positions traversed by the chooser during the previous call to select */
 		int walk_count() const {return walk_count_;}
@@ -41,7 +40,7 @@ class PickNegamaxAlphaBeta: public MinimaxChooser {
 			const int sign);
 		void sort_by_function(Board::u_ptr_list& boards, const Ply parent_ply) const;
 	public:
-		PickNegamaxAlphaBeta(GameSpecification* spec, eval_function_t fn, int ply, bool ordered=true) :
+		PickNegamaxAlphaBeta(const GameSpecification* spec, eval_function_t fn, int ply, bool ordered=true) :
 			MinimaxChooser(spec,fn,ply),  ordered_(ordered) {
 		};
 		Board::u_ptr_it select(const Position & current, Board::u_ptr_list &list) override;

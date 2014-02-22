@@ -176,9 +176,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4.h</locationURI>
 		</link>
 		<link>
-			<name>connect4/connect4_exp.cpp</name>
+			<name>connect4/connect4_classify.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/connect4_exp.cpp</locationURI>
+			<location>C:/development/github/artiboard/Artiboard/connect4/connect4_classify.cpp</location>
 		</link>
 		<link>
 			<name>connect4/connect4_main.cpp</name>

@@ -229,5 +229,5 @@ namespace arti {
 		};
 
 	ostream& operator <<(std::ostream& os, const Match& v);
-
+	typedef std::function<float(const Position&)> eval_function_t;
 }

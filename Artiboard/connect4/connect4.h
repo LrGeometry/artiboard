@@ -19,4 +19,12 @@ public:
 	static const Piece north;
 	static const Piece south;
 	static const Piece open;
+	static const Connect4 spec;
+	static float win_lose(const Position& pos);
+	static float StenMarkADATE(const Position& pos);
+	static float StenMarkIBEF(const Position& pos);
+	static float StenMarkIBEFB(const Position& pos);
+	static float StenMarkADATEB(const Position& pos);
+	static float StenMarkIBEFS(const Position& pos);
 };
+

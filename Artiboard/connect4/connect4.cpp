@@ -1,7 +1,7 @@
 #include "connect4.h"
 #include <log.h>
 #include <vector>
-
+const Connect4 Connect4::spec;
 const Piece Connect4::south('o');
 const Piece Connect4::north('x');
 const Piece Connect4::open('-');
@@ -140,5 +140,95 @@ AnnotatedBoard::AnnotatedBoard(const Board& s) {
 	}
 }
 
+float Connect4::win_lose(const Position& pos) {
+	switch (Connect4::spec.outcome_of(pos)) {
+	case SouthPlayerWins: return 6*7*1000;
+	case NorthPlayerWins: return -6*7*1000;
+	default:
+		return 0.0f;
+	}
+}
+
+float weighted_south(const int w[], const Position& pos) {
+	float result = 0.0f;
+	for (int r = 0; r < 7; r++)
+		for (int c = 0; c < 8; c++) {
+			if (pos.board().at(c,r) == Connect4::south)
+				result += w[c*r];
+		}
+	return result;
+}
+
+float weighted_balanced(const int w[], const Position& pos) {
+	float s = 1.0f;
+	float n = 1.0f;
+	for (int r = 0; r < 7; r++)
+		for (int c = 0; c < 8; c++) {
+			const auto p = pos.board().at(c,r);
+			if (p == Connect4::south)
+				s += w[c*r];
+			else if (p == Connect4::north)
+				n += w[c*r];
+		}
+	return s - n;
+}
+
+static const int stenmark_ibef[] = {
+	3,4, 5, 7, 5,4,3,
+	4,6, 8,10, 8,6,4,
+	5,8,11,13,11,8,5,
+	5,8,11,13,11,8,5,
+	4,6, 8,10, 8,6,4,
+	3,4, 5, 7, 5,4,3};
+
+static const int stenmark_adate[] = {
+	2, 0,2, 2, 2, 2,1,
+	0, 2,6, 6, 2, 4,1,
+	0,12,6,14,12,11,2,
+	0, 1,4,16, 0, 0,2,
+	0, 2,5, 0, 5, 4,4,
+	0, 2,0, 1, 12,0,0};
+
+
+float Connect4::StenMarkIBEF(const Position& pos) {
+	auto result = Connect4::win_lose(pos);
+	if (result == 0.0) {
+		result = weighted_south(stenmark_ibef,pos);
+	}
+	//TRACE << pos.board() << "SCORE:" << result;
+	return result;
+}
+
+float Connect4::StenMarkIBEFS(const Position& pos) {
+	return weighted_south(stenmark_ibef,pos);
+}
+
+
+float Connect4::StenMarkADATE(const Position& pos) {
+	auto result = Connect4::win_lose(pos);
+	if (result == 0.0) {
+		result = weighted_south(stenmark_adate,pos);
+	}
+	//TRACE << pos.board() << "SCORE:" << result;
+	return result;
+}
+
+float Connect4::StenMarkIBEFB(const Position& pos) {
+	auto result = Connect4::win_lose(pos);
+	if (result == 0.0) {
+		result = weighted_balanced(stenmark_ibef,pos);
+	}
+	//TRACE << pos.board() << "SCORE:" << result;
+	return result;
+}
+
+float Connect4::StenMarkADATEB(const Position& pos) {
+	auto result = Connect4::win_lose(pos);
+	if (result == 0.0) {
+		result = weighted_balanced(stenmark_adate,pos);
+	}
+	//TRACE << pos.board() << "SCORE:" << result;
+	return result;
+}
 
 
