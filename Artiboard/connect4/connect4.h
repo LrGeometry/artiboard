@@ -25,6 +25,5 @@ public:
 	static float StenMarkIBEF(const Position& pos);
 	static float StenMarkIBEFB(const Position& pos);
 	static float StenMarkADATEB(const Position& pos);
-	static float StenMarkIBEFS(const Position& pos);
 };
 

@@ -109,6 +109,8 @@ MatchOutcome Connect4::outcome_of(const Position& p) const {
 
 /** Next open square in every file is a possible move */
 void Connect4::collectMoves(const Position& pos, Move::SharedFWList &result) const {
+	if (outcome_of(pos) != Unknown)
+		return; // there are no more moves to make
 	auto piece = piece_for(pos.ply().side_to_move());
 	for (auto i = 0U; i < files.size(); i++) {
 		const Region& r = *files[i];
@@ -140,14 +142,16 @@ AnnotatedBoard::AnnotatedBoard(const Board& s) {
 	}
 }
 
-float Connect4::win_lose(const Position& pos) {
+float win_lose_or(const Position& pos, eval_function_t fn) {
 	switch (Connect4::spec.outcome_of(pos)) {
 	case SouthPlayerWins: return 6*7*1000;
 	case NorthPlayerWins: return -6*7*1000;
+	case Draw: return 0;
 	default:
-		return 0.0f;
+		return fn(pos);
 	}
 }
+
 
 float weighted_south(const int w[], const Position& pos) {
 	float result = 0.0f;
@@ -160,8 +164,8 @@ float weighted_south(const int w[], const Position& pos) {
 }
 
 float weighted_balanced(const int w[], const Position& pos) {
-	float s = 1.0f;
-	float n = 1.0f;
+	float s = 0.0f;
+	float n = 0.0f;
 	for (int r = 0; r < 7; r++)
 		for (int c = 0; c < 8; c++) {
 			const auto p = pos.board().at(c,r);
@@ -189,46 +193,33 @@ static const int stenmark_adate[] = {
 	0, 2,5, 0, 5, 4,4,
 	0, 2,0, 1, 12,0,0};
 
+float Connect4::win_lose(const Position& pos) {
+	return win_lose_or(pos,
+		[](const Position& pos){return 0.0f;});
+}
 
 float Connect4::StenMarkIBEF(const Position& pos) {
-	auto result = Connect4::win_lose(pos);
-	if (result == 0.0) {
-		result = weighted_south(stenmark_ibef,pos);
-	}
-	//TRACE << pos.board() << "SCORE:" << result;
-	return result;
+	return win_lose_or(pos,
+		[](const Position& pos){
+			return weighted_south(stenmark_ibef,pos);});
 }
-
-float Connect4::StenMarkIBEFS(const Position& pos) {
-	return weighted_south(stenmark_ibef,pos);
-}
-
 
 float Connect4::StenMarkADATE(const Position& pos) {
-	auto result = Connect4::win_lose(pos);
-	if (result == 0.0) {
-		result = weighted_south(stenmark_adate,pos);
-	}
-	//TRACE << pos.board() << "SCORE:" << result;
-	return result;
+	return win_lose_or(pos,
+		[](const Position& pos){
+			return weighted_south(stenmark_adate,pos);});
 }
 
 float Connect4::StenMarkIBEFB(const Position& pos) {
-	auto result = Connect4::win_lose(pos);
-	if (result == 0.0) {
-		result = weighted_balanced(stenmark_ibef,pos);
-	}
-	//TRACE << pos.board() << "SCORE:" << result;
-	return result;
+	return win_lose_or(pos,
+		[](const Position& pos){
+			return weighted_balanced(stenmark_ibef,pos);});
 }
 
 float Connect4::StenMarkADATEB(const Position& pos) {
-	auto result = Connect4::win_lose(pos);
-	if (result == 0.0) {
-		result = weighted_balanced(stenmark_adate,pos);
-	}
-	//TRACE << pos.board() << "SCORE:" << result;
-	return result;
+	return win_lose_or(pos,
+		[](const Position& pos){
+			return weighted_balanced(stenmark_adate,pos);});
 }
 
 

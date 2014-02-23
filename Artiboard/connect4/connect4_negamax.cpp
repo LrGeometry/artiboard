@@ -58,12 +58,10 @@ class NegamaxOrdered : Experiment {
 				do_step(i,"ADATE",Connect4::StenMarkADATE,false);
 				do_step(i,"IBEFB",Connect4::StenMarkIBEFB,false);
 				do_step(i,"ADATEB",Connect4::StenMarkADATEB,false);
-				do_step(i,"IBEFS",Connect4::StenMarkIBEFS,false);
 				do_step(i,"WinLose",Connect4::win_lose,true);
 				do_step(i,"IBEF",Connect4::StenMarkIBEF,true);
 				do_step(i,"ADATE",Connect4::StenMarkADATE,true);
 				do_step(i,"IBEFB",Connect4::StenMarkIBEFB,true);
-				do_step(i,"IBEFS",Connect4::StenMarkIBEFS,true);
 				do_step(i,"ADATEB",Connect4::StenMarkADATEB,true);
 			}
 		  //pickLevel(2);
