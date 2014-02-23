@@ -73,10 +73,10 @@ class NegamaxOrdered : Experiment {
 
 class PerformanceMeasurements : Experiment {
 	public:
-		PerformanceMeasurements() : Experiment("c4-350","What affect does search depth have on performance?") {}
+		PerformanceMeasurements() : Experiment("c4-350","What affect does search depth have on performance? (3h+)") {}
 		void do_run() override {
 			file() << "Function Depth Performance";
-			do_step("WinLose",Connect4::win_lose);
+			//do_step("WinLose",Connect4::win_lose);
 			do_step("IBEF",Connect4::StenMarkIBEF);
 			do_step("ADATE",Connect4::StenMarkADATE);
 			do_step("IBEFB",Connect4::StenMarkIBEFB);

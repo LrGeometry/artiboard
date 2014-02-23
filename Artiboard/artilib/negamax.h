@@ -40,6 +40,9 @@ class PickNegamaxAlphaBeta: public MinimaxChooser {
 			const int sign);
 		void sort_by_function(Board::u_ptr_list& boards, const Ply parent_ply) const;
 	public:
+		/** The value for ply indicates how many ply must be searched.  The minimum value is 1. At ply=1
+		 * there is essentially no look ahead - the function fn is determines the choice.
+		 */
 		PickNegamaxAlphaBeta(const GameSpecification* spec, eval_function_t fn, int ply, bool ordered=true) :
 			MinimaxChooser(spec,fn,ply),  ordered_(ordered) {
 		};
