@@ -146,7 +146,7 @@ float win_lose_or(const Position& pos, eval_function_t fn) {
 	switch (Connect4::spec.outcome_of(pos)) {
 	case SouthPlayerWins: return 6*7*1000;
 	case NorthPlayerWins: return -6*7*1000;
-	case Draw: return 0;
+	case Draw: return 6*7*1000-1; // draw is nearly as good as a win
 	default:
 		return fn(pos);
 	}

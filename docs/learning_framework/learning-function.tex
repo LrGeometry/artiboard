@@ -531,6 +531,14 @@ One expects the performance to increase as the search depth increases.
 Using the known functions of Connect4; determine the \myterm{random performance measure} at different ply depths; using $N = 15000$.
 Using ordered alpha-beta (should not be significant).
 \subsection*{Results}
+\begin{figure}[ht]
+	\centering
+		\includegraphics{artifacts/c4-350.eps}
+	\caption{Performance at ply depths}
+	\label{fig:patply}
+\end{figure}
+From \reffig{patply} it is clear that only ADATE and IBEF consistently increases with an increase is search depth.  This experiment also suggests that IBEF is better than ADATE.  However ADATE started out better than IBEF -- could it be because that level was used by Stenmark's \cite{stenmark:masters} optimisation?
+
 \section{Conclusion}
 \label{sec:learning-conclusion}
 The use of a phased evaluation function instead of a single linear evaluation function introduces non-linearity into the evaluation process. Research endeavours using phased functions indicate that these function do indeed contribute to an improvement in the  performance of learning agents.  As a research problem, the discovery of features for linear functions is not as active as the problem of weight optimisation.  The approach Buro used for GLEM finds the specific features that were found in a representative number of instances of a given example set.
