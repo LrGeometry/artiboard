@@ -201,7 +201,15 @@ I(\myset S,a) = H(\myset S) - H(\myset S,a)
 \end{equation}
 The information gain heuristic selects the attribute with the greatest information gain value. Note that an equivalent selection is when when selecting the attribute with the smallest value for \refeq{attrib_entropy}. 
 
-\input{id3experiments}
+\section{Experiment: number of training examples}
+% results are in c4-070.r
+Preliminary results shows that a ratio of $1:3$ for test to training examples and a minimal object pruning produces a good balance between tree size and tree certainty.
+
+\section{Bit vector representation}
+TODO: Idea comes from experiments described in \cite{shavlik:comparision}.  
+\section{Experiment: The effect of bit encoding}
+TODO
+
 \section{The discovery algorithm}
 \label{sec:discovery_algorithm}
 % Introduction
@@ -781,7 +789,7 @@ So in general cutoff of 64 seems to be optimal.
 \center
 \includegraphics{artifacts/c4-300cc.eps}
 \caption{Cutoff and certainty}
-\label{fig:id3cs}
+\label{fig:c4-300}
 \end{figure}
 
 \section{Experiment: Does region affect size and certainty?}

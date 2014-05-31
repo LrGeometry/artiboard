@@ -467,7 +467,7 @@ Another issue related to the measurement is how the random player chooses its mo
 
 There is one more decision regarding the random player that is not always clarified.  The random player only chooses a random move, if there is not a winning move available. Clearly this decision would have a drastic affect on the metric itself. 
 
-\section{Experiment: Measure count for \mygame{Checkers}}
+\section{Experiment: Measure count for Checkers}
 In order to determine a reasonable value for $N$ for the \mygame{Checkers} game, an illustrative experiment was conducted using five different phased evaluation functions \{A,B,C,D,E\}\footnote{The idea was to use a few arbitrary functions for this experiment. The five functions used here were taken from initial work conducted on the discovery process. The detail of this process is described in the next chapter.}. A total of 20 000 games were played using each of the functions. The value of \refeq{performance} was measured using an increasing value for $N$ at intervals of  $1000$.  Then, using the final measurement (that is $F(20000,p)$ as a yardstick, the `error' of the preceding measurements was calculated as absolute value of the difference the measurement and the yardstick.  Thus, a high error value at interval $I$ indicates that $F(I,p)$ is an inaccurate prediction for $F(20000,p)$.  The result of these calculations can be seen in \reffig{error}.
 \begin{figure}[htp]
 	\centering

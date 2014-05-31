@@ -33,4 +33,28 @@ There is an interesting problem highlighted with the comparison of the evaluatio
 \subsection{Simulation results}  The experiment uses a 5-ply look-ahead and alpha-beta pruning to generate the game tree.  Costs are allocated such that winning positions have a higher costs and losing positions a lower cost. The cost of non-edge nodes is $1$.  Because the entire tic-tac-toe game tree can be used, it is a clean way to test the effect of $\theta$.  For connect-four the evaluation function proposed by Stenmark \cite{stenmark:masters} is used.  Both experiments show the expected result: that a higher value for $\theta$ produce a stronger player.  However, the results for connect-4 is not as clear as the result for tic-tac-toe.
 \subsection{Notes} This work does not directly relate to the work I am doing -- the focus is on improving the satisfaction of a human player; and a way to adjust the strength of a player.  However, I do have the problem of emulating weak players when comparing different evaluation functions.  It could be that one could express an evaluation function in terms of another using $\theta$.  It has the potential of becoming a knowledge-strength test. 
 
-    
+\section{Symbolic and Neural Learning Algorithms: An Experimental Comparison}
+\cite{shavlik:comparision}
+\subsection{Introduction}
+Supervised learning is implemented using using ID3, perceptron and backpropagation algorithms.  These algorithms are compared by observing the effect of the amount of training data and the quality of training data.  For the latter, random noise was used, values was removed from training set, and features was removed.
+% i ignored the work done using the NETTalk dataset; it is not relevant to my current research
+\subsection{General experimental setup}
+Five different data sets were used: soyabean (17 classes), chess (2 classes), audiology (24 classes), heart disease (2 catagories), NETTalk (41 catagories). 
+\subsubsection{ID3} 
+For ID3 chi-squared pruning \cite{quinlan:noise} was added to handle noisy data.
+\subsubsection{Perceptron}
+The perceptron \cite{rosenblatt:perceptrons} adjust the weight of a single linear threshold, and minimizes the squares of errors using gradient decent.  It only works on data that is linearly separable.  The implementation makes use of the perceptron cycling theorem.  One perceptron is created for each category; the perceptron that exceeds his threshold the furthest is chosen.
+\subsubsection{Backpropagation} 
+The backpropagation \cite{rumelhart:propagation} method also uses gradient descent with sum of squares - but it has hidden units.  This paper uses a differentiable threshold function.  It also employs a learning rate and a momentum term that helps overcome local maxima. This method is not guaranteed to converge.  The number of hidden units were chosen by a formula: (input nodes $+$ output nodes) $\times \frac{10}{100}$
+\subsection{Representing examples}
+Bit vectors are used: one for each value-attribute pair. Missing values for an attribute means all bits are off.
+This representation slightly improved ID3's performance. Possible reasons are: 1) It eliminates the undesired preference for many valued attributes 2) Allows more general branching  and 3) it eliminates the irrelevant values problem.  The downside is that more features means increased run time.
+\subsection{Results}
+\subsubsection{Learning time and correctness} 
+ID3 and perceptron is much faster than BP, but BP did fare better on correctness.
+\subsubsection{Effect of the number of training examples}
+BP did well here too.  The author suggested that faring better on few examples is a prediction of faring better on many examples.  ID3's lack of performance could be related to the problem of small disjuncts.
+\subsubsection{Effect of imperfect examples}
+BP did better here, but ID3 did surprisingly well.
+\subsection{Notes}    
+This paper highlights opportunities to improve on the basic ID3 - specifically the use of bit vectors sounds applicable to the current work.  It is also worth looking at the different types of data sets; asking which type are closer to game boards.  The experiments are likely to be worth repeating; but also including perceptron trees\cite{utgoff:trees}. 
