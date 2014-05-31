@@ -14,3 +14,5 @@ artilib/generated
 *.synctex
 *.tps
 *.bst
+/Default
+/Debug

@@ -4,7 +4,7 @@ DEBUG = -O -g3 $(GP)
 MAX_SPEED = -O3 -DNDEBUG $(GP)
 FLAGS = $(MAX_SPEED) 
 #FLAGS = $(DEBUG) 
-COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -pthread -fmessage-length=0 -Werror=return-type -Wno-unknown-pragmas -std=c++0x -Wall $(FLAGS)
+COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -pthread -fmessage-length=0 -Werror=return-type -Wno-unknown-pragmas -std=c++11 -Wall $(FLAGS)
 LINK_ARGS =  -L$(TARGET_DIR) -Llibs $(GP)
 DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers tictactoe 
 # 3.3 does not have this problem: '_empty' was not declared in this scope
@@ -26,19 +26,22 @@ TICTACTOE := $(TARGET_DIR)/tictactoe.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
 
-all: c4
+all: run_tictactoe
 
 ant: $(ANTLR_LIB)
 	echo "done"
+
+ant_clean: 
+	rm $(ANTLR_LIB)
 
 test: $(ARTI_TEST)
 	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
 
 c4: $(CONNECT_4)
-	cd $(TARGET_DIR); ./connect4.exe c4-350 data_dir=../../input; cat ./log.txt
+	cd $(TARGET_DIR); ./connect4.exe list; cat ./log.txt
 	
 run_tictactoe: $(TICTACTOE)
-	cd $(TARGET_DIR); ./tictactoe.exe t3-100; cat ./log.txt
+	cd $(TARGET_DIR); ./tictactoe.exe list; cat ./log.txt
 
 run_checkers: $(CHECKERS)
 	cd $(TARGET_DIR); ./checkers.exe

@@ -53,6 +53,12 @@ namespace arti {
 		return ss.cend();	
 	}
 
+	void Board::apply(std::function<void (Square, Piece)> fn) const {
+		for (auto s = begin(); s != end(); s++)
+			fn(s.pos(),*s);
+	}
+
+
 	int Board::count_repeats(const Region& ss, const Piece &value) const {
 		int result = 0;
 		bool repeating = false;

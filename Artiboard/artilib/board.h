@@ -5,7 +5,7 @@
 #include <ostream>
 #include <memory>
 #include <iterator>
-
+#include <functional>
 #include "square.h"
 /**
  * The framework presumes that a board game is played on a Board that contains 64 squares.
@@ -129,7 +129,7 @@ namespace arti {
 
 			const const_iterator begin() const {return const_iterator(*this,0,0);}
 			const const_iterator end() const {return const_iterator(*this,7,7);}
-	
+			void apply(std::function<void (Square, Piece)> fn) const;
 		private:
 			std::array<Piece, 64> _data;
 			const_iterator _it_b, _it_e;

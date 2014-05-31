@@ -136,6 +136,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/optimiser.h</locationURI>
 		</link>
 		<link>
+			<name>artilib/outcomedata.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/outcomedata.cpp</locationURI>
+		</link>
+		<link>
+			<name>artilib/outcomedata.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/outcomedata.h</locationURI>
+		</link>
+		<link>
 			<name>artilib/square.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/square.cpp</locationURI>
@@ -159,11 +169,6 @@
 			<name>connect4/.gitignore</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/.gitignore</locationURI>
-		</link>
-		<link>
-			<name>connect4/c4_class_exp.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/connect4/c4_class_exp.cpp</locationURI>
 		</link>
 		<link>
 			<name>connect4/connect4.cpp</name>

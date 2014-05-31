@@ -135,6 +135,16 @@
 			<locationURI>copy_PARENT/Artiboard/artilib/optimiser.h</locationURI>
 		</link>
 		<link>
+			<name>artilib/outcomedata.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/outcomedata.cpp</locationURI>
+		</link>
+		<link>
+			<name>artilib/outcomedata.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/artilib/outcomedata.h</locationURI>
+		</link>
+		<link>
 			<name>artilib/square.cpp</name>
 			<type>1</type>
 			<locationURI>copy_PARENT/Artiboard/artilib/square.cpp</locationURI>
@@ -155,6 +165,16 @@
 			<locationURI>copy_PARENT/Artiboard/artilib/systemex.h</locationURI>
 		</link>
 		<link>
+			<name>tictactoe/t3_icu.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/tictactoe/t3_icu.cpp</locationURI>
+		</link>
+		<link>
+			<name>tictactoe/t3_icu.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/tictactoe/t3_icu.h</locationURI>
+		</link>
+		<link>
 			<name>tictactoe/tictactoe.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/tictactoe/tictactoe.cpp</locationURI>
@@ -163,6 +183,11 @@
 			<name>tictactoe/tictactoe.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/tictactoe/tictactoe.h</locationURI>
+		</link>
+		<link>
+			<name>tictactoe/tictactoe_id3.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Artiboard/tictactoe/tictactoe_id3.cpp</locationURI>
 		</link>
 		<link>
 			<name>tictactoe/tictactoe_main.cpp</name>

@@ -88,7 +88,7 @@ BEGIN(1,"quinlan example classifies correctly")
 	result.to_stream(TRACE,cf._db);
 	ensure_equalsf("root must be certain", 100.0f, cf.root().certainty());
 	ensure("root must have children", !result.is_leaf());
-	ensure_equals("best atribute does not match", cf._db.attribute_name(result.childs.begin()->attribute),"Outlook");
+	ensure_equals("best attribute does not match", cf._db.attribute_name(result.childs.begin()->attribute),"Outlook");
 	ensure_equalsf("Outlook entropy is not correct",0.693536f,result.best_entropy);
 	ensure_equals(result.childs_size(),3);
 	ensure_equals(result.size(),8);
