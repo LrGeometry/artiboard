@@ -1,3 +1,4 @@
+#pragma once
 #include <set>
 #include <algorithm>
 #include <functional>
@@ -66,7 +67,13 @@ public:
 
 std::ostream& operator<<(std::ostream &os, const ID3Node& v);
 
-/** The classifier produces a ID3 node, and resolve values.
+/**
+ * The ID3Classifier produces an ID3Node that resolves values.
+ * A client of this class inherits from it.  The responsibility of the client it to
+ * provide the data that must be classified.  It does this by implementing
+ * value_of() and class_of(); members that interpret the meaning on the elements
+ * that are being classified. These members typically 'lookup' a data structure
+ * that is referenced by the client.
  */
 class ID3Classifier {
 private: 

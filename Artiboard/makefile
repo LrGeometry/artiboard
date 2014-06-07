@@ -1,3 +1,4 @@
+# This makefile runs from Powershell
 TARGET_DIR = RunDir
 #GP=-pg 
 DEBUG = -O -g3 $(GP)
@@ -26,7 +27,7 @@ TICTACTOE := $(TARGET_DIR)/tictactoe.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
 .PHONY : clean all run_connect_4 dox 
 
-all: run_tictactoe
+all: run_c4
 
 ant: $(ANTLR_LIB)
 	echo "done"
@@ -35,16 +36,16 @@ ant_clean:
 	rm $(ANTLR_LIB)
 
 test: $(ARTI_TEST)
-	cd $(TARGET_DIR); ./artitest.exe; cat ./log.txt
+	cd $(TARGET_DIR)/artitest.exe; cat ./log.txt
 
-c4: $(CONNECT_4)
-	cd $(TARGET_DIR); ./connect4.exe list; cat ./log.txt
+run_c4: $(CONNECT_4)
+	cd $(TARGET_DIR) & connect4.exe list & type log.txt
 	
 run_tictactoe: $(TICTACTOE)
-	cd $(TARGET_DIR); ./tictactoe.exe list; cat ./log.txt
+	cd $(TARGET_DIR) & tictactoe.exe list & cat ./log.txt
 
 run_checkers: $(CHECKERS)
-	cd $(TARGET_DIR); ./checkers.exe
+	cd $(TARGET_DIR) & checkers.exe
 
 # sometimes this target must be called explicitly
 grammars:		

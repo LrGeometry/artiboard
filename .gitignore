@@ -21,3 +21,5 @@ src/.settings/
 *.Rhistory
 *.sublime-workspace
 *.xmind
+Artiboard-D
+dub.json

@@ -16,7 +16,7 @@ namespace arti {
 	{
 	public:
 		// check if f and r is from 1 to 8
-		static bool in_bounds(ordinal_t f, ordinal_t r)	{ return (f < 8) & (r < 8); }
+		static bool in_bounds(ordinal_t f, ordinal_t r)	{ return (f < 8) && (r < 8); }
 		enum color_t {Light, Dark};
 		// index for a valid square is 0 to 63
 		ordinal_t index(void) const;
