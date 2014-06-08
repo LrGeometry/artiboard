@@ -54,7 +54,7 @@ namespace arti {
 			bool operator <(const Piece& other) const {return _value < other._value;}			;
 			bool operator ==(const square_value_t rhs) const {return _value == rhs;}
 			square_value_t index() const {return _value;}			;
-
+			std::string to_string() const;
 		private:
 			square_value_t _value;
 		public:

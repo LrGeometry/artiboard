@@ -2,6 +2,7 @@
 #include <feat.h>
 #include <id3.h>
 #include <forward_list>
+#include <log.h>
 #include "connect4.h"
 #include "icu_data.h"
 using namespace arti;
@@ -61,7 +62,7 @@ std::ostream& operator << (std::ostream& os, const DataStat& s) {
 
 class DataStatistics: public Experiment {
 public:
-	DataStatistics(): Experiment("c4-020","Connect-4 ICU data") {}
+	DataStatistics(): Experiment("c4-020","Display Connect-4 ICU data statistics") {}
 	void do_run() override {
 		file() << "ply wins losses draws";
 		const IcuData data(args()["icu_file"]);
@@ -77,9 +78,54 @@ public:
 };
 DataStatistics ex2;
 
+class C4IcuExperiment : public Experiment {
+	public:
+		C4IcuExperiment(const char * name, const string &desc) : Experiment(name,desc) {}
+	protected:
+		std::string data_filename() {return args()["icu_file"];}
+};
+
+/**
+ * http://plantuml.sourceforge.net/classes.html
+ * @startuml
+ * class ExampleStratExperiment *-> IcuData
+ * IcuData -|> arti.OutcomeData
+ * ExampleStratExperiment *-> arti.OutcomeDataClassifier
+ * ExampleStratExperiment *-> arti.OutcomeDataTable
+ * package arti {
+ * class ID3Classifier
+ * OutcomeDataClassifier --|> ID3Classifier
+ * class OutcomeDataTable
+ * class OutcomeDataClassifier << todo >>
+ * OutcomeDataClassifier o-->  OutcomeDataTable
+ * OutcomeData <.. OutcomeDataTable : construct
+ * ID3NameResolver <|-- OutcomeDataTable
+ * OutcomeStats <.. OutcomeData : calculate_stats()
+ * OutcomeData "+" *--> MapElement
+ * OutcomeDataTable *--> MapElement : data
+ * MapElement *--> Board
+ * MapElement *-->MatchOutcome
+ * OutcomeDataTable ..> OutcomeStats
+ * OutcomeDataTable "+" *--> Piece : values
+ * OutcomeDataTable "+" *--> MatchOutcome : classes
+ * OutcomeDataTable "+" *--> Square : attributes
+ * }
+ * @enduml
+ */
+class ExampleStratExperiment : public C4IcuExperiment {
+public:
+		ExampleStratExperiment() : C4IcuExperiment("c4-025","The effect of the test selection strategy?") {}
+		void do_run() override {
+			IcuData data(data_filename());
+			LOG << data.calculate_stats();
+			// TODO 200 implement example selection strategy experiment
+		}
+} c4_025;
+
+
 class FeatureStatistics: public Experiment {
 public:
-	FeatureStatistics(): Experiment("c4-030","Connect-4 ICU data features") {}
+	FeatureStatistics(): Experiment("c4-030","Display Connect-4 ICU data feature statistics") {}
 	void do_run() override {
 		const IcuData data(args()["icu_file"]);
 		file() << "region piece count wins losses draws";
@@ -130,16 +176,16 @@ class AnnotatedDatabase: public ID3NameResolver {
 			collect_annos();
 			collect_attribs();
 		}
-		const std::string& value_name(const int a, const int v) {
+		std::string value_name(const int a, const int v) {
 			const auto &result = names[v];
 			if (result.empty()) {
 				return names[v] = string_from_format("%d", v);
 			} else return result;
 		}
-		const std::string& attribute_name(const int a) {
+		std::string attribute_name(const int a) {
 			return attribs[a].first;
 		}
-		const std::string& class_name(const int c) {
+		std::string class_name(const int c) {
 			const auto &result = names[c];
 			if (result.empty()) {
 				return names[c] = string_from_format("%d", c);
@@ -187,7 +233,7 @@ public:
 
 class Classify: public Experiment {
 public:
-	Classify(): Experiment("c4-300","Find a good cutoff value") {}
+	Classify(): Experiment("c4-300","Find a good cutoff value for ID3") {}
 	void do_run() override {
 		auto datadir = args()["data_dir"];
 		IcuData data(datadir + "/downloaded/connect-4.data");
@@ -225,4 +271,5 @@ private:
 			file() << regionname << " " << cf.root().size() <<" " << cf.root().certainty();
 		}
 } c4_400;
+
 

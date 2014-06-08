@@ -20,10 +20,6 @@ When compared to other classifiers such as neural networks and genetic algorithm
 % simplification
 A disadvantage of decision trees is that the decision structures can become quite complex. Two primary motives drive the need to simplify decision trees.  The first is to make it easier for humans to interpret the tree, and the second is to rid the tree of inaccurate branches and to avoid over-fitting \cite{kubat:review}.  Inaccuracies are introduced by noisy data and by induction with an inadequate example set.  The typical approach, called  \myterm{pruning}, involves the removal of the lower branches in the tree. When the pruning occurs during the induction process, it is called \myterm{on-line pruning}.  In \myterm{post pruning}, the tree is simplified after the induction process.  Post-pruning methods can be used to improve over-fitted trees. \myterm{Minimal object pruning} is an on-line pruning method that prevents the exploration of a node that has less than three branches that classify a specified minimum number of entities \cite{quinlan:c45}. 
 
-% accuracy measurement
-Arguably the most important quality criterion of a decision tree is the \newline \myterm{classification accuracy} of the tree.  A straight forward measurement of accuracy is simply the fraction of examples that are correctly classified.   However, sometimes the identification of a specific class is more important than the identification of other classes. In such cases two types of errors can be identified: the \myterm{error of  omission} considers the examples that should have been positively classified - but were not (i.e. false negatives); and the \myterm{error of commission} considers the examples that should not have been positively classified - but were (i.e. false positives).  Omissions indicate over-specialisation, while over-generalisation is the cause of commissions. The aim is to develop concepts that are  \myterm{consistent} and \myterm{complete}. A consistent concept does not produce an error of commission and a complete concept does not produce an error of omission \cite{kubat:review}.   
-
-
 %example
 An example serves best to demonstrate the utility of a decision tree. Consider a set of entities, $\{\vec e_1,\ldots, \vec e_8\}$ with attributes $a_1,a_2$ and $a_3$ and values as listed in \reftab{examples}.  The decision tree shown in \reffig{examples} can be used to determine the class of entity $\vec e$.  From the root node, the path $a_2 = z$ leads to a predicted classification of $Y$ for $\vec e$.  
 
@@ -201,7 +197,50 @@ I(\myset S,a) = H(\myset S) - H(\myset S,a)
 \end{equation}
 The information gain heuristic selects the attribute with the greatest information gain value. Note that an equivalent selection is when when selecting the attribute with the smallest value for \refeq{attrib_entropy}. 
 
-\section{A tic-tac-toe decision tree}
+\section{Measuring the accuracy of classification}
+\mydefc{Classification Accuracy} {of a classification algorithm} {A quantitative measurement obtained by applying the algorithm on a set of examples called the \myterm{test set}. It is calculated for algorithm $a$ and the test set $\myset T$ as follows
+\begin{equation}
+A_a(\myset T) = \frac{|\myset C| \times 100}{|\myset T|}
+\end{equation}
+where $\myset C \subseteq \myset T$ such that each element in $\myset C $ is correctly classified by $a$.
+}  
+
+Considering the algorithm form the perspective a specific class, one can be more specific about the accuracy of an algorithm \cite{kubat:review}. For this class, and example is \myterm{positively classified} when the algorithm decides it is an instance of the class, and \myterm{negatively classified} when it decides an example is not an instance of the class. This algorithm will make one of these two types of errors:
+\mydefs{Error of  omission} {Occurs when an example is negatively classified but it should have been positive.  Such a decision is called a \myterm{false negative}.}
+\mydefs{Error of  commission} {Occurs when an example is positively classified but it should have been negative.  Such a decision is called a \myterm{false positive}.}
+Omissions indicate over-specialisation, while over-generalisation is the cause of commissions. 
+
+The aim is to develop algorithm that is \myterm{consistent} and \myterm{complete}. A consistent algorithm does not produce an error of commission and a complete algorithm does not produce an error of omission.   
+
+
+%TODO incorporate work done by fisher-1989-comparison and shavlik-1991-comparison for how test set were selected
+
+\section{Experiment: The effect of test example selection} %c4-025
+\subsection{Objective}
+The \myterm{Classification Accuracy} measurement is clearly influenced by its input: the selection of the elements of the test set.  This experiment explores the extent to which this hypothesis is true.
+\subsection{Method}
+% http://archive.ics.uci.edu/ml/datasets/Connect-4
+For this experiment the examples from the UCI Connect-4 dataset was used \cite{icu:data}. The following selection strategies are compared:
+\begin{enumerate}
+	\item $\myset W$: Select test examples from Win class only
+	\item $\myset L$: Select test examples from Loss class only
+	\item $\myset D$: Select test examples from Draw class only
+	\item $\myset M$: Select mixed test examples
+	\item $\myset B$: Select mixed test examples balanced to have the same ratio as the input set % proposed by fisher-1989-comparison or shavlik-1991-comparison (must be verified)
+	\item $\myset F$: Use the entire set of examples as the test set
+\end{enumerate} 
+The reasoning behind choosing the tests from each specific category is to investigate worst case scenarios: in a random selection, the worse case scenario could be that all example cases fall into the same category. 
+
+An element in the test set is not removed from the example set given to the classification algorithm.  This is an additional control that ensures that we are observing the measurement strategy; not the influence of having different examples presented to the classification algorithm.  Thus, the ID3 algorithm is applied once on the input, and the resulting decision tree is measured for each selection strategy.
+
+For each subset selection strategy an observation is made $100$ times.  For each observation a random selection of $1/4$ of the total examples is chosen as the test set.  Each selection holds to the rules of the strategy being measured. 
+
+The mean value and variance of these observations are then compared.   If the mean value differs considerably, the hypothesis is proven.  Also, the variance of each strategy is an indication of how accurate one can expect an arbitrary measurement using that strategy would be.  
+
+      
+\subsection{Results}
+\subsection{Conclusion}
+\section{Demonstration: A tic-tac-toe decision tree}
 TODO: use icu data for tic-tac-toe \cite{icu:data} to construct a decision tree for tic-tac-toe.  How does this tree compare with work done by \cite{utgoff:feature}?
 % may be interesting what others did with this data: http://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.names
 \section{Experiment: number of training examples}
@@ -243,7 +282,7 @@ In the decision tree, the branches that lead to $\mywin$ describe attributes tha
 
 A sub-tree of the decision tree can be obtained by eliminating all branches that do not lead to $\mywin$. Transforming this sub-tree into an and-or tree (as described in \refsec{decision_tree}) produces the $\mywin$ and-or tree.  Likewise, the $\mylose$ and-or tree can be constructed.  For the evaluation function, feature expressions derived from the $\mywin$ and-or tree are combined with the negation of expressions derived from the $\mylose$ and-or tree.  The outline of the procedure to derive functions terms from the decision tree is listed in \refalg{deduction}.    
 
-\begin{figure}[t]
+\begin{figure}[t] 
 \begin{algorithm}
 {Function deduction}
 {An ID3 tree, $T$}

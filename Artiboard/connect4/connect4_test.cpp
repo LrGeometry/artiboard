@@ -4,6 +4,7 @@
 #include <test_util.h>
 #include "connect4.h"
 #include "icu_data.h"
+#include <log.h>
 #define TESTDATA connect4TestData
 namespace tut {
 	using namespace std;

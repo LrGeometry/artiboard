@@ -25,6 +25,7 @@ CONNECT_4 := $(TARGET_DIR)/connect4.exe
 CHECKERS := $(TARGET_DIR)/checkers.exe
 TICTACTOE := $(TARGET_DIR)/tictactoe.exe
 ARTI_TEST := $(TARGET_DIR)/artitest.exe 
+INPUT_DIR := C:\development\github\artiboard\input\downloaded
 .PHONY : clean all run_connect_4 dox 
 
 all: run_c4
@@ -39,7 +40,7 @@ test: $(ARTI_TEST)
 	cd $(TARGET_DIR)/artitest.exe; cat ./log.txt
 
 run_c4: $(CONNECT_4)
-	cd $(TARGET_DIR) & connect4.exe list & type log.txt
+	cd $(TARGET_DIR) & connect4.exe c4-025 icu_file=$(INPUT_DIR)\connect-4.data & type log.txt
 	
 run_tictactoe: $(TICTACTOE)
 	cd $(TARGET_DIR) & tictactoe.exe list & cat ./log.txt

@@ -38,7 +38,7 @@ namespace arti {
 		Square(const ordinal_t dark_color_index);
 		bool operator < (const Square& other) const { return index() < other.index();}
 		bool operator == (const Square& other) const { return index() == other.index(); }
-		
+		std::string to_string() const;
 	private:
 		/* updates */
 		// change to the mirror of the square

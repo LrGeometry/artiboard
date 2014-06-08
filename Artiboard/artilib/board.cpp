@@ -10,8 +10,13 @@ namespace arti {
 
 	Piece::Piece(square_value_t v): _value(v) {};
 
+	std::string Piece::to_string() const {
+		std::string result;
+		result.push_back(_value);
+		return result;
+	}
 	std::ostream& operator <<(ostream& os, const Piece& v) {
-		os << v.index();
+		os << v.to_string();
 		return os;
 	}
 

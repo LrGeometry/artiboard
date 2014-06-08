@@ -55,8 +55,12 @@ namespace arti {
 			: (_rank-1)*4 + (_file-1) / 2;
 	}
 
+	std::string Square::to_string() const {
+		return string_from_format("%d,%d ", _file, _rank);
+	}
+
 	std::ostream & operator<<(std::ostream & o, const Square & s) {
-		o << string_from_format("%d,%d ", s.file(), s.rank());
+		o << s.to_string();
 		return o;
 	}
 

@@ -25,9 +25,9 @@ The ID3NameResolver gives names to these indexes.
 */
 class ID3NameResolver {
 public:
-   virtual const std::string& attribute_name(const int a) = 0;
-   virtual const std::string& value_name(const int a, const int v) = 0;
-   virtual const std::string& class_name(const int c) = 0;
+   virtual std::string attribute_name(const int a) = 0;
+   virtual std::string value_name(const int a, const int v) = 0;
+   virtual std::string class_name(const int c) = 0;
    virtual ~ID3NameResolver(){}
 };
 typedef std::map<int,int> mapii;

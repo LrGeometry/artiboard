@@ -126,6 +126,8 @@ namespace arti {
 		Unknown, SouthPlayerWins, NorthPlayerWins, Draw
 	};
 
+	std::string to_string(const MatchOutcome& v);
+
 	ostream& operator <<(std::ostream& os, const MatchOutcome& v);
 
 	/**

@@ -121,9 +121,19 @@ namespace arti {
 		return os;
 	}
 
- ostream& operator <<(std::ostream& os, const MatchOutcome& v) {
+	static char to_char(const MatchOutcome& v) {
 		static const char* chars = "usnd";
-		os << chars[v];
+		return chars[v];
+	}
+
+	std::string to_string(const MatchOutcome& v) {
+		std::string r;
+		r.push_back(to_char(v));
+		return r;
+	}
+
+ ostream& operator <<(std::ostream& os, const MatchOutcome& v) {
+		os << to_char(v);
 		return os;
 	}
 
