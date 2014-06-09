@@ -20,7 +20,8 @@ namespace arti {
 		return os;
 	}
 
-	Board::Board() : _data(), _it_b(*this,0,0), _it_e(*this,7,7) {};
+	Board::Board() : _data(), _it_b(this,0,0), _it_e(this,7,7) {};
+	Board::Board(const Board &b) : _data(b._data), _it_b(this,0,0), _it_e(this,7,7) {};
 
 	const Piece& Board::at(const std::size_t colIndex, const std::size_t rowIndex) const {
 		if (colIndex < 0 || rowIndex < 0 || colIndex > 7 || rowIndex > 7)

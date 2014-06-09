@@ -31,6 +31,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>artilibtest</name>
+			<type>2</type>
+			<location>C:/development/github/artiboard/Artiboard/artilibtest</location>
+		</link>
+		<link>
 			<name>connect4</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>

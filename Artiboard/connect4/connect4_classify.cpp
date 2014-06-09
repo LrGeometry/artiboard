@@ -117,7 +117,11 @@ public:
 		ExampleStratExperiment() : C4IcuExperiment("c4-025","The effect of the test selection strategy?") {}
 		void do_run() override {
 			IcuData data(data_filename());
-			LOG << data.calculate_stats();
+			OutcomeDataTable table(data);
+			OutcomeDataClassifier fier(table);
+			fier.train();
+			fier.root().to_stream(LOG, table);
+			// LOG << data.calculate_stats();
 			// TODO 200 implement example selection strategy experiment
 		}
 } c4_025;

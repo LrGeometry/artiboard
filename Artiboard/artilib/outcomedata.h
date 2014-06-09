@@ -8,6 +8,7 @@ namespace arti {
   typedef std::map<MatchOutcome,long> outcome_counts_t;
   typedef std::set<Piece> piece_set_t;
   typedef std::map<Square,piece_set_t> square_pieces_t;
+  typedef std::pair<Board,MatchOutcome> board_outcome_t;
 
 	class OutcomeStats {
 		private:
@@ -43,17 +44,31 @@ namespace arti {
 			 * Use this constructor if you have already calculated the statistics (saves a bit of time)
 			 * The data is copied into this instance
 			 */
-			OutcomeDataTable(const outcome_map_t &data, const OutcomeStats &stats) : data_(data) {build_table(stats);}
+			OutcomeDataTable(const outcome_map_t &data, const OutcomeStats &stats) : data_(data.size()) {build_table(data,stats);}
 		  std::string attribute_name(const int a) override;
 		  std::string value_name(const int a, const int v) override;
 		  std::string class_name(const int c) override;
+			int value_of(const int i, const int a) const;
+			int class_of(const int i) const;
+			int data_count() const {return data_.size();}
+			int attribute_count() const {return attributes_.size();}
 		private:
 			std::vector<Square> attributes_;
 			std::vector<Piece> values_;
 			std::vector<MatchOutcome> classes_;
-			const outcome_map_t data_;
-			void build_table(const OutcomeStats &stats);
+			std::vector<board_outcome_t> data_;
+			void build_table(const outcome_map_t &data,const OutcomeStats &stats);
 
+	};
+
+	class OutcomeDataClassifier : public ID3Classifier {
+		public:
+			OutcomeDataClassifier(const OutcomeDataTable table, size_t cc = 0) : ID3Classifier(cc), table_(table) {}
+			int value_of(const int element, const int attribute) override {return table_.value_of(element,attribute);}
+			int class_of(const int element) override {return table_.class_of(element);}
+			void train() {ID3Classifier::train(table_.data_count(), table_.attribute_count());}
+		private:
+			const OutcomeDataTable &table_;
 	};
 }
 

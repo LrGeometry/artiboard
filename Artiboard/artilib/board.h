@@ -78,6 +78,7 @@ namespace arti {
 			 * Construct an instance that contains a Piece#EMPTY in each square.
 			 */
 			Board();
+			Board(const Board& b);
 			/**
 			 * What is on a square?
 			 * @param colIndex
@@ -105,9 +106,9 @@ namespace arti {
 			bool operator< (const Board& o) const;
 			class const_iterator : public std::iterator<std::forward_iterator_tag,Square> {
 					ordinal_t _file,_rank;
-					const Board& _b;
+					const Board * _b;
 				public:
-					const_iterator(const Board& sb, ordinal_t file, ordinal_t rank) : _file(file),_rank(rank),_b(sb) {}
+					const_iterator(const Board * sb, ordinal_t file, ordinal_t rank) : _file(file),_rank(rank),_b(sb) {}
 					const_iterator(const const_iterator& o) : _file(o._file),_rank(o._rank),_b(o._b){}
 					const_iterator& operator++() {
 						if (_file < 7) _file++; 
@@ -120,15 +121,15 @@ namespace arti {
 					const_iterator operator++(int) {const_iterator tmp(*this);operator++();return tmp;}
 					bool operator==(const const_iterator& rhs) const {return _file == rhs._file && _rank == rhs._rank;}
 					bool operator!=(const const_iterator& rhs) const {return !(operator==(rhs));}
-					const Piece& operator*() const {return _b.at(_file,_rank);}
+					const Piece& operator*() const {return _b->at(_file,_rank);}
 					Square pos() const {return Square(_file,_rank);}	
 					ordinal_t file() const {return _file;}
 					ordinal_t rank() const {return _rank;}
-					const Board& board() const {return _b;}
+					const Board* board() const {return _b;}
 			};
 
-			const const_iterator begin() const {return const_iterator(*this,0,0);}
-			const const_iterator end() const {return const_iterator(*this,7,7);}
+			const const_iterator begin() const {return const_iterator(this,0,0);}
+			const const_iterator end() const {return const_iterator(this,7,7);}
 			void apply(std::function<void (Square, Piece)> fn) const;
 		private:
 			std::array<Piece, 64> _data;

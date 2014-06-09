@@ -28,7 +28,7 @@ ARTI_TEST := $(TARGET_DIR)/artitest.exe
 INPUT_DIR := C:\development\github\artiboard\input\downloaded
 .PHONY : clean all run_connect_4 dox 
 
-all: run_c4
+all: test
 
 ant: $(ANTLR_LIB)
 	echo "done"
@@ -37,10 +37,10 @@ ant_clean:
 	rm $(ANTLR_LIB)
 
 test: $(ARTI_TEST)
-	cd $(TARGET_DIR)/artitest.exe; cat ./log.txt
+	cd $(TARGET_DIR) & artitest.exe & type log.txt
 
 run_c4: $(CONNECT_4)
-	cd $(TARGET_DIR) & connect4.exe c4-025 icu_file=$(INPUT_DIR)\connect-4.data & type log.txt
+	cd $(TARGET_DIR) & connect4.exe test c4-025 icu_file=$(INPUT_DIR)\connect-4.data & type log.txt
 	
 run_tictactoe: $(TICTACTOE)
 	cd $(TARGET_DIR) & tictactoe.exe list & cat ./log.txt

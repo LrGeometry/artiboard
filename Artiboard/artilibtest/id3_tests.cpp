@@ -42,13 +42,13 @@ struct QuinlanDatabase : public ID3NameResolver {
 		add(13, std::vector<std::string>({"rain", "mild", "high", "true"}), "N");
 	}		
 
-   const std::string& value_name(const int a, const int v) override {
+   std::string value_name(const int a, const int v) override {
    		return _names[v];
    }
-   const std::string& attribute_name(const int a) override {
+   std::string attribute_name(const int a) override {
    		return attribute_names[a];
    }
-   const std::string& class_name(const int c) override {
+   std::string class_name(const int c) override {
    		return _names[c];
    }
 

@@ -43,12 +43,34 @@ OutcomeStats OutcomeData::calculate_stats() const {
 	return OutcomeStats(*this);
 }
 
-
-
-void OutcomeDataTable::build_table(const OutcomeStats& stats) {
+void OutcomeDataTable::build_table(const outcome_map_t &data,const OutcomeStats& stats) {
 	attributes_ = stats.squares();
 	classes_ = stats.outcomes();
 	values_ = stats.pieces();
+	// copy data from source map into flat list
+	int i=0;
+	for (const auto &e : data) {
+		data_[i].first = e.first;
+		data_[i++].second = e.second;
+	}
+}
+
+int OutcomeDataTable::value_of(const int i, const int a) const {
+	auto oc = data_[i].first(attributes_[a]);
+	for (size_t i=0;i<classes_.size();i++)
+		if (values_[i] == oc)
+			return i;
+	FAIL("data class not found");
+	return -1;
+}
+
+int OutcomeDataTable::class_of(const int i) const {
+	auto oc = data_[i].second;
+	for (size_t i=0;i<classes_.size();i++)
+		if (values_[i] == oc)
+			return i;
+	FAIL("data class not found");
+	return -1;
 }
 
 

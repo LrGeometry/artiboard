@@ -127,7 +127,7 @@ arti::Piece annotate(const Board::const_iterator& it) {
 	else { 
 		arti::Region n;
 		n.insert_neighbours(it.pos()); 
-		int r = it.board().count(n,*it);
+		int r = it.board()->count(n,*it);
 		if (*it == *south_annotations) return Piece(south_annotations[r]);
 		else if(*it == *north_annotations) return Piece(north_annotations[r]);
 		else if(*it == *open_annotations) return Piece(open_annotations[r]);
