@@ -25,9 +25,9 @@ The ID3NameResolver gives names to these indexes.
 */
 class ID3NameResolver {
 public:
-   virtual std::string attribute_name(const int a) = 0;
-   virtual std::string value_name(const int a, const int v) = 0;
-   virtual std::string class_name(const int c) = 0;
+   virtual std::string attribute_name(const size_t a) = 0;
+   virtual std::string value_name(const size_t a, const size_t v) = 0;
+   virtual std::string class_name(const size_t c) = 0;
    virtual ~ID3NameResolver(){}
 };
 typedef std::map<int,int> mapii;
@@ -82,21 +82,21 @@ public:
    const size_t count_cut; 
    ID3Classifier(size_t cc = 0) : count_cut(cc) {}
    /** the value the element has for the given attribute */
-   virtual int value_of(const int element, const int attribute) = 0;
+   virtual int value_of(const size_t element, const size_t attribute) = 0;
    /** the class of the element */
-   virtual int class_of(const int element) = 0;
+   virtual int class_of(const size_t element) = 0;
    /** create the classifier root node */
-   void train(const int elementCount, const int attributeCount);
-   void train_and_test(const int elementCount, const int attributeCount, const int test_denominator = -1);
+   void train(const size_t elementCount, const size_t attributeCount);
+   void train_and_test(const size_t elementCount, const size_t attributeCount, const int test_denominator = -1);
    const ID3Node& root() const {return _root;}
-   int classify(const int element) {return classify(element, _root);}
-   void test(const std::forward_list<int> &elements);
+   int classify(const size_t element) {return classify(element, _root);}
+   void test(const std::forward_list<size_t> &elements);
    virtual ~ID3Classifier() {}
 private:
-   int classify(const int element, const ID3Node &node);
-   bool test_classify(const int element, ID3Node &node, const int expected_class);
-   void train(std::forward_list<int> &elements, std::forward_list<int> &attributes, ID3Node &parent);
-   float entropy_of(const int attribute, const std::forward_list<int>& elements);
+   int classify(const size_t element, const ID3Node &node);
+   bool test_classify(const size_t element, ID3Node &node, const int expected_class);
+   void train(std::forward_list<size_t> &elements, std::forward_list<size_t> &attributes, ID3Node &parent);
+   float entropy_of(const size_t attribute, const std::forward_list<size_t>& elements);
 };
 
 }

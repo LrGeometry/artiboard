@@ -43,8 +43,12 @@ namespace arti {
 			std::cout << "ended OK" << std::endl;
 			return 0;
 		} catch (std::exception &ex) {
-			LOG << "*** ERROR ***: " << ex.what() << std::endl;
 			std::cout << "error:" << ex.what() << std::endl << "ended" << std::endl;
+			std::cout.flush();
+			LOG << "*** ERROR ***: " << ex.what() << std::endl;
+			return 1;
+		} catch (...) {
+			std::cout << "unknown exception!" << std::endl;
 			return 1;
 		}
 	}

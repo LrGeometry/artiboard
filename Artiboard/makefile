@@ -1,12 +1,12 @@
 # This makefile runs from Powershell
 TARGET_DIR = RunDir
 #GP=-pg 
-DEBUG = -O -g3 $(GP)
+DEBUG = -O -g3 $(GP) -D_GLIBCXX_DEBUG
 MAX_SPEED = -O3 -DNDEBUG $(GP)
 FLAGS = $(MAX_SPEED) 
 #FLAGS = $(DEBUG) 
 COMPILE_ARGS = -Iantlr -Itutlib -Iartilib -c -pthread -fmessage-length=0 -Werror=return-type -Wno-unknown-pragmas -std=c++11 -Wall $(FLAGS)
-LINK_ARGS =  -L$(TARGET_DIR) -Llibs $(GP)
+LINK_ARGS = -static-libgcc -static-libstdc++ -L$(TARGET_DIR) -Llibs $(GP) 
 DIRS = artilib connect4 tutlib artilib/grammars artilibtest checkers tictactoe 
 # 3.3 does not have this problem: '_empty' was not declared in this scope
 #ANTLR = java -cp libs/antlr-3.3.jar org.antlr.Tool -verbose -make 
@@ -28,7 +28,7 @@ ARTI_TEST := $(TARGET_DIR)/artitest.exe
 INPUT_DIR := C:\development\github\artiboard\input\downloaded
 .PHONY : clean all run_connect_4 dox 
 
-all: test
+all: run_c4
 
 ant: $(ANTLR_LIB)
 	echo "done"
@@ -40,7 +40,7 @@ test: $(ARTI_TEST)
 	cd $(TARGET_DIR) & artitest.exe & type log.txt
 
 run_c4: $(CONNECT_4)
-	cd $(TARGET_DIR) & connect4.exe test c4-025 icu_file=$(INPUT_DIR)\connect-4.data & type log.txt
+	cd $(TARGET_DIR) & connect4.exe c4-025 icu_file=$(INPUT_DIR)\connect-4.data & type log.txt
 	
 run_tictactoe: $(TICTACTOE)
 	cd $(TARGET_DIR) & tictactoe.exe list & cat ./log.txt

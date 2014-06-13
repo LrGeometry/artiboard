@@ -42,13 +42,13 @@ struct QuinlanDatabase : public ID3NameResolver {
 		add(13, std::vector<std::string>({"rain", "mild", "high", "true"}), "N");
 	}		
 
-   std::string value_name(const int a, const int v) override {
+   std::string value_name(const size_t a, const size_t v) override {
    		return _names[v];
    }
-   std::string attribute_name(const int a) override {
+   std::string attribute_name(const size_t a) override {
    		return attribute_names[a];
    }
-   std::string class_name(const int c) override {
+   std::string class_name(const size_t c) override {
    		return _names[c];
    }
 
@@ -69,12 +69,12 @@ struct QuinlanDatabase : public ID3NameResolver {
 struct QuinlanClassifier : public ID3Classifier {
 	QuinlanDatabase _db;
 	
-	int value_of(const int e, const int a) override {
+	int value_of(const size_t e, const size_t a) override {
 		ENSURE(a < 4, "invalid value for a");
 		return _db._data[e]._attribs[a];
 	};
 
-  int class_of(const int e) override {
+  int class_of(const size_t e) override {
   	return _db._data[e]._class;
   };
 

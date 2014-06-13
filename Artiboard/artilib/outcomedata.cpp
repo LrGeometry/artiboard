@@ -1,5 +1,5 @@
 #include "outcomedata.h"
-
+#include "log.h"
 namespace arti {
 OutcomeStats::OutcomeStats(const outcome_map_t &data) {
 	size_ = data.size();
@@ -48,41 +48,40 @@ void OutcomeDataTable::build_table(const outcome_map_t &data,const OutcomeStats&
 	classes_ = stats.outcomes();
 	values_ = stats.pieces();
 	// copy data from source map into flat list
-	int i=0;
-	for (const auto &e : data) {
-		data_[i].first = e.first;
-		data_[i++].second = e.second;
-	}
+	size_t i=0;
+	for (const auto &e : data)
+		data_[i++] = e;
+	ASSERT(i == data.size());
 }
 
-int OutcomeDataTable::value_of(const int i, const int a) const {
-	auto oc = data_[i].first(attributes_[a]);
-	for (size_t i=0;i<classes_.size();i++)
-		if (values_[i] == oc)
-			return i;
-	FAIL("data class not found");
+int OutcomeDataTable::value_of(const size_t i, const size_t a) const {
+	const Piece oc = data_[i].first(attributes_[a]);
+	for (size_t k=0;k<values_.size();k++)
+		if (values_[k] == oc)
+			return k;
+	throw runtime_error_ex("data value not found for attribute '%s' element %d", attributes_[a].to_string().c_str(), i);
 	return -1;
 }
 
-int OutcomeDataTable::class_of(const int i) const {
+int OutcomeDataTable::class_of(const size_t i) const {
 	auto oc = data_[i].second;
 	for (size_t i=0;i<classes_.size();i++)
-		if (values_[i] == oc)
+		if (classes_[i] == oc)
 			return i;
 	FAIL("data class not found");
 	return -1;
 }
 
 
-std::string OutcomeDataTable::attribute_name(const int a){
+std::string OutcomeDataTable::attribute_name(const size_t a){
 	return attributes_[a].to_string();
 }
 
-std::string OutcomeDataTable::value_name(const int a, const int v){
+std::string OutcomeDataTable::value_name(const size_t a, const size_t v){
 	return values_[v].to_string();
 
 }
-std::string OutcomeDataTable::class_name(const int c){
+std::string OutcomeDataTable::class_name(const size_t c){
 	return to_string(classes_[c]);
 }
 

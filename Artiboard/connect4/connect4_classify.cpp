@@ -118,7 +118,7 @@ public:
 		void do_run() override {
 			IcuData data(data_filename());
 			OutcomeDataTable table(data);
-			OutcomeDataClassifier fier(table);
+			OutcomeDataClassifier fier(table,10);
 			fier.train();
 			fier.root().to_stream(LOG, table);
 			// LOG << data.calculate_stats();
@@ -180,16 +180,16 @@ class AnnotatedDatabase: public ID3NameResolver {
 			collect_annos();
 			collect_attribs();
 		}
-		std::string value_name(const int a, const int v) {
+		std::string value_name(const size_t a, const size_t v) override {
 			const auto &result = names[v];
 			if (result.empty()) {
 				return names[v] = string_from_format("%d", v);
 			} else return result;
 		}
-		std::string attribute_name(const int a) {
+		std::string attribute_name(const size_t a) override {
 			return attribs[a].first;
 		}
-		std::string class_name(const int c) {
+		std::string class_name(const size_t c) override {
 			const auto &result = names[c];
 			if (result.empty()) {
 				return names[c] = string_from_format("%d", c);
@@ -222,11 +222,11 @@ public:
 	AnnotatedDatabase *db;
 public:
 	explicit AnnotatedClassifier(AnnotatedDatabase *data, const size_t count_cut) : ID3Classifier(count_cut), db(data) {}
-  int class_of(const int element) override {
+  int class_of(const size_t element) override {
   	return db->items[element].outcome;
   }
 
-	int value_of(const int element, const int attribute) override	{
+	int value_of(const size_t element, const size_t attribute) override	{
 		const auto &b = db->items[element].board;
 		const auto &r = db->program->regions()[db->attribs[attribute].first];
 		const auto &p = db->attribs[attribute].second;

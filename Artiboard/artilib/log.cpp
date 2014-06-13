@@ -2,7 +2,7 @@
 #include <ostream>
 
 namespace arti {
-	Log s_instance("log.txt");
+	static Log s_instance("log.txt");
 
 	Log& Log::instance() {
 		return s_instance;

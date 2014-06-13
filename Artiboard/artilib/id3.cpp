@@ -2,12 +2,12 @@
 #include "id3.h"
 
 namespace {
-	void fill(std::forward_list<int>& list, const int count) {
+	void fill(std::forward_list<size_t>& list, const int count) {
 		for (int i=0; i<count;i++)
 			list.push_front(i);
 	}
 
-	void fill_split(std::forward_list<int>& listA, std::forward_list<int>& listB, const int count, const int denominator) {
+	void fill_split(std::forward_list<size_t>& listA, std::forward_list<size_t>& listB, const int count, const int denominator) {
 		for (int i=0; i<count;i++) {
 			if (i%denominator == 0)
 				listB.push_front(i);
@@ -56,7 +56,7 @@ namespace arti {
 		}
 	}
 
-  int ID3Classifier::classify(const int element, const ID3Node &node) {
+  int ID3Classifier::classify(const size_t element, const ID3Node &node) {
 		if (!node.is_leaf()) {
 			const int val = value_of(element, node.childs.begin()->attribute);
 			FOR_EACH(c, node.childs) 
@@ -66,7 +66,7 @@ namespace arti {
 		return node.dominant_class;
 	}
 
-  bool ID3Classifier::test_classify(const int element, ID3Node &node, const int expected_class) {
+  bool ID3Classifier::test_classify(const size_t element, ID3Node &node, const int expected_class) {
 		node.test_count++;
 		if (!node.is_leaf()) {
 			const int val = value_of(element, node.childs.begin()->attribute);
@@ -84,17 +84,17 @@ namespace arti {
 		return is_correct;
 }
 
-	void ID3Classifier::train(const int elementCount, const int attributeCount) {
+	void ID3Classifier::train(const size_t elementCount, const size_t attributeCount) {
 		ENSURE(_root.is_leaf(),"classifier has already been trained");
-		std::forward_list<int> elems,attribs;
+		std::forward_list<size_t> elems,attribs;
 		fill(elems,elementCount);
 		fill(attribs,attributeCount);
 		train(elems,attribs,_root);
 	}
 
-  void ID3Classifier::train_and_test(const int elementCount, const int attributeCount, const int test_denominator) {
+  void ID3Classifier::train_and_test(const size_t elementCount, const size_t attributeCount, const int test_denominator) {
 		ENSURE(_root.is_leaf(),"classifier has already been trained");
-		std::forward_list<int> elems,attribs,test_elems;
+		std::forward_list<size_t> elems,attribs,test_elems;
 		if (test_denominator > 0) {
 			fill_split(elems,test_elems,elementCount,test_denominator);
 			ENSURE(size_of(test_elems) > 0, "test_denominator identified no test elements");
@@ -112,15 +112,17 @@ namespace arti {
 		}
 	}
 
-
-	void ID3Classifier::train(std::forward_list<int> &elements, std::forward_list<int> &attributes, ID3Node &parent) {
+	void ID3Classifier::train(std::forward_list<size_t> &elements, std::forward_list<size_t> &attributes, ID3Node &parent) {
 		ENSURE(size_of(attributes)>0,"there are no attributes to classify");
 		if (count_cut > 0 && size_of(elements) < count_cut) return; // minimal object pruning
 		// select the best attribute -- that is the one with the lowest entropy
 		typedef std::pair<int,float> entropy_t;
 		std::vector<entropy_t> entropies(size_of(attributes));
-		std::transform(attributes.begin(),attributes.end(),entropies.begin(),[&] (const int a) 
-			{float e = entropy_of(a,elements);return entropy_t(a,e);});
+		std::transform(attributes.begin(),attributes.end(),entropies.begin(),[&] (const int a)
+			{
+				const float e = entropy_of(a,elements);
+				return entropy_t(a,e);
+			});
 //		FOR_EACH(e,entropies) {TRACE << e->first << ":" << e->second;};
 		auto selected_it = std::min_element(entropies.begin(),entropies.end(),[] (const entropy_t& a, const entropy_t& b) 
 			{return a.second < b.second;});
@@ -128,7 +130,7 @@ namespace arti {
 		parent.best_entropy = selected_it->second;
 //		if (parent.best_entropy == 0) return;
 		// use selected to split elements
-		std::map<int,std::forward_list<int>> split; // attribute value -> elements
+		std::map<int,std::forward_list<size_t>> split; // attribute value -> elements
 		FOR_EACH(e, elements) split[value_of(*e,selected)].push_front(*e);
 		FOR_EACH(s, split) {
 			// is there more than one classification
@@ -154,21 +156,21 @@ namespace arti {
 		attributes.push_front(selected); // put attribute back -- parent set remains unchanges
 	}
 
-	void ID3Classifier::test(const std::forward_list<int> &elements) {
+	void ID3Classifier::test(const std::forward_list<size_t> &elements) {
 		_root.clear_test_data();
 		FOR_EACH(e, elements)
 			test_classify(*e, _root, class_of(*e));
 	}
 
- 	float ID3Classifier::entropy_of(const int attribute, const std::forward_list<int>& elements){
+ 	float ID3Classifier::entropy_of(const size_t attribute, const std::forward_list<size_t>& elements){
  		const float count = size_of(elements);
  		ENSURE(count > 0.0,"elements cannot be empty");
  		float result = 0.0f;
  		mapii values; 
  		std::map<int,mapii> classes;  // attribute value -> class_map
- 		FOR_EACH(e,elements) {
- 			auto v = value_of(*e,attribute);
- 			auto c = class_of(*e);
+ 		for(const auto e : elements) {
+ 			auto v = value_of(e,attribute);
+ 			auto c = class_of(e);
 			values[v]++;
 			classes[v][c]++;
  		} 
