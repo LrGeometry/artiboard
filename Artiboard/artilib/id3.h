@@ -24,6 +24,7 @@ class ElementIndexList : public std::forward_list<size_t> {
 public:
 		void fill(const size_t count);
 		void collect_random_subset(element_index_list_t &result, const size_t count) const;
+		void collect_random_half(element_index_list_t &result) const {collect_random_subset(result,size()/2);}
 		void prepend(const element_index_list_t &elems);
 		bool contains(const size_t e) const;
 		size_t size() const {return size_of(*this);}
@@ -97,9 +98,11 @@ public:
    virtual int value_of(const size_t element, const size_t attribute) = 0;
    /** the class of the element */
    virtual int class_of(const size_t element) = 0;
-   /** create the classifier root node */
+   /** train the classifier root node using all the elements*/
    void train(const size_t elementCount, const size_t attributeCount);
-   /** splits elements according to denominated into example and test set.
+   /** train the classifier root node using a subset of the elements*/
+   void train(std::forward_list<size_t> &elements, const size_t attributeCount);
+   /** splits elements according to denominator into example and test set.
     * if denominator is 0, these is no split and testing is done using the whole
     * input set
     */
@@ -108,6 +111,7 @@ public:
    int classify(const size_t element) {return classify(element, _root);}
    /** recalculates the test data in root() */
    void test(const std::forward_list<size_t> &elements);
+   float accuracy(const std::forward_list<size_t> &test_set) {test(test_set);return root().certainty();}
    virtual ~ID3Classifier() {}
 private:
    int classify(const size_t element, const ID3Node &node);

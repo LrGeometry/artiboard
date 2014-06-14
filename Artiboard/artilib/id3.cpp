@@ -33,7 +33,7 @@ namespace arti {
 		const auto s = size();
 		CHECK(count < s);
 		double p = (count * 1.0)/(s*1.0);
-		std::uniform_real_distribution<double> distribution(0.0,1.0);
+		static std::uniform_real_distribution<double> distribution(0.0,1.0);
 		auto it = begin();
 		std::set<size_t> rs;
 		while (rs.size() != count) {
@@ -123,6 +123,14 @@ namespace arti {
 		fill(attribs,attributeCount);
 		train(elems,attribs,_root);
 	}
+
+  void ID3Classifier::train(std::forward_list<size_t> &elements, const size_t attributeCount) {
+		ENSURE(_root.is_leaf(),"classifier has already been trained");
+		std::forward_list<size_t> attribs;
+		fill(attribs,attributeCount);
+		train(elements,attribs,_root);
+  }
+
 
   void ID3Classifier::train_and_test(const size_t elementCount, const size_t attributeCount, const size_t test_denominator) {
 		ENSURE(_root.is_leaf(),"classifier has already been trained");

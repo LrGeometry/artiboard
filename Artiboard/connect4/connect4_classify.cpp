@@ -114,6 +114,8 @@ class C4IcuExperiment : public Experiment {
  */
 class ExampleStratExperiment : public C4IcuExperiment {
 public:
+		typedef std::function<void (std::forward_list<size_t> &result)> selector_fn;
+
 		ExampleStratExperiment() : C4IcuExperiment("c4-025","The effect of the test selection strategy?") {}
 		void do_run() override {
 			IcuData data(data_filename());
@@ -137,13 +139,38 @@ public:
 			}
 			LOG << "|U|=" << U.size() << " |T|=" << T.size() << " |D|=" << D.size();
 			CHECK(U.size() + T.size() == D.size());
-
-//			OutcomeDataClassifier fier(table,0);
-//			fier.train_and_test();
-//			fier.root().to_stream(LOG, table);
+			// build the decision tree
+			OutcomeDataClassifier fier(table,0);
+			fier.train(T);
+			CHECK(fier.accuracy(T) == 100);
+			file() << "Strategy Measurement Size";
+			run_strategy(fier,"W",Us);
+			run_strategy(fier,"L",Un);
+			run_strategy(fier,"D",Ud);
+			run_strategy(fier,"M",U);
+			run_strategy(fier,"B",
+				[&](std::forward_list<size_t> &result) {
+					Us.collect_random_half(result);
+					Un.collect_random_half(result);
+					Ud.collect_random_half(result);
+				});
+			//fier.root().to_stream(LOG, table);
 //			LOG << data.calculate_stats();
 			// TODO 200 implement example selection strategy experiment
 		}
+
+		void run_strategy(OutcomeDataClassifier& f, const char * name, const ElementIndexList& s) {
+			run_strategy(f,name,[&s](std::forward_list<size_t> &result){s.collect_random_half(result);});
+		}
+
+		void run_strategy(OutcomeDataClassifier& f, const char * name, selector_fn fn) {
+			for (int i=0;i<100;i++) {
+				std::forward_list<size_t> ts;
+				fn(ts);
+				file() << name << " " << f.accuracy(ts) << " " << size_of(ts);
+			}
+		}
+
 private:
 		ElementIndexList U,T, Un, Us, Ud;
 } c4_025;

@@ -69,6 +69,7 @@ namespace arti {
 			create_dir("..\\experiments");
 			std::string fileName = string_from_format("..\\experiments\\%s.txt",
 					name_);
+			LOG << "Created file " << fileName.c_str();
 			ofile_.open(fileName.c_str());
 			if (!ofile_.is_open())
 				throw runtime_error_ex("Cannot create file %s",
