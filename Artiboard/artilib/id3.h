@@ -79,17 +79,22 @@ class ID3Classifier {
 private: 
    ID3Node _root;
 public:   
-   const size_t count_cut; 
-   ID3Classifier(size_t cc = 0) : count_cut(cc) {}
+   const size_t mo_cut_off_; // minimal object pruning cut-off
+   ID3Classifier(size_t cc = 0) : mo_cut_off_(cc) {}
    /** the value the element has for the given attribute */
    virtual int value_of(const size_t element, const size_t attribute) = 0;
    /** the class of the element */
    virtual int class_of(const size_t element) = 0;
    /** create the classifier root node */
    void train(const size_t elementCount, const size_t attributeCount);
-   void train_and_test(const size_t elementCount, const size_t attributeCount, const int test_denominator = -1);
+   /** splits elements according to denominated into example and test set.
+    * if denominator is 0, these is no split and testing is done using the whole
+    * input set
+    */
+   void train_and_test(const size_t elementCount, const size_t attributeCount, const size_t test_denominator = 0);
    const ID3Node& root() const {return _root;}
    int classify(const size_t element) {return classify(element, _root);}
+   /** recalculates the test data in root() */
    void test(const std::forward_list<size_t> &elements);
    virtual ~ID3Classifier() {}
 private:

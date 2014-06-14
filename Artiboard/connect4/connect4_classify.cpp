@@ -96,7 +96,7 @@ class C4IcuExperiment : public Experiment {
  * class ID3Classifier
  * OutcomeDataClassifier --|> ID3Classifier
  * class OutcomeDataTable
- * class OutcomeDataClassifier << todo >>
+ * class OutcomeDataClassifier
  * OutcomeDataClassifier o-->  OutcomeDataTable
  * OutcomeData <.. OutcomeDataTable : construct
  * ID3NameResolver <|-- OutcomeDataTable
@@ -118,8 +118,8 @@ public:
 		void do_run() override {
 			IcuData data(data_filename());
 			OutcomeDataTable table(data);
-			OutcomeDataClassifier fier(table,10);
-			fier.train();
+			OutcomeDataClassifier fier(table,0);
+			fier.train_and_test();
 			fier.root().to_stream(LOG, table);
 			// LOG << data.calculate_stats();
 			// TODO 200 implement example selection strategy experiment

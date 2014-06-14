@@ -92,7 +92,7 @@ namespace arti {
 		train(elems,attribs,_root);
 	}
 
-  void ID3Classifier::train_and_test(const size_t elementCount, const size_t attributeCount, const int test_denominator) {
+  void ID3Classifier::train_and_test(const size_t elementCount, const size_t attributeCount, const size_t test_denominator) {
 		ENSURE(_root.is_leaf(),"classifier has already been trained");
 		std::forward_list<size_t> elems,attribs,test_elems;
 		if (test_denominator > 0) {
@@ -114,7 +114,7 @@ namespace arti {
 
 	void ID3Classifier::train(std::forward_list<size_t> &elements, std::forward_list<size_t> &attributes, ID3Node &parent) {
 		ENSURE(size_of(attributes)>0,"there are no attributes to classify");
-		if (count_cut > 0 && size_of(elements) < count_cut) return; // minimal object pruning
+		if (mo_cut_off_ > 0 && size_of(elements) < mo_cut_off_) return; // minimal object pruning
 		// select the best attribute -- that is the one with the lowest entropy
 		typedef std::pair<int,float> entropy_t;
 		std::vector<entropy_t> entropies(size_of(attributes));
@@ -158,8 +158,8 @@ namespace arti {
 
 	void ID3Classifier::test(const std::forward_list<size_t> &elements) {
 		_root.clear_test_data();
-		FOR_EACH(e, elements)
-			test_classify(*e, _root, class_of(*e));
+		for (auto e : elements)
+			test_classify(e, _root, class_of(e));
 	}
 
  	float ID3Classifier::entropy_of(const size_t attribute, const std::forward_list<size_t>& elements){

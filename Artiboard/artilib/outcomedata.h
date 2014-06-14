@@ -66,7 +66,7 @@ namespace arti {
 			OutcomeDataClassifier(const OutcomeDataTable& table, size_t cc = 0) : ID3Classifier(cc), table_(table) {}
 			int value_of(const size_t element, const size_t attribute) override {return table_.value_of(element,attribute);}
 			int class_of(const size_t element) override {return table_.class_of(element);}
-			void train() {ID3Classifier::train(table_.data_count(), table_.attribute_count());}
+			void train_and_test() {ID3Classifier::train_and_test(table_.data_count(), table_.attribute_count());}
 		private:
 			const OutcomeDataTable &table_;
 	};

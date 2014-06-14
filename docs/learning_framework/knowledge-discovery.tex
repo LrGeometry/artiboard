@@ -123,12 +123,17 @@ To demonstrate the transformation of decision trees into and-or trees, consider 
 
 \section{The ID3 algorithm}
 \label{sec:id3}
-The purpose of the ID3 algorithm \cite{quinlan:trees} is to induce a decision tree from a set of examples.  It is also known as the Top Down Induction of Decision Trees algorithm, or TDIDT. The algorithm is based on the a divide and conquer principle: the initial example set is split into smaller subsets, which are then further divided in subsequent iterations of the macro cycle. It is also a greedy algorithm because a decision to split a set is final -- there is no backtracking.  An outline of the ID3 algorithm is given in \refalg{id3}.
+The purpose of the ID3 algorithm \cite{quinlan:trees} is to induce a decision tree from a set of examples.  The algorithm is based on the a divide and conquer principle: the initial example set is split into smaller subsets, which are then further divided in subsequent iterations of the macro cycle. It is also a greedy algorithm because a decision to split a set is final -- there is no backtracking.  An outline of the ID3 algorithm is given in \refalg{id3}.
 \begin{figure}[!ht]
 \begin{algorithm}
 {ID3}
-{A set of attributes $A = \{ a_1 \ldots a_n\}$ and a set of examples $E = \{\vec e_1 \ldots \vec e_m\}$.  Each example contains an array of $n$ values such that there is a value for every attribute in $A$ (for some classification problems a predefined `null' value can be used to specify missing values).  Every example has a classification. As a constraint, all elements in the example set with the same values for the attributes must have the same classification.}
+{ i. Attributes $\myset A = \{ a_1 \ldots a_n\}$. \newline
+	ii. Classes $\myset C = \{ c_1 \ldots c_k\}$. \newline
+  iii. Examples $\myset E = \{\vec e_1 \ldots \vec e_m\}$. Each $e_i$ contains an array of $n$ values such that there is a value for every attribute in $\myset A$.  It also has a classification (selected from $\myset C$). All elements in $\myset E$ with the same values for the attributes must have the same classification.\newline
+	iv. A pruning cut-off parameter $q \geq 0$
+	}
 {A decision tree $T$} 
+
 ID3(A,E,T) \+\\
 Given E, select the best attribute $a$; \label{line:id3_select} \\
 Create T as a tree with $a$ as root; \\
@@ -140,7 +145,7 @@ for each $S_i$ in $S$ \+ \\
 			Create a leaf node labelled with the  \+ \\ 
 			classification value and attach it
 			to the root of T; \- \-\\ 
-	else \+ \\ 
+	else  if $|Si| \geq q$ \label{line:id3_prune}\+ \\ 
 			ID3(A - \{$a$\}, $S_i$, $T_i$); \\
 			Attach $T_i$ to the root of T;
 \end{algorithm}
@@ -149,6 +154,9 @@ for each $S_i$ in $S$ \+ \\
 \end{figure}
 
 Note that the selected attribute is removed from the set before the recursive invocation of the algorithm. It is therefore conceivable that the algorithm is invoked with $A$ as an empty set - however such an invocation is possible only if the example set contains entities with the same value for every attribute but with different classifications \cite{bratko:learning}.  It is for this reason that the precondition of the input specifies that at least one attribute value must be different for every pair of examples that have different classes.
+
+% minimal object pruning
+On \refline{id3_prune} the effect of the pruning parameter becomes clear.  %TODO: discuss further and provide reference
 
 % introduce information gain
 The criterion used to select the split attribute, $a$, on \refline{id3_select} is the primary influence on the quality of the decision tree that is induced \cite{kubat:review}. The \myterm{information gain} criterion aims to choose the attribute that maximises the amount of new information that become available after the split is made. 
