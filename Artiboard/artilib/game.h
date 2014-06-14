@@ -126,6 +126,8 @@ namespace arti {
 		Unknown, SouthPlayerWins, NorthPlayerWins, Draw
 	};
 
+	typedef std::function<bool (const Board &b, const MatchOutcome &oc)> pred_board_outcome_t;
+
 	std::string to_string(const MatchOutcome& v);
 
 	ostream& operator <<(std::ostream& os, const MatchOutcome& v);

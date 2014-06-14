@@ -1,3 +1,4 @@
+
 \usepackage[top=1.25in,bottom=1.3in,left=1.25in,right=1.25in]{geometry}
 \usepackage{fp}
 %\usepackage[body={6.0in, 8.2in},left=1.25in,right=1.25in]{geometry}  
@@ -5,6 +6,9 @@
 \usepackage{pstricks, pst-node,pst-tree}
 \usepackage{ntabbing}
 \usepackage{subfigure}
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 % a list with labelled items
 \newenvironment{mylist}
 {\begin{list}
@@ -56,7 +60,7 @@
 
 %references
 \newcommand{\reftab}[1]{Table \ref{tab:#1}}
-\newcommand{\refeq}[1]{Equation \ref{eq:#1}}
+\renewcommand{\refeq}[1]{Equation \ref{eq:#1}} %TODO this command ins defined in package mathttools; maybe it is nicer
 \newcommand{\refsec}[1]{Section \ref{sec:#1}}
 \newcommand{\reffig}[1]{Figure \ref{fig:#1}}
 \newcommand{\refalg}[1]{Figure \ref{alg:#1}}

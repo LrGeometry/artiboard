@@ -7,6 +7,7 @@
 #include <list>
 #define PREVENT_COPY(X) private: X(const X &source); X & operator=(const X&);
 #define ENSURE(P,M) if (!(P)) throw arti::runtime_error_ex("%s %s %d", M, __FILE__,__LINE__)
+#define CHECK(P) if (!(P)) throw arti::runtime_error_ex("%s %d", __FILE__,__LINE__)
 #define FAIL(M) throw arti::runtime_error_ex("%s %s %d", M, __FILE__,__LINE__)
 #ifdef NDEBUG
 #define ASSERT(P) /*SKIP*/

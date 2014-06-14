@@ -52,6 +52,10 @@ namespace arti {
 			int class_of(const size_t i) const;
 			int data_count() const {return data_.size();}
 			int attribute_count() const {return attributes_.size();}
+			void collect_if(element_index_list_t &result, pred_board_outcome_t fn) const;
+			void collect(element_index_list_t &result, const MatchOutcome poc) {collect_if(result,
+				[&poc](const Board& brd, const MatchOutcome &oc) {return oc == poc;});
+			}
 		private:
 			std::vector<Square> attributes_;
 			std::vector<Piece> values_;

@@ -14,9 +14,20 @@
 
 namespace arti {
 
+typedef std::forward_list<size_t> element_index_list_t;
+
 template <class T> std::size_t size_of(const std::forward_list<T>& list) {
    return std::distance(list.begin(),list.end());
 }
+
+class ElementIndexList : public std::forward_list<size_t> {
+public:
+		void fill(const size_t count);
+		void collect_random_subset(element_index_list_t &result, const size_t count) const;
+		void prepend(const element_index_list_t &elems);
+		bool contains(const size_t e) const;
+		size_t size() const {return size_of(*this);}
+};
 
 /** This classifier is an implementation of Quinlan's ID3 algorithm.
 In order to use it you have to index your attributes and elements attribute values 
@@ -31,6 +42,7 @@ public:
    virtual ~ID3NameResolver(){}
 };
 typedef std::map<int,int> mapii;
+
 /** A node in the classification tree. 
  */
 class ID3Node {

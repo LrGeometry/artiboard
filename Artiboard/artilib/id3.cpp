@@ -1,9 +1,10 @@
 #include <iterator>
 #include "id3.h"
+std::default_random_engine generator;
 
 namespace {
-	void fill(std::forward_list<size_t>& list, const int count) {
-		for (int i=0; i<count;i++)
+	void fill(std::forward_list<size_t>& list, const size_t count) {
+		for (size_t i=0; i<count;i++)
 			list.push_front(i);
 	}
 
@@ -23,6 +24,37 @@ namespace {
 }
 
 namespace arti {
+
+	void ElementIndexList::fill(const size_t count) {
+		::fill(*this,count);
+	}
+
+	void ElementIndexList::collect_random_subset(element_index_list_t &result, const size_t count) const {
+		const auto s = size();
+		CHECK(count < s);
+		double p = (count * 1.0)/(s*1.0);
+		std::uniform_real_distribution<double> distribution(0.0,1.0);
+		auto it = begin();
+		std::set<size_t> rs;
+		while (rs.size() != count) {
+				if (distribution(generator) <= p) {
+					rs.insert(*it);
+				}
+				it++;
+				if (it == end())
+					it = begin();
+		}
+		result.insert_after(result.before_begin(), rs.begin(), rs.end());
+	}
+
+	bool ElementIndexList::contains(const size_t e) const {
+		return (std::find(begin(),end(),e) != end());
+	}
+
+	void ElementIndexList::prepend(const element_index_list_t &elems) {
+		insert_after(before_begin(), elems.begin(), elems.end());
+	}
+
 	std::ostream& operator<<(std::ostream &os, const ID3Node& v) {
 		std::string space;
 		for (int i = 0; i < v.level;i++) space += ".";

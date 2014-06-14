@@ -118,12 +118,34 @@ public:
 		void do_run() override {
 			IcuData data(data_filename());
 			OutcomeDataTable table(data);
-			OutcomeDataClassifier fier(table,0);
-			fier.train_and_test();
-			fier.root().to_stream(LOG, table);
-			// LOG << data.calculate_stats();
+			// calculate the sets
+			ElementIndexList D,Dn,Ds,Dd;
+			D.fill(data.size());
+			table.collect(Dn,MatchOutcome::NorthPlayerWins);
+			table.collect(Ds,MatchOutcome::SouthPlayerWins);
+			table.collect(Dd,MatchOutcome::Draw);
+			Dn.collect_random_subset(Un,(Dn.size()*1)/4);
+			Ds.collect_random_subset(Us,(Ds.size()*1)/4);
+			Dd.collect_random_subset(Ud,(Dd.size()*1)/4);
+			U.prepend(Un);
+			U.prepend(Us);
+			U.prepend(Ud);
+			LOG << "|U|=" << U.size() << " |T|=" << T.size() << " |D|=" << D.size();
+			CHECK(Ud.size() + Us.size() + Un.size() == U.size());
+			for (auto e : D) {
+				if (!U.contains(e)) T.push_front(e);
+			}
+			LOG << "|U|=" << U.size() << " |T|=" << T.size() << " |D|=" << D.size();
+			CHECK(U.size() + T.size() == D.size());
+
+//			OutcomeDataClassifier fier(table,0);
+//			fier.train_and_test();
+//			fier.root().to_stream(LOG, table);
+//			LOG << data.calculate_stats();
 			// TODO 200 implement example selection strategy experiment
 		}
+private:
+		ElementIndexList U,T, Un, Us, Ud;
 } c4_025;
 
 

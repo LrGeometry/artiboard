@@ -85,6 +85,12 @@ std::string OutcomeDataTable::class_name(const size_t c){
 	return to_string(classes_[c]);
 }
 
+void OutcomeDataTable::collect_if(element_index_list_t &result, pred_board_outcome_t fn) const {
+		for (size_t i=0; i<data_.size(); i++)
+			if (fn(data_[i].first, data_[i].second))
+				result.push_front(i);
+}
+
 }
 
 

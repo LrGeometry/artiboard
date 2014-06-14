@@ -12,7 +12,8 @@
  The ability to classify can be described as the ability to predict a particular attribute value of an entity based on the values of the other attributes of that entity.  
 
 % What is a decision tree?
-  The attribute to predict is called the \myterm{target attribute}, and its value is referred to as the \myterm{class} of the entity. A \myterm{decision tree} is a structure that contains rules that are used to predict the class of a given entity.  A leaf node of a tree indicates the class, and a non-leaf node, called a \myterm{decision node}. The non-leaf node specifies a condition to test. Each branch leading from a decision node signifies a possible outcome for the test.  The classification process starts at the root of the tree, tests the value of the attribute specified in the condition and follows the applicable branch to the next node. This process continues until a leaf node that defines the class for the entity, is reached \cite{jackson:learning}.
+  The attribute to predict is called the \myterm{target attribute}, and its value is referred to as the \myterm{class} of the entity. 
+\mydefs{Decision Tree} {A structure that contains rules that are used to predict the class of a given entity.  A leaf node of the tree indicates the class, and a non-leaf node, called a \myterm{decision node}. The non-leaf node specifies a condition to test. Each branch leading from a decision node signifies a possible outcome for the test.  The classification process starts at the root of the tree, tests the value of the attribute specified in the condition and follows the applicable branch to the next node. This process continues until a leaf node that defines the class for the entity, is reached \cite{jackson:learning}}.
 
 % why trees?
 When compared to other classifiers such as neural networks and genetic algorithms, the distinguishing characteristic of decision trees is the {\sl readability} of the knowledge that drives the classification process.  The readability of the rules represented by a decision tree facilitates the discernment, analysis and evaluation of the classification process.  Another advantage of decision trees is that the structure is easy to manipulate.  In particular, the ability to transform decision trees into and-or trees, and logical expressions makes them very useful for the current research.
@@ -156,7 +157,8 @@ for each $S_i$ in $S$ \+ \\
 Note that the selected attribute is removed from the set before the recursive invocation of the algorithm. It is therefore conceivable that the algorithm is invoked with $A$ as an empty set - however such an invocation is possible only if the example set contains entities with the same value for every attribute but with different classifications \cite{bratko:learning}.  It is for this reason that the precondition of the input specifies that at least one attribute value must be different for every pair of examples that have different classes.
 
 % minimal object pruning
-On \refline{id3_prune} the effect of the pruning parameter becomes clear.  %TODO: discuss further and provide reference
+On \refline{id3_prune} the effect of the pruning parameter becomes clear.  
+%TODO: discuss further and provide reference (the previous section mentiones pruning too)
 
 % introduce information gain
 The criterion used to select the split attribute, $a$, on \refline{id3_select} is the primary influence on the quality of the decision tree that is induced \cite{kubat:review}. The \myterm{information gain} criterion aims to choose the attribute that maximises the amount of new information that become available after the split is made. 
@@ -213,7 +215,9 @@ A_a(\myset T) = \frac{|\myset C| \times 100}{|\myset T|}
 where $\myset C \subseteq \myset T$ such that each element in $\myset C $ is correctly classified by $a$.
 }  
 
-Considering the algorithm form the perspective a specific class, one can be more specific about the accuracy of an algorithm \cite{kubat:review}. For this class, and example is \myterm{positively classified} when the algorithm decides it is an instance of the class, and \myterm{negatively classified} when it decides an example is not an instance of the class. This algorithm will make one of these two types of errors:
+\mydefc{Decision Accuracy} {of a \myterm{Decision Tree}} {A quantitative measurement obtained by classifying a set of examples called the \myterm{test set}. It is calculated using the \newline \myterm{Classification Accuracy} where the algorithm is the decision tree's classification process.}  
+
+Considering the algorithm from the perspective a specific class, one can be more specific about the accuracy of an algorithm \cite{kubat:review}. For this class, an example is \myterm{positively classified} when the algorithm decides it is an instance of the class, and \myterm{negatively classified} when it decides an example is not an instance of the class. This algorithm will make one of these two types of errors:
 \mydefs{Error of  omission} {Occurs when an example is negatively classified but it should have been positive.  Such a decision is called a \myterm{false negative}.}
 \mydefs{Error of  commission} {Occurs when an example is positively classified but it should have been negative.  Such a decision is called a \myterm{false positive}.}
 Omissions indicate over-specialisation, while over-generalisation is the cause of commissions. 
@@ -222,40 +226,47 @@ The aim is to develop algorithm that is \myterm{consistent} and \myterm{complete
 
 
 %TODO incorporate work done by fisher-1989-comparison and shavlik-1991-comparison for how test set were selected
+\section{TODO Demonstration: A tic-tac-toe decision tree}
+TODO: use icu data for tic-tac-toe \cite{icu:data} to construct a decision tree for tic-tac-toe.  How does this tree compare with work done by \cite{utgoff:feature}?
+% may be interesting what others did with this data: http://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.names
 
-\section{Experiment: The effect of test example selection} %c4-025
+\section{TODO Experiment: The effect of test example selection} %c4-025
 \subsection{Objective}
 The \myterm{Classification Accuracy} measurement is clearly influenced by its input: the selection of the elements of the test set.  This experiment explores the extent to which this hypothesis is true.
-\subsection{Method}
-% http://archive.ics.uci.edu/ml/datasets/Connect-4
-For this experiment the examples from the UCI Connect-4 dataset was used \cite{icu:data}. The following selection strategies are compared:
+The following test selection strategies are compared:
 \begin{enumerate}
-	\item $\myset W$: Select test examples from Win class only
-	\item $\myset L$: Select test examples from Loss class only
-	\item $\myset D$: Select test examples from Draw class only
-	\item $\myset M$: Select mixed test examples
-	\item $\myset B$: Select mixed test examples balanced to have the same ratio as the input set % proposed by fisher-1989-comparison or shavlik-1991-comparison (must be verified)
-	\item $\myset F$: Use the entire set of examples as the test set
+	\item $\mathcal W$: Select test examples from Win class only
+	\item $\mathcal L$: Select test examples from Loss class only
+	\item $\mathcal D$: Select test examples from Draw class only
+	\item $\mathcal M$: Select mixed test examples
+	\item $\mathcal B$: Select mixed test examples balanced to have the same ratio as the input set % proposed by fisher-1989-comparison or shavlik-1991-comparison (must be verified)
 \end{enumerate} 
 The reasoning behind choosing the tests from each specific category is to investigate worst case scenarios: in a random selection, the worse case scenario could be that all example cases fall into the same category. 
 
-An element in the test set is not removed from the example set given to the classification algorithm.  This is an additional control that ensures that we are observing the measurement strategy; not the influence of having different examples presented to the classification algorithm.  Thus, the ID3 algorithm is applied once on the input, and the resulting decision tree is measured for each selection strategy.
+\subsection{Method}
+% http://archive.ics.uci.edu/ml/datasets/Connect-4
+For this experiment the examples from the UCI Connect-4 dataset was used \cite{icu:data}. This dataset, $\myset D$ has $67557$ examples and $42$ attributes.  Each example is divided into $3$ classes:
+\begin{enumerate}
+	\item south player wins, $s$, has $44473$ elements (about 66\%)
+	\item north player wins, $n$, has $16635$ elements (about 24\%)
+	\item draws, $d$, has $6449$ elements (about 10\%)
+\end{enumerate}
+This dataset, $\myset D$, is divided into two mutually exclusive sub-sets: the training set $\myset T$ and the unseen set $\myset U$. The training set to unseen set ratio is $3:1$; keeping this ratio for each class. The number of examples in the training set for a class, $c$, is \[ |\myset{T_c}| = \floor[\Bigg]{\frac{|\myset{D_c}| \times 3} {4}}\] 
+% http://tex.stackexchange.com/questions/42271/floor-and-ceiling-functions
+The split of elements for each $\myset{D_c}$ into the sub-sets $\myset{T_c}$ and $\myset{U_c}$ is made randomly. For this experiment, this allocation is done exactly once; $\myset T$ and $\myset U$ becomes the fixed input for the experiment. A decision tree $T_t$ is created from $\myset T$ using ID3 (see \refalg{id3}) with a pruning cut-off parameter value of zero.   
 
-For each subset selection strategy an observation is made $100$ times.  For each observation a random selection of $1/4$ of the total examples is chosen as the test set.  Each selection holds to the rules of the strategy being measured. 
+For each test selection strategy an observation is made $100$ times.  For each observation a random selection of $\ceil{1/2}$ of $\myset U$ is used to measure the \myterm{Decision Accuracy} of $T_t$.  The random selection holds to the invariants implied by each selection strategy. 
 
-The mean value and variance of these observations are then compared.   If the mean value differs considerably, the hypothesis is proven.  Also, the variance of each strategy is an indication of how accurate one can expect an arbitrary measurement using that strategy would be.  
+The mean value and variance of these measurements are then compared.   If the mean value differs considerably, the hypothesis is proven.  Also, the variance of each strategy is an indication of how accurate one can expect an arbitrary measurement using that strategy would be.  
 
       
 \subsection{Results}
 \subsection{Conclusion}
-\section{Demonstration: A tic-tac-toe decision tree}
-TODO: use icu data for tic-tac-toe \cite{icu:data} to construct a decision tree for tic-tac-toe.  How does this tree compare with work done by \cite{utgoff:feature}?
-% may be interesting what others did with this data: http://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.names
 \section{Experiment: number of training examples}
 % results are in c4-070.r
 Preliminary results shows that a ratio of $1:3$ for test to training examples and a minimal object pruning produces a good balance between tree size and tree certainty.
 
-\section{Bit vector representation}
+\section{TODO Bit vector representation}
 TODO: Idea comes from experiments described in \cite{shavlik:comparision}.  
 \section{Experiment: The effect of bit encoding}
 TODO
