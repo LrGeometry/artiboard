@@ -230,14 +230,14 @@ The aim is to develop algorithm that is \myterm{consistent} and \myterm{complete
 TODO: use icu data for tic-tac-toe \cite{icu:data} to construct a decision tree for tic-tac-toe.  How does this tree compare with work done by \cite{utgoff:feature}?
 % may be interesting what others did with this data: http://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.names
 
-\section{TODO Experiment: The effect of test example selection} %c4-025
+\section{Experiment: The effect of test example selection} %c4-025
 \subsection{Objective}
 The \myterm{Classification Accuracy} measurement is clearly influenced by its input: the selection of the elements of the test set.  This experiment explores the extent to which this hypothesis is true.
 The following test selection strategies are compared:
 \begin{enumerate}
 	\item $\mathcal W$: Select test examples from Win class only
 	\item $\mathcal L$: Select test examples from Loss class only
-	\item $\mathcal D$: Select test examples from Draw class only
+	% \item $\mathcal D$: Select test examples from Draw class only  %draw class produced an average of 30% (i decided to leave this out of the picture for now)
 	\item $\mathcal M$: Select mixed test examples
 	\item $\mathcal B$: Select mixed test examples balanced to have the same ratio as the input set % proposed by fisher-1989-comparison or shavlik-1991-comparison (must be verified)
 \end{enumerate} 
@@ -247,21 +247,34 @@ The reasoning behind choosing the tests from each specific category is to invest
 % http://archive.ics.uci.edu/ml/datasets/Connect-4
 For this experiment the examples from the UCI Connect-4 dataset was used \cite{icu:data}. This dataset, $\myset D$ has $67557$ examples and $42$ attributes.  Each example is divided into $3$ classes:
 \begin{enumerate}
-	\item south player wins, $s$, has $44473$ elements (about 66\%)
-	\item north player wins, $n$, has $16635$ elements (about 24\%)
+	\item south player wins (i.e. Win class), $s$, has $44473$ elements (about 66\%)
+	\item north player wins (i.e. Loss class), $n$, has $16635$ elements (about 24\%)
 	\item draws, $d$, has $6449$ elements (about 10\%)
 \end{enumerate}
 This dataset, $\myset D$, is divided into two mutually exclusive sub-sets: the training set $\myset T$ and the unseen set $\myset U$. The training set to unseen set ratio is $3:1$; keeping this ratio for each class. The number of examples in the training set for a class, $c$, is \[ |\myset{T_c}| = \floor[\Bigg]{\frac{|\myset{D_c}| \times 3} {4}}\] 
 % http://tex.stackexchange.com/questions/42271/floor-and-ceiling-functions
 The split of elements for each $\myset{D_c}$ into the sub-sets $\myset{T_c}$ and $\myset{U_c}$ is made randomly. For this experiment, this allocation is done exactly once; $\myset T$ and $\myset U$ becomes the fixed input for the experiment. A decision tree $T_t$ is created from $\myset T$ using ID3 (see \refalg{id3}) with a pruning cut-off parameter value of zero.   
 
-For each test selection strategy an observation is made $100$ times.  For each observation a random selection of $\ceil{1/2}$ of $\myset U$ is used to measure the \myterm{Decision Accuracy} of $T_t$.  The random selection holds to the invariants implied by each selection strategy. 
+For each test selection strategy an observation is made $100$ times.  For each observation a random selection, $\myset S$ such that $|\myset S| = 1000$, are chosen to measure the \myterm{Decision Accuracy} of $T_t$. The elements in $\myset S$ are chose to conform to the invariant implied by the strategy.  Fixing this number eliminates the situation where a larger test set produces more accurate measurements.
 
 The mean value and variance of these measurements are then compared.   If the mean value differs considerably, the hypothesis is proven.  Also, the variance of each strategy is an indication of how accurate one can expect an arbitrary measurement using that strategy would be.  
-
       
 \subsection{Results}
+As can be seen on \reffig{c4-025} there is quite a difference between the measurements; especially between the extrement strategy of $\mathcal W$ and $\mathcal L$.  There is no clear statistical significant difference between the means of $\mathcal B$ and $\mathcal M$, but the former definitely produces measurements with less variance.   
+\begin{figure} 
+\center
+\includegraphics{artifacts/c4-025box.eps}
+\caption{Strategy and measurements}
+\label{fig:c4-025}
+\end{figure}
+
+%\begin{figure} 
+\input{artifacts/c4-025tab.tex}
+%\label{tab:c4-025}
+%\end{figure}
 \subsection{Conclusion}
+It is clear that the selection strategy has an effect on the measurement.  However, it could be that the differences has a lot to do with the unevenness of the examples in the dataset. Under these circumstances, the results suggests that $\mathcal B$ is a more precise measurement strategy.   
+
 \section{Experiment: number of training examples}
 % results are in c4-070.r
 Preliminary results shows that a ratio of $1:3$ for test to training examples and a minimal object pruning produces a good balance between tree size and tree certainty.

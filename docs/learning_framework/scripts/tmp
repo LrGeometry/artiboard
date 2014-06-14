@@ -1,0 +1,15 @@
+% latex table generated in R 2.15.0 by xtable 1.7-1 package
+% Sat Jun 14 18:03:54 2014
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlrr}
+  \hline
+ & Strategy & x & v \\ 
+  \hline
+1 & B & 75.92 & 1.43 \\ 
+  2 & L & 66.72 & 1.41 \\ 
+  3 & M & 75.02 & 3.01 \\ 
+  4 & W & 85.85 & 1.16 \\ 
+   \hline
+\end{tabular}
+\end{table}

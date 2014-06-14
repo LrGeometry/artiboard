@@ -146,13 +146,16 @@ public:
 			file() << "Strategy Measurement Size";
 			run_strategy(fier,"W",Us);
 			run_strategy(fier,"L",Un);
-			run_strategy(fier,"D",Ud);
+			//run_strategy(fier,"D",Ud);
 			run_strategy(fier,"M",U);
 			run_strategy(fier,"B",
 				[&](std::forward_list<size_t> &result) {
-					Us.collect_random_half(result);
-					Un.collect_random_half(result);
-					Ud.collect_random_half(result);
+					auto fs = (Us.size() * 1000) / U.size();
+					auto fn = (Un.size() * 1000) / U.size();
+					auto fd = 1000 - fs - fn;
+					Us.collect_random_subset(result,fs);
+					Un.collect_random_subset(result,fn);
+					Ud.collect_random_subset(result,fd);
 				});
 			//fier.root().to_stream(LOG, table);
 //			LOG << data.calculate_stats();
@@ -160,7 +163,7 @@ public:
 		}
 
 		void run_strategy(OutcomeDataClassifier& f, const char * name, const ElementIndexList& s) {
-			run_strategy(f,name,[&s](std::forward_list<size_t> &result){s.collect_random_half(result);});
+			run_strategy(f,name,[&s](std::forward_list<size_t> &result){s.collect_random_subset(result,1000);});
 		}
 
 		void run_strategy(OutcomeDataClassifier& f, const char * name, selector_fn fn) {
