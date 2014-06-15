@@ -34,8 +34,7 @@ class FairnessExperiment: public Experiment {
 					file() << runs << " " << (north * 100) / runs  << " " << (south * 100) / runs;
 			}
 		}
-};
-FairnessExperiment ex1;
+} c4_010;
 
 
 
@@ -75,8 +74,7 @@ public:
 			file() << s->first << s->second;
 		file() << data.size();
 	}
-};
-DataStatistics ex2;
+} c4_020;
 
 class C4IcuExperiment : public Experiment {
 	public:
@@ -116,7 +114,7 @@ class ExampleStratExperiment : public C4IcuExperiment {
 public:
 		typedef std::function<void (std::forward_list<size_t> &result)> selector_fn;
 
-		ExampleStratExperiment() : C4IcuExperiment("c4-025","The effect of the test selection strategy?") {}
+		ExampleStratExperiment() : C4IcuExperiment("c4-025","The effect of the test selection strategy on ID3 accuracy") {}
 		void do_run() override {
 			IcuData data(data_filename());
 			OutcomeDataTable table(data);
@@ -142,6 +140,7 @@ public:
 			// build the decision tree
 			OutcomeDataClassifier fier(table,0);
 			fier.train(T);
+			LOG << "U accuracy = " << fier.accuracy(U);
 			CHECK(fier.accuracy(T) == 100);
 			file() << "Strategy Measurement Size";
 			run_strategy(fier,"W",Us);
@@ -178,6 +177,46 @@ private:
 		ElementIndexList U,T, Un, Us, Ud;
 } c4_025;
 
+class MOCutOff: public C4IcuExperiment {
+private:
+		ElementIndexList D,U,T,Dn,Ds,Dd;
+public:
+		MOCutOff(): C4IcuExperiment("c4-026","Influence of the MO cut-off on ID3") {}
+	void balance_selectUT() {
+		ElementIndexList Un, Us, Ud;
+		U.clear();
+		T.clear();
+		Dn.collect_random_subset(Un,(Dn.size()*1)/4);
+		Ds.collect_random_subset(Us,(Ds.size()*1)/4);
+		Dd.collect_random_subset(Ud,(Dd.size()*1)/4);
+		U.prepend(Un);
+		U.prepend(Us);
+		U.prepend(Ud);
+		for (auto e : D) {
+			if (!U.contains(e)) T.push_front(e);
+		}
+	}
+	void do_run() override {
+		IcuData data(data_filename());
+		OutcomeDataTable table(data);
+		D.fill(data.size());
+		table.collect(Dn,MatchOutcome::NorthPlayerWins);
+		table.collect(Ds,MatchOutcome::SouthPlayerWins);
+		table.collect(Dd,MatchOutcome::Draw);
+		file() << "Cutoff Accuracy Size";
+		for (int o = 0; o < 30; o++)
+				for (int i = 0; i < 10; i++) {
+					const int cutoff = (i+1) * 32;
+					std::cout << " " << o  << ":" << i;
+					OutcomeDataClassifier fier(table,cutoff);
+					balance_selectUT();
+					fier.train(T);
+					fier.test(U);
+					file() << cutoff << " " << fier.root().certainty() << " " << fier.root().size();
+				}
+	}
+} c4_026;
+
 
 class FeatureStatistics: public Experiment {
 public:
@@ -199,8 +238,7 @@ public:
 			}
 		}
 	}
-};
-FeatureStatistics ex3;
+} c4_030;
 
 
 typedef std::pair<arti::Board, MatchOutcome> element_type;
@@ -306,7 +344,9 @@ public:
 			}
 		}
 	}
-} classfy;
+} c4_300;
+
+
 
 class ClassifyRegions: public Experiment {
 public:

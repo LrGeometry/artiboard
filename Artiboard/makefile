@@ -39,8 +39,10 @@ ant_clean:
 test: $(ARTI_TEST)
 	cd $(TARGET_DIR) & artitest.exe & type log.txt
 
-run_c4: $(CONNECT_4)
-	cd $(TARGET_DIR) & connect4.exe c4-025 icu_file=$(INPUT_DIR)\connect-4.data & type log.txt
+#c4-025 takes less than 10 seconds
+#c4-026 takes about 10 minutes
+run_c4: $(CONNECT_4) 
+	cd $(TARGET_DIR) & connect4.exe list icu_file=$(INPUT_DIR)\connect-4.data & type log.txt
 	
 run_tictactoe: $(TICTACTOE)
 	cd $(TARGET_DIR) & tictactoe.exe list & cat ./log.txt

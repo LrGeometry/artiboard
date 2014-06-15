@@ -19,7 +19,8 @@
 When compared to other classifiers such as neural networks and genetic algorithms, the distinguishing characteristic of decision trees is the {\sl readability} of the knowledge that drives the classification process.  The readability of the rules represented by a decision tree facilitates the discernment, analysis and evaluation of the classification process.  Another advantage of decision trees is that the structure is easy to manipulate.  In particular, the ability to transform decision trees into and-or trees, and logical expressions makes them very useful for the current research.
 
 % simplification
-A disadvantage of decision trees is that the decision structures can become quite complex. Two primary motives drive the need to simplify decision trees.  The first is to make it easier for humans to interpret the tree, and the second is to rid the tree of inaccurate branches and to avoid over-fitting \cite{kubat:review}.  Inaccuracies are introduced by noisy data and by induction with an inadequate example set.  The typical approach, called  \myterm{pruning}, involves the removal of the lower branches in the tree. When the pruning occurs during the induction process, it is called \myterm{on-line pruning}.  In \myterm{post pruning}, the tree is simplified after the induction process.  Post-pruning methods can be used to improve over-fitted trees. \myterm{Minimal object pruning} is an on-line pruning method that prevents the exploration of a node that has less than three branches that classify a specified minimum number of entities \cite{quinlan:c45}. 
+A disadvantage of decision trees is that the decision structures can become quite complex. Two primary motives drive the need to simplify decision trees.  The first is to make it easier for humans to interpret the tree, and the second is to rid the tree of inaccurate branches and to avoid over-fitting \cite{kubat:review}.  Inaccuracies are introduced by noisy data and by induction with an inadequate example set.  The typical approach, called  \myterm{pruning}, involves the removal of the lower branches in the tree. When the pruning occurs during the induction process, it is called \myterm{on-line pruning}.  In \myterm{post pruning}, the tree is simplified after the induction process.  Post-pruning methods can be used to improve over-fitted trees. 
+\mydefs{Minimal object pruning} {An on-line pruning method that prevents the exploration of a node when it represents less a specified minimum number (called the \emph{cut-off}) of examples \cite{quinlan:c45}.   }. % also mentioned in patel-2012.pdf  TODO: trace the origin of this idea
 
 %example
 An example serves best to demonstrate the utility of a decision tree. Consider a set of entities, $\{\vec e_1,\ldots, \vec e_8\}$ with attributes $a_1,a_2$ and $a_3$ and values as listed in \reftab{examples}.  The decision tree shown in \reffig{examples} can be used to determine the class of entity $\vec e$.  From the root node, the path $a_2 = z$ leads to a predicted classification of $Y$ for $\vec e$.  
@@ -131,7 +132,7 @@ The purpose of the ID3 algorithm \cite{quinlan:trees} is to induce a decision tr
 { i. Attributes $\myset A = \{ a_1 \ldots a_n\}$. \newline
 	ii. Classes $\myset C = \{ c_1 \ldots c_k\}$. \newline
   iii. Examples $\myset E = \{\vec e_1 \ldots \vec e_m\}$. Each $e_i$ contains an array of $n$ values such that there is a value for every attribute in $\myset A$.  It also has a classification (selected from $\myset C$). All elements in $\myset E$ with the same values for the attributes must have the same classification.\newline
-	iv. A pruning cut-off parameter $q \geq 0$
+	iv. \myterm{Minimal Object Pruning} cut-off parameter $q \geq 0$
 	}
 {A decision tree $T$} 
 
@@ -157,8 +158,7 @@ for each $S_i$ in $S$ \+ \\
 Note that the selected attribute is removed from the set before the recursive invocation of the algorithm. It is therefore conceivable that the algorithm is invoked with $A$ as an empty set - however such an invocation is possible only if the example set contains entities with the same value for every attribute but with different classifications \cite{bratko:learning}.  It is for this reason that the precondition of the input specifies that at least one attribute value must be different for every pair of examples that have different classes.
 
 % minimal object pruning
-On \refline{id3_prune} the effect of the pruning parameter becomes clear.  
-%TODO: discuss further and provide reference (the previous section mentiones pruning too)
+\myterm{Minimal Object Pruning} is implemented on \refline{id3_prune}.  Nodes with too little examples are not explored. If no pruning is needed, the algorithm must be provided with a cut-off value of zero.  
 
 % introduce information gain
 The criterion used to select the split attribute, $a$, on \refline{id3_select} is the primary influence on the quality of the decision tree that is induced \cite{kubat:review}. The \myterm{information gain} criterion aims to choose the attribute that maximises the amount of new information that become available after the split is made. 
@@ -206,6 +206,10 @@ I(\myset S,a) = H(\myset S) - H(\myset S,a)
 \label{eq:gain}
 \end{equation}
 The information gain heuristic selects the attribute with the greatest information gain value. Note that an equivalent selection is when when selecting the attribute with the smallest value for \refeq{attrib_entropy}. 
+\section{TODO Demonstration: A tic-tac-toe decision tree}
+TODO: use icu data for tic-tac-toe \cite{icu:data} to construct a decision tree for tic-tac-toe.  How does this tree compare with work done by \cite{utgoff:feature}?
+% may be interesting what others did with this data: http://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.names
+
 
 \section{Measuring the accuracy of classification}
 \mydefc{Classification Accuracy} {of a classification algorithm} {A quantitative measurement obtained by applying the algorithm on a set of examples called the \myterm{test set}. It is calculated for algorithm $a$ and the test set $\myset T$ as follows
@@ -217,6 +221,8 @@ where $\myset C \subseteq \myset T$ such that each element in $\myset C $ is cor
 
 \mydefc{Decision Accuracy} {of a \myterm{Decision Tree}} {A quantitative measurement obtained by classifying a set of examples called the \myterm{test set}. It is calculated using the \newline \myterm{Classification Accuracy} where the algorithm is the decision tree's classification process.}  
 
+\mydefc{Balanced Accuracy} {The \myterm{Decision Accuracy} of a tree such that the ratios between the classes in the  \myterm{test set} are the same as these ratios in the traing set. }  
+
 Considering the algorithm from the perspective a specific class, one can be more specific about the accuracy of an algorithm \cite{kubat:review}. For this class, an example is \myterm{positively classified} when the algorithm decides it is an instance of the class, and \myterm{negatively classified} when it decides an example is not an instance of the class. This algorithm will make one of these two types of errors:
 \mydefs{Error of  omission} {Occurs when an example is negatively classified but it should have been positive.  Such a decision is called a \myterm{false negative}.}
 \mydefs{Error of  commission} {Occurs when an example is positively classified but it should have been negative.  Such a decision is called a \myterm{false positive}.}
@@ -226,11 +232,9 @@ The aim is to develop algorithm that is \myterm{consistent} and \myterm{complete
 
 
 %TODO incorporate work done by fisher-1989-comparison and shavlik-1991-comparison for how test set were selected
-\section{TODO Demonstration: A tic-tac-toe decision tree}
-TODO: use icu data for tic-tac-toe \cite{icu:data} to construct a decision tree for tic-tac-toe.  How does this tree compare with work done by \cite{utgoff:feature}?
-% may be interesting what others did with this data: http://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.names
 
-\section{Experiment: The effect of test example selection} %c4-025
+\section{Experiment: Test selection influence on accuracy} %c4-025
+\label{sec:c4-025}
 \subsection{Objective}
 The \myterm{Classification Accuracy} measurement is clearly influenced by its input: the selection of the elements of the test set.  This experiment explores the extent to which this hypothesis is true.
 The following test selection strategies are compared:
@@ -239,7 +243,7 @@ The following test selection strategies are compared:
 	\item $\mathcal L$: Select test examples from Loss class only
 	% \item $\mathcal D$: Select test examples from Draw class only  %draw class produced an average of 30% (i decided to leave this out of the picture for now)
 	\item $\mathcal M$: Select mixed test examples
-	\item $\mathcal B$: Select mixed test examples balanced to have the same ratio as the input set % proposed by fisher-1989-comparison or shavlik-1991-comparison (must be verified)
+	\item $\mathcal B$: Select mixed test examples balanced to have the same ratio as the input set.  This is the input for the \myterm{Balanced Accuracy} measurement. % proposed by fisher-1989-comparison or shavlik-1991-comparison (must be verified)
 \end{enumerate} 
 The reasoning behind choosing the tests from each specific category is to investigate worst case scenarios: in a random selection, the worse case scenario could be that all example cases fall into the same category. 
 
@@ -273,16 +277,39 @@ As can be seen on \reffig{c4-025} there is quite a difference between the measur
 %\label{tab:c4-025}
 %\end{figure}
 \subsection{Conclusion}
-It is clear that the selection strategy has an effect on the measurement.  However, it could be that the differences has a lot to do with the unevenness of the examples in the dataset. Under these circumstances, the results suggests that $\mathcal B$ is a more precise measurement strategy.   
+It is clear that the selection strategy has an effect on the measurement.  However, it could be that the differences has a lot to do with the unevenness of the examples in the dataset. Under these circumstances, the results suggests that \myterm{Balanced Accuracy} measurement is more precise.   
 
-\section{Experiment: number of training examples}
-% results are in c4-070.r
-Preliminary results shows that a ratio of $1:3$ for test to training examples and a minimal object pruning produces a good balance between tree size and tree certainty.
+\section{Experiment: Minimal object pruning influence on accuracy}
+% c4-026
+\subsection{Objective}
+\myterm{Minimal Object Pruning} surely has an influence on the \myterm{Balanced Accuracy} of the classification tree.    A higher cut-off value produces smaller trees; at the expense of a more generalised classifier. This experiment investigates the relationship between cut-off and accuracy and decides on a best value for the cut-off. A set of $10$ cut-off values are compared: $32, 64, 96, \ldots, 320$.
+\subsection{Method}
+This experiment uses the ICU dataset for Connect-4 (see \refsec{c4-025}) and the \myterm{Balanced Accuracy} measurement.  The dataset is split into a training set $\myset T$ and an unseen set $\myset U$, such that $|\myset T|:|\myset U| = 3:1$.  The set $\myset T$ is used for training and the set $\myset U$ is used as the test set for measuring the accuracy.   
+For each cut-off value, $30$ observations are made, and an accuracy measurement is taken for each observation.  Each observation uses a random selection for $\myset T$ and $\myset U$.   
+\subsection{Results}
+From \reffig{c4-026-a} is is clear that accuracy decreases as the cut-off value increases.  The expected inverse relationship between size and cut-off is clearly visible  on \reffig{c4-026-s}.  A significant gain is size in notable between $32$ and $64$. 
+\begin{figure} 
+\center
+\includegraphics{artifacts/c4-026acc.eps}
+\caption{Cutoff and accuracy}
+\label{fig:c4-026-a}
+\end{figure}
+\begin{figure} 
+\center
+\includegraphics{artifacts/c4-026size.eps}
+\caption{Cutoff and size}
+\label{fig:c4-026-s}
+\end{figure}
+\subsection{Conclusion}
+It seems that a cut-off value of $64$ gives a good balance between accuracy and size.
 
 \section{TODO Bit vector representation}
 TODO: Idea comes from experiments described in \cite{shavlik:comparision}.  
 \section{Experiment: The effect of bit encoding}
 TODO
+\section{TODO Experiment: number of training examples}
+% results are in c4-070.r
+Preliminary results shows that a ratio of $1:3$ for test to training examples and a minimal object pruning produces a good balance between tree size and tree certainty.
 
 \section{The discovery algorithm}
 \label{sec:discovery_algorithm}
@@ -845,26 +872,6 @@ A simplification strategy can be obtained by choosing an exclusion rule and a cu
 	\label{tab:simplify_strategies}
 \end{table*}
 
-\section{Experiment: The affect of cutoff upon size and certainty}
-\subsection*{Objective}
-
-\subsection*{Method}
-\subsection*{Results}
-\begin{figure} [!ht]
-\center
-\includegraphics{artifacts/c4-300cs.eps}
-\caption{Cutoff and size}
-\label{fig:id3cs}
-\end{figure}
-As cutoff increases, size decreases.
-A cutoff of 32 and 64 has about the same certainty.  
-So in general cutoff of 64 seems to be optimal.
-\begin{figure} [!ht]
-\center
-\includegraphics{artifacts/c4-300cc.eps}
-\caption{Cutoff and certainty}
-\label{fig:c4-300}
-\end{figure}
 
 \section{Experiment: Does region affect size and certainty?}
 \subsection*{Objective}

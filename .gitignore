@@ -10,6 +10,7 @@
 *.tps
 *.bbl
 *.blg
+*.tmp
 /bin/
 /dox/
 RunDir/
