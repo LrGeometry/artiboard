@@ -32,7 +32,7 @@ protected:
 			do_step(i,"ADATEB",Connect4::StenMarkADATEB);
 		}
 	}
-} nme;
+} c4_100;
 
 class NegamaxOrdered : Experiment {
 	public:
@@ -66,7 +66,7 @@ class NegamaxOrdered : Experiment {
 			}
 		  //pickLevel(2);
 		}
-} nmo;
+} c4_200;
 
 
 class PerformanceMeasurements : Experiment {
@@ -106,4 +106,4 @@ class PerformanceMeasurements : Experiment {
 			}
 			return 100 * (N+wp-lp)/(2.0f*N);
 		}
-} pmm;
+} c4_350;
