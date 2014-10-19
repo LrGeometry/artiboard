@@ -453,7 +453,7 @@ This section describes a method to measure a player's performance. A method to m
 	M_r(N,p) =  \frac{N + W(p) - L(p)}{2 \times N} \times 100
 	\label{eq:performance}
 \end{equation}
-where $L(p)$ is the number of games lost by $p$, $W(p)$ is the number of games won by $p$, and $N$ is the number of games played in a competition between a random moving player and $p$.
+where $L(p)$ is the number of games lost by $p$, $W(p)$ is the number of games won by $p$, and $N$ is the number of games played in a competition between a random moving player and $p$.  In these games, $p$ makes the first move $N/2$ times.
 }
 
 This measurement is algebraically equivalent to the Franken and Engelbrecht \cite{franken:checkers} function called the \myterm{F- measure}.  Like the F-measure, this function does consider the number of draws. This is important in games where draws are common, like in \mygame{Checkers} matches. 
@@ -524,12 +524,11 @@ At $N = 15000$, the error is well below $0.5$ (the horisontal line). In effect, 
 %\subsection{Measuring the learning rate}
 %\cite{fogel:networks} uses the mean of the best player's score.
 
-\section{Experiment: Does more search improve performance?}
+	\section{Experiment: Does more search improve performance?}
 \subsection*{Objective}
 One expects the performance to increase as the search depth increases.
 \subsection*{Method}
-Using the known functions of Connect4; determine the \myterm{random performance measure} at different ply depths; using $N = 15000$.
-Using ordered alpha-beta (should not be significant).
+Consider the ADATE and IBEF functions of Connect4  (see page \pageref{sec:ADATE}) to determine the \myterm{random metric} at ply depths $1$ through to $6$, using $N = 3000$.  Each function is measured twice: once where the agent moves first and again where the agent moves second.  The agent uses \myterm{Negamax alpha-beta} with move ordering.
 \subsection*{Results}
 \begin{figure}[ht]
 	\centering
@@ -537,7 +536,9 @@ Using ordered alpha-beta (should not be significant).
 	\caption{Performance at ply depths}
 	\label{fig:patply}
 \end{figure}
-From \reffig{patply} it is clear that only ADATE and IBEF consistently increases with an increase is search depth.  This experiment also suggests that IBEF is better than ADATE.  However ADATE started out better than IBEF -- could it be because that level was used by Stenmark's \cite{stenmark:masters} optimisation?
+From \reffig{patply} we can see that it is better for the agent to play first.  This is in a way to be expected - taking control of the game earlier should obtain better results.  The second observation is that ADATE is not better than IBEF.  This seems to go against the conclusion reached by Stenmark \cite{stenmark:masters}.  However, he played ADATE against IBEF -- so it might be better when the two play head on. 
+
+Insofar the current experiment is concerned, it seems that better search does generally lead to better performance (as expected).  The exception is ADATE-f on ply 3.  This strange dip in performance could highlight a problem with this function at this ply level.    
 
 \section{Conclusion}
 \label{sec:learning-conclusion}

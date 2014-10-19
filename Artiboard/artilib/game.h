@@ -245,7 +245,7 @@ namespace arti {
 			/**
 			 * Play the game until an outcome is reached.
 			 */
-			void play();
+			MatchOutcome play();
 			MatchOutcome outcome() const {
 				return _outcome;
 			}

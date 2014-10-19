@@ -2,7 +2,8 @@
 #include <negamax.h>
 #include "connect4.h"
 #include <log.h>
-
+#include <thread>
+#include <future>
 using namespace arti;
 
 class NegamaxExploration : public Experiment {
@@ -68,42 +69,76 @@ class NegamaxOrdered : Experiment {
 		}
 } c4_200;
 
+static arti::MatchOutcome play_m(Match& m) {
+	return m.play();
+}
 
+// 7353:> Complete c4-350 - first and second player
 class PerformanceMeasurements : Experiment {
 	public:
-		PerformanceMeasurements() : Experiment("c4-350","What affect does search depth have on performance? (3h+)") {}
+		PerformanceMeasurements() : Experiment("c4-350","What affect does search depth have on performance? (2h)") {}
 		void do_run() override {
 			file() << "Function Depth Performance";
-			//do_step("WinLose",Connect4::win_lose);
-			do_step("IBEF",Connect4::StenMarkIBEF);
-			do_step("ADATE",Connect4::StenMarkADATE);
-			do_step("IBEFB",Connect4::StenMarkIBEFB);
-			do_step("ADATEB",Connect4::StenMarkADATEB);
+			do_step("IBEF-f",Connect4::StenMarkIBEF,true,false);
+			do_step("ADATE-f",Connect4::StenMarkADATE,true,false);
+			do_step("IBEF-s",Connect4::StenMarkIBEF,false,true);
+			do_step("ADATE-s",Connect4::StenMarkADATE,false,true);
+			// 1519:> Complete c4-350
 		}
 	private:
-		void do_step(const string& fname, eval_function_t fn) {
-			for (int p=1; p < 7;p++) {
-				file() << fname << " " << p << " " << p_metric(fn,p);
-				LOG << fname << " " << p;
+		void do_step(const string& fname, eval_function_t fn,const bool play_first, const bool play_second, const int s=1, const int e=6) {
+			for (int p=s; p <= e;p++) {
+				auto r = p_metric(fn,p,play_first,play_second);
+				file() << fname << " " << p << " " << r;
+				LOG << fname << " " << p << " " << r ;
 			}
 		}
 
-		float p_metric(eval_function_t fn, const int ply) {
-			static const int N = 15000;
-			static PickRandom randpick(Connect4::spec);
-			PickNegamaxAlphaBeta negapick(&Connect4::spec,fn,ply);
-			PickDual dual(negapick,randpick);
+		void adjust_counts(const MatchOutcome result,const MatchOutcome whoami, int &w, int &l) {
+			CHECK(result != MatchOutcome::Unknown);
+			if (result == whoami) w = w + 1;
+			else if (result != MatchOutcome::Draw) l = l + 1;
+		}
+
+		float p_metric(eval_function_t fn, const int ply, const bool play_first, const bool play_second) {
+			CHECK(play_first || play_second);
+			const int N = 3000; // the number of 'pair' matches to play where pair = one match on each side
+			const int LOAD = 16;  // the number of futures to submit asynchronously; depends on the number of cores available
+			PickRandom randpick(Connect4::spec);
 			int wp = 0;
 			int lp = 0;
-			for (int i=0;i<N;i++) {
-				Match match(Connect4::spec,dual);
-				match.play();
-				auto result = match.outcome();
-				if (result == SouthPlayerWins)
-					wp++;
-				else if (result == NorthPlayerWins)
-					lp++;
+			int total = 0;
+			using future_t = std::future<arti::MatchOutcome>;
+			int count = 0;
+			while (count < N) {
+				std::list<future_t> flist,llist;
+				int step = LOAD;
+				if (step + count > N)
+					step = N - count;
+				for (int i=0;i<step;i++) {
+					if (play_first) flist.emplace_front(
+						std::async(std::launch::async,
+							[&ply,&fn,&randpick](){
+								PickNegamaxAlphaBeta negapick(&Connect4::spec,fn,ply);
+								PickDual first(negapick,randpick);
+								return Match(Connect4::spec,first).play();
+							}));
+					if (play_second) llist.emplace_front(
+						std::async(std::launch::async,
+							[&ply,&fn,&randpick](){
+								PickNegamaxAlphaBeta negapick(&Connect4::spec,fn,ply);
+								PickDual last(randpick,negapick);
+								return Match(Connect4::spec,last).play();
+							}));
+				};
+				for (auto &f : flist)
+					adjust_counts(f.get(),SouthPlayerWins,wp,lp);
+				for (auto &f : llist)
+					adjust_counts(f.get(),NorthPlayerWins,wp,lp);
+				count += step;
+				total += (flist.size() + llist.size());
 			}
-			return 100 * (N+wp-lp)/(2.0f*N);
+			CHECK(count == N);
+			return 100 * (total+wp-lp)/(total*2.0f);
 		}
 } c4_350;

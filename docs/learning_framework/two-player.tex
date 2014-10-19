@@ -933,7 +933,8 @@ Interestingly, there is no need to visit every node in the minimax tree to deter
 
 Alpha-beta obtains the same results that a full minimax tree traversal would obtain, but it requires much less effort. Therefore, applications for minimax and research activities that involves minimax tree searching typically use an implementation that employs alpha-beta pruning as the reference minimax algorithm.   
 
-The alpha beta concept can also be transferred to \mytermmark{Negamax} -- leading to the \mytermmark{Negamax alpha-beta} algorithm. See \refalg{negamax-ab} for the outline of this algorithm.   % TODO: it is possible to order the children to improve the possibility of cut-offs -- see wikipedia 
+\mydefs{Negamax alpha-beta} {A variation on the Negamax algorithm that employs alpha-beta}
+See \refalg{negamax-ab} for the outline of this algorithm.   % TODO: it is possible to order the children to improve the possibility of cut-offs -- see wikipedia 
 
 \begin{figure} [hb]
 \begin{algorithm} 

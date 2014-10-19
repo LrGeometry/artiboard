@@ -3,7 +3,7 @@
 
 \section{C}\label{tab:attribute_regions}
 
-\chapter{Knowledge Discovery with ID3}
+\chapter{Discovering Knowledge with ID3}
 
 \section{Decision trees}
 \label{sec:decision_tree}   
@@ -287,7 +287,7 @@ It is clear that the selection strategy has an effect on the measurement.  Howev
 This experiment uses the ICU dataset for Connect-4 (see \refsec{c4-025}) and the \myterm{Balanced Accuracy} measurement.  The dataset is split into a training set $\myset T$ and an unseen set $\myset U$, such that $|\myset T|:|\myset U| = 3:1$.  The set $\myset T$ is used for training and the set $\myset U$ is used as the test set for measuring the accuracy.   
 For each cut-off value, $30$ observations are made, and an accuracy measurement is taken for each observation.  Each observation uses a random selection for $\myset T$ and $\myset U$.   
 \subsection{Results}
-From \reffig{c4-026-a} is is clear that accuracy decreases as the cut-off value increases.  The expected inverse relationship between size and cut-off is clearly visible  on \reffig{c4-026-s}.  A significant gain is size in notable between $32$ and $64$. 
+From \reffig{c4-026-a} is is clear that accuracy decreases as the cut-off value increases.  The expected inverse relationship between size and cut-off is clearly visible  on \reffig{c4-026-s}.  A significant gain in size is notable between $32$ and $64$. 
 \begin{figure} 
 \center
 \includegraphics{artifacts/c4-026acc.eps}
@@ -303,13 +303,13 @@ From \reffig{c4-026-a} is is clear that accuracy decreases as the cut-off value 
 \subsection{Conclusion}
 It seems that a cut-off value of $64$ gives a good balance between accuracy and size.
 
-\section{TODO Bit vector representation}
-TODO: Idea comes from experiments described in \cite{shavlik:comparision}.  
-\section{Experiment: The effect of bit encoding}
-TODO
-\section{TODO Experiment: number of training examples}
+%\section{TODO Bit vector representation}
+%TODO: Idea comes from experiments described in \cite{shavlik:comparision}.  
+%\section{Experiment: The effect of bit encoding}
+%TODO
+%\section{TODO Experiment: number of training examples}
 % results are in c4-070.r
-Preliminary results shows that a ratio of $1:3$ for test to training examples and a minimal object pruning produces a good balance between tree size and tree certainty.
+%Preliminary results shows that a ratio of $1:3$ for test to training examples and a minimal object pruning produces a good balance between tree size and tree certainty.
 
 \section{The discovery algorithm}
 \label{sec:discovery_algorithm}

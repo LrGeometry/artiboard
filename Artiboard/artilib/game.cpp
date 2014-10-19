@@ -95,7 +95,7 @@ namespace arti {
 			_outcome(MatchOutcome::Unknown) {
 	}
 
-	void Match::play() {
+	MatchOutcome Match::play() {
 		if (!_line.last().is_root())
 			throw std::runtime_error("cannot play again");
 		Move::SharedFWList moves;
@@ -113,6 +113,7 @@ namespace arti {
 				_outcome = _spec.outcome_of(_line.last());
 			}
 		}
+		return _outcome;
 	}
 
 	ostream& operator <<(std::ostream& os, const Match& v) {
@@ -142,7 +143,7 @@ namespace arti {
 	 static std::default_random_engine engine;
 	 static std::uniform_real_distribution<float> distro(0.0f,1.0f);
 	 static auto random = std::bind(distro,engine);
-	 // if there is a winnning move, take it
+	 // if there is a winning move, take it
 	 for (auto b = children.begin(); b!= children.end(); b++) {
 		 PositionThatPoints p(current.ply().next(),b->get());
 		 auto oc = spec_.outcome_of(p);
