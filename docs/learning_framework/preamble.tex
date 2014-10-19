@@ -138,7 +138,6 @@
 
 \newcommand \myprint [1] {\FPround \fpr {#1} 6 \FPprint \fpr}
 \newcommand \myeval [1] {\FPeval \val {#1} \FPround \rval \val 6 \FPprint \rval}
-
 % New Environments
 %\newtheorem{mydef}{Definition}[section]
 %\newcounter{mydef}[chapter]
@@ -148,26 +147,25 @@
 % the second parameter describes the input
 % the third parameter describes the output
 % the body of the environment contains the pseudo code  lines are terminated with \\ and \> is used to indent
-{
-\small
+{ \small
+{\rule{\textwidth}{0.2pt}}
 \begin{tabular} [t] {rp{60ex}}
-\hline
 \\
 	{\it Algorithm} & #1 \\
 	{\it Input} & #2  \\
 	{\it Output} & #3 \\
 \end{tabular}
-%	\begin{sffamily}
+%\noindent\makebox[\linewidth]
+	\begin{sffamily}
 	%\tt		% adding tt looks good but causes latex font warnings
-	\small
+	
 	\begin{ntabbing}
-
 	\reset
 	123\=123\=123\=123\=123\=123\=\kill
-	
 }{
 	\end{ntabbing}
-%	\end{sffamily}
+	\end{sffamily} 
+	\rule{\textwidth}{0.2pt}
 }
 
 % Name of a new parameter function

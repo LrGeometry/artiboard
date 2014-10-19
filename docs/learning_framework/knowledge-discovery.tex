@@ -148,7 +148,7 @@ for each $S_i$ in $S$ \+ \\
 			classification value and attach it
 			to the root of T; \- \-\\ 
 	else  if $|Si| \geq q$ \label{line:id3_prune}\+ \\ 
-			ID3(A - \{$a$\}, $S_i$, $T_i$); \\
+			ID3(A - $\{a\}$, $S_i$, $T_i$); \\
 			Attach $T_i$ to the root of T;
 \end{algorithm}
 \caption{An outline of the ID3 algorithm}
@@ -221,7 +221,7 @@ where $\myset C \subseteq \myset T$ such that each element in $\myset C $ is cor
 
 \mydefc{Decision Accuracy} {of a \myterm{Decision Tree}} {A quantitative measurement obtained by classifying a set of examples called the \myterm{test set}. It is calculated using the \newline \myterm{Classification Accuracy} where the algorithm is the decision tree's classification process.}  
 
-\mydefc{Balanced Accuracy} {The \myterm{Decision Accuracy} of a tree such that the ratios between the classes in the  \myterm{test set} are the same as these ratios in the traing set. }  
+\mydefc{Balanced Accuracy} {of a \myterm{Decision Tree}}{The \myterm{Decision Accuracy} of a tree such that the ratios between the classes in the  \myterm{test set} are equal to the ratios in the training set. }  
 
 Considering the algorithm from the perspective a specific class, one can be more specific about the accuracy of an algorithm \cite{kubat:review}. For this class, an example is \myterm{positively classified} when the algorithm decides it is an instance of the class, and \myterm{negatively classified} when it decides an example is not an instance of the class. This algorithm will make one of these two types of errors:
 \mydefs{Error of  omission} {Occurs when an example is negatively classified but it should have been positive.  Such a decision is called a \myterm{false negative}.}
