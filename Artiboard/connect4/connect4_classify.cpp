@@ -225,7 +225,7 @@ public:
 		const IcuData data(args()["icu_file"]);
 		file() << "region piece count wins losses draws";
 		const std::vector<Piece> pieces({Piece('-'), Piece('o'), Piece('x')});
-		auto program = load_program("../connect4/data/squares.txt"); 
+		auto program = load_program(data_dir()+"\\regions.txt");
 		FOR_EACH(nr,program->regions()) {
 			auto n = nr->first;
 			auto r = nr->second;
