@@ -1,5 +1,5 @@
 /* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
-/* [ Created with wxMaxima version 12.04.0 ] */
+/* [ Created with wxMaxima version 13.04.2 ] */
 
 /* [wxMaxima: input   start ] */
 kill(all)$
@@ -160,7 +160,9 @@ rectform(%);
 kill(all)$
 e1: 3*t + 4;
 e2: t-6;
-plot2d([parametric, e1, e2, 
+plot2d([parametric, e1, e2, 
+
+
              [t, -8*%pi, 8*%pi], [nticks, 2000]])$
 /* [wxMaxima: input   end   ] */
 
@@ -190,7 +192,6 @@ assume(x > 0);
 assume(y > 1);
 solve(e,x);
 /* [wxMaxima: input   end   ] */
-
 
 /* Maxima can't load/batch files which end with a comment! */
 "Created with wxMaxima"$

@@ -1,4 +1,4 @@
-\chapter{Two-player games}
+\chapter*{Two-player games}
 \label{chap:two-player}
 { \chapterintro
 This chapter reviews fundamental two-player definitions and concepts used in chapters that follow.  Furthermore, the reasons for using games in research and the properties that are typically used to classify two-player games are explored. Game convergence is such a property, and a new, more general definition of this property extends work done previously in this regard.  Throughout the chapter, the perspective remains on the influence the presented material might have on the definition of a learning framework.}
@@ -19,9 +19,11 @@ Fundamentally, a game is a set of rules.  These rules define how the game starts
 
 \mydefs{two-player game} {A game where two participants compete in a contest determined by the game rules.} 
 
-In an abstract sense,  game rules describe allowable changes to the \myterm{game state}.  For board games, the game state is usually referred to as a \myterm{position}. 
+In an abstract sense,  game rules describe allowable changes to the \myterm{game state}.  
 
-\mydefs{legal position} {A game state that can be constructed by playing the game according to its rules.}
+\mydefs{position} {The state of a game at a point in time.} 
+
+\mydefs{legal position} {A poistion that can be constructed by playing the game according to its rules.}
 
 Three mutually exclusive sets cover the set of legal positions: the set of \myterm{initial positions}; the set of \myterm{middle positions} and the set of \myterm{end positions}.  A game starts with an initial position and it ends with an end position.  Any legal position not in the initial- or end position set belongs to the set of middle positions. Many popular games have only one initial position, but there are exceptions.  For instance, in  \mygame{Tournament Checkers} the initial position is determined from a balloted sequence of three moves \cite{schaeffer:solving} -- and the set of  initial positions has 144 elements. \mygame{Arimaa} starts with each player in turn arranging 16 game pieces on the nearest two ranks on a \mygame{Chess} board.  In this game there are thousands of initial positions\footnote{See http://www.arimaa.com for the \mygame{Arimaa} game rules}. 
 
@@ -31,8 +33,13 @@ The outcome of a match is determined from the end position.  A game in which the
  
 %.  This game has approximately $10^{20}$ initial positions.  
 
+\mydefs{game tree} {Using a position centric view, the rules of the game can be regarded as the input to a production system that starts from an initial position and produces all the legal positions that follow.  Repeating the production, level by level, results in a tree structure with the initial position as the root and end positions as leaf nodes. This tree structure is called a \myterm{game tree}.}
 
-Using a position centric view, the rules of the game can be regarded as the input to a production system that starts from an initial position and produces all the legal positions that follow.  Repeating the production, level by level, results in a tree structure with the initial position as the root and end positions as leaf nodes. This tree structure is called a \myterm{game tree} and each level in the tree is called a \myterm{ply} \cite{samuel:checkers}.  The \myterm{branching factor} is a measure of the average number of child nodes. The set of all game trees with an initial position as root is called the \myterm{game forest}.  
+\mydefs{ply} {A level in the \myterm{game tree} \cite{samuel:checkers}.}
+
+\mydefs{branching factor} {A measure of the average number of child nodes in the \myterm{game tree}.} 
+
+\mydefs{game forest} {The set of all \myterms{game tree} with an initial position.}  
 
 During the game, the nodes of the game tree is traversed and a path is constructed.  This path is called a \myterm{play-line} and it starts at the root of a game tree and extends towards the leaves of the tree as the game progresses.  The \myterm{active game tree} is the tree in which the play-line is found. The \myterm{active position} is the last node in the play line.  The \myterm{past positions} are the nodes that precede the active position, and the \myterm{future lines} are all the paths in the game tree with the active position as root.  
 
@@ -254,7 +261,7 @@ In the next chapter, the problem of representing the knowledge for two-player bo
 %Let $c$ be the number of maximal set homogeneous regions with relation to the occupation set $\{\mathcal{T}_1,\mathcal{T}_2,\ldots,\mathcal{T}_n\}$.  Then, the value of the atomic feature above is 1 if {\it op} describes the relation between $c$ and $n$ accurately, and it is 0, otherwise.
 %\end{definition}
 
-\chapter{Representing game knowledge}
+\chapter*{Representing game knowledge}
 \label{chap:kr}
 {\chapterintro
 In the previous chapter, an introduction to the broader concepts of two-player games were provided.  This chapter builds on those concepts by providing a review of the knowledge types and the knowledge representation schemes used by successful learning- and playing agents.  It also proposes a new representation language for game knowledge that includes symbols and numbers. A precise definition of this language is provided.}
@@ -861,7 +868,7 @@ The use of Boolean operators ensures that known techniques can be used to constr
 
 An important notion is the fit-to-features model used by $F$. This model provides an opportunity to exploit and to further develop selective game tree search algorithms that do not assume the compared positions are on the same ply.  In the next chapter, the search activity is explored in more detail; and these concepts and the benefit of this model becomes clearer.
 
-\chapter{Exploring the game tree}
+\chapter*{Exploring the game tree}
 \label{chap:tree}
 { \chapterintro
 The previous chapter focussed on how knowledge can be presented and  used by the playing agent to make a move decision.  In this chapter, the manner in which the agent applies that knowledge to search the game tree is discussed.  A new search method called the best-first shallow search is presented and evaluated.

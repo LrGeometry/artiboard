@@ -1,4 +1,4 @@
-\chapter{Learning the evaluation function}
+\chapter*{Learning the evaluation function}
 \label{chap:learning}
 {\chapterintro
 The previous two chapters described the facets of the playing agent.  In this chapter, the focus returns to the learning agent.  A review of the predominant learning methods is provided, and the learning framework is introduced.  This framework represents a key contribution of the current work, and the details of the framework is presented in the two chapters that follow this one.
@@ -266,7 +266,7 @@ From  \refeq{delta_sum}, the linear weights are determined as follows:
 \nonumber \vec{w} & = & \vec{w} + \sum_{t=1}^{m}\theta(z - P_t) \vec{x}_t   \\
 \nonumber & = & \vec{w} + \theta \sum_{t=1}^{m} \sum_{k=t}^{m}(P_{k+1} - P_k) \vec{x}_t 
 \end{eqnarray}
-Because $\sum_{i=1}^n\sum_{j=i}^n a_ib_j = \sum_{j=1}^n\sum_{i=1}^j a_ib_j$:
+Because $\sum_{i=1}^n\sum_{j=i}^n a_ib_j = \sum_{j=1}^n\sum_{i=1}^j a_ib_j$ (see section \ref{sec:sum_proof}):
 \begin{eqnarray}
 \nonumber \vec{w} & = & \vec{w} +  \theta \sum_{k=1}^{m}\sum_{t=1}^{k}(P_{k+1} - P_k) \vec{x}_t \\
 \nonumber & = & \vec{w} + \sum_{t=1}^{m}\theta(P_{t+1} - P_t) \sum_{k=1}^{t} \vec{x}_k 
@@ -523,12 +523,18 @@ At $N = 15000$, the error is well below $0.5$ (the horisontal line). In effect, 
 %
 %\subsection{Measuring the learning rate}
 %\cite{fogel:networks} uses the mean of the best player's score.
+\section{Experiment: Which function is better (one-sided, balanced or normalised}
+\subsection*{Objective}
+TODO
 
-	\section{Experiment: Does more search improve performance?}
+\section{Experiment: Is it better to be the first player?}
+TODO
+
+\section{Experiment: Does more search improve performance?}
 \subsection*{Objective}
 One expects the performance to increase as the search depth increases.
 \subsection*{Method}
-Consider the ADATE and IBEF functions of Connect4  (see page \pageref{sec:ADATE}) to determine the \myterm{random metric} at ply depths $1$ through to $6$, using $N = 3000$.  Each function is measured twice: once where the agent moves first and again where the agent moves second.  The agent uses \myterm{Negamax alpha-beta} with move ordering.
+Consider the \myterm{ADATE function} and \myterm{IBEF function} to determine the \myterm{random metric} at ply depths $1$ through to $6$, using $N = 3000$.  Each function is measured twice: once where the agent moves first and again where the agent moves second.  The agent uses \myterm{Negamax alpha-beta} with move ordering.
 \subsection*{Results}
 \begin{figure}[ht]
 	\centering

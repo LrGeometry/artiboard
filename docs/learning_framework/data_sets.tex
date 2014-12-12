@@ -1,0 +1,76 @@
+\chapter*{Appendix I: Data Sets and functions}
+
+\section{Connect-Four}
+\label{sec:uci-c4}
+\mydefs{UCI Connect-Four data set} {An data set obtained from the UCI machine learning repository \cite{bache:uci}. It contains the \myterms{legal position} at the 8-\myterm{ply} in the game of \myterm{Connect-Four} in which neither player has won and the next move is not forced.}
+
+This data set, $\myset D$ has $67557$ examples and $42$ attributes.  Each example is divided into $3$ classes:
+\begin{enumerate}
+	\item south player wins (i.e. Win class), $s$, has $44473$ elements (about 66\%)
+	\item north player wins (i.e. Loss class), $n$, has $16635$ elements (about 24\%)
+	\item draws, $d$, has $6449$ elements (about 10\%)
+\end{enumerate}
+
+\mydefs{ADATE function} {A function for \myterm{Connect-Four} \myterms{position} derived by Stenmark's experiment \cite{stenmark:masters}. The function is calculated as follows:
+\[ 
+m = \sum_{i \in S}{p(s) \times w(s)}
+\] 
+where $p(s) = 1$ if a square, $s$ is occupied by the player, $-1$ when occupied by the opponent and $0$ when it is not occupied.  Also, $w(s)$ is the weight of square $s$. Weights are assigned according to the values in the table below. 
+\newline
+\begin{center}
+\begin{tabular} {|l|l|l|l|l|l|l|}
+	\hline
+	2& 0&2& 2& 2& 2&1 \\ \hline
+	0& 2&6& 6& 2& 4&1 \\ \hline
+	0&12&6&14&12&11&2 \\  \hline
+	0& 1&4&16& 0& 0&2 \\ \hline
+	0& 2&5& 0& 5& 4&4 \\ \hline
+	0& 2&0& 1& 12&0&0 \\ \hline
+\end{tabular}
+\end{center}
+} 
+
+\mydefs{IBEF function} {An evaluation function for \myterm{Connect-Four} \myterms{position} defined by Stenmark \cite{stenmark:masters}.  It is an acronym for  {\it Intuitive Board Evaluation Function}.  It uses the same calculation method as the \myterm{ADATE function} but employs different weights, as given below 
+\newline
+\begin{center}
+\begin{tabular} {|l|l|l|l|l|l|l|}
+	\hline
+	3&4& 5& 7& 5&4&3 \\ \hline
+	4&6& 8&10& 8&6&4 \\ \hline
+	5&8&11&13&11&8&5 \\ \hline
+	5&8&11&13&11&8&5 \\ \hline
+	4&6& 8&10& 8&6&4 \\ \hline
+	3&4& 5& 7& 5&4&3 \\ \hline
+\end{tabular}
+\end{center}
+}. 
+
+\chapter*{Appendix II: Mathematics}
+\section{Double sum equality}
+\label{sec:sum_proof}
+We need to prove that:
+\begin{align}
+\sum_{i=1}^n\sum_{j=i}^n a_ib_j = \sum_{j=1}^n\sum_{i=1}^j a_ib_j
+\end{align}
+
+For $n = 1$:
+\begin{align}
+\sum_{i=1}^1\sum_{j=i}^1 a_ib_j &= a_1b_1 \\
+\sum_{j=1}^1\sum_{i=1}^j a_ib_j &= a_1b_1 
+\end{align}
+
+Assuming equality holds for n, for $n+1$:
+\begin{align}
+\sum_{i=1}^{n+1}\sum_{j=i}^{n+1} a_ib_j 
+&= \sum_{i=1}^{n+1}\left(\sum_{j=i}^{n} a_ib_j + a_ib_{n+1}\right) \\
+&= \sum_{i=1}^{n}\left(\sum_{j=i}^{n} a_ib_j + a_ib_{n+1}\right) 
++ \left(\sum_{j=n+1}^{n} a_{n+1}b_j + a_{n+1}b_{n+1}\right) \\
+&= \sum_{i=1}^{n}\left(\sum_{j=i}^{n} a_ib_j + a_ib_{n+1}\right) 
++ a_{n+1}b_{n+1} \\
+&= \sum_{i=1}^{n}\sum_{j=i}^{n} a_ib_j + \sum_{i=1}^{n} a_ib_{n+1}
++ a_{n+1}b_{n+1} \\
+&= \sum_{j=1}^n\sum_{i=1}^j a_ib_j + \sum_{i=1}^{n} a_ib_{n+1}
++ a_{n+1}b_{n+1} \\
+&= \sum_{j=1}^n\sum_{i=1}^j a_ib_j + \sum_{i=1}^{n+1} a_ib_{n+1} \\
+&= \sum_{j=1}^{n+1}\sum_{i=1}^j a_ib_j 
+\end{align}

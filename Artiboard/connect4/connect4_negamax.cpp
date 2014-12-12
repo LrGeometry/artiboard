@@ -79,10 +79,12 @@ class PerformanceMeasurements : Experiment {
 		PerformanceMeasurements() : Experiment("c4-350","What affect does search depth have on performance? (2h)") {}
 		void do_run() override {
 			file() << "Function Depth Performance";
-			do_step("IBEF-f",Connect4::StenMarkIBEF,true,false);
-			do_step("ADATE-f",Connect4::StenMarkADATE,true,false);
-			do_step("IBEF-s",Connect4::StenMarkIBEF,false,true);
-			do_step("ADATE-s",Connect4::StenMarkADATE,false,true);
+			do_step("IBEF",Connect4::StenMarkIBEFB,true,false);
+			do_step("ADATE",Connect4::StenMarkADATEB,true,false);
+			do_step("IBEF_S",Connect4::StenMarkIBEF,true,false);
+			do_step("ADATE_S",Connect4::StenMarkADATE,true,false);
+//			do_step("IBEF-s",Connect4::StenMarkIBEFB,false,true);
+//			do_step("ADATE-s",Connect4::StenMarkADATEB,false,true);
 			// 1519:> Complete c4-350
 		}
 	private:

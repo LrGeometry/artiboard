@@ -155,26 +155,33 @@ float win_lose_or(const Position& pos, eval_function_t fn) {
 
 float weighted_south(const int w[], const Position& pos) {
 	float result = 0.0f;
+	float count = .0f;
 	for (int r = 0; r < 7; r++)
 		for (int c = 0; c < 8; c++) {
-			if (pos.board().at(c,r) == Connect4::south)
+			auto p = pos.board().at(c,r);
+			if (p != Connect4::open)
+				count = count + 1.f;;
+			if (p == Connect4::south)
 				result += w[c*r];
 		}
-	return result;
+	return result/count;
 }
 
 float weighted_balanced(const int w[], const Position& pos) {
 	float s = 0.0f;
 	float n = 0.0f;
+	float count = 0.0f;
 	for (int r = 0; r < 7; r++)
 		for (int c = 0; c < 8; c++) {
 			const auto p = pos.board().at(c,r);
+			if (p != Connect4::open)
+				count = count + 1.f;;
 			if (p == Connect4::south)
 				s += w[c*r];
 			else if (p == Connect4::north)
 				n += w[c*r];
 		}
-	return s - n;
+	return (s - n)/count;
 }
 
 static const int stenmark_ibef[] = {

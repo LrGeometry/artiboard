@@ -1,9 +1,9 @@
-\chapter{missing references}
+\chapter*{missing references}
 \section{A}\label{sec:encoding_examples}
 
 \section{C}\label{tab:attribute_regions}
 
-\chapter{Discovering Knowledge with ID3}
+\chapter*{Discovering Knowledge with ID3}
 
 \section{Decision trees}
 \label{sec:decision_tree}   
@@ -249,13 +249,7 @@ The reasoning behind choosing the tests from each specific category is to invest
 
 \subsection{Method}
 % http://archive.ics.uci.edu/ml/datasets/Connect-4
-For this experiment the examples from the UCI Connect-4 dataset was used \cite{icu:data}. This dataset, $\myset D$ has $67557$ examples and $42$ attributes.  Each example is divided into $3$ classes:
-\begin{enumerate}
-	\item south player wins (i.e. Win class), $s$, has $44473$ elements (about 66\%)
-	\item north player wins (i.e. Loss class), $n$, has $16635$ elements (about 24\%)
-	\item draws, $d$, has $6449$ elements (about 10\%)
-\end{enumerate}
-This dataset, $\myset D$, is divided into two mutually exclusive sub-sets: the training set $\myset T$ and the unseen set $\myset U$. The training set to unseen set ratio is $3:1$; keeping this ratio for each class. The number of examples in the training set for a class, $c$, is \[ |\myset{T_c}| = \floor[\Bigg]{\frac{|\myset{D_c}| \times 3} {4}}\] 
+This experiment uses the \myterm{UCI Connect-Four data set}. The set, $\myset D$, is divided into two mutually exclusive sub-sets: the training set $\myset T$ and the unseen set $\myset U$. The training set to unseen set ratio is $3:1$; keeping this ratio for each class. The number of examples in the training set for a class, $c$, is \[ |\myset{T_c}| = \floor[\Bigg]{\frac{|\myset{D_c}| \times 3} {4}}\] 
 % http://tex.stackexchange.com/questions/42271/floor-and-ceiling-functions
 The split of elements for each $\myset{D_c}$ into the sub-sets $\myset{T_c}$ and $\myset{U_c}$ is made randomly. For this experiment, this allocation is done exactly once; $\myset T$ and $\myset U$ becomes the fixed input for the experiment. A decision tree $T_t$ is created from $\myset T$ using ID3 (see \refalg{id3}) with a pruning cut-off parameter value of zero.   
 
