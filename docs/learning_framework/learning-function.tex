@@ -228,9 +228,14 @@ The basic process of reinforcement learning is problematic for non-trivial games
 %% ** some more clarification of what furnkranz meant here is needed
 \subsection{Temporal Difference learning}
 %\cite{sutton:temporal}
-Temporal difference learning (TD) is a reinforcement learning process that mitigates the problems associated with delayed reinforcement.  When the reward is immediate, the behaviour of TD is no different than the reinforcement learning process described in the previous section.  However, when a \myterm{multi-step activity} is learnt, TD converges faster and produces better predictions than the basic reinforcement approach \cite{sutton:temporal}.  
+\mydefc{TDL} {a.k.a. Temporal difference learning} {A reinforcement learning process that mitigates the problems associated with delayed reinforcement.}  
 
-The key to understanding TD is to consider the sequence of observations, $\vec{x}_1, \vec{x}_2, \vec{x}_3, \ldots, \vec{x}_m$ that leads to the outcome $z$.  Each vector $\vec{x}_t$ describes the state of the environment at time $t$; and $z$ is the outcome at time $m$. The aim of the TD learner is to produce a corresponding sequence of predictions of the outcome ($z$), say $P_1,P_2, P_3, \ldots, P_m$.  At time $t$, the prediction for $z$ is $P_t$.  If these predictions are accurate, the player is able to determine at time $t$ which move would lead to a winning outcome because the prediction, $P_{t+1}$ for the resulting position, $\vec{x}_{t+1}$  will be a win.
+When the reward is immediate, the behaviour of TDL is no different than the reinforcement learning process described in the previous section.  However, when a \myterm{multi-step activity} is learnt, TDL converges faster and produces better predictions than the basic reinforcement approach \cite{sutton:temporal}.  
+
+The key to understanding TDL is to consider the sequence of observations, $\vec{x}_1, \vec{x}_2, \vec{x}_3, \ldots, \vec{x}_m$ that leads to the outcome $z$.  Each vector $\vec{x}_t$ describes the state of the environment at time $t$; and $z$ is the outcome at time $m$. The aim of the TDL learner is to produce a corresponding sequence of predictions of the outcome ($z$), say $P_1,P_2, P_3, \ldots, P_m$.  At time $t$, the prediction for $z$ is $P_t$.  If these predictions are accurate, the player is able to determine at time $t$ which move would lead to a winning outcome because the prediction, $P_{t+1}$ for the resulting position, $\vec{x}_{t+1}$  will be a win.
+
+\mydefs{TD error signal} {The difference between to consecutive predictions \cite{sutton:temporal}.} 
+% citation comes from: \cite{thill:connect-4}
 
 Each prediction is based on a vector of modifiable weights, $\vec{w}$. Thus, $P_t$ can be denoted as $P(\vec{x}_t,\vec{w})$.  During learning, the values of $\vec{w}$ is updated.  
 
@@ -244,7 +249,9 @@ The increment, $\Delta \vec{w}_t$, depends on the difference between $P_t$ and $
 \label{eq:delta}
 \Delta \vec{w}_t = \theta(z - P_t) \nabla_{\vec{w}} P_t
 \end{equation}
-The gradient, $\nabla_{\vec{w}} P_t$ is the vector of partial derivatives of $P_t$ with respect to each component of $\vec{w}$.  For the special case where a linear function, $P_t$ is learnt: 
+The gradient, $\nabla_{\vec{w}} P_t$ is the vector of partial derivatives of $P_t$ with respect to each component of $\vec{w}$.  
+
+For the special case where a linear function, $P_t$ is learnt: 
 \begin{equation}
 \label{eq:linear}
 	P_t = \vec{w}^T \vec{x}_t = \sum_{i} \vec{w}(i) \vec{x}_t(i)
@@ -257,7 +264,7 @@ where 	$\vec{w}(i)$ and $\vec{x}_t(i)$ are the $i$-th components of  $\vec{w}$ a
 
 The difference $z - \vec{w}^T\vec{x}_t$ represents the scalar error between the prediction and what it should have been.  This error is multiplied by the vector $\vec{x}_t$ because $\vec{x}_t$ indicates how each weight must be adjusted to reduce the error.  For example, if the error is positive, $\vec{x}_t[i]$\footnote{$\vec{a}[b]$ refers to the $b^{th}$ element of $\vec{a}$} is positive and $\vec{w}[i]$ will be increased - resulting in an increase of $\vec{w}^T\vec{x}_t$ and reducing the error.
 
-The equation to determine $P_t$ is dependant on $z$, and $P_t$ cannot be computed before $z$ is known.  In other words,  \refeq{widrow} cannot be calculated incrementally.  There is a temporal difference learning procedure, called TD(1) that produces the same result as  \refeq{widrow} such that the value can be computed incrementally.  Let $P_{m+1}  \equiv z$, then the error at $P_t$ is the sum of the changes in the predictions after $P_t$:
+The equation to determine $P_t$ is dependant on $z$, and $P_t$ cannot be computed before $z$ is known.  In other words,  \refeq{widrow} cannot be calculated incrementally.  There is a temporal difference learning procedure, called TDL(1) that produces the same result as  \refeq{widrow} such that the value can be computed incrementally.  Let $P_{m+1}  \equiv z$, then the error at $P_t$ is the sum of the changes in the predictions after $P_t$:
 \[
 	z - P_t = \sum_{k=t}^{m}(P_{k+1} - P_k)
 \]  
@@ -273,11 +280,11 @@ Because $\sum_{i=1}^n\sum_{j=i}^n a_ib_j = \sum_{j=1}^n\sum_{i=1}^j a_ib_j$ (see
 \end{eqnarray}
 The increment can now be expressed as: 
 \begin{equation}
-\label{td_delta}
+\label{eq:td_delta}
 \Delta \vec{w}_t = \theta(P_{t+1} - P_t) \sum_{k=1}^{t} \vec{x}_k
 \end{equation}
 
-The value of $\Delta \vec{w}_t$ can be computed incrementally  because it depends on the value of the two successive predictions and the sum of all preceding increments.   In response to a new prediction, $P_{t+1}$, $\Delta \vec{w}_t$ can be determined and used to update the predictions, $P_1, P_2, \ldots,P_t$.  The TD(1) procedure alters all these to an equal extent.  TD($\lambda$) is a class of procedures that make greater alterations to more recent predictions: the prediction for an observation $k$ steps in the past are weighted by $\lambda^k$ where $\lambda \in [0,1]$:
+The value of $\Delta \vec{w}_t$ can be computed incrementally  because it depends on the value of the two successive predictions and the sum of all preceding increments.   In response to a new prediction, $P_{t+1}$, $\Delta \vec{w}_t$ can be determined and used to update the predictions, $P_1, P_2, \ldots,P_t$.  The TD(1) procedure alters all these to an equal extent.  TDL($\lambda$) is a class of procedures that make greater alterations to more recent predictions: the prediction for an observation $k$ steps in the past are weighted by $\lambda^k$ where $\lambda \in [0,1]$:
 \begin{equation}
 \label{eq:dwt}
 \Delta \vec{w}_t = \theta(P_{t+1} - P_t) \sum_{k=1}^{t} \lambda^{t-k} \vec{x}_k
@@ -287,31 +294,51 @@ A larger value for $\lambda$ increases the number of preceding observations that
 The advantage of using the exponential form to alter the weights is that it can be computed incrementally: that is, the value $\Delta \vec{w}_{t+1} $ can be computed using the values obtained from the computation of $\Delta \vec{w}_t $.  The way this is done is shown in the following derivation:
 \begin{eqnarray}
 \nonumber \Delta \vec{w}_{t+1} 
-	&=
-	& \theta(P_{t+2} - P_{t-1}) 
+	&=&
+	\theta(P_{t+2} - P_{t+1}) 
 	\sum_{k=1}^{t+1} \lambda^{t+1-k} \vec{x}_k \\
 \nonumber 
-	&= 
-	&\theta(P_{t+2} - P_{t-1}) (\vec{x}_{t+1} + 
-	\underbrace{\sum_{k=1}^t \lambda^{t-k} \vec{x}_k} _{\mbox{\tiny from  \refeq{dwt} }}) 
+	&=& 
+	\theta(P_{t+2} - P_{t+1}) (\lambda^{t+1-(t+1)} \vec{x}_{t+1} + 
+	\underbrace{\sum_{k=1}^t \lambda^{t-k} \vec{x}_k} _{\mbox{\tiny from  \refeq{dwt} }}) \\
+	&=& 
+	\theta(P_{t+2} - P_{t+1}) (\vec{x}_{t+1} + \sum_{k=1}^t \lambda^{t-k} \vec{x}_k ) \\
+	\vec{w}_{t+1}  &=& \vec{w}_t + \Delta \vec{w}_{t+1} \\
+	\vec{w}_{t+1}  &=& \vec{w}_t + \theta(P_{t+2} - P_{t+1}) (\vec{x}_{t+1} + \sum_{k=1}^t \lambda^{t-k} \vec{x}_k ) 
 \end{eqnarray}
 
-In order to gain an intuitive understanding of how TD learning works, consider a particular game position $q$.  From experience, the probability of winning from $q$ is estimated at $0.10$.  In a particular game line that leads to a win, another position, $p$, precedes position $q$. What is the estimated probability of winning associated to $p$?  Assuming $p$ was encountered only once during training and it lead to a win, a supervised learning method would conclude that $p$ is a good move.  The TD method would use $q$'s estimate to determine $p$'s value because $q$ precedes $p$.  The low estimate of $0.10$ for $q$ would lead TD to the conclusion that $p$ is more likely to lead to a loss.  If $q$ is correctly rated, the TD method is more correct.  Given infinite experience, both methods would converge to the same value for $p$, but when the  experience is limited, TD learns a better evaluation.  
+If one uses the notation $\delta_t = P_{t+1} - P_{t}$ to denote the \myterm{TD error signal} at $t$, then the final expression can be written as:
+\begin{equation}
+\vec{w}_{t+1}  = \vec{w}_t + \theta \delta_{t+1} (\vec{x}_{t+1} + \sum_{k=1}^t \lambda^{t-k} \vec{x}_k )
+\label{eq:linear td}
+\end{equation}
 
-Samuel's \cite{samuel:checkers} \mygame{Checkers} learner also adjusts the weights in accordance with the immediate successors in a game line.  The difference is that Samuel's program does not utilise an \textit{a priori} rating of the positions, while TD requires that every training sequence ends with a definite, externally supplied outcome. Samuel's decision to fix the weight of the most prominent feature (piece advantage), prevents his training procedure from finding useless evaluation functions. 
+Keep in mind that \refeq{linear td} is for the case when $P$ is linear function.  A more general equation for TD(1) can also be derived where the function is not linear (but it has to be differentiable). Let $P_t = f(\vec{x}_t,o_t)$ where $o_t$ is the observation at time $t$:
+% this equation comes from \cite{thill:connect-4} -- it might be a good idea to derive it
+% or check the riginal source 
+\newcommand \pardir[1]{\frac{\partial}{\partial #1}}
+\begin{equation}
+\vec{w}_{t+1} = \vec{w}_t + \theta \delta_{t} \pardir {\vec{w}} f(\vec{w}_t,o_t)
+\label{eq:general td}
+\end{equation}
+
+
+In order to gain an intuitive understanding of how TDL learning works, consider a particular game position $q$.  From experience, the probability of winning from $q$ is estimated at $0.10$.  In a particular game line that leads to a win, another position, $p$, precedes position $q$. What is the estimated probability of winning associated to $p$?  Assuming $p$ was encountered only once during training and it lead to a win, a supervised learning method would conclude that $p$ is a good move.  The TDL method would use $q$'s estimate to determine $p$'s value because $q$ precedes $p$.  The low estimate of $0.10$ for $q$ would lead TDL to the conclusion that $p$ is more likely to lead to a loss.  If $q$ is correctly rated, the TDL method is more correct.  Given infinite experience, both methods would converge to the same value for $p$, but when the  experience is limited, TDL learns a better evaluation.  
+
+Samuel's \cite{samuel:checkers} \mygame{Checkers} learner also adjusts the weights in accordance with the immediate successors in a game line.  The difference is that Samuel's program does not utilise an \textit{a priori} rating of the positions, while TDL requires that every training sequence ends with a definite, externally supplied outcome. Samuel's decision to fix the weight of the most prominent feature (piece advantage), prevents his training procedure from finding useless evaluation functions. 
 %
 %This constraint discourages the procedure from finding useless evaluation functions.   The decision to set the weight with the largest absolute value to zero also could have prevented the program from exploring functions that has little to do with winning the game.  A simpler procedure than Samuel's explored by Christensen **\cite{christensen:static} obtained promising preliminary results.  
 %Used by \cite{kotnik:significance}.
 
 %\cite{furnkranz:survey}
-Tesauro \cite{tesauro:practical,tesauro:learning} presented the first results of temporal difference learning on the training of an evaluation function for \mygame{Backgammon}. The trained playing agent, named TD-Gammon, achieved expert level play.
-Other research attempts failed to achieve this level of performance, and TD's success has been attributed to the characteristics peculiar to \mygame{Backgammon} that makes it an ideal game for learning from self-play \cite{furnkranz:survey,pollack:player,kotnik:significance}. The primary characteristics cited is that the game does not require a large amount of search and that the dice-rolls guarantee the exploration of a sufficient variety of positions to identify all regions of the feature space.  
+Tesauro \cite{tesauro:practical,tesauro:learning} presented the first results of temporal difference learning on the training of an evaluation function for \mygame{Backgammon}. The trained playing agent, named TDL-Gammon, achieved expert level play.
+Other research attempts failed to achieve this level of performance, and TDL's success has been attributed to the characteristics peculiar to \mygame{Backgammon} that makes it an ideal game for learning from self-play \cite{furnkranz:survey,pollack:player,kotnik:significance}. The primary characteristics cited are that the game does not require a large amount of search and that the dice-rolls guarantee the exploration of a sufficient variety of positions to identify all regions of the feature space.  
 
 \subsection{Coevolution} 
 \label{sec:learning-coevolution}
 In the context of game learning coevolution is a learning process that involves adaptation of the environment in which the learner finds itself.  As the environment changes, the learner must adapt.  Coevolution also requires that the changes in the environment are largely a consequence of the changes in the learning agents. 
 
-The simplest example of coevolution is two agents that learn by competing against each other.  In this case, one agent is the learning environment of the other. After each competition, the evaluation function of at least one of the agents are adjusted. This approach has been used by Pollack {\it et. el.} \cite{pollack:player} and Kotnik \cite{kotnik:significance} to train \mygame{Backgammon} and \mygame{Gin Rummy} players, respectively.  They compared their results with the TD approach and concluded coevolution works better than TD.  
+The simplest example of coevolution is two agents that learn by competing against each other.  In this case, one agent is the learning environment of the other. After each competition, the evaluation function of at least one of the agents are adjusted. This approach has been used by Pollack {\it et. el.} \cite{pollack:player} and Kotnik \cite{kotnik:significance} to train \mygame{Backgammon} and \mygame{Gin Rummy} players, respectively.  They compared their results with the TDL approach and concluded coevolution works better than TDL.  
 
 This simple coevolution approach works well for \mygame{Backgammon} and \mygame{Gin Rummy} because these games are stochastic. The stochastic element ensures that a variety of match conditions are tested, even if the strategies of the competitors remain unchanged.  Thus, the accuracy of the assessment of stochastic competitors can be improved by increasing the number of matches played during a competition.  
 
@@ -330,7 +357,7 @@ Fogel's \mygame{Tic-tac-toe} learner \cite{fogel:networks} avoids the cross-over
 The PSO algorithm uses the fitness function to identify individuals in the population to which other individuals are attracted.  Using the same fitness function, PSO has been shown to be an improvement on GA \cite{franken:checkers,franken:evolving,messerschmidt:learning}.  For this reason, PSO is selected as the method to be used by the current research.  The detail of the PSO algorithm and how it is used in the game learning domain is discussed in a later chapter.
 %The value domain of the weights  [-1;+1] interval; where a negative value    Searhc depth of 7.  
  %wduminy
-%Although the results were in favour of  the simpler approach, Kotnik's experiment had a side effect that could provide an alternative explanation for his results.  The TD agent's reward is based on  the score ([0,1]), while the simple agent's reward is either 1 or 0.   The effect is that the training signal for a win (no matter how small the   winning margin) is much stronger (more discrete) for the simple agent  than it is for the TD agent.  Effectively the TD agent learns ``how to   win by a large margin" and the other agents agent learns ``how to win".  This is an unfortunate design decision that renders Kotnik's results inconclusive\footnote{May be a good idea for a small research project or a paper to do another comparison based on the same ideas proposed by Kotnik}.
+%Although the results were in favour of  the simpler approach, Kotnik's experiment had a side effect that could provide an alternative explanation for his results.  The TDL agent's reward is based on  the score ([0,1]), while the simple agent's reward is either 1 or 0.   The effect is that the training signal for a win (no matter how small the   winning margin) is much stronger (more discrete) for the simple agent  than it is for the TDL agent.  Effectively the TDL agent learns ``how to   win by a large margin" and the other agents agent learns ``how to win".  This is an unfortunate design decision that renders Kotnik's results inconclusive\footnote{May be a good idea for a small research project or a paper to do another comparison based on the same ideas proposed by Kotnik}.
 % genetic algorithm
 %\cite{messerschmidt:learning}, and therefore it is more difficult to learn as the second player. The network provided a score for each square. 
 %\cite{fogel:networks} use score composed from competition against randomly chosen individuals from the population + against near-perfect player.  Only winners become parents.
@@ -352,7 +379,7 @@ The PSO algorithm uses the fitness function to identify individuals in the popul
 %\subsection{Strategies to select opponents}
 %\cite{furnkranz:survey}
 %The training strategy must provide the learner with information that is focussed enough to guarantee convergence towards a good evaluation function, but the information should also provide the variation required to allow the learning of a function that is generally applicable.  The problem of variety is especially important when learning from self-play.  In reinforcement learning, this problem is known as the trade-off between exploration of new knowledge and the exploitation of already acquired knowledge. 
-%TD-Gammon did not have the problem because the dice-roll provided sufficient variety.  Although Tesauro does not fully agree with Pollack and Blair, claims this is the only reason why TD-Gammon performed so well **\cite{pollack:strategy}.   They back up their claims by using a simple hill-climbing strategy to train the weights of the network.  The fact that such a simple strategy works all is in itself quite remarkable.  
+%TDL-Gammon did not have the problem because the dice-roll provided sufficient variety.  Although Tesauro does not fully agree with Pollack and Blair, claims this is the only reason why TDL-Gammon performed so well **\cite{pollack:strategy}.   They back up their claims by using a simple hill-climbing strategy to train the weights of the network.  The fact that such a simple strategy works all is in itself quite remarkable.  
 %
 %Epstein **\cite{epstein:ideal} presents evidence that self-training does not perform well for deterministic games.  She developed a game learning system called Hoyle that learned during self play.  Optimal results were not achieved from self-play, perfect opponents or random players - and she demonstrated that a lesson-and-practice training strategy is superior.  In this strategy phases of training with an expert player are interwoven with phases of self-play. Hoyle relies on an hierarchy of advisors that vote for, or against a particular move.  The advisors are hand-coded, but game independent.  
 %Two of these advisors, Patsy and Zone Ranger use knowledge that are based on visual perception **\cite{epstein:expertly}.
@@ -372,7 +399,7 @@ The PSO algorithm uses the fitness function to identify individuals in the popul
 %
 % Hsu \textit{et al}. **\cite{hsu:grandmaster} compared the dominant position starting with a grandmaster's move to a dominant position of any alternative move at a shallow search.  If an alternative move gets a higher evaluation, the weights are adjusted  into the appropriate direction.   
 %
-% Proper integration of learning and search for TD learning is formalized in **\cite{baxter:learning}.
+% Proper integration of learning and search for TDL learning is formalized in **\cite{baxter:learning}.
 %
 %\section{Assessment of tuning algorithms}
 %\subsection{ALSO}
@@ -550,6 +577,6 @@ Insofar the current experiment is concerned, it seems that better search does ge
 \label{sec:learning-conclusion}
 The use of a phased evaluation function instead of a single linear evaluation function introduces non-linearity into the evaluation process. Research endeavours using phased functions indicate that these function do indeed contribute to an improvement in the  performance of learning agents.  As a research problem, the discovery of features for linear functions is not as active as the problem of weight optimisation.  The approach Buro used for GLEM finds the specific features that were found in a representative number of instances of a given example set.
 
-Reinforcement is a general learning technique founded on the principles of supervised learning to find optimal values for weights.  TD-learning is an important innovation on reinforcement learning specifically developed for multi-step tasks that impose a delayed reward.  Although TD-learning has been shown to be an excellent learning method for \mygame{Backgammon}, other researchers failed to achieved comparable successes. % In addition, there is evidence that GA and PSO approaches could be better learning methods. 
+Reinforcement is a general learning technique founded on the principles of supervised learning to find optimal values for weights.  TDL-learning is an important innovation on reinforcement learning specifically developed for multi-step tasks that impose a delayed reward.  Although TDL-learning has been shown to be an excellent learning method for \mygame{Backgammon}, other researchers failed to achieved comparable successes. % In addition, there is evidence that GA and PSO approaches could be better learning methods. 
 
 As a learning method, the macro-cycle of the learning framework uses coevolution.  Examples are used to deduce features, the weights of the features are optimised to produce new players that in turn, creates new examples.  In the next chapter, the discovery stage of the macro-cycle is introduced.  The chapter after that describes the PSO algorithm in detail and introduces a new method to determine the fitness of individuals in the population.   

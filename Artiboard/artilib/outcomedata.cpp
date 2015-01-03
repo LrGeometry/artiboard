@@ -43,10 +43,8 @@ OutcomeStats OutcomeData::calculate_stats() const {
 	return OutcomeStats(*this);
 }
 
-void OutcomeDataTable::build_table(const outcome_map_t &data,const OutcomeStats& stats) {
-	attributes_ = stats.squares();
+void DataTable::init(const outcome_map_t &data,const OutcomeStats& stats) {
 	classes_ = stats.outcomes();
-	values_ = stats.pieces();
 	// copy data from source map into flat list
 	size_t i=0;
 	for (const auto &e : data)
@@ -54,16 +52,21 @@ void OutcomeDataTable::build_table(const outcome_map_t &data,const OutcomeStats&
 	ASSERT(i == data.size());
 }
 
-int OutcomeDataTable::value_of(const size_t i, const size_t a) const {
-	const Piece oc = data_[i].first(attributes_[a]);
+LocationEncoder::LocationEncoder(const std::vector<Square> &a, const std::vector<Piece> &v)
+: SquareEncoder(a) {
+	values_ = v;
+}
+
+int LocationEncoder::value_of(const Board &b, const size_t a) const {
+	const Piece oc = b(attribute(a));
 	for (size_t k=0;k<values_.size();k++)
 		if (values_[k] == oc)
 			return k;
-	throw runtime_error_ex("data value not found for attribute '%s' element %d", attributes_[a].to_string().c_str(), i);
+	throw runtime_error_ex("data value not found for attribute '%s' element", attribute(a).to_string().c_str());
 	return -1;
 }
 
-int OutcomeDataTable::class_of(const size_t i) const {
+int DataTable::class_of(const size_t i) const {
 	auto oc = data_[i].second;
 	for (size_t i=0;i<classes_.size();i++)
 		if (classes_[i] == oc)
@@ -73,19 +76,16 @@ int OutcomeDataTable::class_of(const size_t i) const {
 }
 
 
-std::string OutcomeDataTable::attribute_name(const size_t a){
+std::string SquareEncoder::attribute_name(const size_t a) const{
 	return attributes_[a].to_string();
 }
 
-std::string OutcomeDataTable::value_name(const size_t a, const size_t v){
-	return values_[v].to_string();
 
-}
-std::string OutcomeDataTable::class_name(const size_t c){
+std::string DataTable::class_name(const size_t c){
 	return to_string(classes_[c]);
 }
 
-void OutcomeDataTable::collect_if(element_index_list_t &result, pred_board_outcome_t fn) const {
+void DataTable::collect_if(element_index_list_t &result, pred_board_outcome_t fn) const {
 		for (size_t i=0; i<data_.size(); i++)
 			if (fn(data_[i].first, data_[i].second))
 				result.push_front(i);

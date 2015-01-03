@@ -166,8 +166,8 @@ namespace arti {
 			const index_t & col() const {return _vantageCol;};
 			const index_t & row() const {return _vantageRow;};
 			const Piece& relative(const index_t colOffset, const index_t rowOffset) const {
-				const index_t delta_col = (_vantageSide == Side::South) ? colOffset : -colOffset;
-				const index_t delta_row = (_vantageSide == Side::South) ? rowOffset : -rowOffset;
+				const auto delta_col = (_vantageSide == Side::South) ? colOffset : -colOffset;
+				const auto delta_row = (_vantageSide == Side::South) ? rowOffset : -rowOffset;
 				return _board(_vantageCol + delta_col, _vantageRow + delta_row);
 			}
 		private:

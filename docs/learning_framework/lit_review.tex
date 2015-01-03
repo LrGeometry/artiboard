@@ -59,3 +59,61 @@ BP did well here too.  The author suggested that faring better on few examples i
 BP did better here, but ID3 did surprisingly well.
 \subsection{Notes}    
 This paper highlights opportunities to improve on the basic ID3 - specifically the use of bit vectors sounds applicable to the current work.  It is also worth looking at the different types of data sets; asking which type are closer to game boards.  The experiments are likely to be worth repeating; but also including perceptron trees\cite{utgoff:trees}. 
+\section{Reinforcement learning with n-tuples on the game Connect-4}
+\cite{thill:connect-4}
+\subsection{Introduction}
+\subsubsection{Learning}
+The credit assignment problem is addressed by reinforcement learning methods like temporal difference learning (TDL) and
+evolutionary algorithms like evolution strategies and co-evolution.  Games present a challenge because the objective function is not known. Instead of finding this objective function directly, often certain interactions are used to drive the search, thus we end up with a surrogate objective function \cite{krawiec:tuple}.  A well known example of this type of interaction is self-play. 
+\subsubsection{Related work}
+There has been previous work in the area of learning to play Connect-4.  However, this is the first time a comparison is done with a perfect playing minimax agent. Lucas showed that Othello can be learned with the n-tuple approach \cite{lucas:tuple}.	
+\subsection{Methods}
+\subsubsection{Connect-4}
+The minimax agent used an 8-ply or 12-ply opening database - it finds the perfect next move within a fraction of a second.
+\subsubsection{N-tuples and LUTs}
+Each n-tuple is a sequence of board locations.  Each location has a value that identifies one in a set of possible states.  Each state is an encoding of some semantic meaning: $0$ is empty, $1$ is yellow, $2$ is red, $3$ is empty and not reachable.  For the experiments, two encoding schemes are compared: $P_4$ and $P_3$.  The former includes state $3$ and the latter excludes it. 
+
+The number represented by the sequence can be used as an index to a lookup table (LUT) which contain a weight. (WD: Thus for an n-tuple we have potentially $n^p$ LUT entries; where p is the number of different states). 
+
+The key, $k$ for the lookup table for an n-tuple, $T_i$ with positions denoted by $\{a_{i0},\ldots,a_{in}\}$ is calculated using the number of states $p$ and the current board position, $z$.
+\[
+ k_i(z) = \sum_{j=0}^{n-1} z[a_{ij}] p^j 
+\]
+Where $z[a]$ is the state of the position $z$ at location $a$.
+
+The output function for the n-tuple network with $m$ tuples $\{T_1,\ldots,T_m\}$ is calculated using the lookup table for each tuple, $L_i$. 
+\[
+f(\vec{w_t},z_t) = \sum_{i=0}^{m} L_i[k_i(z_t)]
+\]
+Where $L_i[k]$ is the sum of the weights in the lookup table for $T_i$ for key $k$.
+
+Connect-4 has a symmetry along the 	middle column: let key $k$ have a symmetry value of $M(k)$, then we can augment the function to take advantage of the symmetry:
+\[
+f(\vec{w_t},z_t) = \sum_{i=0}^{m} L_i[k_i(z_t)] + L_i[M(k_i(z_t))]
+\] 
+
+N-tuples are created using a method similar to the snake method \cite{lucas:tuple}: Start are a random locations; add one of the $8$ neighbours and walk to it.  Add another neighbour until $n$ locations are added (no duplicates are allowed). 
+\subsubsection{TDL}
+The goal of the learning agent is to predict the value function: $1$ if yellow wins and $-1$ if red wins.  It does so by playing a sequence of games against itself.  The reward given at the end of the game is the outcome and it corresponds to the value of the value function.
+We use \refeq{general td} and $\tanh(f(\vec{w_t},z_t))$ as the function to be learnt.
+(Q: what is the derivative of $\tanh$? A: $1 - \tan^2(x)$) % http://math2.org/math/derivatives/more/hyperbolics.htm
+\subsubsection{Agent evaluation}
+The perfect minimax player (playing red -- second player) is the referee. A sequence of $50$ games are played - points are awarded as $1$ for win and $\frac{1}{2}$ for draw and $0$ for loose. If minimax has more than one equal option, it chooses at random which one to play.  This introduces some randomness during play.  The overall success rate is the mean of the $50$ scores; ranging for $0$ to $1$. 
+\subsection{Experimental setup}
+During training no search is used.  Used $70$ n-tuples of length $8$.  The learning rate, $\theta$ follows an exponential decay scheme; ranging from $0.01$ to $0.001$.  Initial weights were all zero; and playing $10$ million games, evaluating every $100,000$.
+An additional source of randomness is introduced: with some probability $\epsilon$, the learning agent chooses its move on random. After a random move n weight update is performed. A sigmoidal decay scheme is used for $\epsilon$. 
+\subsection{Results}
+When using two separate LUTs - one for each player an value above $0.8$ was obtained. Using the $P_4$ encoding a faster  learning rate than $P_3$ is obtained.  The specific n-tuples significantly affected the training set - one specific set was found that was unable to be trained at all.  The choice for $\theta$ decay also had a significant impact on learning.
+\subsection{Conclusion}
+The n-tuple approach is successful for the game of Connect-4; but millions of training examples are required.  Future work can be done on identifying the characteristics of good n-tuple sets.	
+
+\subsection{Notes}
+It might be worth trying the perfect player as part of the learning process.  
+It is possible to encode TDL so that we can learn the weights of the locations, instead of the weights for the function? Is the symmetry used for Connect-4 a valid one?  The n-tuple seems to use sequences -- why not sets?
+The LUTs have a weight for each one of the n-tuples.  What will happen if it has only one weight for the n-tuple?
+%thill_2012.pdf
+
+\section{Online Adaptable Learning Rates for the Game Connect-4}
+\cite{bagheri:online}
+TODO: Read
+%bagheri_2014.pdf

@@ -1,7 +1,3 @@
-\chapter*{missing references}
-\section{A}\label{sec:encoding_examples}
-
-\section{C}\label{tab:attribute_regions}
 
 \chapter*{Discovering Knowledge with ID3}
 
@@ -158,7 +154,9 @@ for each $S_i$ in $S$ \+ \\
 Note that the selected attribute is removed from the set before the recursive invocation of the algorithm. It is therefore conceivable that the algorithm is invoked with $A$ as an empty set - however such an invocation is possible only if the example set contains entities with the same value for every attribute but with different classifications \cite{bratko:learning}.  It is for this reason that the precondition of the input specifies that at least one attribute value must be different for every pair of examples that have different classes.
 
 % minimal object pruning
-\myterm{Minimal Object Pruning} is implemented on \refline{id3_prune}.  Nodes with too little examples are not explored. If no pruning is needed, the algorithm must be provided with a cut-off value of zero.  
+\mydefs{Minimal Object Pruning} {A method to create a more generalised decision tree by not exploring nodes with too few examples are not explored. If a node has less than the provided cut-off value, further classification is not performed for that node.}
+
+It is implemented on \refline{id3_prune}. If no pruning is needed, the algorithm must be provided with a cut-off value of zero.
 
 % introduce information gain
 The criterion used to select the split attribute, $a$, on \refline{id3_select} is the primary influence on the quality of the decision tree that is induced \cite{kubat:review}. The \myterm{information gain} criterion aims to choose the attribute that maximises the amount of new information that become available after the split is made. 
@@ -207,7 +205,7 @@ I(\myset S,a) = H(\myset S) - H(\myset S,a)
 \end{equation}
 The information gain heuristic selects the attribute with the greatest information gain value. Note that an equivalent selection is when when selecting the attribute with the smallest value for \refeq{attrib_entropy}. 
 \section{TODO Demonstration: A tic-tac-toe decision tree}
-TODO: use icu data for tic-tac-toe \cite{icu:data} to construct a decision tree for tic-tac-toe.  How does this tree compare with work done by \cite{utgoff:feature}?
+TODO: use icu data for tic-tac-toe icu data to construct a decision tree for tic-tac-toe.  How does this tree compare with work done by \cite{utgoff:feature}?
 % may be interesting what others did with this data: http://archive.ics.uci.edu/ml/machine-learning-databases/tic-tac-toe/tic-tac-toe.names
 
 
@@ -223,6 +221,8 @@ where $\myset C \subseteq \myset T$ such that each element in $\myset C $ is cor
 
 \mydefc{Balanced Accuracy} {of a \myterm{Decision Tree}}{The \myterm{Decision Accuracy} of a tree such that the ratios between the classes in the  \myterm{test set} are equal to the ratios in the training set. }  
 
+\mydefc{Trained Accuracy} {of a \myterm{Decision Tree}}{The \myterm{Decision Accuracy} where  \myterm{test set} is the entire training set.}  
+
 Considering the algorithm from the perspective a specific class, one can be more specific about the accuracy of an algorithm \cite{kubat:review}. For this class, an example is \myterm{positively classified} when the algorithm decides it is an instance of the class, and \myterm{negatively classified} when it decides an example is not an instance of the class. This algorithm will make one of these two types of errors:
 \mydefs{Error of  omission} {Occurs when an example is negatively classified but it should have been positive.  Such a decision is called a \myterm{false negative}.}
 \mydefs{Error of  commission} {Occurs when an example is positively classified but it should have been negative.  Such a decision is called a \myterm{false positive}.}
@@ -232,6 +232,118 @@ The aim is to develop algorithm that is \myterm{consistent} and \myterm{complete
 
 
 %TODO incorporate work done by fisher-1989-comparison and shavlik-1991-comparison for how test set were selected
+\section{Encoding position examples}
+\label{sec:encoding_examples}
+Armed with the background of decision trees and the ID3 algorithm described in the sections above, the focus in this section returns to the discovery of the knowledge used by game playing agents. These agents use the knowledge to compare game positions.  In order to uphold the zero-knowledge principle, only features that are directly observable from the game position can be used in this assessment. Of all the observable features, only a small subset have a significant influence on the game outcome. The task of learning agent is to identify the features that belong to this  significant subset.
+
+The identification of the significant features can be regarded as a classification problem.  The observable features are classified into two groups, those that are significant and those that are not.  Consequently, it seems reasonable to explore the possibility of using ID3 to induce significant features from example game positions.  In the paragraphs that follow, an approach is proposed whereby a game position is encoded into a structure that can be used as input to the ID3 algorithm.  This ID3 structure has two requirements: it needs an ID3 classification and it needs a set of ID3 attributes. 
+
+\subsection{Position classification}
+\label{sec:pos_class}
+% the class of an examples
+Insofar the game player is concerned, the most interesting aspect of any position is whether or not this position leads to a win ($\mywin$), a lose ($\mylose$) or a draw ($\mydraw$). It therefore makes sense to use the game outcome to classify the ID3 examples -- i.e. a game position is classified as an element from  $\{\mywin,\mylose,\mydraw\}$. 
+
+% how is the classification determined?
+The classification of a position is determined from the game lines  generated during the preceding stage of the macro cycle (see \refsec{learning-framework}). The positions in each game line are credited for their contribution (or their lack of contribution) to the outcome of the game. For example, if the outcome of the game is a win for the first player, positions chosen by the first player is ascribed with a higher likelihood to lead to a win than the positions chosen by the second player.  Thus, a tally of the outcomes of the game-lines in which it appears determines the position's classification. 
+
+% the handling equal values
+Essentially, the outcome with the greatest count dictates the classification of the position.
+But, special cases arise when more than one outcome has the same count. An equal count for $\mywin$ and $\mylose$ classifies the position as $\mydraw$.  In the case where the $\mydraw$ count shares the maximum with another outcome, the latter is chosen as the classification of the position in question.  For example, when the number of losses is $23$, the number of wins is $24$ and the number of draws is $24$, the position is classified as $\mywin$.  This allocation is made because the knowledge value of the ``not lose" classification is higher than the knowledge value of a ``draw" classification;  and the example position is more likely to lead to a $\mywin$ than a $\mylose$. 
+
+\subsection{Location regions}
+% forces influencing the attribute choice
+The feature language $\mathcal F$, described in \refsec{knowledge-language}, is adequate to {\sl express} an attribute, but it does not {\sl define} the set of attributes. An attribute used to encode a position consists of an  $\mathcal F$-expression that is interpreted as a boolean expression. 
+Because ID3 requires an enumerated attribute set, and because of the practical limitations on time and space, the feature language expressions must be chosen carefully.  The constraint imposed by ID3 is that the attribute set must be able to distinguish between any two positions with dissimilar classifications.   
+It is also possible to select attributes based on game knowledge, but such an approach would spurn the zero knowledge principle introduced in \refsec{knowledge-granularity}.  
+
+% defining the  regions and the attributes
+For the current research, the attributes are created from easily identifiable regions on the board. 
+
+\mydefs{Location Region Set} {A set of regions such that each region contains one and only one board location; and each location is in one and only one region}
+
+The \myterm{Location Region Set} is both intuitive and simple.  A more sophisticated region set considers simple patterns.
+
+\mydefs{Pattern Region Set} {A set of regions identified on the playable board. One region is the entire board, the other regions are the set of ranks (rows), the set of files (columns) and the set of diagonal lines. Also included is the set of concentric squares starting from the four squares in the centre of the board and ending with the squares on the border are also included as regions.}  
+
+Selecting regions in this way is arbitrary enough to be considered free of game knowledge, and organised enough to be quickly recognisable by observation.  The  regions for the \myterm{Pattern Region Set} for the $8 \times 8$ board are listed in \reftab{attribute_regions} (see \refsec{language-symbol} for the notation used for squares).
+\begin{table*}[h!]
+\small
+\centering
+	\begin{tabular} {|l|l|l|}
+	\hline
+  \textbf{Region} & {\bf Description} & {\bf Squares in region}\\
+	\hline
+all & All & $\mysquare * * $ \\
+r1 & $1^{st}$ Rank & $\mysquare * 1$ \\
+r2 & $2^{nd}$ Rank & $\mysquare * 2$ \\
+r3 & $3^{rd}$ Rank & $\mysquare * 3$ \\
+r4 & $4^{th}$ Rank & $\mysquare * 4$ \\
+r5 & $5^{th}$ Rank & $\mysquare * 5$ \\
+r6 & $6^{th}$ Rank & $\mysquare * 6$ \\
+r7 & $7^{th}$ Rank & $\mysquare * 7$ \\
+r8 & $8^{th}$ Rank & $\mysquare * 8$ \\
+&&\\
+f1 & $1^{st}$ File & $\mysquare 1 * $ \\
+f2 & $2^{nd}$ File & $\mysquare 2 * $ \\
+f3 & $3^{rd}$ File & $\mysquare 3 * $ \\
+f4 & $4^{th}$ File & $\mysquare 4 * $ \\
+f5 & $5^{th}$ File & $\mysquare 5 * $ \\
+f6 & $6^{th}$ File & $\mysquare 6 * $ \\
+f7 & $7^{th}$ File & $\mysquare 7 * $ \\
+f8 & $8^{th}$ File & $\mysquare 8 * $ \\
+&&\\
+bd1 & $1^{st}$ Back Diag & $ \mysquare 1 1 $\\
+bd2 & $2^{nd}$ Back Diag & $ \mysquare 3 1, \mysquare 2 2, \mysquare 1 3 $\\
+bd3 & $3^{rd}$ Back Diag & $ \mysquare 5 1, \mysquare 4 2, \mysquare 3 3, \mysquare 2 4, \mysquare 1 5 $\\
+bd4 & $4^{th}$ Back Diag & $ \mysquare 7 1, \mysquare 6 2, \mysquare 5 3, \mysquare 4 4, \mysquare 3 5, \mysquare 2 6, \mysquare 1 7$\\
+bd5 & $5^{th}$ Back Diag & $ \mysquare 8 2, \mysquare 7 3, \mysquare 6 4, \mysquare 5 5, \mysquare 4 6, \mysquare 3 7, \mysquare 2 8 $\\
+bd6 & $6^{th}$ Back Diag & $ \mysquare 8 4, \mysquare 7 5, \mysquare 6 6, \mysquare 5 7, \mysquare 4 8 $\\
+bd7 & $7^{th}$ Back Diag & $ \mysquare 8 6, \mysquare 7 7, \mysquare 6 8 $\\
+bd8 & $8^{th}$ Back Diag & $ \mysquare 8 8 $\\
+&&\\
+fd1 & $1^{st}$ Forw. Diag & $ \mysquare 1 7, \mysquare 2 8 $\\
+fd2 & $2^{nd}$ Forw. Diag & $ \mysquare 1 5, \mysquare 2 6, \mysquare 3 7, \mysquare 4 8 $\\
+fd3 & $3^{rd}$ Forw. Diag & $ \mysquare 1 3, \mysquare 2 4, \mysquare 3 5, \mysquare 4 6, \mysquare 5 7, \mysquare 6 8 $\\
+fd4 & $4^{th}$ Forw. Diag & $ \mysquare 1 1, \mysquare 2 2, \mysquare 3 3, \mysquare 4 4, \mysquare 5 5, \mysquare 6 6, \mysquare 7 7, \mysquare 8 8 $\\
+fd5 & $5^{th}$ Forw. Diag & $ \mysquare 3 1, \mysquare 4 2, \mysquare 5 3, \mysquare 6 4, \mysquare 7 5, \mysquare 8 6 $\\
+fd6 & $6^{th}$ Forw. Diag & $ \mysquare 5 1, \mysquare 6 2, \mysquare 7 3, \mysquare 8 4 $\\
+fd7 & $7^{th}$ Forw. Diag & $ \mysquare 7 1, \mysquare 8 2 $\\
+&&\\
+cc1 & $1^{st}$ Square & $ \mysquare 4 4 \mysquare 5 5 $\\
+cc2 & $2^{nd}$ Square & $ \mysquare 3 5, \mysquare 3 3, \mysquare 5 3, \mysquare 6 4, \mysquare 6 6, \mysquare 4 6 $\\
+cc3 & $3^{rd}$ Square & $ \mysquare 2 6, \mysquare 2 4, \mysquare 2 2, \mysquare 4 2, \mysquare 6 2, \mysquare 7 3, \mysquare 7 5, \mysquare 7 7, \mysquare 5 7 $\\
+cc4 & $4^{th}$ Square & $ \mysquare 1 7, \mysquare 1 5, \mysquare 1 3, \mysquare 1 1, \mysquare 3 1, \mysquare 5 1, \mysquare 7 1, \mysquare 8 2, \mysquare 8 4,$ \\ 
+& & $ \mysquare 8 6, \mysquare 8 8, \mysquare 6 8, \mysquare 4 8, \mysquare 2 8, $\\
+\hline
+	\end{tabular}	
+	\caption{Regions used for attributes}
+	\label{tab:attribute_regions}
+\end{table*}
+
+\subsection{Region encodings}
+\label{sec:pos_attribs}
+% feature expressions as attributes
+Recall from \refsec{language-features} that the \myterm{Fuzzy Occupation Feature} takes the form $\myset T \otimes \myset R$, where $\myset T$ is a subset of the set of occupation states, $\mypieces$. There is a very large number of expressions that is of this form; and it is from a subset called the Attribute Expression Set, $\myset E$, that the attributes are defined.  One attribute is declared for every $\mathcal F$-expression in $\myset E$:
+\mydefc{Attribute Expression Set} {
+for a set of regions, $\myset R$ and the set of occupation states, $\mypieces$} {The the set of all attribute expressions, $\myset E$ of the form $\{t\} \otimes \myset R_i$ such that $t \in \mypieces $ and $ \myset R_i \in \myset R$.}
+
+For a position, the value of an Attribute Expression is determined by the number of squares in the region that are of the given occupation type.  The value of an ID3 attribute is either $Y$ for {\it yes}, or $N$ for {\it no}.  For position, $p$, the attribute defined by the expression $e = \{t\} \otimes \myset R_1$ takes a value of $Y$ if and only if $V(p,e) > 0$,  otherwise it takes the value $N$ ($V$ is defined on page  \pageref{sec:language-features}).  Thus, if the position contains any squares in the region of the specified occupation type, it has a value of $Y$.
+
+Note that the size of the \myterm{attribute expression set} is:
+\begin{equation}
+|\myset E| = |\myset R| \times |\myset \mypieces|
+\end{equation} 
+
+\mydefc{Region encoding}{of a position, $p$}{A mapping from each element in an \myterm{Attribute Expression Set} to the values they take for $p$: $\myset R \mapsto \{Y,N\}$}
+
+\mydefs{Location region encoding} {A \myterm{Region encoding} that employs \newline the \myterm{Location Region Set}}
+
+\mydefs{Pattern region encoding} {A \myterm{Region encoding} that employs \newline the \myterm{Pattern Region Set}}
+
+\subsection{Location encoding}
+The \myterm{Location Region Set} has the advantage that each region has one and only one possible value (from $\mypieces $).  An as such a simpler encoding can devised when this set is used.
+
+\mydefc{Location encoding}{of a position, $p$}{A mapping from each element in the \myterm{Location Region Set} to the value that elements has for $p$: $\myset R \mapsto \mypieces.$}
 
 \section{Experiment: Test selection influence on accuracy} %c4-025
 \label{sec:c4-025}
@@ -249,11 +361,11 @@ The reasoning behind choosing the tests from each specific category is to invest
 
 \subsection{Method}
 % http://archive.ics.uci.edu/ml/datasets/Connect-4
-This experiment uses the \myterm{UCI Connect-Four data set}. The set, $\myset D$, is divided into two mutually exclusive sub-sets: the training set $\myset T$ and the unseen set $\myset U$. The training set to unseen set ratio is $3:1$; keeping this ratio for each class. The number of examples in the training set for a class, $c$, is \[ |\myset{T_c}| = \floor[\Bigg]{\frac{|\myset{D_c}| \times 3} {4}}\] 
+This experiment uses the \myterm{UCI Connect-Four data set} with a \myterm{Location Encoding}. The set, $\myset D$, is divided into two mutually exclusive sub-sets: the training set $\myset T$ and the unseen set $\myset U$. The training set to unseen set ratio is $3:1$; keeping this ratio for each class. The number of examples in the training set for a class, $c$, is \[ |\myset{T_c}| = \floor[\Bigg]{\frac{|\myset{D_c}| \times 3} {4}}\] 
 % http://tex.stackexchange.com/questions/42271/floor-and-ceiling-functions
 The split of elements for each $\myset{D_c}$ into the sub-sets $\myset{T_c}$ and $\myset{U_c}$ is made randomly. For this experiment, this allocation is done exactly once; $\myset T$ and $\myset U$ becomes the fixed input for the experiment. A decision tree $T_t$ is created from $\myset T$ using ID3 (see \refalg{id3}) with a pruning cut-off parameter value of zero.   
 
-For each test selection strategy an observation is made $100$ times.  For each observation a random selection, $\myset S$ such that $|\myset S| = 1000$, are chosen to measure the \myterm{Decision Accuracy} of $T_t$. The elements in $\myset S$ are chose to conform to the invariant implied by the strategy.  Fixing this number eliminates the situation where a larger test set produces more accurate measurements.
+For each test selection strategy an observation is made $100$ times.  For each observation a random selection, $\myset S$ such that $|\myset S| = 1000$, are chosen to measure the \myterm{Decision Accuracy} of $T_t$. The elements in $\myset S$ are chosen to conform to the invariant implied by the strategy.  Fixing this number eliminates the situation where a larger test set produces more accurate measurements.
 
 The mean value and variance of these measurements are then compared.   If the mean value differs considerably, the hypothesis is proven.  Also, the variance of each strategy is an indication of how accurate one can expect an arbitrary measurement using that strategy would be.  
       
@@ -273,7 +385,7 @@ As can be seen on \reffig{c4-025} there is quite a difference between the measur
 \subsection{Conclusion}
 It is clear that the selection strategy has an effect on the measurement.  However, it could be that the differences has a lot to do with the unevenness of the examples in the dataset. Under these circumstances, the results suggests that \myterm{Balanced Accuracy} measurement is more precise.   
 
-\section{Experiment: Minimal object pruning influence on accuracy}
+\section{Experiment: Minimal object pruning influence on balanced accuracy}
 % c4-026
 \subsection{Objective}
 \myterm{Minimal Object Pruning} surely has an influence on the \myterm{Balanced Accuracy} of the classification tree.    A higher cut-off value produces smaller trees; at the expense of a more generalised classifier. This experiment investigates the relationship between cut-off and accuracy and decides on a best value for the cut-off. A set of $10$ cut-off values are compared: $32, 64, 96, \ldots, 320$.
@@ -284,19 +396,44 @@ For each cut-off value, $30$ observations are made, and an accuracy measurement 
 From \reffig{c4-026-a} is is clear that accuracy decreases as the cut-off value increases.  The expected inverse relationship between size and cut-off is clearly visible  on \reffig{c4-026-s}.  A significant gain in size is notable between $32$ and $64$. 
 \begin{figure} 
 \center
-\includegraphics{artifacts/c4-026acc.eps}
+\includegraphics[width=0.8\textwidth]{artifacts/c4-026acc.eps}
 \caption{Cutoff and accuracy}
 \label{fig:c4-026-a}
 \end{figure}
 \begin{figure} 
 \center
-\includegraphics{artifacts/c4-026size.eps}
+\includegraphics[width=0.8\textwidth]{artifacts/c4-026size.eps}
 \caption{Cutoff and size}
 \label{fig:c4-026-s}
 \end{figure}
 \subsection{Conclusion}
 It seems that a cut-off value of $64$ gives a good balance between accuracy and size.
 
+\section{Experiment: Minimal object pruning influence on trained accuracy}
+% c4-027
+\subsection{Objective}
+Investigate the influence of \myterm{Minimal Object Pruning} on the \myterm{Trained Accuracy} of the classification tree. A higher cut-off is expected to produce a smaller tree but with less accuracy.   
+\subsection{Method}
+This experiment uses the \myterm{UCI Connect-Four data set}. $30$ measurements are taken, each incrementing the cut-off value by $8$, starting with a value of zero.
+\subsection{Results}
+The results are shown in \reffig{c4-027}.
+\begin{figure} 
+\centering
+\subfigure % [Accuracy Measurements] 
+{
+	\includegraphics[width=0.45\textwidth]{artifacts/c4-027acc.eps}
+}
+\qquad
+\subfigure %[Size Measurements] 
+{
+	\includegraphics[width=0.45\textwidth]{artifacts/c4-027size.eps}
+}
+\caption{Trained Accuracy}
+\label{fig:c4-027}
+\end{figure}
+
+\subsection{Conclusion}
+The trained accuracy measurement produces the expected variation in size and in measured accuracy.
 %\section{TODO Bit vector representation}
 %TODO: Idea comes from experiments described in \cite{shavlik:comparision}.  
 %\section{Experiment: The effect of bit encoding}
@@ -304,6 +441,20 @@ It seems that a cut-off value of $64$ gives a good balance between accuracy and 
 %\section{TODO Experiment: number of training examples}
 % results are in c4-070.r
 %Preliminary results shows that a ratio of $1:3$ for test to training examples and a minimal object pruning produces a good balance between tree size and tree certainty.
+\section{Experiment: Influence of encoding on accuracy}
+%c4-028
+\subsection{Objective}
+The difference on encoding schemes may influence the decision tree in size or in accuracy.
+\subsection{Method}
+Using the \myterm{UCI Connect-Four data set} we compare four different encodings:
+\begin{enumerate}
+	\item [SLE] Standard \myterm{Location Encoding}.  $6 \times 7 = 42$ attributes and $|\mypieces| = 3$ 
+	\item [ELE] Enhanced \myterm{Location Encoding}. Empty space are marked as reachable or not. $6 \times 7 = 42$ attributes and $|\mypieces| = 4$  
+	\item [SRE] Standard \myterm{Location Region Encoding} $6 \times 7 \times 3 = 126$ attributes and $|\mypieces| = 2$
+	\item [ERE] Enhanced \myterm{Location Region Encoding} $6 \times 7 \times 4 = 168$ attributes and $|\mypieces| = 2$
+\end{enumerate}
+Each encoding is classified for 6 different cut-off values: $\{0,16,32,48,64,76\}$ using the \myterm{Trained Accuracy} as measurement.
+
 
 \section{The discovery algorithm}
 \label{sec:discovery_algorithm}
@@ -408,10 +559,10 @@ The details of the algorithm is best illustrated by an example.  The decision tr
 				}
 		}
 }
-\caption{A decision tree generated by C4.5}
+\caption{A decision tree generated by ID3}
 \label{fig:dec_tree}
 \end{figure}
-Each node in the C4.5 decision tree has three useful properties: the {\sl decision}, the {\sl dominant class} and the {\sl accuracy}.  These properties are shown as the label of the nodes in the figure.  The first part of the label represents the decision, the letter in the middle indicates the dominant class, and the accuracy is expressed as the percentage at the end of the label. 
+Each node in the ID3 decision tree has three useful properties: the {\sl decision}, the {\sl dominant class} and the {\sl accuracy}.  These properties are shown as the label of the nodes in the figure.  The first part of the label represents the decision, the letter in the middle indicates the dominant class, and the accuracy is expressed as the percentage at the end of the label. 
 
 % explain attribute
 The {\sl decision} of the root node is encoded as {\tt f6x3}, and translates to the shorthand feature expression 

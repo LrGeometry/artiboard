@@ -181,7 +181,7 @@ class MOCutOff: public C4IcuExperiment {
 private:
 		ElementIndexList D,U,T,Dn,Ds,Dd;
 public:
-		MOCutOff(): C4IcuExperiment("c4-026","Influence of the MO cut-off on ID3") {}
+		MOCutOff(): C4IcuExperiment("c4-026","Influence of the MO cut-off on ID3 - balanced") {}
 	void balance_selectUT() {
 		ElementIndexList Un, Us, Ud;
 		U.clear();
@@ -217,6 +217,60 @@ public:
 	}
 } c4_026;
 
+class MOCutOffT: public C4IcuExperiment {
+public:
+		MOCutOffT(): C4IcuExperiment("c4-027","Influence of the MO cut-off on ID3 - trained") {}
+	void do_run() override {
+		ElementIndexList training_set;
+		IcuData data(data_filename());
+		OutcomeDataTable table(data);
+		training_set.fill(data.size());
+		file() << "Cutoff Accuracy Size";
+		const int steps = 30;
+		set_steps(steps);
+		for (int i = 0; i < steps; i++) {
+			const int cutoff = i * 8;
+			OutcomeDataClassifier fier(table,cutoff);
+			fier.train(training_set);
+			fier.test(training_set);
+			file() << cutoff << " " << fier.root().certainty() << " " << fier.root().size();
+			step();
+		}
+	}
+} c4_027;
+
+class EncodingExp: public C4IcuExperiment {
+public:
+		EncodingExp(): C4IcuExperiment("c4-028","Influence of the encoding") {}
+	void do_run() override {
+		ElementIndexList training_set;
+		IcuData data(data_filename());
+		training_set.fill(data.size());
+		const auto stats = data.calculate_stats();
+		typedef std::pair<std::string,DataTableEncoder*> encoder_t;
+		std::vector<encoder_t> encoders{
+			{"SLE", new LocationEncoder(stats.squares(),stats.pieces())}
+			// TODO: add other decoders here
+		};
+		file() << "Cutoff Encoding Accuracy Size";
+		const int steps = 6*encoders.size();
+		set_steps(steps);
+		for (int i = 0; i < steps; i++) {
+			const int cutoff = i * 16;
+			for (auto &e : encoders) {
+				DataTableWithEncoder table(*e.second,data,stats);
+				OutcomeDataClassifier fier(table,cutoff);
+				fier.train(training_set);
+				fier.test(training_set);
+				file() << cutoff << " " << e.first << " " << fier.root().certainty() << " " << fier.root().size();
+				step();
+			}
+		}
+
+		for (auto &e : encoders)
+			delete e.second;
+	}
+} c4_028;
 
 class FeatureStatistics: public Experiment {
 public:

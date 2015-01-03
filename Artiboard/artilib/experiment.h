@@ -40,12 +40,16 @@ namespace arti {
 			const ArgList& args() const {return args_;}
 			const string& data_dir() const {return args_["data_dir"];}
 			const string data_fn(const string& filename) {return data_dir() + "/" + filename;}
+			void set_steps(int v) {steps_ = v;}
+			void step() {at_step++; std::cout << " at " << ((at_step*10000) / steps_)/100.0f << "%" << std::endl;}
 		private:
 			const char * name_;
 			const std::string description_;
 			time_t start_;
 			std::ofstream ofile_;
 			ArgList args_;
+			int steps_ = 1;
+			int at_step = 0;
 	};
 
 	class ExperimentRepository {

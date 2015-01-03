@@ -31,12 +31,76 @@ namespace arti {
 			OutcomeStats calculate_stats() const;
 	};
 
-	/**
-	 * This class is responsible for 'breaking up' the outcome data into
-	 * examples (think rows), attributes (think columns) and classification
-	 * a special column.
-	 */
-	class OutcomeDataTable: public ID3NameResolver {
+	class DataTable : public ID3NameResolver {
+		public:
+			DataTable(const outcome_map_t &data, const OutcomeStats &stats) : data_(data.size()) {init(data,stats);}
+			int class_of(const size_t i) const;
+			int data_count() const {return data_.size();}
+			virtual int value_of(const size_t i, const size_t a) const = 0;
+			virtual	int attribute_count() const = 0;
+			std::string class_name(const size_t c) final;
+			void collect_if(element_index_list_t &result, pred_board_outcome_t fn) const;
+			void collect(element_index_list_t &result, const MatchOutcome poc) {collect_if(result,
+				[&poc](const Board& brd, const MatchOutcome &oc) {return oc == poc;});
+			}
+
+		protected:
+			const board_outcome_t& data(size_t i) const {return data_[i];}
+		private:
+			void init(const outcome_map_t &data, const OutcomeStats &stats);
+		private:
+			std::vector<MatchOutcome> classes_;
+			std::vector<board_outcome_t> data_;
+	};
+
+	class DataTableEncoder {
+		public:
+			virtual int value_of(const Board& b, const size_t a) const = 0;
+			virtual	int attribute_count() const = 0;
+		  virtual std::string attribute_name(const size_t a) const = 0;
+		  virtual std::string value_name(const size_t a, const size_t v) const = 0;
+	};
+
+	class DataTableWithEncoder: public DataTable {
+		public:
+			DataTableWithEncoder(DataTableEncoder &encoder, const outcome_map_t &data, const OutcomeStats &stats) : DataTable(data,stats), encoder_(encoder) {}
+		  std::string attribute_name(const size_t a) final {return encoder_.attribute_name(a);}
+		  std::string value_name(const size_t a, const size_t v) {return encoder_.value_name(a,v);}
+			int attribute_count() const final {return encoder_.attribute_count();}
+			int value_of(const size_t i, const size_t a) const final {return encoder_.value_of(data(i).first,a);};
+		private:
+			const DataTableEncoder &encoder_;
+	};
+
+	class DataTableWithOwnerEncoder: public DataTableWithEncoder {
+		public:
+			DataTableWithOwnerEncoder(DataTableEncoder *encoder, const outcome_map_t &data, const OutcomeStats &stats) : DataTableWithEncoder(*encoder,data,stats), encoder_p(encoder) {}
+			virtual ~DataTableWithOwnerEncoder(){delete encoder_p;}
+		protected:
+			DataTableEncoder * encoder_p;
+	};
+
+	class SquareEncoder: public DataTableEncoder {
+		public:
+			SquareEncoder(const std::vector<Square> &a) {attributes_ = a;}
+		  std::string attribute_name(const size_t a) const final;
+			int attribute_count() const final {return attributes_.size();}
+		protected:
+			const Square& attribute(const size_t i) const {return attributes_[i];}
+		private:
+			std::vector<Square> attributes_;
+	};
+
+	class LocationEncoder: public SquareEncoder {
+		public:
+			LocationEncoder(const std::vector<Square> &a, const std::vector<Piece> &v);
+		  std::string value_name(const size_t a, const size_t v) const final {return values_[v].to_string();}
+			int value_of(const Board &b, const size_t a) const final;
+		private:
+			std::vector<Piece> values_;
+	};
+
+	class OutcomeDataTable: public DataTableWithOwnerEncoder {
 		public:
 			/** The copy-from constructor; the data is copied into the table and can be discarded after the call */
 			OutcomeDataTable(const OutcomeData &data) : OutcomeDataTable(data,data.calculate_stats()) {}
@@ -44,36 +108,18 @@ namespace arti {
 			 * Use this constructor if you have already calculated the statistics (saves a bit of time)
 			 * The data is copied into this instance
 			 */
-			OutcomeDataTable(const outcome_map_t &data, const OutcomeStats &stats) : data_(data.size()) {build_table(data,stats);}
-		  std::string attribute_name(const size_t a) override;
-		  std::string value_name(const size_t a, const size_t v) override;
-		  std::string class_name(const size_t c) override;
-			int value_of(const size_t i, const size_t a) const;
-			int class_of(const size_t i) const;
-			int data_count() const {return data_.size();}
-			int attribute_count() const {return attributes_.size();}
-			void collect_if(element_index_list_t &result, pred_board_outcome_t fn) const;
-			void collect(element_index_list_t &result, const MatchOutcome poc) {collect_if(result,
-				[&poc](const Board& brd, const MatchOutcome &oc) {return oc == poc;});
-			}
-		private:
-			std::vector<Square> attributes_;
-			std::vector<Piece> values_;
-			std::vector<MatchOutcome> classes_;
-			std::vector<board_outcome_t> data_;
-			void build_table(const outcome_map_t &data,const OutcomeStats &stats);
-
+			OutcomeDataTable(const outcome_map_t &data, const OutcomeStats &stats) : DataTableWithOwnerEncoder(new LocationEncoder(stats.squares(),stats.pieces()),data,stats) {}
 	};
 
 	class OutcomeDataClassifier : public ID3Classifier {
 		public:
-			OutcomeDataClassifier(const OutcomeDataTable& table, size_t cc = 0) : ID3Classifier(cc), table_(table) {}
+			OutcomeDataClassifier(const DataTable& table, size_t cc = 0) : ID3Classifier(cc), table_(table) {}
 			int value_of(const size_t element, const size_t attribute) override {return table_.value_of(element,attribute);}
 			int class_of(const size_t element) override {return table_.class_of(element);}
 			void train_and_test() {ID3Classifier::train_and_test(table_.data_count(), table_.attribute_count());}
 			void train(std::forward_list<size_t>  &elements) {ID3Classifier::train(elements,table_.attribute_count());}
 		private:
-			const OutcomeDataTable &table_;
+			const DataTable &table_;
 	};
 }
 
