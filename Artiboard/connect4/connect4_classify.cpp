@@ -246,22 +246,30 @@ public:
 		ElementIndexList training_set;
 		IcuData data(data_filename());
 		training_set.fill(data.size());
+		std::cout << "calculating stats\n";
 		const auto stats = data.calculate_stats();
+		for (auto &e : stats.pieces())
+			std::cout << e;
+
 		typedef std::pair<std::string,DataTableEncoder*> encoder_t;
 		std::vector<encoder_t> encoders{
-			{"SLE", new LocationEncoder(stats.squares(),stats.pieces())}
-			// TODO: add other decoders here
+			{"SLE", new LocationEncoder(stats.squares(),stats.pieces())},
+			{"ELE", new EnhancedLocationEncoder(stats.squares(),stats.pieces())},
+			{"SRE", new LocationRegionEncoder(stats.squares(),stats.pieces())},
+			{"ERE", new EnhancedLocationRegionEncoder(stats.squares(),stats.pieces())}
 		};
 		file() << "Cutoff Encoding Accuracy Size";
-		const int steps = 6*encoders.size();
+		const int increments = 12;
+		const int steps = increments*encoders.size();
 		set_steps(steps);
-		for (int i = 0; i < steps; i++) {
+		for (int i = 0; i < increments; i++) {
 			const int cutoff = i * 16;
 			for (auto &e : encoders) {
 				DataTableWithEncoder table(*e.second,data,stats);
 				OutcomeDataClassifier fier(table,cutoff);
 				fier.train(training_set);
 				fier.test(training_set);
+				LOG << cutoff << " " << e.first;
 				file() << cutoff << " " << e.first << " " << fier.root().certainty() << " " << fier.root().size();
 				step();
 			}

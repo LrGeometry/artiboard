@@ -58,11 +58,11 @@ LocationEncoder::LocationEncoder(const std::vector<Square> &a, const std::vector
 }
 
 int LocationEncoder::value_of(const Board &b, const size_t a) const {
-	const Piece oc = b(attribute(a));
+	const Piece oc = b(square(a));
 	for (size_t k=0;k<values_.size();k++)
 		if (values_[k] == oc)
 			return k;
-	throw runtime_error_ex("data value not found for attribute '%s' element", attribute(a).to_string().c_str());
+	throw runtime_error_ex("data value not found for attribute '%s' element", square(a).to_string().c_str());
 	return -1;
 }
 

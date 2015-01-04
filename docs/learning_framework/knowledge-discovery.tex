@@ -453,7 +453,26 @@ Using the \myterm{UCI Connect-Four data set} we compare four different encodings
 	\item [SRE] Standard \myterm{Location Region Encoding} $6 \times 7 \times 3 = 126$ attributes and $|\mypieces| = 2$
 	\item [ERE] Enhanced \myterm{Location Region Encoding} $6 \times 7 \times 4 = 168$ attributes and $|\mypieces| = 2$
 \end{enumerate}
-Each encoding is classified for 6 different cut-off values: $\{0,16,32,48,64,76\}$ using the \myterm{Trained Accuracy} as measurement.
+Each encoding is classified for different cut-off values starting from 0, incrementing by 16. We used the \myterm{Trained Accuracy} as measurement.
+
+\subsection{Results}
+The results are shown in \reffig{c4-028}.  From here it can be seem that regions (ERE and SRE) does a bit better on size and accuracy than the standard encodings. Also the enhanced encodings does a bit better.  
+\begin{figure} 
+\centering
+\subfigure % [Accuracy Measurements] 
+{
+	\includegraphics[width=0.45\textwidth]{artifacts/c4-028acc.eps}
+}
+\qquad
+\subfigure %[Size Measurements] 
+{
+	\includegraphics[width=0.45\textwidth]{artifacts/c4-028size.eps}
+}
+\caption{Performance of encodings}
+\label{fig:c4-028}
+\end{figure}
+\subsection{Conclusion}
+An encoding where we consider reachable location with binary valued attributes seems to be the best in both space and in accuracy.  This result is in accordance with the expectation -- given more details to use as attributes does improve the performance of ID3.
 
 
 \section{The discovery algorithm}

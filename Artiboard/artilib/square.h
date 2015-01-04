@@ -20,8 +20,8 @@ namespace arti {
 		enum color_t {Light, Dark};
 		// index for a valid square is 0 to 63
 		ordinal_t index(void) const;
-		ordinal_t rank() const {return _rank;}
-		ordinal_t file() const {return _file;}
+		ordinal_t rank() const {return _rank;} // a.k.a row
+		ordinal_t file() const {return _file;} // a.k.a.column
 		bool is_valid() const {return in_bounds(_file,_rank);}
 		ordinal_t color_index(const bool flip = false) const;
 		color_t color() const;
@@ -29,9 +29,9 @@ namespace arti {
 		// normal constructor
 		Square(const ordinal_t file, const ordinal_t rankValue);
 		Square() : Square(1,1){};
-		// contruct a flip of another square
+		// construct a flip of another square
 		Square(const Square& source, bool flip=false);
-		// constucts an offset square
+		// constructs an offset square
 		Square(const Square& source, 
 			const ordinal_t offset_file, 
 			const ordinal_t offset_rank);
@@ -39,6 +39,9 @@ namespace arti {
 		bool operator < (const Square& other) const { return index() < other.index();}
 		bool operator == (const Square& other) const { return index() == other.index(); }
 		std::string to_string() const;
+		Square above() const {return Square(_file,_rank+1);}
+		Square below() const {return Square(_file,_rank-1);}
+		bool is_bottom() const {return _rank == 0; }
 	private:
 		/* updates */
 		// change to the mirror of the square

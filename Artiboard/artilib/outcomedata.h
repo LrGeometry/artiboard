@@ -59,6 +59,7 @@ namespace arti {
 			virtual	int attribute_count() const = 0;
 		  virtual std::string attribute_name(const size_t a) const = 0;
 		  virtual std::string value_name(const size_t a, const size_t v) const = 0;
+		  virtual ~DataTableEncoder(){}
 	};
 
 	class DataTableWithEncoder: public DataTable {
@@ -83,19 +84,45 @@ namespace arti {
 	class SquareEncoder: public DataTableEncoder {
 		public:
 			SquareEncoder(const std::vector<Square> &a) {attributes_ = a;}
-		  std::string attribute_name(const size_t a) const final;
-			int attribute_count() const final {return attributes_.size();}
+		  std::string attribute_name(const size_t a) const override;
+			int attribute_count() const override {return attributes_.size();}
 		protected:
-			const Square& attribute(const size_t i) const {return attributes_[i];}
+			const Square& square(const size_t i) const {return attributes_[i];}
 		private:
 			std::vector<Square> attributes_;
 	};
 
+	class LocationRegionEncoder: public DataTableEncoder {
+			public:
+				LocationRegionEncoder(const std::vector<Square> &a, const std::vector<Piece> &v)
+					: squares_(a), pieces_(v) {}
+			  std::string attribute_name(const size_t a) const {return square(a).to_string() + piece(a).to_string();}
+				int attribute_count() const override {return squares_.size() * pieces_.size();}
+			protected:
+				const size_t piece_index(const size_t i) const {return i / squares_.size();}
+				const size_t square_index(const size_t i) const {return i % squares_.size();}
+				const Square& square(const size_t i) const {return squares_[square_index(i)];}
+				const Piece& piece(const size_t i) const {return pieces_[piece_index(i)];}
+				const size_t index_of(const size_t piece_ix, const size_t sq_ix) {return piece_ix * squares_.size() + sq_ix;}
+				std::string value_name(const size_t a, const size_t v) const override {
+					return (v == 1)?"Y":"N";
+				}
+				int value_of(const Board &b, const size_t a) const override {
+					return (b(square(a)) == piece(a))?1:0;
+				}
+				int square_count() const {return squares_.size();}
+			private:
+				const std::vector<Square> squares_;
+				const std::vector<Piece> pieces_;
+		};
+
 	class LocationEncoder: public SquareEncoder {
 		public:
 			LocationEncoder(const std::vector<Square> &a, const std::vector<Piece> &v);
-		  std::string value_name(const size_t a, const size_t v) const final {return values_[v].to_string();}
-			int value_of(const Board &b, const size_t a) const final;
+		  std::string value_name(const size_t a, const size_t v) const override {return values_[v].to_string();}
+			int value_of(const Board &b, const size_t a) const override;
+		protected:
+			Piece piece(const size_t v) const {return values_[v];}
 		private:
 			std::vector<Piece> values_;
 	};

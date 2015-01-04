@@ -47,12 +47,14 @@ namespace arti {
 			 */
 			const static Piece OUT_OF_BOUNDS;
 			explicit Piece(square_value_t v = EMPTY._value);
-			bool is_empty() const {return _value == EMPTY._value;}			;
+			bool is_empty() const {return _value == EMPTY._value;}
+			bool is_piece() const {return _value != EMPTY._value;}	;
 			bool is_out_of_bounds() const {return _value == OUT_OF_BOUNDS._value;}			;
 			bool operator !=(const Piece& other) const {return _value != other._value;}			;
 			bool operator ==(const Piece& other) const {return _value == other._value;}			;
 			bool operator <(const Piece& other) const {return _value < other._value;}			;
 			bool operator ==(const square_value_t rhs) const {return _value == rhs;}
+			bool operator !=(const square_value_t rhs) const {return _value != rhs;}
 			square_value_t index() const {return _value;}			;
 			std::string to_string() const;
 		private:
