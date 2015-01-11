@@ -152,7 +152,7 @@ namespace arti {
 		 if (oc == NorthPlayerWins && current.ply().is_player_b())
 			 return b;
 	 }
-	 const int count = std::round((children.size()+1) * random() - 0.5f);
+	 const int count = (int) std::round((children.size()+1) * random() - 0.5f);
 	 //TRACE << children.size() << " " << count;
 	 auto it = children.begin();
 	 // advance to (i+1)-th child

@@ -31,7 +31,7 @@ namespace arti {
 			std::cout << "started" << std::endl;
 			LOG << argc << " argument(s) supplied:";
 			for (int c=0; c<argc;c++) LOG << "\t" << argv[c];
-			if (argc == 1)
+			if (argc < 2)
 				throw runtime_error_ex("incorrect usage, expected:\n\t%s  experiment_name>|test|list",argv[0]);
 			std::string name(argv[1]);
 			if (name == "list")

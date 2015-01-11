@@ -1,6 +1,11 @@
 #include <iterator>
 #include "id3.h"
+#ifndef _MSC_BUILD
 std::default_random_engine generator;
+#else
+#include <random>
+std::random_device generator;
+#endif
 
 namespace {
 	void fill(std::forward_list<size_t>& list, const size_t count) {
@@ -221,7 +226,7 @@ namespace arti {
  				const float value_count = p->second;
  				const float class_count = c->second;
  				const float pripn = class_count / value_count;
- 				const float cipn = -pripn * log2(pripn);
+ 				const float cipn = -pripn * ::log2(pripn);
  				ipn += cipn;
  				//TRACE << "value " << p->first << "class " << c->first << " has ipn " << cipn << " and class count " << class_count << " of total" << value_count;
  			} 

@@ -1,5 +1,11 @@
 #include "feat.h"
-
+#ifdef _MSC_BUILD
+namespace arti {
+	FeatureProgram::u_ptr load_program(const std::string& filename) {
+		throw std::exception("not implemented");
+	}
+}
+#else
 #include "grammars/FeatLexer.h"
 #include "grammars/FeatParser.h"
 #include "grammars/FeatTree.h"
@@ -45,3 +51,5 @@ namespace arti {
 			return FeatureProgram::u_ptr(result);
 	}
 }
+
+#endif

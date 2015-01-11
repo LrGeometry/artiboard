@@ -3,7 +3,13 @@
 #include "systemex.h"
 #include <fstream>
 #include <windows.h>
+#ifdef _MSC_BUILD
+#include <direct.h>
+#define vsnprintf vsnprintf_s
+#define mkdir _mkdir
+#else
 #include <dirent.h>
+#endif
 
 using namespace std;
 
@@ -62,7 +68,7 @@ namespace arti {
 		// determine file size
 		file.seekg(0,ios::end);
 		auto length = file.tellg();
-		if (length == 0)
+		if (0 == length)
 			throw runtime_error_ex("The file ('%s') is empty", fileName);
 		// read the whole file the result
 		file.seekg(0,ios::beg);
