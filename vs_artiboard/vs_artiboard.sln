@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "artilib", "..\Artiboard\artilib\artilib.vcxproj", "{C6B22473-839F-4613-9F4E-3F21B8340661}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "connect4", "..\Artiboard\connect4\connect4.vcxproj", "{B3A7AD72-F62E-4ED0-8C07-43C7D3990B1D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "connect4_console", "..\Artiboard\connect4_console\connect4_console.vcxproj", "{3A1479EC-7868-4393-BE41-D2874C2AB90F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6B22473-839F-4613-9F4E-3F21B8340661}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C6B22473-839F-4613-9F4E-3F21B8340661}.Debug|Win32.Build.0 = Debug|Win32
+		{C6B22473-839F-4613-9F4E-3F21B8340661}.Release|Win32.ActiveCfg = Release|Win32
+		{C6B22473-839F-4613-9F4E-3F21B8340661}.Release|Win32.Build.0 = Release|Win32
+		{B3A7AD72-F62E-4ED0-8C07-43C7D3990B1D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B3A7AD72-F62E-4ED0-8C07-43C7D3990B1D}.Debug|Win32.Build.0 = Debug|Win32
+		{B3A7AD72-F62E-4ED0-8C07-43C7D3990B1D}.Release|Win32.ActiveCfg = Release|Win32
+		{B3A7AD72-F62E-4ED0-8C07-43C7D3990B1D}.Release|Win32.Build.0 = Release|Win32
+		{3A1479EC-7868-4393-BE41-D2874C2AB90F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3A1479EC-7868-4393-BE41-D2874C2AB90F}.Debug|Win32.Build.0 = Debug|Win32
+		{3A1479EC-7868-4393-BE41-D2874C2AB90F}.Release|Win32.ActiveCfg = Release|Win32
+		{3A1479EC-7868-4393-BE41-D2874C2AB90F}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

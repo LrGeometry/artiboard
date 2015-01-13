@@ -1,0 +1,5 @@
+ <:
+0:> *** START <:
+0:> 2 argument(s) supplied: <:
+0:> 	C:\development\github\artiboard\vs_artiboard\Debug\connect4_console.exe <:
+0:> 	list <:
