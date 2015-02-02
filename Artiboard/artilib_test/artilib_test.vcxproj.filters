@@ -26,13 +26,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="connect4_console.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\connect4\connect4_classify.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\connect4\connect4_negamax.cpp">
+    <ClCompile Include="FeatureProgramTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

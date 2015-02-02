@@ -25,3 +25,7 @@ src/.settings/
 Artiboard-D
 dub.json
 Debug
+vs_artiboard/packages/
+vs_artiboard/ipch/
+vs_artiboard/vs_artiboard.sdf
+vs_artiboard/vs_artiboard.v12.suo

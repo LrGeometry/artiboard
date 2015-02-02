@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "connect4", "..\Artiboard\co
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "connect4_console", "..\Artiboard\connect4_console\connect4_console.vcxproj", "{3A1479EC-7868-4393-BE41-D2874C2AB90F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "artilib_test", "..\Artiboard\artilib_test\artilib_test.vcxproj", "{B7A744F4-A7DB-47CA-9D3A-B6B7EB606CC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +29,10 @@ Global
 		{3A1479EC-7868-4393-BE41-D2874C2AB90F}.Debug|Win32.Build.0 = Debug|Win32
 		{3A1479EC-7868-4393-BE41-D2874C2AB90F}.Release|Win32.ActiveCfg = Release|Win32
 		{3A1479EC-7868-4393-BE41-D2874C2AB90F}.Release|Win32.Build.0 = Release|Win32
+		{B7A744F4-A7DB-47CA-9D3A-B6B7EB606CC3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B7A744F4-A7DB-47CA-9D3A-B6B7EB606CC3}.Debug|Win32.Build.0 = Debug|Win32
+		{B7A744F4-A7DB-47CA-9D3A-B6B7EB606CC3}.Release|Win32.ActiveCfg = Release|Win32
+		{B7A744F4-A7DB-47CA-9D3A-B6B7EB606CC3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

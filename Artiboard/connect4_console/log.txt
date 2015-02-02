@@ -1,5 +1,9 @@
  <:
 0:> *** START <:
-0:> 2 argument(s) supplied: <:
+0:> 5 argument(s) supplied: <:
 0:> 	C:\development\github\artiboard\vs_artiboard\Debug\connect4_console.exe <:
-0:> 	list <:
+0:> 	c4-400 <:
+0:> 	data_dir=C:\development\github\artiboard\input <:
+0:> 	icu_file=C:\development\github\artiboard\input\downloaded <:
+0:> 	\connect-4.data <:
+0:> Start c4-400:Which regions classifies better?

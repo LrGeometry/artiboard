@@ -374,9 +374,9 @@ public:
 	AnnotatedDatabase *db;
 public:
 	explicit AnnotatedClassifier(AnnotatedDatabase *data, const size_t count_cut) : ID3Classifier(count_cut), db(data) {}
-  int class_of(const size_t element) override {
-  	return db->items[element].outcome;
-  }
+	int class_of(const size_t element) override {
+		return db->items[element].outcome;
+	}
 
 	int value_of(const size_t element, const size_t attribute) override	{
 		const auto &b = db->items[element].board;

@@ -16,6 +16,14 @@ namespace arti {
 	public:
 		typedef std::map<string, valueT> baseT;
 		bool has_name(const string& name) const {return baseT::find(name) != baseT::end();}
+		void check_name(const string& name) const {
+			if (!has_name(name)) {
+				std::stringstream ss;
+				ss << "The name '" << name << "' cannot be found. Use one of " << size() << " names:" ; 
+				for (auto &e : *this) ss << " " << e.first;
+				throw std::runtime_error(ss.str());
+			}
+		}
 
 		void add(const string& name, const valueT& value) {
 			if (has_name(name))
@@ -52,6 +60,8 @@ namespace arti {
 	class GroundExpression : public FeatureExpression {
 
 	public:
+		GroundExpression() : GroundExpression("","") {}
+		GroundExpression(const GroundExpression &o) : GroundExpression(o._stateset, o._region) {}; 
 		GroundExpression(const string& s, const string& r): _stateset(s),_region(r) {}
 		void to_stream(std::ostream& os) const override {os << _stateset << "@" << _region;}
 		const string _stateset;
@@ -96,6 +106,16 @@ namespace arti {
 	class FeatureTerm : public FeatureExpression {
 	protected:
 		FeatureTerm(float weight) : _weight(weight) {}
+	public:
+		float weight() const {return _weight;}
+	protected:
+		float _weight;	
+	};
+
+	class FeatureTermDummy : public FeatureTerm {
+	public:
+		FeatureTermDummy(float weight) : FeatureTerm(weight) {}
+		void to_stream(std::ostream& os) const override {os << "dummy:" << weight();}
 	protected:
 		float _weight;	
 	};
