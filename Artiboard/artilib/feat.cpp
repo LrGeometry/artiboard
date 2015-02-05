@@ -15,7 +15,6 @@
 namespace arti {
 	using namespace boost::spirit;
 	using namespace boost::spirit::ascii;
-
 	using base_iterator_t = std::string::iterator;
 	using token_t = lex::lexertl::token < base_iterator_t, boost::mpl::vector<unsigned int, std::string> > ;
 	using lexer_t = lex::lexertl::lexer < token_t > ;
@@ -29,54 +28,20 @@ namespace arti {
 			function = "function";
 			stateset = "stateset";
 			region = "region";
-			this->self = formula | function | stateset | region;
+			this->self = formula | function | stateset | region ;
 			this->self += lex::token_def<>('=')
 				| '{' | '}' | '(' | ')' | ',' | '@' | '|' | '&' | '!' | '*' | '+' | ';';
 			this->self += identifier | index | weight;
 
-			this->self("WS") = lex::token_def<>("[ \\t\\n]+")
+			this->self("WS") = lex::token_def<>("[ \\t\\r\\n]+")
 				| "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/";
 
-
 		}
-
 		lex::token_def<string> identifier;
 		lex::token_def<unsigned int> index;
 		lex::token_def<float> weight;
 		lex::token_def<> formula, stateset, function, region;
 	};
-	std::stringstream error;
-struct ReportError {
-	// the result type must be explicit for Phoenix
-	template<typename, typename, typename, typename>
-	struct result { typedef void type; };
-
-	// contract the string to the surrounding new-line characters
-	template<typename Iter1,typename Iter2,typename ET, typename T4>
-	void operator()(Iter1 first_iter, Iter2 last_iter,
-									ET error_iter,  T4 what) const {
-		error << "Hello";
-		//std::string first(first_iter, error_iter);
-		//std::string last(error_iter, last_iter);
-		//auto first_pos = first.rfind('\n');
-		//auto last_pos = last.find('\n');
-		//auto error_line = ((first_pos == std::string::npos) ? first
-		//                    : std::string(first, first_pos + 1))
-		//                  + std::string(last, 0, last_pos);
-		//auto error_pos = (error_iter - first_iter) + 1;
-		//if (first_pos != std::string::npos) {
-		//  error_pos -= (first_pos + 1);
-		//}
-		//std::cerr << "Parsing error in " << what << std::endl
-		//          << error_line << std::endl
-		//          << std::setw(error_pos) << '^'
-		//          << std::endl;
-	}
-
-	;
-};
-
-	const boost::phoenix::function<ReportError> report_fun = ReportError();
 
 	using skipper_t = qi::in_state_skipper < Tokenizer::lexer_def > ;
 	struct Grammar : qi::grammar < Tokenizer::iterator_type, skipper_t > {
@@ -101,7 +66,7 @@ struct ReportError {
 			using boost::spirit::_val;
 			using boost::phoenix::ref;
 			using boost::phoenix::size;
-			program_ = *(region | stateset | formula | function);
+			program_ = *(region | stateset | formula | function) >> qi::eoi;
 
 			auto add_region = [&](const string& name, arti::Region& r) {
 				result->regions().add(name,r);
@@ -138,7 +103,7 @@ struct ReportError {
 			auto add_formula = [&](string& n, expression_t e) {
 				result->formulas().add(n,e);
 			};
-			formula = t.formula >> t.identifier [_val = _1] >> '=' >> term[bind(add_formula,_val,_1)] >> ';';
+			formula = t.formula >> t.identifier [_val = _1] >> '=' >> orExpr[bind(add_formula,_val,_1)] >> ';';
 
 			auto mk_ft = [](float a) {
 				return new FeatureTermDummy(a);
@@ -157,7 +122,7 @@ struct ReportError {
 				return new FeatureTermWithFormula(w,b);
 			};
 			fun_term = t.weight[_val = bind(mk_ft,_1)] >> '*' >> 
-					(term [_val = bind(mk_fte,_val,_1)] 
+					(orExpr [_val = bind(mk_fte,_val,_1)] 
 				| t.identifier [_val = bind(mk_ftf,_val,_1)]);
 
 			auto mk_ground = [&](string_pair_t&o) {
@@ -167,7 +132,7 @@ struct ReportError {
 				return new NotExpression(a);
 			};
 			term = ground [_val = bind(mk_ground,_1)] 
-				| '(' >> term [_val=_1] >> ')' 
+				| '(' >> orExpr [_val=_1] >> ')' 
 				| '!' >> term [_val = bind(mk_not,_1)];
 
 			auto mk_or = [](expression_t a, expression_t b) {
@@ -196,7 +161,7 @@ struct ReportError {
 
 			auto name_states = [&](StateSet&s) {return result->states().assign_name(s);}; 
 			ref_state = 	
-					('{' >> state_set [_val = bind(name_states,_1)] >> '}') 
+					( state_set [_val = bind(name_states,_1)] ) 
 					| t.identifier [_val = _1]
 					;
 
@@ -209,7 +174,7 @@ struct ReportError {
 				s.insert(n);
 			};
 
-			state_set = +t.identifier[bind(add_state,_val,_1)] 
+			state_set = '{' >> +t.identifier[bind(add_state,_val,_1)] >> '}' 
 			;
 			
 			auto add_sq = [](Region& r, Square &s) {r.insert(s);};
@@ -220,22 +185,36 @@ struct ReportError {
 				[ _val = bind(mk_sq,_1,_2) ]
 				;
 			using namespace qi::labels;
-			qi::on_error<qi::fail>
-				(
-				program_,
-				report_fun(_1, _2, _3, _4)
-				);
 		}
 
 		void parse(std::string& str) {
-			error.clear();
 			std::string::iterator it = str.begin();
 			iterator_type iter = t.begin(it, str.end());
 			iterator_type end = t.end();
 			bool r = qi::phrase_parse(iter, end, *this, qi::in_state("WS")[t.self]);
 			if (!r || iter < end) {
 				std::stringstream ss;
-				ss << "Parsing failed.\n" << r << "*" << error.str() << "*";
+				ss << "Parsing failed\n";
+				if (it != str.end()) {
+					// count new lines
+					int line = 0;
+					std::string::iterator line_pos = str.begin();
+					for (auto cit = str.begin();cit != it;cit++) {
+						if (*cit == '\n') {
+							line++;
+							line_pos = cit;
+						};
+					}
+					ss << "Unexpected token at line: " << line+1;
+					if (line_pos < it) 
+						ss << " col: " << (it - line_pos);
+					else
+						ss << "(end of line)";
+					if (*it == ' ') ss << ". Before the space.";
+					else if (*it == '\n') ss << ". The last token in the line.";
+					else ss << ". Before this :>" << *it << "<:";
+				} else
+					ss << "Unexpected end of file\n";
 				throw std::runtime_error(ss.str());
 			} 
 		}
